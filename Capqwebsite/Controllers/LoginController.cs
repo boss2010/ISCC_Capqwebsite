@@ -6,7 +6,7 @@ namespace Capqwebsite.Controllers
 {
     public class LoginController : Controller
     {
-        //rehabLogin
+        //rehabLogin2
         [AllowAnonymous]
         [Route("/Login/Index")]
        
