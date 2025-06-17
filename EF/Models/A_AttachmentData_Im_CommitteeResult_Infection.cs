@@ -9,7 +9,7 @@ namespace EF.Models;
 public partial class A_AttachmentData_Im_CommitteeResult_Infection
 {
     public long Id { get; set; }
-
+    //sayed
     public long Im_CommitteeResult_id { get; set; }
 
     /// <summary>
