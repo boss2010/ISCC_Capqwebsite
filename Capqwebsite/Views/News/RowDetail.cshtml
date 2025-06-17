@@ -1,0 +1,54 @@
+﻿
+@model EF.Models.WebsiteTypeDetail
+<!-- Page Header Start -->
+<div class="container-fluid py-1">
+	<div class="container py-2">
+		<div class="row align-items-center py-4">
+			<div class="col-md-6 text-center text-md-right">
+				<i class="fas fa-newspaper icon-style"></i>
+				<h3 class="mb-4 mb-md-0 text-primary text-uppercase output">تفاصيل @ViewBag.TypeAr</h3>
+			</div>
+			<div class="col-md-6 text-center text-md-left">
+				<div class="d-inline-flex align-items-center">
+					<a href="@Url.Action("Index","Home")" class="btn btn-secondary">
+						الصفحة الرئيسية
+					</a>
+					@* <a class="btn btn-secondary" href="">الصفحة الرئيسية</a> *@
+					<i class="fas fa-angle-double-right text-primary mx-2"></i>
+					@* http://localhost:5205/News/Index/7
+					<a class="btn btn-secondary disabled" href="">@ViewBag.TypeAr</a> *@
+					<a href="@Url.Action("Index","News", new { ID = @ViewBag.WebsitetypeID })" class="btn btn-secondary ">
+						@ViewBag.TypeAr
+					</a>
+					<i class="fas fa-angle-double-right text-primary mx-2"></i>
+					<a class="btn btn-secondary disabled" href="">تفاصيل @ViewBag.TypeAr</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Page Header Start -->
+<!-- Contact Start -->
+<div class="container-fluid bg-light">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-5">
+				<div class="d-flex flex-column align-items-center justify-content-center h-100 overflow-hidden">
+					<img class="news-img" src="@Model.filepath" alt="">
+				</div>
+			</div>
+			<div class="col-lg-7 mt-5 py-5 pr-lg-5">
+				
+				<h6 class="text-primary font-weight-normal text-uppercase mb-3">@(Model.Date.HasValue?Model.Date.Value.ToString("dd/MM/yyyy"):"nodate")</h6>
+				<h1 class="mb-4 section-title">@Model.TitleAr</h1>
+				<p class="mb-4">
+					@Model.descAr
+				</p>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<!-- Contact End -->

@@ -1,0 +1,52 @@
+﻿<!-- Page Header Start -->
+@model List<EF.Models.WebsiteTypeDetail>
+<div class="container-fluid py-1">
+	<div class="container py-2">
+		<div class="row align-items-center py-4">
+			<div class="col-md-6 text-center text-md-right">
+				<i class="fas fa-phone icon-style"></i>
+				<h3 class="mb-4 mb-md-0 text-primary text-uppercase output">@ViewBag.TypeAr </h3>
+			</div>
+			<div class="col-md-6 text-center text-md-left">
+				<div class="d-inline-flex align-items-center">
+					<a class="btn btn-secondary" href="">تشريعات</a>
+					<i class="fas fa-angle-double-right text-primary mx-2"></i>
+					<a class="btn btn-secondary disabled" href="">@ViewBag.TypeAr</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Page Header Start -->
+<!-- Contact Start -->
+<div class="container-fluid bg-light">
+	<div class="container">
+		<div class="row">
+			<div class="mb-5">
+				@* ////////////////////////////*@
+				@{
+					if (Model != null && Model.Count > 0)
+					{
+						foreach (var item in Model)
+						{
+
+							<h3 class="mb-4 section-title">@item.TitleAr</h3>
+							<div class="media mb-4">
+								<div class="media-body">
+
+
+									<h6>   التاريخ:  <small><i>@item.Date</i></small></h6>
+									<p>@item.descAr</p>
+									@* <img src="@Url.Content(item.filepath)" alt="image">*@
+
+								</div>
+							</div>
+						}
+					}
+				}
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- Contact End -->

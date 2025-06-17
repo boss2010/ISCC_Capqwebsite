@@ -1,0 +1,84 @@
+﻿@model EF.Models.WebsiteTypeDetail
+
+<!-- Page Header Start -->
+<div class="container-fluid py-1">
+    <div class="container py-2">
+        <div class="row align-items-center py-4">
+            <div class="col-md-6 text-center text-md-right">
+                <i class="fas fa-edit icon-style"></i>
+                <h3 class="mb-4 mb-md-0 text-primary text-uppercase output">تعديل @(ViewBag.TypeAr ?? "Not specified")</h3>
+            </div>
+            <div class="col-md-6 text-center text-md-left">
+                <div class="d-inline-flex align-items-center">
+                    <a class="btn btn-secondary" href="@Url.Action("Index", new { ID = Model.WebsitetypeID })">رجوع</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Form Start -->
+<div class="container-fluid bg-light">
+    <div class="container">
+        <form asp-controller="DataEntry" asp-action="Update" method="post" enctype="multipart/form-data">
+            
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
+            <input type="hidden" asp-for="WebsitetypeID" />
+            <input type="hidden" asp-for="filepath" />
+
+            <div class="row">
+                <label>عنوان باللغة العربية</label>
+                <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة العربية">
+                <span asp-validation-for="TitleAr" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="row">
+                <label>عنوان باللغة الانجليزية</label>
+                <input asp-for="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة الانجليزية">
+                <span asp-validation-for="TitleEn" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="row">
+                <label>التاريخ</label>
+                <input asp-for="Date" type="date" class="form-control p-4" value="@Model.Date?.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="row">
+                <label>التفاصيل باللغة العربية</label>
+                <textarea asp-for="descAr" rows="3" class="form-control p-4"></textarea>
+                <span asp-validation-for="descAr" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="row">
+                <label>التفاصيل باللغة الانجليزية</label>
+                <textarea asp-for="descEn" rows="3" class="form-control p-4"></textarea>
+                <span asp-validation-for="descEn" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="row">
+                <label>اختر صورة</label>
+                <input name="imageFile" type="file" class="form-control">
+                @if (!string.IsNullOrEmpty(Model.filepath))
+                {
+                        <div class="mt-2">
+                            <img src="@Model.filepath" alt="Current Image" style="max-width: 100px;" class="img-thumbnail" />
+                            <p class="text-muted">الصورة الحالية</p>
+                        </div>
+                }
+                <span asp-validation-for="filepath" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="row">
+                <label>الرابط الإلكتروني</label>
+                <input asp-for="linkURL" type="text" class="form-control p-4" />
+                <span asp-validation-for="linkURL" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <button class="btn btn-primary py-3 px-5" type="submit">حفظ التعديلات</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@model List<EF.Models.Outlet>
+<!-- Page Header Start -->
+<div class="container-fluid py-1">
+    <div class="container py-2">
+        <div class="row align-items-center py-4">
+            <div class="col-md-6 text-center text-md-right">
+                <i class="fas fa-phone icon-style"></i>
+                <h3 class="mb-4 mb-md-0 text-primary text-uppercase output">مكاتبنا</h3>
+            </div>
+            <div class="col-md-6 text-center text-md-left">
+                <div class="d-inline-flex align-items-center">
+                    <a class="btn btn-secondary" href="Offices/Index">مكاتبنا</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header Start -->
+<!-- Contact Start -->
+<div class="container-fluid bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                @if (Model != null && Model.Count > 0)
+                {
+                @foreach (var item in Model)
+                {
+                <div class="col-lg-6">
+                    <div class="service-item">
+                        <i class="far fa-building"></i>
+                            <h4>@item.Ar_Name</h4>
+                            <p>@item.Address_Ar </p>
+                    </div>
+                </div>
+                }}
+                
+                <div class="col-lg-6">
+                    <div class="service-item">
+                        <i class="far fa-building"></i>
+                        <h4>الاسم</h4>
+                        <p>If you have any idea or suggestion about new templates, feel free to let us know.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Contact End -->
