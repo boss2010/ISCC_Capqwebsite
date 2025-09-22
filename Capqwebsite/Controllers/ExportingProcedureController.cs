@@ -33,12 +33,15 @@ namespace Capqwebsite.Controllers
             ViewData["CountryList"] = new SelectList(DataCountry, "IDCountry", "CountryNameAr");
 
             //////////////////////list of Im_Initiators////////////////////////////////
+            
+           
             var DataItem = (from i in dbContext.Items
-                                //join c in db.Countries on im.Country_Id equals c.ID
+                                join ecc in dbContext.Ex_CountryConstrains
+                                on i.ID equals ecc.Item_ShortName.Item.ID
 
-                            select new ItemVM
+                             select new ItemVM
                             {
-                                ID = i.ID,
+                                ID = ecc.Item_ShortName.Item.ID,
                                 Name_Ar = i.Name_Ar,
                                 Name_En = i.Name_En,
 
@@ -63,7 +66,7 @@ namespace Capqwebsite.Controllers
            on ecc.ID equals exCTxt.CountryConstrain_ID
        join exTxt in dbContext.EX_Constrain_Texts
            on exCTxt.ID equals exTxt.EX_Constrain_Country_Item_ID
-       where ecc.Import_Country_ID == CountryName && ecc.Item_ShortName.Item.ID == ItemName
+       where ecc.Import_Country_ID == CountryName && ecc.Item_ShortName.Item.ID ==ItemName && ecc.IsActive==true&& ecc.User_Deletion_Id==null
        select new ExportingProcedureVM
        {
            CountryName = c.Ar_Name,
