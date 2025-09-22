@@ -82,8 +82,5 @@ namespace Capqwebsite.Controllers
                 return View();
             }
         }
-       
-
-        
     }
 }

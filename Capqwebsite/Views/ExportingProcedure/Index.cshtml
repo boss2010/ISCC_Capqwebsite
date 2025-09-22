@@ -1,4 +1,4 @@
-﻿ @model List<ViewModels.Im_InitiatorVM>
+﻿ @model List<ViewModels.ExportingProcedureVM>
 @{
 	var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "Lang").Value;
 	var lang = string.IsNullOrEmpty(langCookies) ? "ar" : langCookies;
@@ -113,8 +113,8 @@
 									@foreach (var item in @Model)
 									{
 										<tr>
-											<td>@item.InitiatorNameAr</td>
-											<td>@item.ItemName</td>
+											<td>@item.CountryName</td>
+											<td>@item.itemName</td>
 											<td>@item.ShortName_Ar</td>
 											<td>@item.ConstrainText_Ar</td>
 											<td>@item.ConstrainText_En</td>
@@ -143,7 +143,6 @@
 
 			</div>
 		</div>
-
 
 	</div>
 </div>
