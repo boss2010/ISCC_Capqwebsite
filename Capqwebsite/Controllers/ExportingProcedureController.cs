@@ -13,7 +13,7 @@ namespace Capqwebsite.Controllers
 
         [AllowAnonymous]
         [Route("/ExportingProcedure/Index")]
-        public IActionResult Index(long CountryName = 0, long ItemName = 0)
+        public IActionResult Index(long CountryID = 0, long ItemID = 0)
         {
             AgricultureDBContext dbContext = new AgricultureDBContext();
 
@@ -53,7 +53,7 @@ namespace Capqwebsite.Controllers
      .Distinct().OrderBy(i => i.Name_Ar).ToList();
             ViewData["ItemList"] = new SelectList(DataItem, "ID", "Name_Ar");
 
-            if (CountryName > 0 && ItemName > 0)
+            if (CountryID > 0 && ItemID > 0)
             {
 
 
@@ -66,7 +66,7 @@ namespace Capqwebsite.Controllers
            on ecc.ID equals exCTxt.CountryConstrain_ID
        join exTxt in dbContext.EX_Constrain_Texts
            on exCTxt.ID equals exTxt.EX_Constrain_Country_Item_ID
-       where ecc.Import_Country_ID == CountryName && ecc.Item_ShortName.Item.ID ==ItemName && ecc.IsActive==true&& ecc.User_Deletion_Id==null
+       where ecc.Import_Country_ID == CountryID && ecc.Item_ShortName.Item.ID == ItemID && ecc.IsActive==true&& ecc.User_Deletion_Id==null
        select new ExportingProcedureVM
        {
            CountryName = c.Ar_Name,

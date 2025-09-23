@@ -11,7 +11,7 @@ namespace Capqwebsite.Controllers
     {
         [AllowAnonymous]
         [Route("/ImportingProcedure/Index")]
-        public IActionResult Index(long ImInitiatorName = 0, long ItemName=0)
+        public IActionResult Index(long ImInitiatorID = 0, long ItemID = 0)
         {
             AgricultureDBContext dbContext = new AgricultureDBContext();
 
@@ -32,12 +32,14 @@ namespace Capqwebsite.Controllers
             ViewData["ImInitiatorList"] = new SelectList(DataIm_Initiator, "IDInitiator", "InitiatorNameAr");
             var culture = new CultureInfo("ar-SA");
             //////////////////////list of Im_Initiators////////////////////////////////
+           
             var DataItem = (from i in dbContext.Items
-                                //join c in db.Countries on im.Country_Id equals c.ID
+                            join Im_In in dbContext.Im_Initiators
+                            on i.ID equals Im_In.Item_ShortName.Item.ID
 
                             select new ItemVM
                             {
-                                ID = i.ID,
+                                ID = Im_In.Item_ShortName.Item.ID,
                                 Name_Ar = i.Name_Ar,
                                 Name_En = i.Name_En,
 
@@ -47,16 +49,14 @@ namespace Capqwebsite.Controllers
                                 .Where(i => i.Name_Ar != null)
 
     .Distinct().OrderBy(i => i.Name_Ar).ToList();
-
-
-
             ViewData["ItemList"] = new SelectList(DataItem, "ID", "Name_Ar");
+            ////////////////////////////
 
-            if (ImInitiatorName > 0 && ItemName > 0)
+            if (ImInitiatorID > 0 && ItemID > 0)
             {
                 var List = (from Im_In in dbContext.Im_Initiators
                             join intext in dbContext.Im_Constrain_Initiator_Texts on Im_In.ID equals intext.Im_Initiator_ID
-                            where Im_In.Country_Id == ImInitiatorName && Im_In.Item_ShortName.Item.ID == ItemName && intext.IsActive==true
+                            where Im_In.Country_Id == ImInitiatorID && Im_In.Item_ShortName.Item.ID == ItemID && intext.IsActive==true
                             select new Im_InitiatorVM
                             {
                                 IDInitiator = Im_In.ID,

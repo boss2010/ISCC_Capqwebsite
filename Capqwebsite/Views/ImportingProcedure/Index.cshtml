@@ -29,7 +29,7 @@
 <!-- Contact Start -->
 <div class="container-fluid bg-light">
 	<div class="container pt-5">
-		<form class="text-start" style="display:flex;">
+		<form class="text-start">
 			<div class="row">
 				<div class="col-md-4">
 
@@ -39,8 +39,8 @@
 					<br>
 					@* /////////////rrrr_13-5-2025///////////////// *@
 
-					@Html.DropDownList("ImInitiatorName", (IEnumerable
-															<SelectListItem>)ViewData["ImInitiatorList"], "-- اختار --", new { @id = "ImInitiatorListId", @class = "form-control", onchange = "updateInitiatorName()" })
+					@Html.DropDownList("ImInitiatorID", (IEnumerable
+															<SelectListItem>)ViewData["ImInitiatorList"], "-- اختار --", new { @id = "ImInitiatorListId", @class = "form-control" })
 
 
 
@@ -53,8 +53,8 @@
 
 					<br>
 					<br>
-					@Html.DropDownList("ItemName", (IEnumerable
-															<SelectListItem>)ViewData["ItemList"], "-- اختار --", new { @id = "ItemListId", @class = "form-control", onchange = "updateItemName()" })
+					@Html.DropDownList("ItemID", (IEnumerable
+															<SelectListItem>)ViewData["ItemList"], "-- اختار --", new { @id = "ItemListId", @class = "form-control" })
 
 
 
@@ -77,19 +77,20 @@
 
 				</div>
 			</div>
+			<br />
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<center style="margin-bottom: 15px;">
+
+						<input id="btnsearch" type="submit" class="btn btn-secondary box-shadow mt-3 py-2 px-4" name="btnSave" value="بحث">
+					</center>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
 		</form>
 		<br />
-		<br />
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
-				<center style="margin-bottom: 15px;">
-
-					<input id="btnsearch" type="submit" class="btn btn-info btn-lg " name="btnSave" value="بحث">
-				</center>
-			</div>
-			<div class="col-md-4"></div>
-		</div>
+		
 		@* //////////////////////////partial view 24/5/2025////////////////////////// *@
 		<div class="card-body pt-5">
 			<div id="divdata">
@@ -103,3 +104,25 @@
 		
 	</div>
 </div>
+<script src="~/js/jquery-3.4.1.min.js"></script>
+
+<script>
+	$(document).ready(function () {
+		$("#ImInitiatorListId").select2({
+			placeholder: "-- اختار --",
+			allowClear: true
+		});
+		$("#ItemListId").select2({
+			placeholder: "-- اختار --",
+			allowClear: true
+		});
+
+
+			$("#ItemListId").on("change", function () {
+		$("#resultsTable").empty();});
+				$("#ImInitiatorListId").on("change", function () {
+		$("#resultsTable").empty();});
+	});
+
+
+</script>

@@ -1,0 +1,57 @@
+﻿ @model List<ViewModels.ExportingProcedureVM>
+
+
+@{
+    var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "Lang").Value;
+    var lang = string.IsNullOrEmpty(langCookies) ? "ar" : langCookies;
+}
+
+@{
+    if (Model != null && Model.Count > 0)
+    {
+        <div class="row">
+			
+				<table id="resultsTable" class="table table-bordered">
+					<thead>
+						<tr>
+							@* <th scope="col">ID</th> *@
+						<th scope="col">اسم الدولة</th>
+						<th scope="col">اسم النبات</th>
+						<th scope="col">الاسم المختصر</th>
+						<th scope="col">الشروط بالعربية</th>
+						<th scope="col">الشروط بالانجليزيه</th>
+						<th scope="col">الشهاده بالعربية</th>
+						<th scope="col">الشهاده بالنجليزيه</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach (var item in @Model)
+					{
+						<tr>
+							<td>@item.CountryName</td>
+							<td>@item.itemName</td>
+							<td>@item.ShortName_Ar</td>
+							<td>@item.ConstrainText_Ar</td>
+							<td>@item.ConstrainText_En</td>
+							<td>@item.InSide_Certificate_Ar</td>
+							<td>@item.InSide_Certificate_En</td>
+
+							
+						</tr>
+					}
+
+					</tbody>
+				</table>
+			</div>
+        
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-12 text-center">
+				<img src="~/img/emptydata.jpg" />
+                <p class="text-bold">@(lang == "ar" ? "لا يوجد بيانات" : "No Data Found")</p>
+            </div>
+        </div>
+    }
+}
