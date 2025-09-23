@@ -3,6 +3,7 @@
 	var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "Lang").Value;
 	var lang = string.IsNullOrEmpty(langCookies) ? "ar" : langCookies;
 }
+
 <!-- Page Header Start -->
 <div class="container-fluid py-1">
 	<div class="container py-2">
@@ -41,9 +42,16 @@
 					<br>
 					@* /////////////rrrr_13-5-2025///////////////// *@
 
-					@Html.DropDownList("CountryName", (IEnumerable
-											<SelectListItem>)ViewData["CountryList"], "-- اختار --", new { @id = "ImInitiatorListId", @class = "form-control", onchange = "updateInitiatorName()" })
+				 @Html.DropDownList("CountryName", (IEnumerable<SelectListItem>)ViewData["CountryList"], "-- اختار --", new { @id = "ImInitiatorListId", @class = "form-control" })  
 
+					 @* ////// *@
+					@*<div class="input-group input-group-outline my-3 w-100 divName is-filled">
+						<label class="form-label" style="padding-top:0px;">@(lang == "ar" ? "الشركة" : "Organization")</label>
+						@Html.DropDownList("CountryName", (IEnumerable<SelectListItem>)ViewData["CountryList"], "-- اختار --", new { @id = "ImInitiatorListId", @class = "form-control" })
+						@* @Html.DropDownList("ImInitiatorListId", null, "-- إختار --", htmlAttributes: new { @class = "form-control", @onchange = "changeOrganization()" }) *@
+						@* @Html.ValidationMessageFor(model => model.FirstOrDefault().OrganizationID, "", new { @class = "text-danger" })*@
+					@* </div> *@
+					 @* ////// *@
 
 
 
@@ -56,7 +64,7 @@
 					<br>
 					<br>
 					@Html.DropDownList("ItemName", (IEnumerable
-											<SelectListItem>)ViewData["ItemList"], "-- اختار --", new { @id = "ItemListId", @class = "form-control", onchange = "updateItemName()" })
+											<SelectListItem>)ViewData["ItemList"], "-- اختار --", new { @id = "ItemListId", @class = "form-control" })
 
 
 
@@ -146,3 +154,14 @@
 
 	</div>
 </div>
+@* <script src="~/js/jquery-3.4.1.min.js"></script>
+<script>
+$(document).ready(function () {
+	$("#searchCountry").on("keyup", function () {
+		var value = $(this).val().toLowerCase();
+		$("#ImInitiatorListId option").filter(function () {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1 || $(this).val().toLowerCase().indexOf(value) > -1);
+		});
+	});
+});
+</script> *@
