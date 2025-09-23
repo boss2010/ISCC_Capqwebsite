@@ -30,6 +30,9 @@
 </div>
 <!-- Page Header Start -->
 <!-- Contact Start -->
+
+
+
 <div class="container-fluid bg-light">
 	<div class="container pt-5">
 		<form class="text-start" style="display:flex;">
@@ -44,15 +47,7 @@
 
 				 @Html.DropDownList("CountryName", (IEnumerable<SelectListItem>)ViewData["CountryList"], "-- اختار --", new { @id = "ImInitiatorListId", @class = "form-control" })  
 
-					 @* ////// *@
-					@*<div class="input-group input-group-outline my-3 w-100 divName is-filled">
-						<label class="form-label" style="padding-top:0px;">@(lang == "ar" ? "الشركة" : "Organization")</label>
-						@Html.DropDownList("CountryName", (IEnumerable<SelectListItem>)ViewData["CountryList"], "-- اختار --", new { @id = "ImInitiatorListId", @class = "form-control" })
-						@* @Html.DropDownList("ImInitiatorListId", null, "-- إختار --", htmlAttributes: new { @class = "form-control", @onchange = "changeOrganization()" }) *@
-						@* @Html.ValidationMessageFor(model => model.FirstOrDefault().OrganizationID, "", new { @class = "text-danger" })*@
-					@* </div> *@
-					 @* ////// *@
-
+			
 
 
 
@@ -63,10 +58,13 @@
 
 					<br>
 					<br>
-					@Html.DropDownList("ItemName", (IEnumerable
-											<SelectListItem>)ViewData["ItemList"], "-- اختار --", new { @id = "ItemListId", @class = "form-control" })
 
-
+					@Html.DropDownList(
+											"ItemName",
+											(IEnumerable<SelectListItem>)ViewData["ItemList"],
+											"-- اختار --",
+											new { @id = "ItemListId", @class = "form-control" }
+											)
 
 
 				</div>
@@ -154,14 +152,21 @@
 
 	</div>
 </div>
-@* <script src="~/js/jquery-3.4.1.min.js"></script>
-<script>
-$(document).ready(function () {
-	$("#searchCountry").on("keyup", function () {
-		var value = $(this).val().toLowerCase();
-		$("#ImInitiatorListId option").filter(function () {
-			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1 || $(this).val().toLowerCase().indexOf(value) > -1);
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<script src="~/js/jquery-3.4.1.min.js"></script>
+
+<script >
+	$(document).ready(function () {
+		$("#ItemListId").select2({
+			placeholder: "-- اختار --",
+			allowClear: true
+		});
+		$("#ImInitiatorListId").select2({
+			placeholder: "-- اختار --",
+			allowClear: true
 		});
 	});
-});
-</script> *@
+	
+
+</script>
