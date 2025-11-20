@@ -9681,3 +9681,109 @@ h6 {
   padding: 0;
   list-style-type: none;
 }
+
+
+/**shahenda**/
+
+.margins {
+    padding: 10px !important;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    height: 250px;
+    background-color:#f7f6f6be
+}
+.map {
+    border-radius: 10%;
+    height: 200px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    line-height: 20px;
+    margin: 15px 0px;
+    width: inherit;
+}
+.bord {
+padding-top:10%;
+}
+.title {
+    color: rgb(2, 147, 125) !important;
+    background-color: #ffffff;
+    font-size: 22px;
+    font-weight: bold !important;
+    line-height: 3;
+    text-align: center
+}
+.des {
+    position: absolute;
+    color: black;
+    font-size: 19px;
+    top: 90px;
+    line-height: 1;
+}
+.tel {
+    position: absolute;
+    color: black;
+    font-size: 19px;
+    right:16px;
+    top: 130px;
+    line-height: 1;
+}
+.bb, .bb::before, .bb::after {
+    position: absolute;
+    border-radius: 10%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.bb {
+    width: 140px;
+    height: 60px;
+   border-radius:10%;
+   
+    color: #69ca62;
+    box-shadow: inset 0 0 0 1px rgba(105, 202, 98, 0.5);
+}
+
+    .bb::before, .bb::after {
+        content: '';
+        z-index: -1;
+        margin: -2%;
+        box-shadow: inset 0 0 0 2px;
+        animation: clipMe 8s linear infinite;
+    }
+
+    .bb::before {
+        animation-delay: -4s;
+    }
+
+    .bb:hover::after, .bb:hover::before {
+        background-color: rgba(255, 0, 0, 0.3);
+    }
+
+@keyframes clipMe {
+    0%, 100% {
+        clip: rect(0px, 220px, 2px, 0px);
+    }
+
+    25% {
+        clip: rect(0px, 2px, 220px, 0px);
+    }
+
+    50% {
+        clip: rect(218px, 220px, 220px, 0px);
+    }
+
+    75% {
+        clip: rect(0px, 220px, 220px, 218px);
+    }
+}
+.text-red {
+    color: red !important;
+ 
+}
+i.fas.fa-phone {
+   
+    color: red !important;
+  
+}

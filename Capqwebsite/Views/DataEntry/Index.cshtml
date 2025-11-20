@@ -20,74 +20,120 @@
 <!-- Page Header Start -->
 <div class="container-fluid bg-light">
 	<div class="container">
-		<form asp-controller="DataEntry" asp-action="Index" method="post" enctype="multipart/form-data">
+		@if (ViewBag.ID == 12)
+		{
+			<form asp-controller="DataEntry" asp-action="Index" method="post" enctype="multipart/form-data">
 
-			<div class="row">
-				<label>عنوان باللغة العربية</label>
-				<input name="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة العربية" aria-invalid="false">
-				<p class="help-block text-danger"></p>
-			</div>
-			<input name="WebsitetypeID" type="hidden" value=@(ViewBag.ID ?? "Not specified") />
-			<br />
-			<div class="row">
-				<label>عنوان باللغة الانجليزية</label>
-				<input name="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة الانجليزية" aria-invalid="false">
-				<p class="help-block text-danger"></p>
-			</div>
-			<br />
-			<div class="row">
-				<label>التاريخ </label>
-				<input name="Date" type="date" class="form-control p-4" autocomplete="off" />
-				<p class="help-block text-danger"></p>
-			</div>
-			<br />
+				<div class="row">
+					<label>الاسم</label>
+					<input name="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم" aria-invalid="false">
+					<p class="help-block text-danger"></p>
+				</div>
+				<input name="WebsitetypeID" type="hidden" value=@(ViewBag.ID ?? "Not specified") />
+				<br />
+				<div class="row">
+					<label>العنوان</label>
+					<input name="descAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال العنوان" aria-invalid="false">
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+				<div class="row">
+					<label>الهاتف</label>
+					<input name="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الهاتف" aria-invalid="false">
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
 
-			<div class="row">
-				<label>التفاصيل باللغة العربية</label>
-				<textarea name="descAr" rows="3" class="form-control p-4" autocomplete="off"></textarea>
-				<p class="help-block text-danger"></p>
-			</div>
-			<br />
 
-			<div class="row">
-				<label>التفاصيل باللغة الانجليزية</label>
-				<textarea name="descEn" rows="3" class="form-control p-4" autocomplete="off"></textarea>
-				<p class="help-block text-danger"></p>
-			</div>
-			<br />
 
-			<div class="row">
-				<label> اختر صورة</label>
-				<input name="imageFile" type="file" class="form-control">
-				<p class="help-block text-danger"></p>
-			</div>
-			<br />
-			<div class="row">
-				<label>الرابط الإلكتروني</label>
-				<input name="linkURL" type="text" class="form-control p-4" autocomplete="off" />
-				<p class="help-block text-danger"></p>
-			</div>
-			<br />
-			<div>
-				<button class="btn btn-primary py-3 px-5" type="submit">حفظ</button>
-			</div>
-		</form>
+
+
+
+				<br />
+				<div class="row">
+					<label>الرابط الإلكتروني</label>
+					<input name="linkURL" type="text" class="form-control p-4" autocomplete="off" />
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+				<div>
+					<button class="btn btn-primary py-3 px-5" type="submit">حفظ</button>
+				</div>
+			</form>
+		}
+		else
+		{
+			<form asp-controller="DataEntry" asp-action="Index" method="post" enctype="multipart/form-data">
+
+				<div class="row">
+					<label>عنوان باللغة العربية</label>
+					<input name="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة العربية" aria-invalid="false">
+					<p class="help-block text-danger"></p>
+				</div>
+				<input name="WebsitetypeID" type="hidden" value=@(ViewBag.ID ?? "Not specified") />
+				<br />
+				<div class="row">
+					<label>عنوان باللغة الانجليزية</label>
+					<input name="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة الانجليزية" aria-invalid="false">
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+				<div class="row">
+					<label>التاريخ </label>
+					<input name="Date" type="date" class="form-control p-4" autocomplete="off" />
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+
+				<div class="row">
+					<label>التفاصيل باللغة العربية</label>
+					<textarea name="descAr" rows="3" class="form-control p-4" autocomplete="off"></textarea>
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+
+				<div class="row">
+					<label>التفاصيل باللغة الانجليزية</label>
+					<textarea name="descEn" rows="3" class="form-control p-4" autocomplete="off"></textarea>
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+
+				<div class="row">
+					<label> اختر صورة</label>
+					<input name="imageFile" type="file" class="form-control">
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+				<div class="row">
+					<label>الرابط الإلكتروني</label>
+					<input name="linkURL" type="text" class="form-control p-4" autocomplete="off" />
+					<p class="help-block text-danger"></p>
+				</div>
+				<br />
+				<div>
+					<button class="btn btn-primary py-3 px-5" type="submit">حفظ</button>
+				</div>
+			</form>
+		}
 	</div>
+
 </div>
 
 @* //////////////////////////////////////////////////////////////هنا هيظهر جدول فيه بيانات النوع اللى داخل ////////////////////////////////////////////////// *@
 
 @* < !--Data Table Section --> *@
-
-	<table class= "table table-bordered table-striped table-hover" >
+@if (ViewBag.ID == 12)
+{ 
+<table class= "table table-bordered table-striped table-hover" >
 	<thead class= "bg-primary text-white" >
 	<tr >
-	<th > العنوان عربي </th >
-	<th > العنوان انجليزي </th >
-	<th > التاريخ </th >
-	<th > الصورة </th >
+	<th > الاسم </th >
+	<th > العنوان  </th >
+	<th > الهاتف </th >
+	
 	<th > الرابط </th >
-	<th > الإجراءات </th >
+	
 	</tr >
 	</thead >
 	<tbody>
@@ -99,27 +145,11 @@
 
 		<td> @item.TitleAr </td>
 
-		<td> @item.TitleEn </td>
+		<td> @item.descAr </td>
+		<td> @item.descEn </td>
 
-		<td> @item.Date?.ToString("yyyy-MM-dd") </td>
 
-		<td>
-				@if (!string.IsNullOrEmpty(item.filepath))
-
-				{
-
-			<img src = "@item.filepath" alt = "Image" style = "max-width: 100px; max-height: 60px;" class= "img-thumbnail" />
-				}
-
-				else
-				{
-
-			<span> لا توجد صورة</span>
-
-				}
-
-		</td>
-
+		
 		<td>
 				@if (!string.IsNullOrEmpty(item.linkURL))
 
@@ -170,3 +200,94 @@
 
 </table>
 
+}
+else
+{
+	<table class="table table-bordered table-striped table-hover">
+		<thead class="bg-primary text-white">
+			<tr>
+				<th> العنوان عربي </th>
+				<th> العنوان انجليزي </th>
+				<th> التاريخ </th>
+				<th> الصورة </th>
+				<th> الرابط </th>
+				<th> الإجراءات </th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+
+			{
+
+				<tr>
+
+					<td> @item.TitleAr </td>
+
+					<td> @item.TitleEn </td>
+
+					<td> @item.Date?.ToString("yyyy-MM-dd") </td>
+
+					<td>
+						@if (!string.IsNullOrEmpty(item.filepath))
+
+						{
+
+							<img src="@item.filepath" alt="Image" style="max-width: 100px; max-height: 60px;" class="img-thumbnail" />
+						}
+
+						else
+						{
+
+							<span> لا توجد صورة</span>
+
+						}
+
+					</td>
+
+					<td>
+						@if (!string.IsNullOrEmpty(item.linkURL))
+
+						{
+
+							@* <a href = "@item.linkURL" target = "_blank" > فتح الرابط </a> *@
+							<a href="#"> فتح الرابط </a>
+
+						}
+
+						else
+						{
+
+							<span> لا يوجد رابط</span>
+
+						}
+
+					</td>
+
+					<td>
+
+						<div class="btn-group">
+
+							<a href="@Url.Action("Edit", new { id = item.ID })"
+							   class="btn btn-sm btn-warning">
+
+								<i class="fas fa-edit"></i> تعديل
+							</a>
+
+							<a href="@Url.Action("Delete","DataEntry", new { id = item.ID })"
+							   class="btn btn-sm btn-danger"
+							   onclick="return confirm('هل أنت متأكد من الحذف؟');">
+
+								<i class="fas fa-trash"></i> حذف
+							</a>
+
+						</div>
+
+					</td>
+
+				</tr>
+			}
+
+		</tbody>
+
+	</table>
+}

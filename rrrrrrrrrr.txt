@@ -27,3 +27,7 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //ignore
     }
 }
+//////////////////////////link data entry ////////////////////////////////////////
+http://localhost:5205/Login/index
+//////////////////////////////////website//////////
+https://site.capq.gov.eg/Home/HomePage/Index
