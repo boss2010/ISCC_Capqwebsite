@@ -9690,7 +9690,7 @@ h6 {
     margin-bottom: 20px;
     padding-bottom: 10px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-    height: 250px;
+    height: 290px;
     background-color:#f7f6f6be
 }
 .map {
@@ -9698,8 +9698,10 @@ h6 {
     height: 200px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     line-height: 20px;
-    margin: 15px 0px;
+   margin-right:15px;
+    margin-top:30%;
     width: inherit;
+  
 }
 .bord {
 padding-top:10%;
@@ -9707,22 +9709,22 @@ padding-top:10%;
 .title {
     color: rgb(2, 147, 125) !important;
     background-color: #ffffff;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: bold !important;
     line-height: 3;
-    text-align: center
+    text-align: center;
 }
 .des {
     position: absolute;
     color: black;
-    font-size: 19px;
+    font-size: 17px;
     top: 90px;
     line-height: 1;
 }
 .tel {
     position: absolute;
     color: black;
-    font-size: 19px;
+    font-size: 17px;
     right:16px;
     top: 130px;
     line-height: 1;
@@ -9737,10 +9739,10 @@ padding-top:10%;
 }
 
 .bb {
-    width: 140px;
+    width: 190%;
     height: 60px;
    border-radius:10%;
-   
+   margin-right:2%;
     color: #69ca62;
     box-shadow: inset 0 0 0 1px rgba(105, 202, 98, 0.5);
 }

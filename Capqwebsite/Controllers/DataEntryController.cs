@@ -31,9 +31,21 @@ namespace Capqwebsite.Controllers
                         ViewBag.ID = ID;
                         return View(list);
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-
+                        //////////////////////////////errorr looogggg/////////////////////////////////////////
+                        var log = new A__plant_Error_Save
+                        {
+                            PageName = "DataEntryController",
+                            ErrorMessage = ex.Message,
+                            FunctionName = "Index",
+                            Date = DateTime.Now, // "02:30:45 PM"
+                            User_Ip = "rehabSaveErrorr",
+                            IsWeb = true
+                        };
+                        DBContext.Add(log);
+                        DBContext.SaveChanges();
+                        ////////////////////////////////////////////////////
                         return Redirect("/Login/Index");
                     }
                     
@@ -47,9 +59,14 @@ namespace Capqwebsite.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Index(WebsiteTypeDetail form, IFormFile imageFile)
-        {
-            try
+        {       // ✅ تحقق من الـ Model State
+            if (!ModelState.IsValid)
             {
+                Console.WriteLine("❌ Model State غير صحيح:");
+            }
+                try
+            {
+                
 
                 int ID = int.Parse(GetSequencing("WebsiteTypeDetail_SEQ", "int"));
                 form.ID = ID;
@@ -81,7 +98,9 @@ namespace Capqwebsite.Controllers
 
 
                 }
+
                 DBContext.WebsiteTypeDetails.Add(form);
+
                 DBContext.SaveChanges();
 
 
@@ -89,9 +108,22 @@ namespace Capqwebsite.Controllers
             
             return RedirectToAction("Index");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                //////////////////////////////errorr looogggg/////////////////////////////////////////
+                var log = new A__plant_Error_Save
+                {
+                    Id = long.Parse(GetSequencing("A__plant_Error_Save_SEQ", "long")),
+                    PageName = "DataEntryController",
+                    ErrorMessage = ex.Message,
+                    FunctionName = "Insert",
+                    Date = DateTime.Now, // "02:30:45 PM"
+                    User_Ip = "rehabSaveErrorr",
+                    IsWeb = true
+                };
+                DBContext.Add(log);
+                DBContext.SaveChanges();
+                ////////////////////////////////////////////////////
                 return Redirect("/Login/Index");
             }
         }
@@ -226,9 +258,21 @@ namespace Capqwebsite.Controllers
                 return Redirect("/Login/Index");
             }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                //////////////////////////////errorr looogggg/////////////////////////////////////////
+                var log = new A__plant_Error_Save
+                {
+                    PageName = "LoginController",
+                    ErrorMessage = ex.Message,
+                    FunctionName = "EditGet",
+                    Date = DateTime.Now, // "02:30:45 PM"
+                    User_Ip = "rehabSaveErrorr",
+                    IsWeb = true
+                };
+                DBContext.Add(log);
+                DBContext.SaveChanges();
+                ////////////////////////////////////////////////////
                 return Redirect("/Login/Index");
             }
         }
@@ -277,20 +321,54 @@ namespace Capqwebsite.Controllers
             }
             catch (Exception)
             {
+                //////////////////////////////errorr looogggg/////////////////////////////////////////
+                var log = new A__plant_Error_Save
+                {
+                    Id = long.Parse(GetSequencing("A__plant_Error_Save_SEQ", "long")),
 
+                    PageName = "LoginController",
+                    ErrorMessage = "بيانات الدخول خاطئة",
+                    FunctionName = "Update",
+                    Date = DateTime.Now, // "02:30:45 PM"
+                    User_Ip = "rehabSaveErrorr",
+                    IsWeb = true
+                };
+                AgricultureDBContext dBContext = new AgricultureDBContext();
+                dBContext.Add(log);
+                dBContext.SaveChanges();
                 return Redirect("/Login/Index");
             }
         }
 
         public IActionResult Delete(int id)
         {
+            try
+            {
 
-            var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id && (a.IsActive == true || a.IsActive == null)).ToList().FirstOrDefault();
-            deletdRow.IsActive = false;
-            DBContext.SaveChanges();
-            var returnedId = deletdRow.WebsitetypeID;
-            return RedirectToAction("Index", new { ID = returnedId });
+                var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id && (a.IsActive == true || a.IsActive == null)).ToList().FirstOrDefault();
+                deletdRow.IsActive = false;
+                DBContext.SaveChanges();
+                var returnedId = deletdRow.WebsitetypeID;
+                return RedirectToAction("Index", new { ID = returnedId });
+            }
+            catch (Exception ex)
+            {
+                var log = new A__plant_Error_Save
+                {
+                    Id = long.Parse(GetSequencing("A__plant_Error_Save_SEQ", "long")),
 
+                    PageName = "LoginController",
+                    ErrorMessage = ex.Message,
+                    FunctionName = "delete",
+                    Date = DateTime.Now, // "02:30:45 PM"
+                    User_Ip = "rehabSaveErrorr",
+                    IsWeb = true
+                };
+                AgricultureDBContext dBContext = new AgricultureDBContext();
+                dBContext.Add(log);
+                dBContext.SaveChanges();
+                return View();
+            }
 
         }
     }
