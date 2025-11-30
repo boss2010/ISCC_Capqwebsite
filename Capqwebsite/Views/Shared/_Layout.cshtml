@@ -59,6 +59,18 @@
 		<div class="container position-relative" style="z-index: 9;">
 			<nav class="navbar navbar-expand-lg navbar-dark py-3 py-lg-0">
 
+				
+				<a href="" class="navbar-brand">
+					<img src="~/img/logo-capq2.png" class="logo" />
+					<!--<h1 class="m-0 display-5 text-white"><span class="text-primary">i</span>DESIGN</h1>-->
+				</a>
+
+				<a href="https://www.capq.gov.eg/Exporting/Main" class="navbar-toggler" target="_blank"> الخدمات الإلكترونية</a>
+
+				<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+
+				</button>
 				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
 					@* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@
 					@if (Context.Session.GetString("UserSession") == null)
@@ -121,7 +133,8 @@
 									<a href="#" class="dropdown-item">المحطات المعتمدة</a>
 									<a asp-area="" asp-controller="ExportServices" asp-action="Index" title="" class="dropdown-item">
 										شرح الخدمات الالكترونية
-									</a>                                <a href="#" class="dropdown-item">الرسوم</a>
+									</a>                               
+									<a href="#" class="dropdown-item">الرسوم</a>
 								</div>
 							</div>
 
@@ -182,17 +195,6 @@
 					@* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@
 
 				</div>
-				<a href="" class="navbar-brand">
-					<img src="~/img/logo-capq2.png" class="logo" />
-					<!--<h1 class="m-0 display-5 text-white"><span class="text-primary">i</span>DESIGN</h1>-->
-				</a>
-
-				<a href="https://www.capq.gov.eg/Exporting/Main" class="navbar-toggler" target="_blank"> الخدمات الإلكترونية</a>
-
-				<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-					<span class="navbar-toggler-icon"></span>
-
-				</button>
 			</nav>
 		</div>
 	</div>
@@ -264,6 +266,7 @@
 	<script src="~/js/main.js"></script>
 
 	<script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.bundle5.min.js"></script>
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
