@@ -111,7 +111,7 @@
 					<p class="help-block text-danger"></p>
 				</div>
 				<br />
-				<div>
+				<div id="div3">
 					<button class="btn btn-primary py-3 px-5" type="submit">حفظ</button>
 				</div>
 			</form>
@@ -125,6 +125,7 @@
 @* < !--Data Table Section --> *@
 @if (ViewBag.ID == 12)
 { 
+	<div id="div1">
 <table class= "table table-bordered table-striped table-hover" >
 	<thead class= "bg-primary text-white" >
 	<tr >
@@ -199,10 +200,12 @@
 	</tbody>
 
 </table>
+</div>
 
 }
 else
 {
+	<div id="div2">
 	<table class="table table-bordered table-striped table-hover">
 		<thead class="bg-primary text-white">
 			<tr>
@@ -290,4 +293,5 @@ else
 		</tbody>
 
 	</table>
+	</div>
 }
