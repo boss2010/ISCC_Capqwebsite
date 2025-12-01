@@ -1,8 +1,24 @@
 ﻿@model IEnumerable<EF.Models.WebsiteTypeDetail>
-<div>
-    <table>
-       @Model.FirstOrDefault().TitleAr;
-    </table>
 
+
+
+<div> <table id="refreshable-content">
+    @foreach (var item in Model)
+    { 
+       
+       <tr><td>@item.TitleAr</td></tr>
+   
+        
+    }
+   
+ </table>
 
 </div>
+  <script src="~/js/jquery-3.4.1.min.js"></script> 
+ <script>
+
+setInterval(function() {
+    $('#refreshable-content').load(location.href + ' #refreshable-content > *');
+}, 60000);
+
+</Script>   
