@@ -1,4 +1,136 @@
 ﻿@model IEnumerable<EF.Models.WebsiteTypeDetail>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 
+<br />
+<br>
+    <div class="row">
+        <div class="col-md-6">
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+        </div>
+    <div class="col-md-6">
+        <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
+        </div>
+    </div>
+<br />
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+    </div>
+</div>
+<script>
+    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+    const yValues = [55, 49, 44, 24, 15];
+    const barColors = ["red", "green","blue","orange","brown"];
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {display: false},
+          title: {
+            display: true,
+            text: "title of chart",
+            font: {size: 16}
+          }
+        }
+      }
+    });
+
+
+
+
+    const ctx1 = document.getElementById('myChart1');
+
+    new Chart(ctx1, {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {display:true},
+          title: {
+            display: true,
+            text: "title of chart",
+            font: {size:16}
+          }
+        }
+      }
+    });
+
+
+
+
+        const ctx2 = document.getElementById('myChart2');
+
+    new Chart(ctx2, {
+      type: "doughnut",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {display:true},
+          title: {
+            display: true,
+            text: "World Wine Production 2018",
+            font: {size:16}
+          }
+        }
+      }
+    });
+
+
+        const ctx3 = document.getElementById('myChart3');
+
+    new Chart(ctx3, {
+      type: "line",
+      data: {
+        labels: xValues,
+        datasets: [{
+          data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+          borderColor: "red",
+          pointRadius: 2,
+          tension: 0.4,
+        }, {
+          data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+          borderColor: "green",
+          pointRadius: 2,
+          tension: 0.4,
+        }, {
+          data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+          borderColor: "blue",
+          pointRadius: 2,
+          tension: 0.4,
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+</script>
 
 
