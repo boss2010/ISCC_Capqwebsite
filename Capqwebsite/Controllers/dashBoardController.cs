@@ -13,5 +13,13 @@ namespace Capqwebsite.Controllers
             
             return View(dbContext.WebsiteTypeDetails.ToList());
         }
+        public IActionResult dash()
+        {
+
+            AgricultureDBContext dbContext = new AgricultureDBContext();
+
+
+            return View(dbContext.WebsiteTypeDetails.ToList());
+        }
     }
 }
