@@ -66,7 +66,7 @@ namespace Capqwebsite.Controllers
             }
                 try
             {
-                
+            
 
                 int ID = int.Parse(GetSequencing("WebsiteTypeDetail_SEQ", "int"));
                 form.ID = ID;
@@ -98,15 +98,15 @@ namespace Capqwebsite.Controllers
 
 
                 }
-
+                
+                form.User_Creation_Date = DateTime.Now;
                 DBContext.WebsiteTypeDetails.Add(form);
 
                 DBContext.SaveChanges();
-
-
+                TempData["WarningMessage"] = "Saved successfully, but please review the data!";
                 // Rest of your code...
-            
-            return RedirectToAction("Index");
+
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -229,7 +229,7 @@ namespace Capqwebsite.Controllers
 
         //////////////////////////////////////Edit//////////////////////////////////////////////////
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id,int IdType)
         {
             try
             {
@@ -245,6 +245,7 @@ namespace Capqwebsite.Controllers
                     string TypeAr = DBContext.Websitetypes.Where(a => a.ID == itemToEdit.WebsitetypeID).FirstOrDefault()?.TypeAr;
                     ViewBag.TypeAr = TypeAr;
                     ViewBag.ID = itemToEdit.WebsitetypeID;
+                    ViewBag.IdType = IdType;
                     ViewBag.EditMode = true;
                     return View(itemToEdit); // Pass single item for editing
                 }
@@ -286,9 +287,9 @@ namespace Capqwebsite.Controllers
             try
             {
 
-           
-            // Handle file upload
-            if (imageFile != null && imageFile.Length > 0)
+            
+                // Handle file upload
+                if (imageFile != null && imageFile.Length > 0)
             {
                 // Get the original filename (e.g., "myphoto.jpg")
                 string originalFileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
@@ -319,7 +320,7 @@ namespace Capqwebsite.Controllers
             var returnedId = form.WebsitetypeID;
             return RedirectToAction("Index", new { ID = returnedId });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //////////////////////////////errorr looogggg/////////////////////////////////////////
                 var log = new A__plant_Error_Save
@@ -327,7 +328,7 @@ namespace Capqwebsite.Controllers
                     Id = long.Parse(GetSequencing("A__plant_Error_Save_SEQ", "long")),
 
                     PageName = "LoginController",
-                    ErrorMessage = "بيانات الدخول خاطئة",
+                    ErrorMessage = ex.Message,
                     FunctionName = "Update",
                     Date = DateTime.Now, // "02:30:45 PM"
                     User_Ip = "rehabSaveErrorr",
@@ -342,13 +343,15 @@ namespace Capqwebsite.Controllers
 
         public IActionResult Delete(int id)
         {
+            var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id && (a.IsActive == true || a.IsActive == null)).ToList().FirstOrDefault();
+            var returnedId = deletdRow.WebsitetypeID;
             try
             {
-
-                var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id && (a.IsActive == true || a.IsActive == null)).ToList().FirstOrDefault();
+                //int x = 0;
+                //int y = 5 / x;
                 deletdRow.IsActive = false;
                 DBContext.SaveChanges();
-                var returnedId = deletdRow.WebsitetypeID;
+                
                 return RedirectToAction("Index", new { ID = returnedId });
             }
             catch (Exception ex)
@@ -367,7 +370,11 @@ namespace Capqwebsite.Controllers
                 AgricultureDBContext dBContext = new AgricultureDBContext();
                 dBContext.Add(log);
                 dBContext.SaveChanges();
-                return View();
+
+
+
+                return RedirectToAction("Index", new { ID = returnedId });
+
             }
 
         }

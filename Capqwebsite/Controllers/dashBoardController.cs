@@ -16,10 +16,17 @@ namespace Capqwebsite.Controllers
         public IActionResult dash()
         {
 
+
             AgricultureDBContext dbContext = new AgricultureDBContext();
 
+           int People = dbContext.People.ToList().Count();
+            ViewBag.People = People;
+           
+           int Public_Organizations = dbContext.Public_Organizations.ToList().Count();
+            ViewBag.Public_Organizations = Public_Organizations;
 
-            return View(dbContext.WebsiteTypeDetails.ToList());
+
+            return View();
         }
     }
 }

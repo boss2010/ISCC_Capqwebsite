@@ -32,10 +32,21 @@
         <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
     </div>
 </div>
+
+ViewBag.People
+ViewBag.Public_Organizations
+@* /////////////////////////////////////////script///////////////////////////////////////////////// *@
+
+
 <script>
-    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-    const yValues = [55, 49, 44, 24, 15];
-    const barColors = ["red", "green","blue","orange","brown"];
+    alert("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+    console.log("rrrrrrrrrrrrrrrrrrrrrrrrr");
+    console.log(@ViewBag.People);
+        alert(@ViewBag.People);
+        alert(@ViewBag.Public_Organizations);
+    const xValues = ["الشركات ", "الهيئات", "الأفراد"];
+    const yValues = [49,@ViewBag.Public_Organizations,@ViewBag.People];
+    const barColors = ["red", "green","blue"];
 
     const ctx = document.getElementById('myChart');
 
@@ -53,7 +64,7 @@
           legend: {display: false},
           title: {
             display: true,
-            text: "title of chart",
+            text: "التغيرات فى الموقع الزراعى ",
             font: {size: 16}
           }
         }

@@ -20,24 +20,23 @@
 <!-- Edit Form Start -->
 <div class="container-fluid bg-light">
     <div class="container">
-        @if (ViewBag.ID == 12)
+        @if (ViewBag.ID == 12 && @ViewBag.IdType!= 9)
         {
             <form asp-controller="DataEntry" asp-action="Update" method="post" enctype="multipart/form-data">
 
                 <input type="hidden" asp-for="ID" />
+                <input type="hidden" value=@ViewBag.IdType name="IdType" />
                 <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
                 <input type="hidden" asp-for="WebsitetypeID" />
                 <input type="hidden" asp-for="filepath" />
-
                 <div class="row">
                     <label>الاسم</label>
                     <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم">
                     <span asp-validation-for="TitleAr" class="text-danger"></span>
                 </div>
+                <br />                                
                 <br />
-                
-                
-                <br />
+
                 <div class="row">
                     <label>العنوان</label>
                     <textarea asp-for="descAr" rows="3" class="form-control p-4"></textarea>
@@ -49,8 +48,7 @@
                     <textarea asp-for="descEn" rows="3" class="form-control p-4"></textarea>
                     <span asp-validation-for="descEn" class="text-danger"></span>
                 </div>
-                <br />
-               
+                <br />               
                 <div class="row">
                     <label>الرابط الإلكتروني</label>
                     <input asp-for="linkURL" type="text" class="form-control p-4" />
@@ -70,37 +68,39 @@
                 <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
                 <input type="hidden" asp-for="WebsitetypeID" />
                 <input type="hidden" asp-for="filepath" />
-
-                <div class="row">
-                    <label>عنوان باللغة العربية</label>
-                    <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة العربية">
-                    <span asp-validation-for="TitleAr" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="row">
-                    <label>عنوان باللغة الانجليزية</label>
-                    <input asp-for="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة الانجليزية">
-                    <span asp-validation-for="TitleEn" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="row">
-                    <label>التاريخ</label>
-                    <input asp-for="Date" type="date" class="form-control p-4" value="@Model.Date?.ToString("yyyy-MM-dd")" />
-                    <span asp-validation-for="Date" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="row">
-                    <label>التفاصيل باللغة العربية</label>
-                    <textarea asp-for="descAr" rows="3" class="form-control p-4"></textarea>
-                    <span asp-validation-for="descAr" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="row">
-                    <label>التفاصيل باللغة الانجليزية</label>
-                    <textarea asp-for="descEn" rows="3" class="form-control p-4"></textarea>
-                    <span asp-validation-for="descEn" class="text-danger"></span>
-                </div>
-                <br />
+                @if (@ViewBag.IdType != 9)
+                {
+                    <div class="row">
+                        <label>عنوان باللغة العربية</label>
+                        <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة العربية">
+                        <span asp-validation-for="TitleAr" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <label>عنوان باللغة الانجليزية</label>
+                        <input asp-for="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة الانجليزية">
+                        <span asp-validation-for="TitleEn" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <label>التاريخ</label>
+                        <input asp-for="Date" type="date" class="form-control p-4" value="@Model.Date?.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <label>التفاصيل باللغة العربية</label>
+                        <textarea asp-for="descAr" rows="3" class="form-control p-4"></textarea>
+                        <span asp-validation-for="descAr" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <label>التفاصيل باللغة الانجليزية</label>
+                        <textarea asp-for="descEn" rows="3" class="form-control p-4"></textarea>
+                        <span asp-validation-for="descEn" class="text-danger"></span>
+                    </div>
+                    <br />
+                }
                 <div class="row">
                     <label>اختر صورة</label>
                     <input name="imageFile" type="file" class="form-control">
@@ -113,12 +113,15 @@
                     }
                     <span asp-validation-for="filepath" class="text-danger"></span>
                 </div>
+    @if (@ViewBag.IdType != 9)
+    {
                 <br />
                 <div class="row">
                     <label>الرابط الإلكتروني</label>
                     <input asp-for="linkURL" type="text" class="form-control p-4" />
                     <span asp-validation-for="linkURL" class="text-danger"></span>
                 </div>
+    }
                 <br />
                 <div>
                     <button class="btn btn-primary py-3 px-5" type="submit">حفظ التعديلات</button>
