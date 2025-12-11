@@ -37,6 +37,10 @@
 
 									<h6>   التاريخ:  <small><i>@item.Date</i></small></h6>
 									<p>@item.descAr</p>
+									@if (!string.IsNullOrEmpty(item.filepathpdf))
+									{
+										<iframe src="@item.filepathpdf" width="100%" height="400px"></iframe>
+									}
 									@* <img src="@Url.Content(item.filepath)" alt="image">*@
 
 								</div>

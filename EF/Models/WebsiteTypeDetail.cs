@@ -15,11 +15,11 @@ public partial class WebsiteTypeDetail
 
     public string? descEn { get; set; }
 
-    public DateTime? Date { get; set; }
-
     public string? filepath { get; set; }
 
     public int? WebsitetypeID { get; set; }
+
+    public DateTime? Date { get; set; }
 
     public short? User_Updation_Id { get; set; }
 
@@ -34,8 +34,10 @@ public partial class WebsiteTypeDetail
     public DateTime? User_Creation_Date { get; set; }
 
     public bool? IsActive { get; set; }
-    //public bool EditMode { get; set; }
 
     public string? linkURL { get; set; }
-    
+
+    public string? filepathpdf { get; set; }
+
+    public virtual Websitetype? Websitetype { get; set; }
 }

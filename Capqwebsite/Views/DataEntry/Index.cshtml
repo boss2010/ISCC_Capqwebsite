@@ -71,11 +71,14 @@
                 @if (ViewBag.ID != 9)
                 {
                     /////////////////////////////////upload  pdf 11-12-2025//////////////////////////////////////
-                    <div class="row">
-                        <label> اختر ملف</label>
-                        <input name="pdfFile" type="file" class="form-control">
-                        <p class="help-block text-danger"></p>
-                    </div>
+                    @if (ViewBag.ID != 7 && ViewBag.ID != 8 && ViewBag.ID != 10 && ViewBag.ID != 11)
+                    {
+                        <div class="row">
+                            <label> اختر ملف</label>
+                            <input name="pdfFile" type="file" class="form-control">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    }
                     ////////////////////////////////////////////////////////////////////////
                     <div class="row">
                         <label>عنوان باللغة العربية</label>
@@ -235,84 +238,85 @@ else
                 </tr>
             </thead>
             <tbody>
-                @if (Model!=null) { 
-                @foreach (var item in Model)
-
+                @if (Model != null)
                 {
+                    @foreach (var item in Model)
 
-                    <tr>
-                        @if (ViewBag.ID != 9)
-                        {
-                            <td> @item.TitleAr </td>
+                    {
 
-                            <td> @item.TitleEn </td>
-
-                            <td> @item.Date?.ToString("yyyy-MM-dd") </td>
-                        }
-                        <td>
-                            @if (!string.IsNullOrEmpty(item.filepath))
-
+                        <tr>
+                            @if (ViewBag.ID != 9)
                             {
+                                <td> @item.TitleAr </td>
 
-                                <img src="@item.filepath" alt="Image" style="max-width: 100px; max-height: 60px;" class="img-thumbnail" />
+                                <td> @item.TitleEn </td>
+
+                                <td> @item.Date?.ToString("yyyy-MM-dd") </td>
                             }
-
-                            else
-                            {
-
-                                <span> لا توجد صورة</span>
-
-                            }
-
-                        </td>
-                        @if (ViewBag.ID != 9)
-                        {
                             <td>
-                                @if (!string.IsNullOrEmpty(item.linkURL))
+                                @if (!string.IsNullOrEmpty(item.filepath))
 
                                 {
 
-                                    @* <a href = "@item.linkURL" target = "_blank" > فتح الرابط </a> *@
-                                    <a href="@item.linkURL"> فتح الرابط </a>
-
+                                    <img src="@item.filepath" alt="Image" style="max-width: 100px; max-height: 60px;" class="img-thumbnail" />
                                 }
 
                                 else
                                 {
 
-                                    <span> لا يوجد رابط</span>
+                                    <span> لا توجد صورة</span>
 
                                 }
 
                             </td>
-                        }
-                        <td>
+                            @if (ViewBag.ID != 9)
+                            {
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.linkURL))
 
-                            <div class="btn-group">
+                                    {
 
-                                <a href="@Url.Action("Edit", new { id = item.ID, IdType = ViewBag.ID })"
-                                   class="btn btn-sm btn-warning">
+                                        @* <a href = "@item.linkURL" target = "_blank" > فتح الرابط </a> *@
+                                        <a href="@item.linkURL"> فتح الرابط </a>
 
-                                    <i class="fas fa-edit"></i> تعديل
-                                </a>
+                                    }
 
-                                <a href="@Url.Action("Delete", "DataEntry", new { id = item.ID })"
-                                   class="btn btn-sm btn-danger"
-                                   onclick="return confirm('هل أنت متأكد من الحذف؟');">
+                                    else
+                                    {
 
-                                    <i class="fas fa-trash"></i> حذف
-                                </a>
+                                        <span> لا يوجد رابط</span>
 
-                            </div>
+                                    }
 
-                        </td>
+                                </td>
+                            }
+                            <td>
 
-                    </tr>
+                                <div class="btn-group">
+
+                                    <a href="@Url.Action("Edit", new { id = item.ID, IdType = ViewBag.ID })"
+                                       class="btn btn-sm btn-warning">
+
+                                        <i class="fas fa-edit"></i> تعديل
+                                    </a>
+
+                                    <a href="@Url.Action("Delete", "DataEntry", new { id = item.ID })"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('هل أنت متأكد من الحذف؟');">
+
+                                        <i class="fas fa-trash"></i> حذف
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
 
                     }
-     }
+                }
             </tbody>
-           
+
         </table>
     </div>
 }

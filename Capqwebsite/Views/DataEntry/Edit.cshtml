@@ -29,6 +29,7 @@
                 <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
                 <input type="hidden" asp-for="WebsitetypeID" />
                 <input type="hidden" asp-for="filepath" />
+                
                 <div class="row">
                     <label>الاسم</label>
                     <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم">
@@ -70,6 +71,24 @@
                 <input type="hidden" asp-for="filepath" />
                 @if (@ViewBag.IdType != 9)
                 {
+                    ////////////////////////edit upload file///////////////////////////////////////////
+                    <div class="row">
+                    <input type="hidden" asp-for="filepathpdf" />
+                    <label>Current PDF</label>
+                    @if (!string.IsNullOrEmpty(Model.filepathpdf))
+                    {
+                        <iframe src="@Model.filepathpdf" width="100%" height="400px"></iframe>
+                    }
+                     </div>
+                    {
+                        <label>Upload New PDF</label>
+                        <div class="row">
+                            <label> اختر ملف</label>
+                            <input name="pdfFile" type="file" class="form-control">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    }
+                    ///////////////////////////////////////////////////////////////////
                     <div class="row">
                         <label>عنوان باللغة العربية</label>
                         <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة العربية">

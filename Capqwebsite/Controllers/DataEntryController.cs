@@ -94,7 +94,7 @@ namespace Capqwebsite.Controllers
                     }
 
                     // Store the relative path (e.g., "~/img/myphoto_123456789.jpg")
-                    //form.imgpath = $"/img/{uniqueFileName}";
+                    form.filepath = $"/img/{uniqueFileName}";
 
 
                 }
@@ -126,7 +126,7 @@ namespace Capqwebsite.Controllers
                     }
 
                     // Save relative path to DB (نفس النهج)
-                    form.filepath = $"/pdf/{uniqueFileName}";
+                    form.filepathpdf = $"/pdf/{uniqueFileName}";
                 }
 
                 form.User_Creation_Date = DateTime.Now;
@@ -309,7 +309,7 @@ namespace Capqwebsite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(WebsiteTypeDetail form, IFormFile imageFile)
+        public async Task<IActionResult> Update(WebsiteTypeDetail form, IFormFile imageFile, IFormFile pdfFile)
         {
 
 
@@ -345,7 +345,37 @@ namespace Capqwebsite.Controllers
 
 
             }
-            DBContext.WebsiteTypeDetails.Update(form);
+
+                if (pdfFile != null && pdfFile.Length > 0)
+                {
+                    // Get original filename
+                    string originalFileName = Path.GetFileNameWithoutExtension(pdfFile.FileName);
+                    string fileExtension = Path.GetExtension(pdfFile.FileName); // .pdf
+
+                    // Keep the same name exactly (زي ما انت عامل في الصور)
+                    string uniqueFileName = $"{originalFileName}{fileExtension}";
+
+                    // Folder wwwroot/pdf
+                    var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "pdf");
+
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    // Full path
+                    string filePath = Path.Combine(directoryPath, uniqueFileName);
+
+                    // Save file
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await pdfFile.CopyToAsync(fileStream);
+                    }
+
+                    // Save relative path to DB (نفس النهج)
+                    form.filepathpdf = $"/pdf/{uniqueFileName}";
+                }
+                DBContext.WebsiteTypeDetails.Update(form);
             DBContext.SaveChanges();
             var returnedId = form.WebsitetypeID;
             return RedirectToAction("Index", new { ID = returnedId });

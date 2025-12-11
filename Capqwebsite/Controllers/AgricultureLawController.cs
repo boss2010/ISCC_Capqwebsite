@@ -16,6 +16,7 @@ namespace Capqwebsite.Controllers
            string TypeAr= DBContext.Websitetypes.Where(a => a.ID==ID && (a.IsActive == true || a.IsActive == null)).ToList().FirstOrDefault()?.TypeAr;
 
             ViewBag.TypeAr = TypeAr;
+           
             return View(list);
         }
     }
