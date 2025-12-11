@@ -82,5 +82,13 @@ namespace Capqwebsite.Controllers
                 return View();
             }
         }
+        [AllowAnonymous]//اجراءات فتح منشأ
+        [Route("/ImportingProcedure/OpenSource")]
+        public IActionResult OpenSource()
+        {
+            return View();
+        }
+
     }
+
 }
