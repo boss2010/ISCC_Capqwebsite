@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Capqwebsite/Models
+/EF/Models/Ex_ListQuick.cs
+/EF/Models/Ex_ListOld.cs
