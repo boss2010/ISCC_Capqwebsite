@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EF.Models;
 
-public partial class Ex_List
+public partial class Ex_ListOld
 {
     public long? Outlet_User_ID { get; set; }
 
@@ -35,7 +35,7 @@ public partial class Ex_List
 
     public string? ImporterName { get; set; }
 
-    public short? Expr1 { get; set; }
+    public short? f { get; set; }
 
     public long g { get; set; }
 
@@ -51,7 +51,7 @@ public partial class Ex_List
 
     public long? Station_Genshi_ID { get; set; }
 
-    public int Closed_Request { get; set; }
+    public int? Closed_Request { get; set; }
 
     public int Final_Result_ID { get; set; }
 

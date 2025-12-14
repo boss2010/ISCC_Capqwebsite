@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EF.Models;
 
-public partial class Ex_List
+public partial class Ex_ListQuick
 {
     public long? Outlet_User_ID { get; set; }
 

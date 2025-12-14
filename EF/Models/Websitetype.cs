@@ -14,4 +14,6 @@ public partial class Websitetype
     public bool? IsActive { get; set; }
 
     public bool? IsImage { get; set; }
+
+    public virtual ICollection<WebsiteTypeDetail> WebsiteTypeDetails { get; set; } = new List<WebsiteTypeDetail>();
 }

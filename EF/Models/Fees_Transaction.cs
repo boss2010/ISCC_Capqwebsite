@@ -69,5 +69,7 @@ public partial class Fees_Transaction
 
     public virtual ICollection<Fees_Transactions_Detile> Fees_Transactions_Detiles { get; set; } = new List<Fees_Transactions_Detile>();
 
+    public virtual ICollection<Fees_Transactions_Payment_Detile> Fees_Transactions_Payment_Detiles { get; set; } = new List<Fees_Transactions_Payment_Detile>();
+
     public virtual Fees_TableName? TableName { get; set; }
 }

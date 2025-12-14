@@ -75,6 +75,8 @@ public partial class Item
 
     public string? Item_Code { get; set; }
 
+    public bool? Agriculture_17 { get; set; }
+
     public virtual ICollection<Ex_CommitteeResult_Infection> Ex_CommitteeResult_Infections { get; set; } = new List<Ex_CommitteeResult_Infection>();
 
     public virtual Family? Family { get; set; }

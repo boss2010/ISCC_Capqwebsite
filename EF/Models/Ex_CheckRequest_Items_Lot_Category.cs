@@ -80,6 +80,10 @@ public partial class Ex_CheckRequest_Items_Lot_Category
 
     public decimal? GrossWeightOld { get; set; }
 
+    public long? FarmsData_ID { get; set; }
+
+    public string? FarmsCode { get; set; }
+
     public virtual Ex_CheckRequest_Item? Ex_CheckRequest_Items { get; set; }
 
     public virtual ICollection<Ex_CheckRequest_Items_Lot_Result> Ex_CheckRequest_Items_Lot_Results { get; set; } = new List<Ex_CheckRequest_Items_Lot_Result>();

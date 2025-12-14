@@ -68,6 +68,12 @@ public partial class Outlet
 
     public int? PortNational_ID { get; set; }
 
+    /// <summary>
+    /// from system code 21
+    /// صادر	/وارد	/صادر+ وارد
+    /// </summary>
+    public byte IsDisplay { get; set; }
+
     public virtual ICollection<Center> Centers { get; set; } = new List<Center>();
 
     public virtual ICollection<Ex_CheckRequest> Ex_CheckRequests { get; set; } = new List<Ex_CheckRequest>();

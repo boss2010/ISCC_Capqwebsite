@@ -28,5 +28,7 @@ public partial class Fees_Transactions_Payment_Detile
 
     public long? pos_information_id { get; set; }
 
+    public virtual Fees_Transaction? Fees_Transactions { get; set; }
+
     public virtual pos_information? pos_information { get; set; }
 }
