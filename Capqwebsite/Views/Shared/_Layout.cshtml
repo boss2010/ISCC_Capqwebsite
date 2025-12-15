@@ -108,9 +108,7 @@
 							<div class="nav-item dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
 								<div class="dropdown-menu rounded-0 m-0">
-									@* <a asp-area="" asp-controller="ImportingProcedure" asp-action="Index" title="" class="dropdown-item">
-                                    اشتراطات الاستيراد
-                                </a> *@
+									
 
 									<a href="@Url.Action("Index","ImportingProcedure")" class="dropdown-item">اشتراطات الاستيراد</a>
 									<a href="#" class="dropdown-item">إجراءات فتح المنشأ</a>
@@ -166,13 +164,41 @@
 							<a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
 								الصفحه الرئيسية
 							</a>
-							<a href="@Url.Action("Index", "DataEntry",new{ID=1})" class="nav-item nav-link">
-								قانون الزراعة
-							</a> <a href="@Url.Action("Index", "DataEntry",new{ID=2})" class="nav-item nav-link">
-								قرارات وزارية
-							</a> <a href="@Url.Action("Index", "DataEntry",new{ID=3})" class="nav-item nav-link">
-								قوائم الافات
-							</a> <a href="@Url.Action("Index", "DataEntry",new{ID=9})" class="nav-item nav-link">
+
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 1 })" class="dropdown-item">
+										قانون الزراعة
+									</a>
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 2 })" class="dropdown-item">
+										قرارات وزارية
+									</a>
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 3 })" class="dropdown-item">
+										قوائم الآفات
+									</a>
+								</div>
+							</div>
+
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
+								<div class="dropdown-menu rounded-0 m-0">
+
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">
+										إجراءات فتح المنشأ
+
+									</a>
+									<a asp-area="" asp-controller="ImportServices" asp-action="Index" title="" class="dropdown-item">
+										شرح الخدمات الالكترونية
+									</a>
+									<a href="#" class="dropdown-item">الرسوم</a>
+								</div>
+							</div>
+							
+							<a href="@Url.Action("Index", "DataEntry",new{ID=9})" class="nav-item nav-link">
 								السليدر
 							</a>
 							<a href="@Url.Action("Index", "DataEntry",new{ID=7})" class="nav-item nav-link">
