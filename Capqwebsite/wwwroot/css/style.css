@@ -9744,10 +9744,9 @@ padding-top:10%;
 }
 
 .bb {
-    width: 190%;
+    width: 100%;
     height: 60px;
    border-radius:10%;
-   margin-right:2%;
     color: #69ca62;
     box-shadow: inset 0 0 0 1px rgba(105, 202, 98, 0.5);
 }

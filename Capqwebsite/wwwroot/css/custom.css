@@ -1,4 +1,4 @@
-img.logo {
+﻿img.logo {
     width: 75px;
 }
 
@@ -577,5 +577,128 @@ Specificity:(0,5,1) {
 
     .ag-courses-item_date-box {
         font-size: 16px;
+    }
+}
+.card2 {
+    position: relative;
+    color: #000;
+    background: transparent;
+    overflow: hidden;
+    border-top: 1px solid #039b85b5;
+    border-right: 1px solid #039b85b5;
+    border-bottom: 1px solid #039b85b5;
+    border-left: 1px solid #039b85b5;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: .25em;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.top, .right, .bottom, .left {
+    position: absolute;
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.top {
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 50%, #01816e, #039b85b5);
+    animation: animateTop 3s ease-in-out infinite;
+}
+
+.bottom {
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #01816e, #039b85b5, transparent 50%);
+    animation: animateBottom 3s ease-in-out infinite;
+}
+
+.right {
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(180deg, transparent 30%, #01816e, #039b85b5);
+    animation: animateRight 3s ease-in-out infinite;
+}
+
+.left {
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(180deg, #01816e,#039b85b5, transparent 70%);
+    animation: animateLeft 3s ease-in-out infinite;
+}
+
+/* Keyframes */
+
+@keyframes animateTop {
+    0%, 100% {
+        width: 0;
+        opacity: 0;
+    }
+
+    25% {
+        width: 100%;
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes animateBottom {
+    0%, 50% {
+        width: 0;
+        opacity: 0;
+    }
+
+    75% {
+        width: 100%;
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes animateRight {
+    0%, 50% {
+        height: 0;
+        opacity: 0;
+    }
+
+    75% {
+        height: 100%;
+        opacity: 1;
+    }
+
+    100% {
+        height: 100%;
+        opacity: 0;
+    }
+}
+
+@keyframes animateLeft {
+    0%, 75% {
+        height: 0;
+        opacity: 0;
+    }
+
+    100% {
+        height: 100%;
+        opacity: 1;
     }
 }

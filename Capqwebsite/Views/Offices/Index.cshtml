@@ -26,28 +26,39 @@
                 @foreach (var item in Model)
                 {
                     var embedLink = ConvertToEmbedUrlWithoutApi(item.linkURL);
-                    <div class="col-lg-6" style="width:100%">
+                    <div class="col-md-6">
                         <div class="margins">
+                        <div class="div">
+                            <article class="card2">
+                                <span>@item.TitleAr</span>
+                                <span class="top"></span>
+                                <span class="right"></span>
+                                <span class="bottom"></span>
+                                <span class="left"></span>
+                            </article>          
+                        </div>
+                        <br />
+                        <div class="div">
                             <div class="col-lg-6 " style="float:right;">
-                                <div class="bord">
-                                    <span class="title bb">@item.TitleAr</span>
-                                    <span class="des">@item.descAr </span>
-                                    <span class="tel">@item.descEn </span>
+                                <div>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>العنوان</span>
+                                    <p></p>
+                              </div>
+                              <div>
+                                    <i class="fas fa-phone-volume"></i>                                    <span>الهاتف</span>
+                                    <p></p>
+                              </div>
+                              <div>
+                                    <i class="fas fa-envelope"></i>
+                                    <span>البريد</span>
+                                    <p></p>
+                              </div>
 
-                                </div>
+                                   @*  <span class="des"> </span>
+                                    <span class="tel">@item.descEn </span> *@
+
                             </div>
-                           
-                           @*  <div class="col-md-6" style="float:left">
-                                @if (!string.IsNullOrEmpty(embedLink))
-                                {
-                                    <iframe src="@embedLink" width="50%" height="200" style="border:0;"
-                                             loading="lazy"></iframe>
-                                }
-                                else
-                                {
-                                    <p>الرابط غير صالح للعرض</p>
-                                }
-                            </div> *@
                             <div class="col-lg-6 col-md-6 d-flex align-items-center">
                                 @if (!string.IsNullOrEmpty(embedLink))
                                 {
@@ -63,6 +74,19 @@
                                     <p>الرابط غير صالح للعرض</p>
                                 }
                             </div>
+
+                            @*  <div class="col-md-6" style="float:left">
+                                @if (!string.IsNullOrEmpty(embedLink))
+                                {
+                                    <iframe src="@embedLink" width="50%" height="200" style="border:0;"
+                                             loading="lazy"></iframe>
+                                }
+                                else
+                                {
+                                    <p>الرابط غير صالح للعرض</p>
+                                }
+                            </div> *@
+                        </div>
                         </div>
                     </div>
 
