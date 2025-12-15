@@ -17,6 +17,7 @@
 	<!-- Customized Bootstrap Stylesheet -->
 	@*     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/bootstrap-select.css" rel="stylesheet" /> *@
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.css">
 	<link href="~/css/style.css" rel="stylesheet">
 	<link href="~/css/custom.css" rel="stylesheet" />
 
@@ -108,7 +109,9 @@
 							<div class="nav-item dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
 								<div class="dropdown-menu rounded-0 m-0">
-									
+									@* <a asp-area="" asp-controller="ImportingProcedure" asp-action="Index" title="" class="dropdown-item">
+                                    اشتراطات الاستيراد
+                                </a> *@
 
 									<a href="@Url.Action("Index","ImportingProcedure")" class="dropdown-item">اشتراطات الاستيراد</a>
 									<a href="#" class="dropdown-item">إجراءات فتح المنشأ</a>
@@ -164,64 +167,13 @@
 							<a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
 								الصفحه الرئيسية
 							</a>
-
-							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
-								<div class="dropdown-menu rounded-0 m-0">
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 1 })" class="dropdown-item">
-										قانون الزراعة
-									</a>
-
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 2 })" class="dropdown-item">
-										قرارات وزارية
-									</a>
-
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 3 })" class="dropdown-item">
-										قوائم الآفات
-									</a>
-								</div>
-							</div>
-
-							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
-								<div class="dropdown-menu rounded-0 m-0">
-
-
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">
-										إجراءات فتح المنشأ
-
-									</a>
-									
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">
-										شرح الخدمات الالكترونية
-
-									</a>
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 14 })" class="dropdown-item">
-										الرسوم
-									</a>
-								</div>
-							</div>
-							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
-								<div class="dropdown-menu rounded-0 m-0">
-
-
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 5 })" class="dropdown-item">
-										المحطات المعتمدة
-
-									</a>
-
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 15 })" class="dropdown-item">
-										شرح الخدمات الالكترونية
-
-									</a>
-									<a href="@Url.Action("Index", "DataEntry", new { ID = 6 })" class="dropdown-item">
-										الرسوم
-									</a>
-								</div>
-							</div>
-							
-							<a href="@Url.Action("Index", "DataEntry",new{ID=9})" class="nav-item nav-link">
+							<a href="@Url.Action("Index", "DataEntry",new{ID=1})" class="nav-item nav-link">
+								قانون الزراعة
+							</a> <a href="@Url.Action("Index", "DataEntry",new{ID=2})" class="nav-item nav-link">
+								قرارات وزارية
+							</a> <a href="@Url.Action("Index", "DataEntry",new{ID=3})" class="nav-item nav-link">
+								قوائم الافات
+							</a> <a href="@Url.Action("Index", "DataEntry",new{ID=9})" class="nav-item nav-link">
 								السليدر
 							</a>
 							<a href="@Url.Action("Index", "DataEntry",new{ID=7})" class="nav-item nav-link">
@@ -239,7 +191,6 @@
 							<a href="@Url.Action("Index", "DataEntry",new{ID=12})" class="nav-item nav-link">
 								مكاتبنا
 							</a>
-							
 						</div>
 					}
 					@* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@
