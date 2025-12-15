@@ -98,7 +98,37 @@ namespace Capqwebsite.Controllers
 
 
                 }
-                
+                //////////////////pdf//////////////////
+                //if (pdfFile != null && pdfFile.Length > 0)
+                //{
+                //    // Get original filename
+                //    string originalFileName = Path.GetFileNameWithoutExtension(pdfFile.FileName);
+                //    string fileExtension = Path.GetExtension(pdfFile.FileName); // .pdf
+
+                //    // Keep the same name exactly (زي ما انت عامل في الصور)
+                //    string uniqueFileName = $"{originalFileName}{fileExtension}";
+
+                //    // Folder wwwroot/pdf
+                //    var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "pdf");
+
+                //    if (!Directory.Exists(directoryPath))
+                //    {
+                //        Directory.CreateDirectory(directoryPath);
+                //    }
+
+                //    // Full path
+                //    string filePath = Path.Combine(directoryPath, uniqueFileName);
+
+                //    // Save file
+                //    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                //    {
+                //        await pdfFile.CopyToAsync(fileStream);
+                //    }
+
+                //    // Save relative path to DB (نفس النهج)
+                //    form.filepathpdf = $"/pdf/{uniqueFileName}";
+                //}
+                /////////////////////////////////////
                 form.User_Creation_Date = DateTime.Now;
                 DBContext.WebsiteTypeDetails.Add(form);
 
