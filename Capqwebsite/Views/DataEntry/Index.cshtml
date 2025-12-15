@@ -72,7 +72,6 @@
                 <input name="WebsitetypeID" id="WebsitetypeID" type="hidden" value=@(ViewBag.ID ?? "Not specified") />
                 @if (ViewBag.ID != 9 && ViewBag.ID != 4 && ViewBag.ID != 5 && ViewBag.ID != 6 && ViewBag.ID != 13 && ViewBag.ID != 14)
                 {
-                    /////////////////////////////////upload  pdf 11-12-2025//////////////////////////////////////
 
                     ////////////////////////////////////////////////////////////////////////
                     <div class="row">
@@ -110,6 +109,7 @@
                 }
                 @if (ViewBag.ID != 4 && ViewBag.ID != 5 && ViewBag.ID != 6 && ViewBag.ID != 13 && ViewBag.ID != 14)
                 {
+
                     <div class="row">
                     <label> اختر صورة</label>
                     <input name="imageFile" type="file" class="form-control">
@@ -129,6 +129,12 @@
                 @* /////////////////////////pdf/////////////////////////////////// *@
                 @if (ViewBag.ID == 4 || ViewBag.ID == 5 || ViewBag.ID == 6 || ViewBag.ID == 13 || ViewBag.ID == 14)
                 {
+                    <div class="row">
+                        <label>الاسم</label>
+                        <input name="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم" aria-invalid="false">
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <br />
                     <div class="row">
                         <label> اختر ملف</label>
                         <input name="imageFile" type="file" class="form-control">
