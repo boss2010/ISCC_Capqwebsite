@@ -343,9 +343,9 @@ namespace Capqwebsite.Controllers
                 // Store the relative path (e.g., "~/img/myphoto_123456789.jpg")
                 form.filepath = $"/img/{uniqueFileName}";
 
-
             }
-            DBContext.WebsiteTypeDetails.Update(form);
+                form.User_Updation_Date= DateTime.Now; 
+                DBContext.WebsiteTypeDetails.Update(form);
             DBContext.SaveChanges();
             var returnedId = form.WebsitetypeID;
             return RedirectToAction("Index", new { ID = returnedId });
