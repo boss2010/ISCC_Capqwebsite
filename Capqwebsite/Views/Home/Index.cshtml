@@ -3,17 +3,20 @@
 	ViewData["Title"] = "Home Page";
 }
 
-<!-- Under Nav Start -->
-<!-- Under Nav End -->
-<!-- Add these to your _Layout.cshtml or before the carousel -->
-@* <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script> *@
 <!-- Carousel Start -->
  @* ////////////////////rr///////////////  *@
 <!-- Carousel Start -->
 <div class="container-fluid p-0 ">
 	<div id="header-carousel" class="carousel slide row" data-ride="carousel">
-		<div class="carousel-inner col-md-8">
+		<div class="col-md-1">
+			<a class="carousel-control-next " href="#header-carousel" data-slide="next">
+				<div class="btn btn-primary" style="width: 45px; height: 45px;">
+					<span class="carousel-control-next-icon mb-n2"></span>
+				</div>
+			</a>
+		</div>
+		
+		<div class="carousel-inner col-md-10">
 			@{
 				bool isFirst = true; // Track the first item for 'active' class
 			}
@@ -27,21 +30,17 @@
 				isFirst = false;
 			}
 			@* //////////////////////// *@
-			
 
 
 
 		</div>
-		<a class="carousel-control-prev col-md-2" href="#header-carousel" data-slide="prev">
-			<div class="btn btn-primary" style="width: 45px; height: 45px;">
-				<span class="carousel-control-prev-icon mb-n2"></span>
-			</div>
-		</a>
-		<a class="carousel-control-next col-md-2" href="#header-carousel" data-slide="next">
-			<div class="btn btn-primary" style="width: 45px; height: 45px;">
-				<span class="carousel-control-next-icon mb-n2"></span>
-			</div>
-		</a>
+		<div class="col-md-1">
+			<a class="carousel-control-prev " href="#header-carousel" data-slide="prev">
+				<div class="btn btn-primary" style="width: 45px; height: 45px;">
+					<span class="carousel-control-prev-icon mb-n2"></span>
+				</div>
+			</a>
+		</div>
 	</div>
 </div>
 <!-- Carousel End -->
@@ -178,11 +177,12 @@
 <!-- Team Start -->
 <div class="container-fluid bg-light">
 	<div class="container" dir="ltr">
-		<div class="row">
+		<div class="row  h-ads">
 			@*////////////////الاعلانات//////////////////////////////*@
-			<div class="col-md-4 col-sm-6">
-				<div class="py-5 px-4 h-100 bg-primary d-flex flex-column align-items-center justify-content-center">
+			<div class="col-md-3 col-sm-6">
+				<div class="py-5 px-4  h-ads bg-green d-flex flex-column align-items-center justify-content-center">
 					<h1 class="mb-0 text-center">الاعلانات</h1>
+
 					@* ////////////////rrrrrr11-5-2025/////////////// *@
 					<a href="@Url.Action("Index", "News", new { ID = 8 })" class="btn btn-secondary box-shadow mt-3 py-2 px-4">
 						مشاهدة المزيد
@@ -192,26 +192,80 @@
                     </a> *@
 				</div>
 			</div>
-			<div class="col-md-8 col-sm-6 p-0 py-sm-5">
-				<div class="owl-carousel team-carousel position-relative p-0 py-sm-5">
-					@* ///////////////////////////الاعلانات/////////////////////////////// *@
-					@foreach (var item in Model.Advertis)
+			<div class="col-md-9 col-sm-6 p-0 mar-auto">
+@* 				menna
+ *@
+					<div class="ads-swiper-wrapper">
+
+						<div class="swiper adsSwiper">
+							<div class="swiper-wrapper">
+
+
+							@foreach (var item in Model.Advertis)
+							{
+								<div class="swiper-slide">
+									<div class="card">
+
+										<div class="image-content">
+											<span class="overlay"></span>
+											<div class="card-image">
+												<img src="@item.filepath" class="card-img">
+											</div>
+										</div>
+
+										<div class="card-content">
+											<h2 class="name">
+												@(item.Date.HasValue? item.Date.Value.ToString("dd/MM/yyyy") : "nodate")
+												@item.descAr
+											</h2>
+
+											<a href="@Url.Action("RowDetail","News",
+					  			          new { ID = item.ID, Type = "الإعلانات" })"
+										   class="description">
+											<i class="fa fa-link"></i>
+										</a>
+
+										</div>
+
+									</div>
+								</div>
+														}
+
+						</div>
+
+						<div class="swiper-button-next"></div>
+						<div class="swiper-button-prev"></div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+@* 				<div class="owl-carousel team-carousel position-relative p-0 py-sm-5"> 
+					foreach (var item in Model.Advertis)
 					{
 						<div class="team d-flex flex-column text-center mx-3">
 							<div class="position-relative">
-								<img class="img-fluid w-100 img-height" src="@item.filepath" alt="rrrrrrr">
+								<img class="img-fluid w-100 img-height" src="item.filepath" alt="rrrrrrr">
 
 							</div>
 							<div class="d-flex flex-column bg-secondary text-center align-center py-3">
 
-								<h5 class="text-white">@(item.Date.HasValue ? item.Date.Value.ToString("dd/MM/yyyy") : "nodate") @item.descAr </h5>
+								<h5 class="text-white">(item.Date.HasValue ? item.Date.Value.ToString("dd/MM/yyyy") : "nodate") @item.descAr </h5>
 								
 								<a href="@Url.Action("RowDetail", "News", new { ID = item.ID,Type="الإعلانات" })" class="btn btn-primary">
 									<i class="fa fa-link"></i>
 								</a>
 							</div>
 						</div>
-					}
+				}*@
 
 
 
@@ -256,6 +310,34 @@
 		</div>
 	</div>
 </div>
+<script src="https://cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.js"></script>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+
+	  const adsSwiper = new Swiper(".adsSwiper", {
+		slidesPerView: 3,
+		spaceBetween: 25,
+		loop: true,
+		grabCursor: true,
+		observer: true,
+		observeParents: true,
+		dir: "rtl",
+
+		navigation: {
+		  nextEl: ".swiper-button-next",
+		  prevEl: ".swiper-button-prev",
+		},
+
+		breakpoints: {
+		  0: { slidesPerView: 1 },
+		  768: { slidesPerView: 2 },
+		  992: { slidesPerView: 3 },
+		},
+	  });
+
+	});
+</script>
 <!-- Testimonial End -->
 <!-- Required JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
