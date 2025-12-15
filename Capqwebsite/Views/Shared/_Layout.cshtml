@@ -191,10 +191,33 @@
 										إجراءات فتح المنشأ
 
 									</a>
-									<a asp-area="" asp-controller="ImportServices" asp-action="Index" title="" class="dropdown-item">
+									
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">
 										شرح الخدمات الالكترونية
+
 									</a>
-									<a href="#" class="dropdown-item">الرسوم</a>
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 14 })" class="dropdown-item">
+										الرسوم
+									</a>
+								</div>
+							</div>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
+								<div class="dropdown-menu rounded-0 m-0">
+
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">
+										إجراءات فتح المنشأ
+
+									</a>
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">
+										شرح الخدمات الالكترونية
+
+									</a>
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 14 })" class="dropdown-item">
+										الرسوم
+									</a>
 								</div>
 							</div>
 							
