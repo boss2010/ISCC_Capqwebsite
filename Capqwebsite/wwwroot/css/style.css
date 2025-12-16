@@ -230,8 +230,9 @@ th {
 }
 
 label {
-  display: inline-block;
-  margin-bottom: 0.5rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
 }
 
 button {
@@ -1568,7 +1569,8 @@ pre code {
 }
 
 .table-bordered {
-  border: 1px solid #dee2e6;
+    border: 1px solid #dee2e6;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .table-bordered th,

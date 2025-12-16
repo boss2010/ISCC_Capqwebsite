@@ -700,3 +700,28 @@ Specificity:(0,5,1) {
         opacity: 1;
     }
 }
+.select2-container .select2-selection--single .select2-selection__rendered {
+    display: block;
+    padding-left: 0px;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 5px;
+}
+.select2-container .select2-selection--single
+ {
+    height: 40px; 
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  right:unset;
+    top: 8px;
+    left: 1px;
+
+}
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    margin-top: 5px;
+}
+.table-bordered td {
+    background-color: #fff;
+}
