@@ -20,7 +20,7 @@
 <!-- Edit Form Start -->
 <div class="container-fluid bg-light">
     <div class="container">
-        @if (ViewBag.ID == 12 && @ViewBag.IdType!= 9)
+        @if (ViewBag.ID == 12 && @ViewBag.IdType != 9 && ViewBag.ID != 15 && ViewBag.ID != 16)
         {
             <form asp-controller="DataEntry" asp-action="Update" method="post" enctype="multipart/form-data">
 
