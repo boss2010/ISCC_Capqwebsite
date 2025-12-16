@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace EF.Models;
 
@@ -205,6 +205,8 @@ public partial class AgricultureDBContext : DbContext
     public virtual DbSet<Ex_Visa> Ex_Visas { get; set; }
 
     public virtual DbSet<Family> Families { get; set; }
+
+    public virtual DbSet<FarmStop> FarmStops { get; set; }
 
     public virtual DbSet<Farm_CheckList> Farm_CheckLists { get; set; }
 
@@ -2623,6 +2625,13 @@ public partial class AgricultureDBContext : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.Families)
                 .HasForeignKey(d => d.Order_ID)
                 .HasConstraintName("FK_Family_Order");
+        });
+
+        modelBuilder.Entity<FarmStop>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Farm");
+
+            entity.ToTable("FarmStop");
         });
 
         modelBuilder.Entity<Farm_CheckList>(entity =>
@@ -7419,11 +7428,11 @@ public partial class AgricultureDBContext : DbContext
                 .HasConstraintName("FK_pos_information_Outlet");
         });
         modelBuilder.HasSequence("A__plant_Error_Save_SEQ")
-            .StartsAt(11433L)
+            .StartsAt(11464L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("A__User_Login_SEQ")
-            .StartsAt(324525L)
+            .StartsAt(324537L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("A_AttachmentData_Ex_CheckRequest_SEQ")
@@ -7438,7 +7447,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("A_AttachmentData_SEQ")
-            .StartsAt(603048L)
+            .StartsAt(603186L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("A_AttachmentData_Station_SEQ")
@@ -7474,7 +7483,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Andriod_Location_SEQ")
-            .StartsAt(440979L)
+            .StartsAt(440981L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<byte>("Andriod_Operation_SEQ")
@@ -7577,7 +7586,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_CheckRequest_Final_Result_SEQ")
-            .StartsAt(24555L)
+            .StartsAt(24556L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_CheckRequest_Items_Lot_Category_SEQ")
@@ -7585,7 +7594,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_CheckRequest_Items_Lot_Result_SEQ")
-            .StartsAt(76980L)
+            .StartsAt(76982L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_CheckRequest_Items_SEQ")
@@ -7630,7 +7639,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_CheckRequest_Visa_SEQ")
-            .StartsAt(21270L)
+            .StartsAt(21271L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_CheckRequestData_Extra_SEQ")
@@ -7659,7 +7668,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_CommitteeResult_SEQ")
-            .StartsAt(91237L)
+            .StartsAt(91239L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<byte>("EX_Constrain_Country_Item_SEQ")
@@ -7722,7 +7731,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_RequestCommittee_SEQ")
-            .StartsAt(37404L)
+            .StartsAt(37405L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Ex_RequestCommittee_Shift_SEQ")
@@ -7855,7 +7864,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Fees_Transactions_Detiles_SEQ")
-            .StartsAt(271264L)
+            .StartsAt(271311L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Fees_Transactions_Payment_Detiles_SEQ")
@@ -7863,7 +7872,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Fees_Transactions_SEQ")
-            .StartsAt(233244L)
+            .StartsAt(233291L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<byte>("Fees_Type_Action_SEQ")
@@ -7903,11 +7912,11 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<int>("Im_CheckRequest_Customs_Message_SEQ")
-            .StartsAt(296106L)
+            .StartsAt(296150L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_Data_SEQ")
-            .StartsAt(300142L)
+            .StartsAt(300189L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_Distribution_SEQ")
@@ -7918,7 +7927,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_Items_Lot_Category_SEQ")
-            .StartsAt(570832L)
+            .StartsAt(570901L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_Items_Lot_Result_SEQ")
@@ -7926,7 +7935,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_Items_SEQ")
-            .StartsAt(525401L)
+            .StartsAt(525468L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<int>("Im_CheckRequest_Lot_Result_Status_SEQ")
@@ -7937,7 +7946,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<int>("Im_CheckRequest_Port_SEQ")
-            .StartsAt(620454L)
+            .StartsAt(620543L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_RefuseReason_SEQ")
@@ -7953,7 +7962,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_SEQ")
-            .StartsAt(300216L)
+            .StartsAt(300263L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequest_Visa_SEQ")
@@ -7961,11 +7970,11 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequestData_Extra_SEQ")
-            .StartsAt(298541L)
+            .StartsAt(298585L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_CheckRequset_Shipping_Method_SEQ")
-            .StartsAt(485720L)
+            .StartsAt(485785L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<int>("Im_Committee_CustodyPlace_SEQ")
@@ -8048,11 +8057,11 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_PermissionItems_Category_SEQ")
-            .StartsAt(4419L)
+            .StartsAt(4422L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_PermissionItems_SEQ")
-            .StartsAt(409469L)
+            .StartsAt(409574L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_PermissionRequest_RefuseReason_SEQ")
@@ -8060,7 +8069,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_PermissionRequest_SEQ")
-            .StartsAt(422617L)
+            .StartsAt(422723L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<byte>("Im_ProcedureType_SEQ")
@@ -8068,7 +8077,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<int>("Im_Request_Port_SEQ")
-            .StartsAt(818540L)
+            .StartsAt(818750L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_Request_TreatmentData_Confirm_SEQ")
@@ -8090,11 +8099,11 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_RequestDat_Extra_SEQ")
-            .StartsAt(409580L)
+            .StartsAt(409685L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_RequestData_SEQ")
-            .StartsAt(409471L)
+            .StartsAt(409576L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Im_ScientificResearch_ItemPlant_Inseket_Lieble_SEQ")
@@ -8157,7 +8166,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("ItemCategories_SEQ")
-            .StartsAt(9161L)
+            .StartsAt(9171L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<short>("ItemCategories_Type_SEQ")
@@ -8293,7 +8302,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Station_Accreditation_Committee_CheckList_SEQ")
-            .StartsAt(22716L)
+            .StartsAt(22734L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Station_Accreditation_Committee_Final_Result_SEQ")
@@ -8305,7 +8314,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Station_Accreditation_Committee_SEQ")
-            .StartsAt(1242L)
+            .StartsAt(1243L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Station_Accreditation_Committee_Shift_SEQ")
@@ -8395,7 +8404,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Table_Action_Log_CheckRequest_SEQ")
-            .StartsAt(1767887L)
+            .StartsAt(1767958L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Table_Action_Log_EX_SEQ")
@@ -8406,7 +8415,7 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Table_Action_Log_SEQ")
-            .StartsAt(658380L)
+            .StartsAt(658513L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence("Table_Action_Log_Station_SEQ")
@@ -8453,11 +8462,11 @@ public partial class AgricultureDBContext : DbContext
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<int>("Websitetype_SEQ")
-            .StartsAt(12L)
+            .StartsAt(17L)
             .HasMin(1L)
             .IsCyclic();
         modelBuilder.HasSequence<int>("WebsiteTypeDetail_SEQ")
-            .StartsAt(125L)
+            .StartsAt(181L)
             .HasMin(1L)
             .IsCyclic();
 
