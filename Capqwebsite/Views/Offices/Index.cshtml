@@ -103,6 +103,7 @@
         </div>
 
         @functions {
+
             public string ConvertToEmbedUrlWithoutApi(string shortUrl)
             {
                 try
@@ -140,4 +141,29 @@
 
 
 </div>
+
 <!-- Contact End -->
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<script>
+    async function loadMap() {
+        const shortUrl = document.getElementById("mapLink").value;
+
+        try {
+            const response = await fetch(shortUrl, { redirect: "follow" });
+            const finalUrl = response.url;
+
+            @*// // const match = finalUrl.match(/@([-0 - 9.] +),([-0-9.]+)/);*@
+
+    @*if (match) {
+        const lat = match[1];
+        const lng = match[2];
+
+        iframe.src = `https://www.google.com/maps?q=${lat},${lng}&output=embed`;
+    }*@
+        } catch (e) {
+            console.error("Map load failed", e);
+        }
+    }
+
+    loadMap();
+</script>
