@@ -742,3 +742,6 @@ Specificity:(0,5,1) {
 .table-bordered td {
     background-color: #fff;
 }
+.mar-top{
+    margin-top:2rem;
+}
