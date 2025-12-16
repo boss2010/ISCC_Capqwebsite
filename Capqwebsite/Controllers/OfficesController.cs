@@ -15,8 +15,8 @@ namespace Capqwebsite.Controllers
             //return View(list);
 
             AgricultureDBContext DBContext = new AgricultureDBContext();
-            var list = DBContext.WebsiteTypeDetails.Where(a => a.WebsitetypeID == 12 && (a.IsActive == true || a.IsActive == null)).ToList();
-            string TypeAr = DBContext.Websitetypes.Where(a => a.ID == 12 && (a.IsActive == true || a.IsActive == null)).ToList().FirstOrDefault()?.TypeAr;
+            var list = DBContext.WebsiteTypeDetails.Where(a => a.WebsitetypeID == 12 && (a.IsActive == true )).ToList();
+            string TypeAr = DBContext.Websitetypes.Where(a => a.ID == 12 && (a.IsActive == true )).ToList().FirstOrDefault()?.TypeAr;
 
             ViewBag.TypeAr = TypeAr;
             return View(list);

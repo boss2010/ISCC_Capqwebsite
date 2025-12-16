@@ -191,10 +191,10 @@ Specificity:(0,5,1) {
 }
 
 
-.img-height
-{
-    height:200px;
+.img-height {
+    height: 200px;
 }
+
 .card-body.card-height {
     height: 140px;
 }
@@ -206,38 +206,45 @@ Specificity:(0,5,1) {
 }
 /******24/11******/
 @media screen and (max-width: 420px) {
-    .navbar-brand{
-        margin-right:0px !important;
-
+    .navbar-brand {
+        margin-right: 0px !important;
     }
+
     body {
         overflow-x: hidden;
     }
+
     .navbar {
         padding: 0;
     }
+
     .table-bordered thead th, .table-bordered thead td {
         font-size: 13px;
     }
+
     #div1, #div2 {
         overflow-x: scroll;
         width: 420px;
-    
     }
+
     #div3 {
         text-align: center;
         margin-bottom: 20px;
     }
-    .mar-b-20{
-        margin-bottom:20px;
+
+    .mar-b-20 {
+        margin-bottom: 20px;
     }
+
     .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link.active {
         background: rgb(0, 198, 169);
         margin-top: 10px;
     }
+
     .navbar-nav .dropdown-menu {
         width: 100%;
     }
+
     span.select2.select2-container.select2-container--default {
         width: 280px !important;
     }
@@ -248,32 +255,35 @@ Specificity:(0,5,1) {
     span.select2.select2-container.select2-container--default {
         width: 280px !important;
     }
+
     .btn {
         padding: 0.375rem 0.60rem;
         font-size: 15px;
     }
+
     .navbar-toggler {
         padding: 0.25rem 0.05rem;
         font-size: 1rem;
     }
+
     .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link.active {
-   
         background: rgb(0, 198, 169);
         margin-top: 10px;
     }
+
     .navbar-nav .dropdown-menu {
         width: 100%;
     }
-    }
+}
+
 @media screen and (max-width: 360px) {
-   
+
 
     .navbar-toggler {
         padding: 0;
     }
-
-   
 }
+
 @media screen and (max-width: 375px) {
 
 
@@ -281,6 +291,7 @@ Specificity:(0,5,1) {
         padding: 0;
     }
 }
+
 @media screen and (max-width: 390px) {
 
 
@@ -296,6 +307,7 @@ Specificity:(0,5,1) {
         padding: 0;
     }
 }
+
 @media screen and (max-width: 344px) {
 
 
@@ -334,6 +346,7 @@ Specificity:(0,5,1) {
     height: unset;
     border: none;
 }
+
 .image-content,
 .card-content {
     display: flex;
@@ -457,17 +470,21 @@ Specificity:(0,5,1) {
         display: none;
     }
 }
+
 .swiper-button-next, .swiper-button-prev {
     color: #fff;
 }
-.mar-auto{
-    margin:auto;
+
+.mar-auto {
+    margin: auto;
 }
+
 .bg-green {
     background-color: #ffffff !important;
     border: 10px solid #039b85;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
 .card-body {
     height: 235px;
 }
