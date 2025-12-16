@@ -5,7 +5,7 @@
 		<div class="row align-items-center py-4">
 			<div class="col-md-6 text-center text-md-right">
 				<i class="fas fa-phone icon-style"></i>
-				<h3 class="mb-4 mb-md-0 text-primary text-uppercase output">@ViewBag.TypeAr </h3>
+				<h3 class="output">@ViewBag.TypeAr </h3>
 			</div>
 			<div class="col-md-6 text-center text-md-left">
 				<div class="d-inline-flex align-items-center">
@@ -19,7 +19,7 @@
 </div>
 <!-- Page Header Start -->
 <!-- Contact Start -->
-<div class="container-fluid bg-light">
+<div class="container-fluid bg-light" hidden>
 	<div class="container">
 		<div class="row">
 			<div class="mb-5">
@@ -50,3 +50,67 @@
 	</div>
 </div>
 <!-- Contact End -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="container-fluid bg-light">
+	<div class="container">
+		<div class="row">
+			@if (Model != null && Model.Count > 0)
+			{
+				foreach (var item in Model)
+				{
+					<div class="ag-format-container col-md-4">
+						<div class="ag-courses_box">
+							<div class="ag-courses_item">
+								<a href="#" class="ag-courses-item_link openPdf" data-pdf="@item.linkURL">
+									<div class="ag-courses-item_bg"></div>
+									<div class="ag-courses-item_title">
+										<img src="~/img/pdf3.png" />
+										<span>@item.TitleAr</span>
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+				}
+			}		
+			<!-- Pop-up -->
+			<div id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999;">
+				<span id="closeModal" style="position:absolute; top:20px; right:30px; cursor:pointer; color:white; font-size:28px;">✖</span>
+				<iframe id="pdfFrame" style="width:80%; height:80%; margin:50px auto; display:block; border:none;"></iframe>
+			</div>
+			<script>
+				const modal = document.getElementById("pdfModal");
+				const frame = document.getElementById("pdfFrame");
+				const closeBtn = document.getElementById("closeModal");
+
+				document.querySelectorAll(".openPdf").forEach(link => {
+					link.addEventListener("click", function (e) {
+						e.preventDefault();
+						const pdfUrl = this.getAttribute("data-pdf");
+						frame.src = pdfUrl;
+						modal.style.display = "block";
+					});
+				});
+
+				closeBtn.onclick = function () {
+					modal.style.display = "none";
+					frame.src = "";
+				};
+			</script>
+		</div>
+	</div>
+</div>				

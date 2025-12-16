@@ -1,106 +1,148 @@
-﻿@model List<EF.Models.WebsiteTypeDetail>
-
-<!-- Page Header -->
+﻿@using System.Text.RegularExpressions
+@model List<EF.Models.WebsiteTypeDetail>
+<!-- Page Header Start -->
 <div class="container-fluid py-1">
     <div class="container py-2">
         <div class="row align-items-center py-4">
             <div class="col-md-6 text-center text-md-right">
-                <i class="fas fa-phone icon-style"></i>
-                <h3 class="mb-4 mb-md-0 text-red text-uppercase output">مكاتبنا</h3>
+                <i class=" fas fa-phone icon-style"></i>
+                <h3 class="mb-4 mb-md-0 text-red text-uppercase output ">مكاتبنا</h3>
             </div>
             <div class="col-md-6 text-center text-md-left">
-                <a class="btn btn-secondary" href="Offices/Index">مكاتبنا</a>
+                <div class="d-inline-flex align-items-center">
+                    <a class="btn btn-secondary" href="Offices/Index">مكاتبنا</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Contact -->
+<!-- Page Header Start -->
+<!-- Contact Start -->
 <div class="container-fluid">
     <div class="container">
         <div class="row">
 
             @if (Model != null && Model.Count > 0)
             {
-                foreach (var item in Model)
+                @foreach (var item in Model)
                 {
+                    var embedLink = ConvertToEmbedUrlWithoutApi(item.linkURL);
                     <div class="col-md-6">
                         <div class="margins">
-
-                            <!-- Title -->
+                        <div class="div">
                             <article class="card2">
                                 <span>@item.TitleAr</span>
                                 <span class="top"></span>
                                 <span class="right"></span>
                                 <span class="bottom"></span>
                                 <span class="left"></span>
-                            </article>
+                            </article>          
+                        </div>
+                        <br />
+                        <div class="div">
+                            <div class="col-lg-6 " style="float:right;">
+                                <div>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>العنوان</span>
+                                    <p></p>
+                              </div>
+                              <div>
+                                    <i class="fas fa-phone-volume"></i>                                    <span>الهاتف</span>
+                                    <p></p>
+                              </div>
+                              <div>
+                                    <i class="fas fa-envelope"></i>
+                                    <span>البريد</span>
+                                    <p></p>
+                              </div>
 
-                            <br />
+                                   @*  <span class="des"> </span>
+                                    <span class="tel">@item.descEn </span> *@
 
-                            <div class="row">
-                                <!-- Info -->
-                                <div class="col-lg-6">
-                                    <div><i class="fas fa-map-marker-alt"></i> <span>العنوان</span></div>
-                                    <div><i class="fas fa-phone-volume"></i> <span>الهاتف</span></div>
-                                    <div><i class="fas fa-envelope"></i> <span>البريد</span></div>
-                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 d-flex align-items-center">
 
-                                <!-- Map -->
-                                <div class="col-lg-6 d-flex align-items-center">
-                                    <iframe class="map-frame"
-                                            width="100%"
-                                            height="200"
-                                            style="border:0;"
-                                            loading="lazy">
+
+                                    @if (@item.linkURL !=null)
+                                {
+                                        <iframe margin-top:40px; src="@item.linkURL "
+                                            width="100%" height="200" style="border:0;" loading="lazy">
                                     </iframe>
-
-                                    <!-- short link from DB -->
-                                    <input type="hidden"
-                                           class="map-link"
-                                           value="@item.linkURL" />
-                                </div>
+                                }
+                                else
+                                {
+                                }
                             </div>
 
+                            @*  <div class="col-md-6" style="float:left">
+                                @if (!string.IsNullOrEmpty(embedLink))
+                                {
+                                    <iframe src="@embedLink" width="50%" height="200" style="border:0;"
+                                             loading="lazy"></iframe>
+                                }
+                                else
+                                {
+                                    <p>الرابط غير صالح للعرض</p>
+                                }
+                            </div> *@
+                        </div>
                         </div>
                     </div>
+
                 }
+}
+
+            
+        </div> 
+        @* ///////////// *@
+        
+        @* /////////// *@
+        @functions {
+            public string ConvertToEmbedUrlWithoutApi(string shortUrl)
+            {
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        client.Timeout = TimeSpan.FromSeconds(5);
+                        client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0");
+
+                        var response = Task.Run(() =>
+                        client.GetAsync(shortUrl, HttpCompletionOption.ResponseHeadersRead)).Result;
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var finalUrl = response.RequestMessage.RequestUri.ToString();
+
+                            // البحث عن إحداثيات بأنماط مختلفة
+                            var patterns = new[] {
+                @"@([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
+                @"!3d([-+]?\d+\.\d+)!4d([-+]?\d+\.\d+)",
+                @"[?&]q=([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
+                @"([-+]?\d+\.\d+),([-+]?\d+\.\d+)"
+                };
+
+                            foreach (var pattern in patterns)
+                            {
+                                var match = Regex.Match(finalUrl, pattern);
+                                if (match.Success)
+                                {
+                                    return $"https://www.google.com/maps?q={match.Groups[1].Value},{match.Groups[2].Value}&output=embed";
+                                }
+                            }
+                        }
+                    }
+                }
+                catch { /* تجاهل الأخطاء في production */ }
+
+                return null;
             }
-
-        </div>
-    </div>
-</div>
-
-<!-- JavaScript -->
-<script>
-    function extractLatLng(url) {
-
-        @* // @lat,lng *@
-        @* let match = url.match(/@(-?\d +\.\d +),(-?\d+\.\d+)/);  *@
-
-        // !3dlat!4dlng
-        if (!match) {
-            match = url.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/);
         }
 
-        if (!match) return null;
 
-        return { lat: match[1], lng: match[2] };
-    }
+    </div>
 
-    document.querySelectorAll(".map-link").forEach((input, index) => {
 
-        const iframe = document.querySelectorAll(".map-frame")[index];
-        const shortUrl = input.value;
+</div>
 
-        fetch(shortUrl, { redirect: "follow" })
-            .then(res => {
-                const coords = extractLatLng(res.url);
-                if (!coords) return;
-
-                iframe.src =
-                    `https://www.google.com/maps?q=${coords.lat},${coords.lng}&output=embed`;
-            })
-            .catch(err => console.error("Map error:", err));
-    });
-</script>
+<!-- Contact End -->

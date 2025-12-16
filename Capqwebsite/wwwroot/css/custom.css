@@ -1,4 +1,4 @@
-img.logo {
+﻿img.logo {
     width: 75px;
 }
 
@@ -488,9 +488,8 @@ Specificity:(0,5,1) {
 .card-body {
     height: 235px;
 }
-
 .ag-courses_box {
-    padding: 50px 0;
+    padding: 15px 0;
 }
 
 .ag-courses_item {
@@ -501,7 +500,7 @@ Specificity:(0,5,1) {
 
 .ag-courses-item_link {
     display: block;
-    padding: 30px 20px;
+    padding: 15px;
     background-color: #121212;
     overflow: hidden;
     position: relative;
@@ -520,14 +519,12 @@ Specificity:(0,5,1) {
         }
 
 .ag-courses-item_title {
-    min-height: 87px;
-    margin: 0 0 25px;
     overflow: hidden;
     font-weight: bold;
-    font-size: 30px;
     color: #FFF;
     z-index: 2;
     position: relative;
+    margin-right: 21px;
 }
 
 .ag-courses-item_date-box {
@@ -548,7 +545,7 @@ Specificity:(0,5,1) {
 .ag-courses-item_bg {
     height: 128px;
     width: 128px;
-    background-color: #3ecd5e;
+    background-color: #00c6a9;
     z-index: 1;
     position: absolute;
     top: -75px;
@@ -597,7 +594,6 @@ Specificity:(0,5,1) {
         font-size: 16px;
     }
 }
-
 .card2 {
     position: relative;
     color: #000;
