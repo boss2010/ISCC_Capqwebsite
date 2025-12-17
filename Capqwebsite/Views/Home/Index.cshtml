@@ -4,7 +4,7 @@
 }
 
 <!-- Carousel Start -->
- @* ////////////////////rr///////////////  *@
+@* ////////////////////rr///////////////  *@
 <!-- Carousel Start -->
 <div class="container-fluid p-0 ">
 	<div id="header-carousel" class="carousel slide row" data-ride="carousel">
@@ -15,7 +15,7 @@
 				</div>
 			</a>
 		</div>
-		
+
 		<div class="carousel-inner col-md-10">
 			@{
 				bool isFirst = true; // Track the first item for 'active' class
@@ -146,9 +146,9 @@
 							</a> *@
 
 							</div>
-							
+
 							<p>@item.descAr</p>
-							
+
 
 						</div>
 					</div>
@@ -193,12 +193,12 @@
 				</div>
 			</div>
 			<div class="col-md-9 col-sm-6 p-0 mar-auto">
-@* 				menna
+				@* 				menna
  *@
-					<div class="ads-swiper-wrapper">
+				<div class="ads-swiper-wrapper">
 
-						<div class="swiper adsSwiper">
-							<div class="swiper-wrapper">
+					<div class="swiper adsSwiper">
+						<div class="swiper-wrapper">
 
 
 							@foreach (var item in Model.Advertis)
@@ -215,7 +215,10 @@
 
 										<div class="card-content">
 											<h2 class="name">
-												@(item.Date.HasValue? item.Date.Value.ToString("dd/MM/yyyy") : "nodate")
+												@if (item.Date != null)
+												{
+													@item.Date.Value.ToString("dd/MM/yyyy") 
+												}
 												@item.descAr
 											</h2>
 
@@ -291,7 +294,10 @@
 @item.TitleAr
 									
 								</h5>
-									<i>@(item.Date.Value.ToString("dd-MM-yyyy")??"nodate") </i>
+								@if(item.Date != null)
+								{
+									<i>@item.Date.Value.ToString("dd-MM-yyyy") </i>
+								}
 							</div>
 						</div>
 							<p> @item.descAr</p>
