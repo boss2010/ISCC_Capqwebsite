@@ -237,7 +237,8 @@
 @item.TitleAr
 									
 								</h5>
-									<i>@(item.Date.Value.ToString("dd-MM-yyyy")??"nodate") </i>
+									@* <i>@(item.Date.Value.ToString("dd-MM-yyyy")??"nodate") </i> *@
+									@(item.Date.HasValue? item.Date.Value.ToString("dd-MM-yyyy") : "")
 							</div>
 						</div>
 							<p> @item.descAr</p>
