@@ -1,4 +1,8 @@
-﻿
+﻿ @model List<ViewModels.FarmStopVM>
+@{
+	var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "Lang").Value;
+	var lang = string.IsNullOrEmpty(langCookies) ? "ar" : langCookies;
+}
 <!-- Page Header Start -->
 <div class="container-fluid py-1">
 	<div class="container py-2">
@@ -25,8 +29,8 @@
 			<div class="row">
 				<div class="col-md-4">
 
-					<label class="label lbl-style ">رقم المزرعه</label>																	
-					<input type="number" class="form-control" />
+					<label class="label lbl-style ">كود المزرعه</label>																	
+					<input type="text" name="FarmCode" id="FarmCode" class="form-control" />
 				</div>
 			
 				<div class="col-md-4">
@@ -37,40 +41,16 @@
 		
 		</form>
 		<br />
+		<div class="card-body pt-5">
+			<div id="divdata">
+				@if (@Model != null)
+				{
+					<partial name="_PartialFarm.cshtml" for="@Model" />
+				}
 
-		<div class="row">
-
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						@* <th scope="col">ID</th> *@
-						<th scope="col">اسم الدولة</th>
-						<th scope="col">اسم النبات</th>
-						<th scope="col">الاسم المختصر</th>
-						<th scope="col">الشروط بالعربية</th>
-						<th scope="col">الشروط بالانجليزيه</th>
-						<th scope="col">الشهاده بالعربية</th>
-						<th scope="col">الشهاده بالنجليزيه</th>
-					</tr>
-				</thead>
-				<tbody>
-					
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-
-
-						</tr>
-				
-
-				</tbody>
-			</table>
+			</div>
 		</div>
+		
 
 	
 	</div>
