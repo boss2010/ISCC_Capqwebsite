@@ -2,79 +2,80 @@
 @model List<EF.Models.WebsiteTypeDetail>
 <!-- Page Header Start -->
 <div class="container-fluid py-1">
-    <div class="container py-2">
-        <div class="row align-items-center py-4">
-            <div class="col-md-6 text-center text-md-right">
-                <i class=" fas fa-phone icon-style"></i>
-                <h3 class="mb-4 mb-md-0 text-red text-uppercase output ">مكاتبنا</h3>
-            </div>
-            <div class="col-md-6 text-center text-md-left">
-                <div class="d-inline-flex align-items-center">
-                    <a class="btn btn-secondary" href="Offices/Index">مكاتبنا</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="container py-2">
+		<div class="row align-items-center py-4">
+			<div class="col-md-6 text-center text-md-right">
+				<i class=" fas fa-phone icon-style"></i>
+				<h3 class="mb-4 mb-md-0 text-red text-uppercase output ">مكاتبنا</h3>
+			</div>
+			<div class="col-md-6 text-center text-md-left">
+				<div class="d-inline-flex align-items-center">
+					<a class="btn btn-secondary" href="Offices/Index">مكاتبنا</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- Page Header Start -->
 <!-- Contact Start -->
 <div class="container-fluid">
-    <div class="container">
-        <div class="row">
+	<div class="container">
+		<div class="row">
 
-            @if (Model != null && Model.Count > 0)
-            {
-                @foreach (var item in Model)
-                {
-                    var embedLink = ConvertToEmbedUrlWithoutApi(item.linkURL);
-                    <div class="col-md-6">
-                        <div class="margins">
-                        <div class="div">
-                            <article class="card2">
-                                <span>@item.TitleAr</span>
-                                <span class="top"></span>
-                                <span class="right"></span>
-                                <span class="bottom"></span>
-                                <span class="left"></span>
-                            </article>          
-                        </div>
-                        <br />
-                        <div class="div">
-                            <div class="col-lg-6 " style="float:right;">
-                                <div>
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>العنوان</span>
-                                    <p></p>
-                              </div>
-                              <div>
-                                    <i class="fas fa-phone-volume"></i>                                    <span>الهاتف</span>
-                                    <p></p>
-                              </div>
-                              <div>
-                                    <i class="fas fa-envelope"></i>
-                                    <span>البريد</span>
-                                    <p></p>
-                              </div>
+			@if (Model != null && Model.Count > 0)
+			{
+				@foreach (var item in Model)
+				{
+					var embedLink = ConvertToEmbedUrlWithoutApi(item.linkURL);
+					<div class="col-md-6">
+						<div class="margins">
+							<div class="div">
+								<article class="card2">
+									<span>@item.TitleAr</span>
+									<span class="top"></span>
+									<span class="right"></span>
+									<span class="bottom"></span>
+									<span class="left"></span>
+								</article>
+							</div>
+							<br />
+							<div class="div">
+								<div class="col-lg-6 " style="float:right;">
+									<div>
+										<i class="fas fa-map-marker-alt"></i>
+										<span>العنوان</span>
+										<p></p>
+									</div>
+									<div>
+										<i class="fas fa-phone-volume"></i>                                    <span>الهاتف</span>
+										<p></p>
+									</div>
+									<div>
+										<i class="fas fa-envelope"></i>
+										<span>البريد</span>
+										<p></p>
+									</div>
 
-                                   @*  <span class="des"> </span>
+									@*  <span class="des"> </span>
                                     <span class="tel">@item.descEn </span> *@
 
-                            </div>
-                            <div class="col-lg-6 col-md-6 d-flex align-items-center">
+								</div>
+								<div class="col-lg-6 col-md-6 d-flex align-items-center">
 
 
-                                    @if (@item.linkURL !=null)
-                                {
-                                        <iframe margin-top:40px; src="@item.linkURL "
-                                            width="100%" height="200" style="border:0;" loading="lazy">
-                                    </iframe>
-                                }
-                                else
-                                {
-                                }
-                            </div>
+									@if (@item.linkURL != null)
+									{
+										<iframe margin-top:40px; src="@item.linkURL "
+												width="100%" height="200" style="border:0;" loading="lazy">
+										</iframe>
 
-                            @*  <div class="col-md-6" style="float:left">
+									}
+									else
+									{
+									}
+								</div>
+
+								@*  <div class="col-md-6" style="float:left">
                                 @if (!string.IsNullOrEmpty(embedLink))
                                 {
                                     <iframe src="@embedLink" width="50%" height="200" style="border:0;"
@@ -85,62 +86,62 @@
                                     <p>الرابط غير صالح للعرض</p>
                                 }
                             </div> *@
-                        </div>
-                        </div>
-                    </div>
+							</div>
+						</div>
+					</div>
 
-                }
-}
-
-            
-        </div> 
-        @* ///////////// *@
-        
-        @* /////////// *@
-        @functions {
-            public string ConvertToEmbedUrlWithoutApi(string shortUrl)
-            {
-                try
-                {
-                    using (var client = new HttpClient())
-                    {
-                        client.Timeout = TimeSpan.FromSeconds(5);
-                        client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0");
-
-                        var response = Task.Run(() =>
-                        client.GetAsync(shortUrl, HttpCompletionOption.ResponseHeadersRead)).Result;
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var finalUrl = response.RequestMessage.RequestUri.ToString();
-
-                            // البحث عن إحداثيات بأنماط مختلفة
-                            var patterns = new[] {
-                @"@([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
-                @"!3d([-+]?\d+\.\d+)!4d([-+]?\d+\.\d+)",
-                @"[?&]q=([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
-                @"([-+]?\d+\.\d+),([-+]?\d+\.\d+)"
-                };
-
-                            foreach (var pattern in patterns)
-                            {
-                                var match = Regex.Match(finalUrl, pattern);
-                                if (match.Success)
-                                {
-                                    return $"https://www.google.com/maps?q={match.Groups[1].Value},{match.Groups[2].Value}&output=embed";
-                                }
-                            }
-                        }
-                    }
-                }
-                catch { /* تجاهل الأخطاء في production */ }
-
-                return null;
-            }
-        }
+				}
+			}
 
 
-    </div>
+		</div>
+		@* ///////////// *@
+
+		@* /////////// *@
+		@functions {
+			public string ConvertToEmbedUrlWithoutApi(string shortUrl)
+			{
+				try
+				{
+					using (var client = new HttpClient())
+					{
+						client.Timeout = TimeSpan.FromSeconds(5);
+						client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0");
+
+						var response = Task.Run(() =>
+						client.GetAsync(shortUrl, HttpCompletionOption.ResponseHeadersRead)).Result;
+
+						if (response.IsSuccessStatusCode)
+						{
+							var finalUrl = response.RequestMessage.RequestUri.ToString();
+
+							// البحث عن إحداثيات بأنماط مختلفة
+							var patterns = new[] {
+		@"@([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
+		@"!3d([-+]?\d+\.\d+)!4d([-+]?\d+\.\d+)",
+		@"[?&]q=([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
+		@"([-+]?\d+\.\d+),([-+]?\d+\.\d+)"
+		};
+
+							foreach (var pattern in patterns)
+							{
+								var match = Regex.Match(finalUrl, pattern);
+								if (match.Success)
+								{
+									return $"https://www.google.com/maps?q={match.Groups[1].Value},{match.Groups[2].Value}&output=embed";
+								}
+							}
+						}
+					}
+				}
+				catch { /* تجاهل الأخطاء في production */ }
+
+				return null;
+			}
+		}
+
+
+	</div>
 
 
 </div>

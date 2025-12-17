@@ -114,11 +114,16 @@
                                 </a> *@
 
                                     <a href="@Url.Action("Index", "ImportingProcedure")" class="dropdown-item">اشتراطات الاستيراد</a>
-                                    <a href="#" class="dropdown-item">إجراءات فتح المنشأ</a>
+                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 13 })" class="dropdown-item">
+                                        إجراءات فتح المنشأ
+                                    </a>
                                     <a asp-area="" asp-controller="ImportServices" asp-action="Index" title="" class="dropdown-item">
                                         شرح الخدمات الالكترونية
                                     </a>
-                                    <a href="#" class="dropdown-item">الرسوم</a>
+                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 14 })" class="dropdown-item">
+                                        الرسوم
+                                    </a>
+                                    @* <a href="#" class="dropdown-item">الرسوم</a> *@
                                 </div>
                             </div>
 
@@ -130,12 +135,15 @@
                                     <a href="@Url.Action("Index", "ExportingProcedure")" class="dropdown-item">اشتراطات التصدير</a>
                                     <a href="@Url.Action("Index", "Farm")" class="dropdown-item">المزارع المعتمدة</a>
 
-
-                                    <a href="#" class="dropdown-item">المحطات المعتمدة</a>
+                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 5 })" class="dropdown-item">
+                                        المحطات المعتمدة
+                                    </a>
                                     <a asp-area="" asp-controller="ExportServices" asp-action="Index" title="" class="dropdown-item">
                                         شرح الخدمات الالكترونية
                                     </a>
-                                    <a href="#" class="dropdown-item">الرسوم</a>
+                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 6 })" class="dropdown-item">
+                                        الرسوم
+                                    </a>
                                 </div>
                             </div>
 
@@ -154,7 +162,7 @@
                                     <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificateLogin/Index" class="dropdown-item" target="_blank">التحقق من الشهادات للدول</a>
                                 </div>
                             </div>
-                            <a href="#" class="nav-item nav-link">الإحصائيات</a>
+                            <a href="~/dashBoard/dash" class="nav-item nav-link">الإحصائيات</a>
                             <a asp-area="" asp-controller="contact" asp-action="Index" title="" class="nav-item nav-link">
                                 اتصل بنا
                             </a>
