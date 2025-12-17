@@ -3,325 +3,319 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] Capq</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] Capq</title>
 
-    <!-- Font Awesome -->
-    <link href="~/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" />
-    <!-- Flaticon Font -->
-    <link href="~/lib/flaticon/font/flaticon.css" rel="stylesheet" />
+	<!-- Font Awesome -->
+	<link href="~/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" />
+	<!-- Flaticon Font -->
+	<link href="~/lib/flaticon/font/flaticon.css" rel="stylesheet" />
 
-    <!-- Libraries Stylesheet -->
-    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <!-- Customized Bootstrap Stylesheet -->
-    @*     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Libraries Stylesheet -->
+	<link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+	<!-- Customized Bootstrap Stylesheet -->
+	@*     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/bootstrap-select.css" rel="stylesheet" /> *@
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="~/css/style.css" rel="stylesheet">
-    <link href="~/css/custom.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<link href="~/css/style.css" rel="stylesheet">
+	<link href="~/css/custom.css" rel="stylesheet" />
 
 
 
 
 </head>
 <body>
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-dark py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center text-lg-right">
-                    <div class="align-items-center">
-                        <span class="color-white">وزارة الزراعة</span>
-                        <br />
-                        <span class="color-white">الإدارة المركزيه للحجر الزراعي</span>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
-                    <div class="d-inline-flex align-items-center">
-                        <a class="text-white pr-3" href=""><i class="fa fa-globe"></i>  <b>English</b></a>
-                        <span class="text-white">|</span>
-                        <a asp-area="" asp-controller="contact" asp-action="Index" title="" class="text-white px-3">
-                            اتصل بنا
-                        </a>
-                        @* ////////////////////log out icon///////////////////////////////// *@
-                        @* <a class="text-white pr-3" href=""><img src="~/img/log2.png"  width="20px" height="20px"/></a> *@
-                        <a href="@Url.Action("ClearSession", "Home")"><img src="~/img/log2.png" width="20px" height="20px" /></a>
-                    </div>
-                </div>
+	<!-- Topbar Start -->
+	<div class="container-fluid bg-dark py-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 text-center text-lg-right">
+					<div class="align-items-center">
+						<span class="color-white">وزارة الزراعة</span>
+						<br />
+						<span class="color-white">الإدارة المركزيه للحجر الزراعي</span>
+					</div>
+				</div>
+				<div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
+					<div class="d-inline-flex align-items-center">
+						<a class="text-white pr-3" href=""><i class="fa fa-globe"></i>  <b>English</b></a>
+						<span class="text-white">|</span>
+						<a asp-area="" asp-controller="contact" asp-action="Index" title="" class="text-white px-3">
+							اتصل بنا
+						</a>
+						@* ////////////////////log out icon///////////////////////////////// *@
+						@* <a class="text-white pr-3" href=""><img src="~/img/log2.png"  width="20px" height="20px"/></a> *@
+						<a href="@Url.Action("ClearSession", "Home")"><img src="~/img/log2.png" width="20px" height="20px" /></a>
+					</div>
+				</div>
 
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-    <!-- Navbar Start -->
-    <div class="container-fluid position-relative nav-bar p-0">
-        <div class="container position-relative" style="z-index: 9;">
-            <nav class="navbar navbar-expand-lg navbar-dark py-3 py-lg-0">
+			</div>
+		</div>
+	</div>
+	<!-- Topbar End -->
+	<!-- Navbar Start -->
+	<div class="container-fluid position-relative nav-bar p-0">
+		<div class="container position-relative" style="z-index: 9;">
+			<nav class="navbar navbar-expand-lg navbar-dark py-3 py-lg-0">
 
 
-                <a href="" class="navbar-brand">
-                    <img src="~/img/logo-capq2.png" class="logo" />
-                    <!--<h1 class="m-0 display-5 text-white"><span class="text-primary">i</span>DESIGN</h1>-->
-                </a>
+				<a href="" class="navbar-brand">
+					<img src="~/img/logo-capq2.png" class="logo" />
+					<!--<h1 class="m-0 display-5 text-white"><span class="text-primary">i</span>DESIGN</h1>-->
+				</a>
 
-                <a href="https://www.capq.gov.eg/Exporting/Main" class="navbar-toggler" target="_blank"> الخدمات الإلكترونية</a>
+				<a href="https://www.capq.gov.eg/Exporting/Main" class="navbar-toggler" target="_blank"> الخدمات الإلكترونية</a>
 
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
+				<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
 
-                </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    @* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@
-                    @if (Context.Session.GetString("UserSession") == null)
+				</button>
+				<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+					@* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@
+					@if (Context.Session.GetString("UserSession") == null)
 
-                    // var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "UserId").Value;
+					// var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "UserId").Value;
 
-                    // if (langCookies == null)
-                    {
-                        <div class="navbar-nav ml-auto py-0">
+					// if (langCookies == null)
+					{
+						<div class="navbar-nav ml-auto py-0">
 
-                            <a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
-                                الصفحه الرئيسية
-                            </a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    @* <a asp-area="" asp-controller="AgricultureLaw" asp-action="" title="" class="dropdown-item">
+							<a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
+								الصفحه الرئيسية
+							</a>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									@* <a asp-area="" asp-controller="AgricultureLaw" asp-action="" title="" class="dropdown-item">
                                     قانون الزراعة
                                 </a> *@
-                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 1 })" class="dropdown-item">
-                                        قانون الزراعة
-                                    </a>
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 1 })" class="dropdown-item">
+										قانون الزراعة
+									</a>
 
-                                    @* <a href="single.html" class="dropdown-item">قرارات وزارية</a> *@
-                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 2 })" class="dropdown-item">
-                                        قرارات وزارية
-                                    </a>
-                                    @* <a href="single.html" class="dropdown-item">قوائم الآفات</a> *@
-                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 3 })" class="dropdown-item">
-                                        قوائم الآفات
-                                    </a>
-                                </div>
-                            </div>
+									@* <a href="single.html" class="dropdown-item">قرارات وزارية</a> *@
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 2 })" class="dropdown-item">
+										قرارات وزارية
+									</a>
+									@* <a href="single.html" class="dropdown-item">قوائم الآفات</a> *@
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 3 })" class="dropdown-item">
+										قوائم الآفات
+									</a>
+								</div>
+							</div>
 
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    @* <a asp-area="" asp-controller="ImportingProcedure" asp-action="Index" title="" class="dropdown-item">
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									@* <a asp-area="" asp-controller="ImportingProcedure" asp-action="Index" title="" class="dropdown-item">
                                     اشتراطات الاستيراد
                                 </a> *@
 
-                                    <a href="@Url.Action("Index", "ImportingProcedure")" class="dropdown-item">اشتراطات الاستيراد</a>
-                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 13 })" class="dropdown-item">
-                                        إجراءات فتح المنشأ
-                                    </a>
-                                    <a asp-area="" asp-controller="ImportServices" asp-action="Index" title="" class="dropdown-item">
-                                        شرح الخدمات الالكترونية
-                                    </a>
-                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 14 })" class="dropdown-item">
-                                        الرسوم
-                                    </a>
-                                    @* <a href="#" class="dropdown-item">الرسوم</a> *@
-                                </div>
-                            </div>
+									<a href="@Url.Action("Index", "ImportingProcedure")" class="dropdown-item">اشتراطات الاستيراد</a>
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 13 })" class="dropdown-item">
+										إجراءات فتح المنشأ
+									</a>
+									<a asp-area="" asp-controller="ImportServices" asp-action="Index" title="" class="dropdown-item">
+										شرح الخدمات الالكترونية
+									</a>
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 14 })" class="dropdown-item">
+										الرسوم
+									</a>
+									@* <a href="#" class="dropdown-item">الرسوم</a> *@
+								</div>
+							</div>
 
 
 
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="@Url.Action("Index", "ExportingProcedure")" class="dropdown-item">اشتراطات التصدير</a>
-                                    <a href="@Url.Action("Index", "Farm")" class="dropdown-item">المزارع المعتمدة</a>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									<a href="@Url.Action("Index", "ExportingProcedure")" class="dropdown-item">اشتراطات التصدير</a>
+									<a href="@Url.Action("Index", "Farm")" class="dropdown-item">المزارع المعتمدة</a>
 
-                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 5 })" class="dropdown-item">
-                                        المحطات المعتمدة
-                                    </a>
-                                    <a asp-area="" asp-controller="ExportServices" asp-action="Index" title="" class="dropdown-item">
-                                        شرح الخدمات الالكترونية
-                                    </a>
-                                    <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 6 })" class="dropdown-item">
-                                        الرسوم
-                                    </a>
-                                </div>
-                            </div>
-
-
-
-                            @* <a href="service.html" class="nav-item nav-link">مكاتبنا</a> *@
-                            <a href="@Url.Action("Index", "Offices")" class="nav-item nav-link">
-                                مكاتبنا
-                            </a>
-                            <a href="https://www.capq.gov.eg/Exporting/Main" class="nav-item nav-link" target="_blank"> الخدمات الإلكترونية</a>
-
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> شهادة الصحة النباتية</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificate/Index" class="dropdown-item" target="_blank"> التحقق من الشهادة بالرقم</a>
-                                    <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificateLogin/Index" class="dropdown-item" target="_blank">التحقق من الشهادات للدول</a>
-                                </div>
-                            </div>
-                            <a href="~/dashBoard/dash" class="nav-item nav-link">الإحصائيات</a>
-                            <a asp-area="" asp-controller="contact" asp-action="Index" title="" class="nav-item nav-link">
-                                اتصل بنا
-                            </a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="navbar-nav ml-auto py-0">
-
-                            <a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
-                                الصفحه الرئيسية
-                            </a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 1 })" class="nav-item nav-link">
-                                        قانون الزراعة
-                                    </a> <a href="@Url.Action("Index", "DataEntry", new { ID = 2 })" class="nav-item nav-link">
-                                        قرارات وزارية
-                                    </a> <a href="@Url.Action("Index", "DataEntry", new { ID = 3 })" class="nav-item nav-link">
-                                        قوائم الافات
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-
-
-                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">
-                                        إجراءات فتح المنشأ
-
-                                    </a>
-
-                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">
-                                        شرح الخدمات الالكترونية
-
-                                    </a>
-                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 14 })" class="dropdown-item">
-                                        الرسوم
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-
-
-                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 5 })" class="dropdown-item">
-                                        المحطات المعتمدة
-
-                                    </a>
-
-                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 15 })" class="dropdown-item">
-                                        شرح الخدمات الالكترونية
-
-                                    </a>
-                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 6 })" class="dropdown-item">
-                                        الرسوم
-                                    </a>
-                                </div>
-                            </div>
-
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 9 })" class="nav-item nav-link">
-                                السليدر
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 7 })" class="nav-item nav-link">
-                                الأخبار
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 8 })" class="nav-item nav-link">
-                                الإعلانات
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 10 })" class="nav-item nav-link">
-                                التنبيهات
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 11 })" class="nav-item nav-link">
-                                التعريف بالشركة
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 12 })" class="nav-item nav-link">
-                                مكاتبنا
-                            </a>
-                        </div>
-                    }
-                    @* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@
-
-                </div>
-            </nav>
-        </div>
-    </div>
-    <!-- Navbar End -->
-
-    <div class="">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white py-5 px-sm-3 px-md-5">
-        <div class="row pt-5">
-            <div class="col-lg-4 col-md-6 mb-5">
-                <h4 class="text-primary mb-4">اتصل بنا</h4>
-                <p><i class="fa fa-map-marker-alt ml-2"></i>٦شارع د/ميشيل باخوم-الدقي-الجيزة-جمهورية مصر العربية</p>
-                <p><i class="fa fa-phone-alt ml-2"></i>(202)37608574 - 3335162</p>
-                <p>
-                    <i class="fa fa-envelope ml-2"></i><a href="mailto:ippc@capq.gov.eg">ippc@capq.gov.eg</a>
-                    <a href="mailto:tech.office@capq.gov.eg" style="margin-left:60px;" class="mar-right-95">tech.office@capq.gov.eg</a>
-                </p>
-                <div class="d-flex justify-content-start mt-4">
-                    <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="https://www.youtube.com/channel/UCom5EcnKh68bWAi6fii82kQ" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="https://www.facebook.com/share/199Y374kXH/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-5">
-                <h4 class="text-primary mb-4">
-                    روابط مفيدة
-                </h4>
-                <div class="d-flex flex-column justify-content-start">
-                    <a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>الأخبار</a>
-                    <a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>التنبيهات</a>
-                    <a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>الإعلانات</a>
-                    <a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>اتصل بنا</a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-5">
-                <h4 class="text-primary mb-4">الموقع الجغرافي</h4>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.770120405209!2d31.212293284600715!3d30.043452225573766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458412c6f24548f%3A0xa151d0b0e3ec8407!2z2YjYstin2LHYqSDYp9mE2LLYsdin2LnYqQ!5e0!3m2!1sar!2seg!4v1554883067369!5m2!1sar!2seg" frameborder="0" style="border:0; line-height: 20px; margin: 15px 0px; width:inherit; " allowfullscreen=""></iframe>
-            </div>
-        </div>
-        <div class="container border-top border-secondary pt-5">
-            <p class="m-0 text-center text-white">
-                <a class="text-white font-weight-bold" href="#">الإدارة المركزيه للحجر الزراعي</a>   &copy; جميع الحقوق محفوظة  مركز نظم المعلومات والحواسب
-            </p>
-        </div>
-    </div>
-    <!-- Footer End -->
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 5 })" class="dropdown-item">
+										المحطات المعتمدة
+									</a>
+									<a asp-area="" asp-controller="ExportServices" asp-action="Index" title="" class="dropdown-item">
+										شرح الخدمات الالكترونية
+									</a>
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 6 })" class="dropdown-item">
+										الرسوم
+									</a>
+								</div>
+							</div>
 
 
 
-    <!-- JavaScript Libraries -->
-    <script src="~/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    @*     <script src="~/bootstrap.bundle.min.js"></script>
+							@* <a href="service.html" class="nav-item nav-link">مكاتبنا</a> *@
+							<a href="@Url.Action("Index", "Offices")" class="nav-item nav-link">
+								مكاتبنا
+							</a>
+							<a href="https://www.capq.gov.eg/Exporting/Main" class="nav-item nav-link" target="_blank"> الخدمات الإلكترونية</a>
+
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> شهادة الصحة النباتية</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									<a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificate/Index" class="dropdown-item" target="_blank"> التحقق من الشهادة بالرقم</a>
+									<a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificateLogin/Index" class="dropdown-item" target="_blank">التحقق من الشهادات للدول</a>
+								</div>
+							</div>
+							<a href="~/dashBoard/dash" class="nav-item nav-link">الإحصائيات</a>
+							<a asp-area="" asp-controller="contact" asp-action="Index" title="" class="nav-item nav-link">
+								اتصل بنا
+							</a>
+						</div>
+					}
+					else
+					{
+						<div class="navbar-nav ml-auto py-0">
+
+							<a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
+								الصفحه الرئيسية
+							</a>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 1 })" class="dropdown-item">قانون الزراعة</a>
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 2 })" class="dropdown-item">قرارات وزارية</a>
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 3 })" class="dropdown-item">قوائم الافات</a>
+								</div>
+							</div>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
+								<div class="dropdown-menu rounded-0 m-0">
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">
+										إجراءات فتح المنشأ
+
+									</a>
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">
+										شرح الخدمات الالكترونية
+
+									</a>
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 14 })" class="dropdown-item">
+										الرسوم
+									</a>
+								</div>
+							</div>
+							<div class="nav-item dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
+								<div class="dropdown-menu rounded-0 m-0">
+
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 5 })" class="dropdown-item">
+										المحطات المعتمدة
+
+									</a>
+
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 15 })" class="dropdown-item">
+										شرح الخدمات الالكترونية
+
+									</a>
+									<a href="@Url.Action("Index", "DataEntry", new { ID = 6 })" class="dropdown-item">
+										الرسوم
+									</a>
+								</div>
+							</div>
+
+							<a href="@Url.Action("Index", "DataEntry", new { ID = 9 })" class="nav-item nav-link">
+								السليدر
+							</a>
+							<a href="@Url.Action("Index", "DataEntry", new { ID = 7 })" class="nav-item nav-link">
+								الأخبار
+							</a>
+							<a href="@Url.Action("Index", "DataEntry", new { ID = 8 })" class="nav-item nav-link">
+								الإعلانات
+							</a>
+							<a href="@Url.Action("Index", "DataEntry", new { ID = 10 })" class="nav-item nav-link">
+								التنبيهات
+							</a>
+							<a href="@Url.Action("Index", "DataEntry", new { ID = 11 })" class="nav-item nav-link">
+								التعريف بالشركة
+							</a>
+							<a href="@Url.Action("Index", "DataEntry", new { ID = 12 })" class="nav-item nav-link">
+								مكاتبنا
+							</a>
+						</div>
+					}
+					@* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@
+
+				</div>
+			</nav>
+		</div>
+	</div>
+	<!-- Navbar End -->
+
+	<div class="">
+		<main role="main" class="pb-3">
+			@RenderBody()
+		</main>
+	</div>
+	<!-- Footer Start -->
+	<div class="container-fluid bg-dark text-white py-5 px-sm-3 px-md-5">
+		<div class="row pt-5">
+			<div class="col-lg-4 col-md-6 mb-5">
+				<h4 class="text-primary mb-4">اتصل بنا</h4>
+				<p><i class="fa fa-map-marker-alt ml-2"></i>٦شارع د/ميشيل باخوم-الدقي-الجيزة-جمهورية مصر العربية</p>
+				<p><i class="fa fa-phone-alt ml-2"></i>(202)37608574 - 3335162</p>
+				<p>
+					<i class="fa fa-envelope ml-2"></i><a href="mailto:ippc@capq.gov.eg">ippc@capq.gov.eg</a>
+					<a href="mailto:tech.office@capq.gov.eg" style="margin-left:60px;" class="mar-right-95">tech.office@capq.gov.eg</a>
+				</p>
+				<div class="d-flex justify-content-start mt-4">
+					<a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="https://www.youtube.com/channel/UCom5EcnKh68bWAi6fii82kQ" target="_blank"><i class="fab fa-youtube"></i></a>
+					<a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="https://www.facebook.com/share/199Y374kXH/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 mb-5">
+				<h4 class="text-primary mb-4">
+					روابط مفيدة
+				</h4>
+				<div class="d-flex flex-column justify-content-start">
+					<a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>الأخبار</a>
+					<a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>التنبيهات</a>
+					<a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>الإعلانات</a>
+					<a class="text-white mb-2" href="#"><i class="fa fa-angle-left ml-2"></i>اتصل بنا</a>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-6 mb-5">
+				<h4 class="text-primary mb-4">الموقع الجغرافي</h4>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.770120405209!2d31.212293284600715!3d30.043452225573766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458412c6f24548f%3A0xa151d0b0e3ec8407!2z2YjYstin2LHYqSDYp9mE2LLYsdin2LnYqQ!5e0!3m2!1sar!2seg!4v1554883067369!5m2!1sar!2seg" frameborder="0" style="border:0; line-height: 20px; margin: 15px 0px; width:inherit; " allowfullscreen=""></iframe>
+			</div>
+		</div>
+		<div class="container border-top border-secondary pt-5">
+			<p class="m-0 text-center text-white">
+				<a class="text-white font-weight-bold" href="#">الإدارة المركزيه للحجر الزراعي</a>   &copy; جميع الحقوق محفوظة  مركز نظم المعلومات والحواسب
+			</p>
+		</div>
+	</div>
+	<!-- Footer End -->
+	<!-- Back to Top -->
+	<a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+
+	<!-- JavaScript Libraries -->
+	<script src="~/js/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	@*     <script src="~/bootstrap.bundle.min.js"></script>
  *@   
- @*     <script src="~/js/bootstrap-select.js"></script>
+	@*     <script src="~/js/bootstrap-select.js"></script>
  *@
-    <script src="~/lib/easing/easing.min.js"></script>
-    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="~/lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="~/lib/lightbox/js/lightbox.min.js"></script>
-    <!-- Template Javascript -->
-    <script src="~/js/main.js"></script>
+	<script src="~/lib/easing/easing.min.js"></script>
+	<script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="~/lib/isotope/isotope.pkgd.min.js"></script>
+	<script src="~/lib/lightbox/js/lightbox.min.js"></script>
+	<!-- Template Javascript -->
+	<script src="~/js/main.js"></script>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/bootstrap.bundle5.min.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="~/js/bootstrap.bundle5.min.js"></script>
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
