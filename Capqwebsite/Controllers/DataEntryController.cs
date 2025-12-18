@@ -25,6 +25,19 @@ namespace Capqwebsite.Controllers
 
                     try
                     {
+                        ViewBag.TitleAr = "الاسم باللغة العربية";
+                        switch (ID)
+                        {
+                            case 3 :
+                            case 4 :
+                            case 5 :
+                                ViewBag.TitleAr = "الهاتف";
+
+                                break;
+                            default:
+                                break;
+                        }
+
                         string TypeAr = DBContext.Websitetypes.Where(a => a.ID == ID).ToList().FirstOrDefault()?.TypeAr;
                         var list = DBContext.WebsiteTypeDetails.Where(a => a.WebsitetypeID == ID && (a.IsActive == true || a.IsActive == null)).ToList();
                         ViewBag.TypeAr = TypeAr;
