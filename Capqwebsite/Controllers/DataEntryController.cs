@@ -397,7 +397,7 @@ namespace Capqwebsite.Controllers
 
         public IActionResult Delete(int id)
         {
-            var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id && (a.IsActive == true || a.IsActive == null)).ToList().FirstOrDefault();
+            var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id ).ToList().FirstOrDefault();
             var returnedId = deletdRow.WebsitetypeID;
             try
             {
