@@ -33,7 +33,7 @@
 
 		<form asp-controller="DataEntry" id="myForm" asp-action="Index" method="post" enctype="multipart/form-data">
 			<input name="WebsitetypeID" id="WebsitetypeID" type="hidden" value=@(ViewBag.ID ?? "Not specified") />
-			@if (ViewBag.ID != 9)
+			@if (ViewBag.ID != 9&& ViewBag.ID != 12)
 			{
 				<div class="row">
 					<label>الاسم باللغة العربية</label>
@@ -80,7 +80,7 @@
 				</div>
 				<br />
 			}
-			@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16)
+			@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
 			{
 				<div class="row">
 					<label> اختر صورة</label>
@@ -107,19 +107,19 @@
 			<table class="table table-bordered table-striped table-hover">
 				<thead class="bg-primary text-white">
 					<tr>
-						@if (ViewBag.ID != 9)
+						@if (ViewBag.ID != 9 && ViewBag.ID != 12)
 						{
 							<th> الاسم عربي </th>
 						}
-						@if (ViewBag.ID == 7)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 12)
 						{
 							<th> الاسم انجليزي </th>
 						}
-						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
 						{
 							<th> تفاصيل عربي </th>
 						}
-						@if (ViewBag.ID == 7)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 12)
 						{
 							<th> تفاصيل انجليزي </th>
 						}
@@ -127,11 +127,11 @@
 						{
 							<th> التاريخ </th>
 						}
-						@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16)
+						@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
 						{
 							<th> الصورة  </th>
 						}
-						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
 						{
 							<th> الرابط </th>
 						}
@@ -146,7 +146,7 @@
 						{
 
 							<tr>
-								@if (ViewBag.ID != 9)
+								@if (ViewBag.ID != 9 && ViewBag.ID != 12)
 								{
 									<td> @item.TitleAr </td>
 								}
@@ -176,7 +176,7 @@
 									</td>
 								}
 
-								@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16)
+								@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
 								{
 								
 									<td>
