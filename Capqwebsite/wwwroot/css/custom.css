@@ -7,8 +7,8 @@
 }
 
 .color-white {
-    color: #fff;
-    font-size: 25px;
+    color: #000;
+    font-size: 20px;
 }
 
 body {
@@ -28,14 +28,21 @@ img.img-logo-2 {
 }
 
 i.fas.fa-newspaper {
-    color: #00c6a9;
-    font-size: 35px;
+    color: #457b39;
+    font-size: 40px;
+    background: #fff;
+    padding: 25px 15px;
+    border-radius: 50%;
+    margin-left: 20px;
+    font-weight: normal;
 }
 
 .align-center {
     text-align: center;
 }
-
+.text-white {
+    color: #000000 !important;
+}
 .d-flex.flex-column {
     padding: 0px 5px;
 }
@@ -176,7 +183,10 @@ i.fas.fa-balance-scale-right {
 
 
 
-
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link.active {
+    
+    font-weight: bold;
+}
 nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0
 Specificity:(0,5,1) {
     background: rgb(0, 198, 169);
@@ -185,12 +195,16 @@ Specificity:(0,5,1) {
 
 @media (min-width: 992px) {
     .pb-lg-0, .py-lg-0 {
-        background: rgb(0, 198, 169);
+        background: #457b39;
         padding-bottom: 0 !important;
+        margin-right: 10%;
     }
 }
 
-
+.navbar-dark .navbar-nav .nav-link {
+  
+    font-weight: bold;
+}
 .img-height {
     height: 200px;
 }
@@ -744,4 +758,45 @@ Specificity:(0,5,1) {
 }
 .mar-top{
     margin-top:2rem;
+}
+.bg-dark {
+    background-color: #ffffff !important;
+}
+.carousel-control-next {
+    right: 0;
+}
+.btn-primary {
+    color: #ffffff;
+    background-color: #457b39;
+    border-color: #457b39;
+    box-shadow: rgb(69 123 57) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+.carousel-item {
+    background-color: rgb(69 123 57 / 30%);
+}
+.bg-light {
+    background-color: #efefef;
+}
+.news-style {
+    background: #efefef;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.title2 {
+    color: #457b39;
+    font-size: 2.21429rem;
+    margin-top: 20px;
+}
+.bg-gree {
+    background: #457b39;
+    border:none;
+}
+.btn-primary:hover {
+    color: #ffffff;
+    background-color: #457b39;
+    border-color: #457b39;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+.fa-globe:before, .fa-mobile:before {
+    color: #457b39;
 }
