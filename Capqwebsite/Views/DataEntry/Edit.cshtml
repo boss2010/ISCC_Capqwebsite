@@ -27,59 +27,110 @@
                 <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
                 <input type="hidden" asp-for="WebsitetypeID" />
                 <input type="hidden" asp-for="filepath" />
+                @if (ViewBag.ID != 9&& ViewBag.ID != 12)
+			{
                 <div class="row">
                 <label>الاسم باللغة العربية</label>
                     <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم">
                     <span asp-validation-for="TitleAr" class="text-danger"></span>
                 </div>
-                <br />
-            <div class="row">
-                <label>الاسم باللغة الانجليزية</label>
+            }<br />
+            @if (ViewBag.ID == 7 || ViewBag.ID == 12)
+            {
+                <div class="row">
+                    <label>الاسم باللغة الانجليزية</label>
                 <input asp-for="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم">
                 <span asp-validation-for="TitleEn" class="text-danger"></span>
-            </div>
+            </div>}
             <br />
                 <br />
-
+                @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
+            {
                 <div class="row">
-                <label>التفاصيل باللغة العربية</label>
+                    <label>التفاصيل باللغة العربية</label>
                     <textarea asp-for="descAr" rows="3" class="form-control p-4"></textarea>
                     <span asp-validation-for="descAr" class="text-danger"></span>
                 </div>
                 <br />
+}
+                @if (ViewBag.ID == 7 || ViewBag.ID == 12)
+            {
                 <div class="row">
                     <label>الهاتف</label>
-                <label>التفاصيل باللغة الانجليزية</label>
+                    <label>التفاصيل باللغة الانجليزية</label>
                     <textarea asp-for="descEn" rows="3" class="form-control p-4"></textarea>
                     <span asp-validation-for="descEn" class="text-danger"></span>
                 </div>
                 <br />
+            }
+            @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10)
+            {
+                <div class="row">
+                    <label>التاريخ</label>
+                    <input asp-for="Date" type="date" class="form-control p-4" value="@Model.Date?.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <br />
+            }
             @* ////////////////////////edit upload file/////////////////////////////////////////// *@
-            <div class="row">
-                <input type="hidden" asp-for="filepath" />
-                <label>Current PDF</label>
-                @if (!string.IsNullOrEmpty(Model.filepath))
-                {
-                    <iframe src="@Model.filepath" width="100%" height="400px"></iframe>
-                }
-            </div>
+            @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
+            {
+                <div class="row">
+                    <input type="hidden" asp-for="filepath" />
+                    <label>Current PDF</label>
+                    @* @if (!string.IsNullOrEmpty(Model.filepath))
+                    {
+                        <iframe src="@Model.filepath" width="100%" height="400px"></iframe>
+                    } *@
+                    @if (!string.IsNullOrEmpty(Model.filepath))
+                    {
+                        if (Model.filepath != null && (Model.filepath.EndsWith(".pdf")))
+                        {
+                            <div class="ag-format-container col-md-12">
+                                <div class="ag-courses_box">
+                                    <div class="ag-courses_item">
+                                        <a href="#" class="ag-courses-item_link openPdf" data-pdf="@Model.filepath">
+                                            <div class="ag-courses-item_bg"></div>
+                                            <div class="ag-courses-item_title">
+                                                <img src="~/img/pdf3.png" />
+                                                <span>@Model.TitleAr</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.filepath != null &&
+                                        (Model.filepath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                        Model.filepath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                        Model.filepath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                        Model.filepath.EndsWith(".gif", StringComparison.OrdinalIgnoreCase) ||
+                                        Model.filepath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase) ||
+                                        Model.filepath.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase)))
+                        {
+                            <img src="@Model.filepath" alt="Image" style="max-width: 100px; max-height: 60px;" class="img-thumbnail" />
+                        }
+                    }
+                </div>
 
-            <label>Upload New PDF</label>
-            <div class="row">
-                @* <label> اختر ملف</label> *@
+                <label>Upload New PDF</label>
+                <div class="row">
+                    @* <label> اختر ملف</label> *@
                 <input name="imageFile" type="file" class="form-control">
                 <p class="help-block text-danger"></p>
-            </div>
-
+                </div>
+            }
             @* /////////////////////////////////////////////////////////////////// *@
-
-            <div class="row">
+            @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
+            {
+                <div class="row">
                     <label>الرابط الإلكتروني</label>
                     <input asp-for="linkURL" type="text" class="form-control p-4" />
                     <span asp-validation-for="linkURL" class="text-danger"></span>
                 </div>
                 <br />
-                <div>
+            }
+            <div>
                     <button class="btn btn-primary py-3 px-5" type="submit">حفظ التعديلات</button>
                 </div>
             </form>
@@ -87,164 +138,28 @@
        
     </div>
 </div>
-@* ///////////////////////////////////////////////القديم/////////////////////////////////////////////////////////////// *@
-<!-- Edit Form Start -->
-<div class="container-fluid bg-light">
-    <div class="container">
-        @if (ViewBag.ID == 12 && @ViewBag.IdType != 9 && ViewBag.ID != 15 && ViewBag.ID != 16)
-        {
-            <form asp-controller="DataEntry" asp-action="Update" method="post" enctype="multipart/form-data">
-
-                <input type="hidden" asp-for="ID" />
-                <input type="hidden" value=@ViewBag.IdType name="IdType" />
-                <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
-                <input type="hidden" asp-for="WebsitetypeID" />
-                <input type="hidden" asp-for="filepath" />
-                <div class="row">
-                    <label>الاسم</label>
-                    <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم">
-                    <span asp-validation-for="TitleAr" class="text-danger"></span>
-                </div>
-                <br />                                
-                <br />
-
-                <div class="row">
-                    <label>العنوان</label>
-                    <textarea asp-for="descAr" rows="3" class="form-control p-4"></textarea>
-                    <span asp-validation-for="descAr" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="row">
-                    <label>الهاتف</label>
-                    <textarea asp-for="descEn" rows="3" class="form-control p-4"></textarea>
-                    <span asp-validation-for="descEn" class="text-danger"></span>
-                </div>
-                <br />               
-                <div class="row">
-                    <label>الرابط الإلكتروني</label>
-                    <input asp-for="linkURL" type="text" class="form-control p-4" />
-                    <span asp-validation-for="linkURL" class="text-danger"></span>
-                </div>
-                <br />
-                <div>
-                    <button class="btn btn-primary py-3 px-5" type="submit">حفظ التعديلات</button>
-                </div>
-            </form>
-        }
-        else if (ViewBag.ID == 4 || ViewBag.ID == 5 || ViewBag.ID == 6 || ViewBag.ID == 13 || ViewBag.ID == 14)
-        {
-            <form asp-controller="DataEntry" asp-action="Update" method="post" enctype="multipart/form-data">
-
-                <input type="hidden" asp-for="ID" />
-                <input type="hidden" value=@ViewBag.IdType name="IdType" />
-                <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
-                <input type="hidden" asp-for="WebsitetypeID" />
-                <input type="hidden" asp-for="filepath" />
-                <div class="row">
-                    <label>الاسم</label>
-                    <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم">
-                    <span asp-validation-for="TitleAr" class="text-danger"></span>
-                </div>
-                <br />
-                <br />
-                @* ////////////////////////edit upload file/////////////////////////////////////////// *@
-                <div class="row">
-                    <input type="hidden" asp-for="filepath" />
-                    <label>Current PDF</label>
-                    @if (!string.IsNullOrEmpty(Model.filepath))
-                    {
-                        <iframe src="@Model.filepath" width="100%" height="400px"></iframe>
-                    }
-                </div>
-                
-                <label>Upload New PDF</label>
-                <div class="row">
-                    @* <label> اختر ملف</label> *@
-                    <input name="imageFile" type="file" class="form-control">
-                    <p class="help-block text-danger"></p>
-                </div>
-                
-                @* /////////////////////////////////////////////////////////////////// *@
-                
-                
-                <div>
-                    <button class="btn btn-primary py-3 px-5" type="submit">حفظ التعديلات</button>
-                </div>
-            </form>
-            
-        
-        
-        }
-        else
-        {
-            <form asp-controller="DataEntry" asp-action="Update" method="post" enctype="multipart/form-data">
-
-                <input type="hidden" asp-for="ID" />
-                <input type="hidden" value=@ViewBag.EditMode name="EditMode" />
-                <input type="hidden" asp-for="WebsitetypeID" />
-                <input type="hidden" asp-for="filepath" />
-                @if (ViewBag.ID != 9 && ViewBag.ID != 4 && ViewBag.ID != 5 && ViewBag.ID != 6 && ViewBag.ID != 13 && ViewBag.ID != 14)
-                {
-                    <div class="row">
-                        <label>عنوان باللغة العربية</label>
-                        <input asp-for="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة العربية">
-                        <span asp-validation-for="TitleAr" class="text-danger"></span>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <label>عنوان باللغة الانجليزية</label>
-                        <input asp-for="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال عنوان باللغة الانجليزية">
-                        <span asp-validation-for="TitleEn" class="text-danger"></span>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <label>التاريخ</label>
-                        <input asp-for="Date" type="date" class="form-control p-4" value="@Model.Date?.ToString("yyyy-MM-dd")" />
-                        <span asp-validation-for="Date" class="text-danger"></span>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <label>التفاصيل باللغة العربية</label>
-                        <textarea asp-for="descAr" rows="3" class="form-control p-4"></textarea>
-                        <span asp-validation-for="descAr" class="text-danger"></span>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <label>التفاصيل باللغة الانجليزية</label>
-                        <textarea asp-for="descEn" rows="3" class="form-control p-4"></textarea>
-                        <span asp-validation-for="descEn" class="text-danger"></span>
-                    </div>
-                    <br />
-                }
-    @if ( ViewBag.ID != 4 && ViewBag.ID != 5 && ViewBag.ID != 6 && ViewBag.ID != 13 && ViewBag.ID != 14)
-                { 
-                <div class="row">
-                    <label>اختر صورة</label>
-                    <input name="imageFile" type="file" class="form-control">
-                    @if (!string.IsNullOrEmpty(Model.filepath))
-                    {
-                        <div class="mt-2">
-                            <img src="@Model.filepath" alt="Current Image" style="max-width: 100px;" class="img-thumbnail" />
-                            <p class="text-muted">الصورة الحالية</p>
-                        </div>
-                    }
-                    <span asp-validation-for="filepath" class="text-danger"></span>
-                    </div>
-                }
-                @if (ViewBag.ID != 9 && ViewBag.ID != 4 && ViewBag.ID != 5 && ViewBag.ID != 6 && ViewBag.ID != 13 && ViewBag.ID != 14)
-                {
-                <br />
-                <div class="row">
-                    <label>الرابط الإلكتروني</label>
-                    <input asp-for="linkURL" type="text" class="form-control p-4" />
-                    <span asp-validation-for="linkURL" class="text-danger"></span>
-                </div>
-    }
-                <br />
-                <div>
-                    <button class="btn btn-primary py-3 px-5" type="submit">حفظ التعديلات</button>
-                </div>
-            </form>
-        }
-    </div>
+@* ///////////////////////////////////////////////pdf/////////////////////////////////////////////////////////////// *@
+<div id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999;">
+    <span id="closeModal" style="position:absolute; top:20px; right:30px; cursor:pointer; color:white; font-size:28px;">✖</span>
+    <iframe id="pdfFrame" style="width:80%; height:80%; margin:50px auto; display:block; border:none;"></iframe>
 </div>
+<script>
+    const modal = document.getElementById("pdfModal");
+    const frame = document.getElementById("pdfFrame");
+    const closeBtn = document.getElementById("closeModal");
+
+    document.querySelectorAll(".openPdf").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const pdfUrl = this.getAttribute("data-pdf");
+            // alert(pdfUrl);
+            frame.src = pdfUrl;
+            modal.style.display = "block";
+        });
+    });
+
+    closeBtn.onclick = function () {
+        modal.style.display = "none";
+        frame.src = "";
+    };
+</script>
