@@ -75,7 +75,7 @@
 					<div class="ag-format-container col-md-4">
 						<div class="ag-courses_box">
 							<div class="ag-courses_item">
-								<a href="#" class="ag-courses-item_link openPdf" data-pdf="@item.linkURL">
+								<a href="#" class="ag-courses-item_link openPdf" data-pdf="@item.filepath">
 									<div class="ag-courses-item_bg"></div>
 									<div class="ag-courses-item_title">
 										<img src="~/img/pdf3.png" />
@@ -101,6 +101,7 @@
 					link.addEventListener("click", function (e) {
 						e.preventDefault();
 						const pdfUrl = this.getAttribute("data-pdf");
+						// alert(pdfUrl);
 						frame.src = pdfUrl;
 						modal.style.display = "block";
 					});
