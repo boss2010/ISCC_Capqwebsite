@@ -114,9 +114,7 @@
                                 </a> *@
 
 									<a href="@Url.Action("Index", "ImportingProcedure")" class="dropdown-item">اشتراطات الاستيراد</a>
-									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 13 })" class="dropdown-item">
-										إجراءات فتح المنشأ
-									</a>
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 13 })" class="dropdown-item">إجراءات فتح المنشأ</a>
 									<a asp-area="" asp-controller="ImportServices" asp-action="Index" title="" class="dropdown-item">
 										شرح الخدمات الالكترونية
 									</a>
@@ -133,7 +131,9 @@
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									<a href="@Url.Action("Index", "ExportingProcedure")" class="dropdown-item">اشتراطات التصدير</a>
-									<a href="@Url.Action("Index", "Farm")" class="dropdown-item">المزارع المعتمدة</a>
+									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 4 })" class="dropdown-item">المزارع المعتمدة</a>
+
+									<a href="@Url.Action("Index", "Farm")" class="dropdown-item">المزارع الموقوفة</a>
 
 									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 5 })" class="dropdown-item">
 										المحطات المعتمدة
