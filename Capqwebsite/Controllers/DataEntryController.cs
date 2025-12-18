@@ -3,6 +3,7 @@ using EF.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Capqwebsite.Controllers
 {
@@ -25,6 +26,29 @@ namespace Capqwebsite.Controllers
 
                     try
                     {
+                        ViewBag.TitleAr = "الاسم"; 
+                        ViewBag.TitleEn = "";
+                        ViewBag.descAr = "التفاصيل";
+                        ViewBag.descEn = "التفاصيل";
+                        ViewBag.filepath = "اختيار ملف";
+                        ViewBag.linkURL = "الرابط";
+                        ViewBag.Date = "التاريخ";
+
+                        switch (ID)
+                        {
+                           
+                            case 12 ://مكاتبنا
+                                ViewBag.descEn = "الهاتف";
+                                ViewBag.descAr = "العنوان";
+                                ViewBag.TitleEn = "البريد";
+                                break;
+                            case 7://الاخبار
+                                ViewBag.TitleAr = "العنوان";
+                                break;
+                            default:
+                                break;
+                        }
+
                         string TypeAr = DBContext.Websitetypes.Where(a => a.ID == ID).ToList().FirstOrDefault()?.TypeAr;
                         var list = DBContext.WebsiteTypeDetails.Where(a => a.WebsitetypeID == ID && (a.IsActive == true || a.IsActive == null)).ToList();
                         ViewBag.TypeAr = TypeAr;
