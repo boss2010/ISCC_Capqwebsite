@@ -17,54 +17,6 @@
 		</div>
 	</div>
 </div>
-<!-- Page Header Start -->
-<!-- Contact Start -->
-<div class="container-fluid bg-light" hidden>
-	<div class="container">
-		<div class="row">
-			<div class="mb-5">
-				@* ////////////////////////////*@
-				@{
-					if (Model != null && Model.Count > 0)
-					{
-						foreach (var item in Model)
-						{
-
-							<h3 class="mb-4 section-title">@item.TitleAr</h3>
-							<div class="media mb-4">
-								<div class="media-body">
-
-
-									<h6>   التاريخ:  <small><i>@item.Date</i></small></h6>
-									<p>@item.descAr</p>
-									@* <img src="@Url.Content(item.filepath)" alt="image">*@
-
-								</div>
-							</div>
-						}
-					}
-				}
-			</div>
-		</div>
-
-	</div>
-</div>
-<!-- Contact End -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="container-fluid bg-light">
 	<div class="container">
 		<div class="row">

@@ -43,7 +43,7 @@
                 <br />
 
             }
-            @if (ViewBag.ID == 7 || ViewBag.ID == 12)
+            @if ( ViewBag.ID == 12)
             {
                 <div class="row">
                     <label>الاسم  باللغة الانجليزية</label>
@@ -56,16 +56,16 @@
             @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
             {
                 <div class="row">
-                    <label>التفاصيل باللغة العربية</label>
+                    <label>@ViewBag.descAr</label>
                     <textarea name="descAr" rows="3" class="form-control p-4" autocomplete="off"></textarea>
                     <p class="help-block text-danger"></p>
                 </div>
                 <br />
             }
-            @if (ViewBag.ID == 7 || ViewBag.ID == 12)
+            @if ( ViewBag.ID == 12)
             {
                 <div class="row">
-                    <label>التفاصيل باللغة الانجليزية</label>
+                    <label>@ViewBag.descEn</label>
                     <textarea name="descEn" rows="3" class="form-control p-4" autocomplete="off"></textarea>
                     <p class="help-block text-danger"></p>
                 </div>
@@ -74,7 +74,7 @@
             @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10)
             {
                 <div class="row">
-                    <label>التاريخ </label>
+                    <label>@ViewBag.Date</label>
                     <input name="Date" type="date" class="form-control p-4" autocomplete="off" />
                     <p class="help-block text-danger"></p>
                 </div>
@@ -83,7 +83,7 @@
             @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
             {
                 <div class="row">
-                    <label> اختر صورة</label>
+                    <label>@ViewBag.filepath</label>
                     <input name="imageFile" type="file" class="form-control">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -109,11 +109,11 @@
                     <tr>
                         @if (ViewBag.ID != 9 && ViewBag.ID != 12)
                         {
-                            <th> الاسم عربي </th>
+                            <th>@ViewBag.TitleAr</th>
                         }
-                        @if (ViewBag.ID == 7 || ViewBag.ID == 12)
+                        @if ( ViewBag.ID == 12)
                         {
-                            <th> الاسم انجليزي </th>
+                            <th>@ViewBag.TitleEn</th>
                         }
                         @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
                         {
