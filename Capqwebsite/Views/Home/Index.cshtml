@@ -91,7 +91,7 @@
 
 				<div class="row">
 					<div class="col-lg-7 m-0 my-lg-5 pt-5 pb-5 pb-lg-2 pl-lg-5">
-						<h1 class="mb-4 section-title">@item.TitleAr</h1>
+						<h2 class="mb-4 section-title">@item.TitleAr</h2>
 
 						<p>@item.descAr</p>
 
@@ -102,7 +102,7 @@
 
 
 					<div class="col-md-5">
-						<div class="d-flex flex-column align-items-center justify-content-center bg-primary h-100 py-3 px-3 width-inherit">
+						<div class="view d-flex flex-column align-items-center justify-content-center  h-100 py-3 px-3 width-inherit">
 							<img src="@item.filepath" class="img-logo-2" />
 						</div>
 					</div>
@@ -176,16 +176,16 @@
 </div>
 <!-- Services End -->
 <!-- Team Start -->
-<div class="container-fluid bg-light">
+<div class="container-fluid " style=" margin-top: 20px;margin-bottom: 50px;">
 	<div class="container" dir="ltr">
 		<div class="row  h-ads">
 			@*////////////////الاعلانات//////////////////////////////*@
 			<div class="col-md-3 col-sm-6">
 				<div class="py-5 px-4  h-ads bg-green d-flex flex-column align-items-center justify-content-center">
-					<h1 class="mb-0 text-center">الاعلانات</h1>
+					<h1 class="mb-0 text-center title2">الاعلانات</h1>
 
 					@* ////////////////rrrrrr11-5-2025/////////////// *@
-					<a href="@Url.Action("Index", "News", new { ID = 8 })" class="btn btn-secondary box-shadow mt-3 py-2 px-4">
+					<a href="@Url.Action("Index", "News", new { ID = 8 })" class="bg-gree btn btn-secondary box-shadow mt-3 py-2 px-4">
 						مشاهدة المزيد
 					</a>
 					@*  <a asp-area="" asp-controller="advList" asp-action="Index" title="" class="btn btn-secondary box-shadow mt-3 py-2 px-4">
@@ -281,11 +281,11 @@
 <!-- Team End -->
 <!-- Testimonial Start -->
 @*////////////////التنبهات//////////////////////////////*@
-<div class="container-fluid">
+<div class="container-fluid bg-efefef ">
 	<div class="container" dir="ltr">
 		<div class="row">
 			<div class="col-md-7 py-5 pr-md-5">
-				<h1 class="mb-4 section-title">التنبيهات</h1>
+				<h1 class="mb-4 title2">التنبيهات</h1>
 				<div class="owl-carousel testimonial-carousel position-relative pb-5 mb-md-5">
 					@foreach (var item in Model.Alert) { 
 					<div class="d-flex flex-column" dir="rtl">
@@ -311,7 +311,7 @@
 			@* ////////////////////static one image for alerts this image not in loop///////////// *@
 			<div class="col-md-5">
 				<div class="d-flex flex-column align-items-center justify-content-center h-100 overflow-hidden width-inherit">
-					<img class="width-inherit" src="~/img/44.jpg" alt="">
+					<i class="fa fa-bell bell" ></i>
 				</div>
 			</div>
 		</div>
