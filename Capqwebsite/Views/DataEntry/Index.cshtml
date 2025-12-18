@@ -33,7 +33,7 @@
 
 		<form asp-controller="DataEntry" id="myForm" asp-action="Index" method="post" enctype="multipart/form-data">
 			<input name="WebsitetypeID" id="WebsitetypeID" type="hidden" value=@(ViewBag.ID ?? "Not specified") />
-			@if (ViewBag.ID != 9)
+			@if (ViewBag.ID != 9&& ViewBag.ID != 12)
 			{
 				<div class="row">
 					<label>الاسم باللغة العربية</label>
@@ -43,17 +43,17 @@
 				<br />
 
 			}
-			@if (ViewBag.ID == 7)
+			@if (ViewBag.ID == 7 || ViewBag.ID==12)
 			{
 				<div class="row">
 					<label>الاسم  باللغة الانجليزية</label>
-					<input name="TitleAr" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم" aria-invalid="false">
+					<input name="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم" aria-invalid="false">
 					<p class="help-block text-danger"></p>
 				</div>
 				<br />
 
 			}
-			@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11)
+			@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
 			{
 				<div class="row">
 					<label>التفاصيل باللغة العربية</label>
@@ -62,7 +62,7 @@
 				</div>
 				<br />
 			}
-			@if (ViewBag.ID == 7)
+			@if (ViewBag.ID == 7 || ViewBag.ID == 12)
 			{
 				<div class="row">
 					<label>التفاصيل باللغة الانجليزية</label>
@@ -80,7 +80,7 @@
 				</div>
 				<br />
 			}
-			@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16)
+			@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
 			{
 				<div class="row">
 					<label> اختر صورة</label>
@@ -89,7 +89,7 @@
 				</div>
 				<br />
 			}
-			@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16)
+			@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
 			{
 				<div class="row">
 					<label>الرابط الإلكتروني</label>
@@ -107,19 +107,19 @@
 			<table class="table table-bordered table-striped table-hover">
 				<thead class="bg-primary text-white">
 					<tr>
-						@if (ViewBag.ID != 9)
+						@if (ViewBag.ID != 9 && ViewBag.ID != 12)
 						{
 							<th> الاسم عربي </th>
 						}
-						@if (ViewBag.ID == 7)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 12)
 						{
 							<th> الاسم انجليزي </th>
 						}
-						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
 						{
 							<th> تفاصيل عربي </th>
 						}
-						@if (ViewBag.ID == 7)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 12)
 						{
 							<th> تفاصيل انجليزي </th>
 						}
@@ -127,11 +127,11 @@
 						{
 							<th> التاريخ </th>
 						}
-						@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16)
+						@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
 						{
 							<th> الصورة  </th>
 						}
-						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16)
+						@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
 						{
 							<th> الرابط </th>
 						}
@@ -146,22 +146,22 @@
 						{
 
 							<tr>
-								@if (ViewBag.ID != 9)
+								@if (ViewBag.ID != 9 && ViewBag.ID != 12)
 								{
 									<td> @item.TitleAr </td>
 								}
 
-								@if (ViewBag.ID == 7)
+								@if (ViewBag.ID == 7 || ViewBag.ID == 12)
 								{
 									<td> @item.TitleEn </td>
 								}
 
-								@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11)
+								@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
 								{
 									<td> @item.descAr </td>
 								}
 
-								@if (ViewBag.ID == 7)
+								@if (ViewBag.ID == 7 || ViewBag.ID == 12)
 								{
 									<td> @item.descEn </td>
 								}
@@ -176,14 +176,39 @@
 									</td>
 								}
 
-								@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16)
+								@if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
 								{
 								
 									<td>
 										@if (!string.IsNullOrEmpty(item.filepath))
 										{
-											<img src="@item.filepath" alt="Image" style="max-width: 100px; max-height: 60px;" class="img-thumbnail" />
-										}
+											if (item.filepath != null && (item.filepath.EndsWith(".pdf")))
+											{
+												<div class="ag-format-container col-md-12">
+												<div class="ag-courses_box">
+													<div class="ag-courses_item">
+														<a href="#" class="ag-courses-item_link openPdf" data-pdf="@item.filepath">
+															<div class="ag-courses-item_bg"></div>
+															<div class="ag-courses-item_title">
+																<img src="~/img/pdf3.png" />
+																<span>@item.TitleAr</span>
+															</div>
+														</a>
+													</div>
+												</div>
+											</div>
+											}
+				@if (item.filepath != null &&
+																		(item.filepath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+																		item.filepath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+																		item.filepath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+																		item.filepath.EndsWith(".gif", StringComparison.OrdinalIgnoreCase) ||
+																		item.filepath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase) ||
+																		item.filepath.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase)))
+											{
+												<img src="@item.filepath" alt="Image" style="max-width: 100px; max-height: 60px;" class="img-thumbnail" />
+											}
+			}
 										else
 										{
 											<span> لا توجد صورة</span>
@@ -191,7 +216,7 @@
 									</td>
 								}
 
-								@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16)
+								@if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
 								{
 									<td>
 										@if (!string.IsNullOrEmpty(item.linkURL))
@@ -233,3 +258,28 @@
 		</div>
 	</div>
 </div>
+@* ///////////////////////////////////////// *@
+<div id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999;">
+	<span id="closeModal" style="position:absolute; top:20px; right:30px; cursor:pointer; color:white; font-size:28px;">✖</span>
+	<iframe id="pdfFrame" style="width:80%; height:80%; margin:50px auto; display:block; border:none;"></iframe>
+</div>
+<script>
+	const modal = document.getElementById("pdfModal");
+	const frame = document.getElementById("pdfFrame");
+	const closeBtn = document.getElementById("closeModal");
+
+	document.querySelectorAll(".openPdf").forEach(link => {
+		link.addEventListener("click", function (e) {
+			e.preventDefault();
+			const pdfUrl = this.getAttribute("data-pdf");
+			// alert(pdfUrl);
+			frame.src = pdfUrl;
+			modal.style.display = "block";
+		});
+	});
+
+	closeBtn.onclick = function () {
+		modal.style.display = "none";
+		frame.src = "";
+	};
+</script>

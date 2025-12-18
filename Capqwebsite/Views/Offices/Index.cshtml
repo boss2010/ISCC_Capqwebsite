@@ -44,16 +44,17 @@
 									<div>
 										<i class="fas fa-map-marker-alt"></i>
 										<span>العنوان</span>
-										<p></p>
+										<p>@item.descAr</p>
 									</div>
 									<div>
-										<i class="fas fa-phone-volume"></i>                                    <span>الهاتف</span>
-										<p></p>
+										<i class="fas fa-phone-volume"></i>                                    
+										<span>الهاتف</span>
+										<p>@item.descEn</p>
 									</div>
 									<div>
 										<i class="fas fa-envelope"></i>
 										<span>البريد</span>
-										<p></p>
+										<p>@item.TitleEn</p>
 									</div>
 
 									@*  <span class="des"> </span>
@@ -107,28 +108,30 @@
 					{
 						client.Timeout = TimeSpan.FromSeconds(5);
 						client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0");
-
-						var response = Task.Run(() =>
-						client.GetAsync(shortUrl, HttpCompletionOption.ResponseHeadersRead)).Result;
-
-						if (response.IsSuccessStatusCode)
+						if (shortUrl!=null)
 						{
-							var finalUrl = response.RequestMessage.RequestUri.ToString();
+							var response = Task.Run(() =>
+							client.GetAsync(shortUrl, HttpCompletionOption.ResponseHeadersRead)).Result;
 
-							// البحث عن إحداثيات بأنماط مختلفة
-							var patterns = new[] {
+							if (response.IsSuccessStatusCode)
+							{
+								var finalUrl = response.RequestMessage.RequestUri.ToString();
+
+								// البحث عن إحداثيات بأنماط مختلفة
+								var patterns = new[] {
 		@"@([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
 		@"!3d([-+]?\d+\.\d+)!4d([-+]?\d+\.\d+)",
 		@"[?&]q=([-+]?\d+\.\d+),([-+]?\d+\.\d+)",
 		@"([-+]?\d+\.\d+),([-+]?\d+\.\d+)"
 		};
 
-							foreach (var pattern in patterns)
-							{
-								var match = Regex.Match(finalUrl, pattern);
-								if (match.Success)
+								foreach (var pattern in patterns)
 								{
-									return $"https://www.google.com/maps?q={match.Groups[1].Value},{match.Groups[2].Value}&output=embed";
+									var match = Regex.Match(finalUrl, pattern);
+									if (match.Success)
+									{
+										return $"https://www.google.com/maps?q={match.Groups[1].Value},{match.Groups[2].Value}&output=embed";
+									}
 								}
 							}
 						}
