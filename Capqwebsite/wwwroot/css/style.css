@@ -2619,9 +2619,9 @@ fieldset:disabled a.btn {
         }
 
 .btn-secondary {
-    color: #fff;
-    background-color: #252531;
-    border-color: #252531;
+    color: #000;
+   /* background-color: #252531;
+    border-color: #252531;*/
 }
 
     .btn-secondary:hover {
@@ -4834,7 +4834,7 @@ input[type="button"].btn-block {
     padding: 0.5rem 0.75rem;
     margin-left: -1px;
     line-height: 1.25;
-    color: #DFB163;
+    color: #457b39;
     background-color: #fff;
     border: 1px solid #dee2e6;
 }
@@ -4860,8 +4860,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;
-    background-color: #DFB163;
-    border-color: #DFB163;
+    background-color: #457b39;
+    border-color: #457b39;
 }
 
 .page-item.disabled .page-link {
@@ -6593,7 +6593,8 @@ button.bg-danger:focus {
 }
 
 .bg-light {
-    background-color: #F3F6FF !important;
+    background-color: #efefef !important;
+    padding: 20px;
 }
 
 a.bg-light:hover, a.bg-light:focus,
@@ -10481,7 +10482,7 @@ h6 {
         right: 0;
         width: 45px;
         height: 3px;
-        background: #DFB163;
+        background: #457b39;
     }
 
 [class^=flaticon-]:before,
@@ -10781,7 +10782,7 @@ h6 {
 }
 
 i.fas.fa-phone {
-    color: red !important;
+    color: #457b39 !important;
 }
 
 .h-ads {

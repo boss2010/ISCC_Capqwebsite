@@ -131,8 +131,8 @@ option {
 }
 
 i.fas.fa-newspaper.icon-style {
-    font-size: 25px;
-    color: #dfb163;
+    font-size: 30px;
+    color: #457b39;
     margin-left: 10px;
 }
 
@@ -894,4 +894,9 @@ Specificity:(0,5,1) {
 
 a {
     color: #457b39;
+}
+.btn-edit {
+    color: #ffffff;
+    border: none;
+    background-color: #457b39;
 }
