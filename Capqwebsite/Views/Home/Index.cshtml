@@ -202,7 +202,6 @@
 					<div class="swiper adsSwiper">
 						<div class="swiper-wrapper">
 
-
 							@foreach (var item in Model.Advertis)
 							{
 								<div class="swiper-slide">
@@ -234,7 +233,12 @@
 
 									</div>
 								</div>
+
+
 														}
+
+
+
 
 						</div>
 
@@ -347,5 +351,17 @@
 	});
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+	var swiper = new Swiper(".adsSwiper", {
+		slidesPerView: 1,
+		spaceBetween: 20,
+		loop: true,
+		navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		},
+	});
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
