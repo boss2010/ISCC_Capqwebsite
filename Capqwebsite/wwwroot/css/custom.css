@@ -887,3 +887,11 @@ Specificity:(0,5,1) {
     }
 }
 
+.text-primary {
+    color: #457b39 !important;
+}
+
+
+a {
+    color: #457b39;
+}
