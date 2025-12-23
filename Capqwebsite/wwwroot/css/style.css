@@ -6114,6 +6114,7 @@ a.close.disabled {
     position: relative;
     width: 100%;
     overflow: hidden;
+   
 }
 
     .carousel-inner::after {
@@ -6134,13 +6135,13 @@ a.close.disabled {
 }
 
     .carousel-item img {
-        width: 1000px;
-        height: 500px;
+        height: 700px;
+        /*  width: 1000px;
+        height: 500px;*/
         margin: 0 auto;
         display: block;
         align-items: center !important; /* توسيط عمودي */
         object-fit: cover;
-        
     }
 
 @media (max-width: 576px) {

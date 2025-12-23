@@ -773,6 +773,9 @@ Specificity:(0,5,1) {
 }
 .carousel-item {
     background-color: rgb(69 123 57 / 30%);
+    height: 700px;
+    margin: auto;
+    width: 100%;
 }
 .bg-light {
     background-color: #efefef;

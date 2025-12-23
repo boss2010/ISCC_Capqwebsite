@@ -21,12 +21,15 @@
 			}
 			@foreach (var item in Model.Slider)
 			{
+			
 				<div class="carousel-item  imgSlid @(isFirst ? "active" : "")">
-                   
+					<center>
                     <img src="@item.filepath" alt="Image">
+				</center>
 					<div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
 					</div>
 				</div>
+				
 				isFirst = false;
 			}
 			@* //////////////////////// *@
