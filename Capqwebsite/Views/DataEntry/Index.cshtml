@@ -81,7 +81,7 @@
                 <br />
             }
             @* @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12) *@
-            @if ((ViewBag.ID == 8 )|| (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12))
+            @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10))
             {
                 <div class="row">
                     <label>@ViewBag.filepath</label>
@@ -128,7 +128,7 @@
                         {
                             <th> التاريخ </th>
                         }
-                        @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
+                        @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10)
                         {
                             <th> الصورة  </th>
                         }
@@ -177,7 +177,7 @@
                                     </td>
                                 }
 
-                                @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12)
+                                @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12&& ViewBag.ID != 10)
                                 {
 
                                     <td>

@@ -27,7 +27,8 @@ namespace Capqwebsite.Controllers
                 /////////////////////////Slider/////////////////////////
                 homeVM.Slider = (from sl in dBContext.WebsiteTypeDetails
 
-                                 where sl.WebsitetypeID == 9 && (sl.IsActive == true || sl.IsActive == null)
+                                 where sl.WebsitetypeID == 9
+                                 && (sl.IsActive == true || sl.IsActive == null)
                                  select new ListSliderVM
                                  {
                                      ID = sl.ID,
@@ -38,7 +39,8 @@ namespace Capqwebsite.Controllers
                 /////////////////////////Intro/////////////////////////////
                 homeVM.Intro = (from intro in dBContext.WebsiteTypeDetails
 
-                                where intro.WebsitetypeID == 10 && (intro.IsActive == true || intro.IsActive == null)
+                                where intro.WebsitetypeID == 11 
+                                && (intro.IsActive == true || intro.IsActive == null)
                                 orderby intro.Date descending
                                 select new ListIntroVM
                                 {
@@ -71,7 +73,8 @@ namespace Capqwebsite.Controllers
                 /////////////////////////Advertis/////////////////////////////
                 homeVM.Advertis = (from adv in dBContext.WebsiteTypeDetails
 
-                                   where adv.WebsitetypeID == 8 && (adv.IsActive == true || adv.IsActive == null)
+                                   where adv.WebsitetypeID == 8
+                                   && (adv.IsActive == true || adv.IsActive == null)
                                    orderby adv.Date descending
                                    select new ListAvertisVM
                                    {
@@ -86,7 +89,8 @@ namespace Capqwebsite.Controllers
                 ////////////////////////////Alert/////////////////////////////
                 homeVM.Alert = (from aler in dBContext.WebsiteTypeDetails
 
-                                where aler.WebsitetypeID == 11 && (aler.IsActive == true || aler.IsActive == null)
+                                where aler.WebsitetypeID == 10 
+                                && (aler.IsActive == true || aler.IsActive == null)
 
                                 select new ListAlertVM
                                 {
