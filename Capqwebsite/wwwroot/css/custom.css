@@ -131,8 +131,8 @@ option {
 }
 
 i.fas.fa-newspaper.icon-style {
-    font-size: 25px;
-    color: #dfb163;
+    font-size: 30px;
+    color: #457b39;
     margin-left: 10px;
 }
 
@@ -773,6 +773,9 @@ Specificity:(0,5,1) {
 }
 .carousel-item {
     background-color: rgb(69 123 57 / 30%);
+    height: 700px;
+    margin: auto;
+    width: 100%;
 }
 .bg-light {
     background-color: #efefef;
@@ -887,3 +890,16 @@ Specificity:(0,5,1) {
     }
 }
 
+.text-primary {
+    color: #457b39 !important;
+}
+
+
+a {
+    color: #457b39;
+}
+.btn-edit {
+    color: #ffffff;
+    border: none;
+    background-color: #457b39;
+}

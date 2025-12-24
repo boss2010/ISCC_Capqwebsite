@@ -39,7 +39,7 @@
 			</div>
 			<div class="col-lg-7 mt-5 py-5 pr-lg-5">
 				
-				<h6 class="text-primary font-weight-normal text-uppercase mb-3">@(Model.Date.HasValue?Model.Date.Value.ToString("dd/MM/yyyy"):"nodate")</h6>
+				<h6 class="text-primary font-weight-normal text-uppercase mb-3">@(Model.Date.HasValue?Model.Date.Value.ToString("dd/MM/yyyy"):"")</h6>
 				<h1 class="mb-4 section-title">@Model.TitleAr</h1>
 				<p class="mb-4">
 					@Model.descAr
