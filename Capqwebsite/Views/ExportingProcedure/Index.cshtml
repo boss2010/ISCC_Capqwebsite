@@ -59,12 +59,7 @@
 					<br>
 					<br>
 
-					@Html.DropDownList(
-											"ItemID",
-											(IEnumerable<SelectListItem>)ViewData["ItemList"],
-											"-- اختار --",
-											new { @id = "ItemListId", @class = "form-control" }
-											)
+					@Html.DropDownList("ItemID",(IEnumerable<SelectListItem>)ViewData["ItemList"],"-- اختار --",new { @id = "ItemListId", @class = "form-control" })
 
 
 				</div>
