@@ -1,25 +1,11 @@
 ﻿@model ViewModels.DashboardVM
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 <style>
-    .col-md-4{
+    .col-md-4 {
         background: #e3e3e3;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        
     }
 </style>
-<br />
-<br>
-    <div class="row">
-    <div class="col-md-1"></div>
-        <div class="col-md-4">
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-        </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
-        </div>
-    <div class="col-md-1"></div>
-    </div>
 <br />
 <br>
 <div class="row">
@@ -29,143 +15,199 @@
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-4">
-        <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+        <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
     </div>
 </div>
-@foreach (var item in @Model.Countries)
-{
-    item.CountOrders.ToString();
-}
+<br />
+<br>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+    </div>
+    <div class="col-md-1"></div>
+   @*  <div class="col-md-4">
+        <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+    </div> *@
+    
+    <div class="col-md-1"></div>
+</div>
 
-@* ViewBag.People
-ViewBag.Public_Organizations *@
+
+
+
+
 @* /////////////////////////////////////////script///////////////////////////////////////////////// *@
 
 
 <script>
-   
-    console.log(@ViewBag.People);
-      
-    const xValues = ["الشركات ", "الهيئات", "الأفراد"];
-    const yValues = [@ViewBag.Company_Nationals,@ViewBag.Public_Organizations,@ViewBag.People];
-    const barColors = ["red", "green","blue"];
 
-    const ctx = document.getElementById('myChart');
+            console.log(@ViewBag.People);
 
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: xValues,
-        datasets: [{
-          backgroundColor: barColors,
-          data: yValues
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {display: false},
-          title: {
-            display: true,
-            text: "التغيرات بالنسبة للأفراد والهيئات والشركات  ",
-            font: {size: 16}
-          }
-        }
-      }
-    });
+            const xValues = ["الشركات ", "الهيئات", "الأفراد"];
+            const yValues = [@ViewBag.Company_Nationals,@ViewBag.Public_Organizations,@ViewBag.People];
+            const barColors = ["red", "green","blue","yellow","pink"];
+
+            const ctx = document.getElementById('myChart');
+
+            new Chart(ctx, {
+              type: "bar",
+              data: {
+                labels: xValues,
+                datasets: [{
+                  backgroundColor: barColors,
+                  data: yValues
+                }]
+              },
+              options: {
+                plugins: {
+                  legend: {display: false},
+                  title: {
+                    display: true,
+                    text: "التغيرات بالنسبة للأفراد والهيئات والشركات  ",
+                    font: {size: 16}
+                  }
+                }
+              }
+            });
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                     
+                const ctx3 = document.getElementById('myChart3');
+
+                    new Chart(ctx3, {
+                      type: "line",
+                      data: {
+                        labels: xValues,
+                        datasets: [{
+                          data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+        //                 data: [
+        //   @ViewBag.Company_Nationals,
+        //   @ViewBag.Company_Nationals,
+        //   @ViewBag.Company_Nationals
+        // ],
+                          borderColor: "red",
+                           label: "الشركات",
+                          pointRadius: 2,
+                          tension: 0.4,
+                        }, {
+                           data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+        //                  data: [
+        //   @ViewBag.Public_Organizations,
+        //   @ViewBag.Public_Organizations,
+        //   @ViewBag.Public_Organizations
+        // ],
+                          borderColor: "green",
+    label: "الهيئات",
+                          pointRadius: 2,
+                          tension: 0.4,
+                        }, {
+                           data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+        //                   data: [
+        //   @ViewBag.People,
+        //   @ViewBag.People,
+        //   @ViewBag.People
+        // ],
+                          borderColor: "blue",
+                           label: "الأفراد",
+                          pointRadius: 2,
+                          tension: 0.4,
+                        }]
+                      },
+
+                    });
+                            // ///////////////////////////////pie//////////////////////Countries/////////////////////////////////////////////////////////
 
 
-
-     const xValuesCountries = ["اوكرانيا","اليابان","مصر","السعودية","قطر"];
-        // const yValuesCountries = [@ViewBag.Company_Nationals,@ViewBag.Public_Organizations,@ViewBag.People];
-        const yValuesCountries = @foreach(var item in Model.Countries)
-    {
-            @item.CountOrders
-                if (item != Model.Countries.Last())
+                let xValuesCountries = [
+            @foreach (var item in Model.Countries)
             {
-                    @: ,  // فاصلة بين العناصر
+                            <text>"@item.Country",</text>
             }
-    }
+            ];
+                 xValuesCountries = @Html.Raw(
+                                                                                        System.Text.Json.JsonSerializer.Serialize(
+                                                                                                                        Model.Countries.Select(x => x.Country)
+                                                                                        )
+                                                        );
 
-    const ctx1 = document.getElementById('myChart1');
-
-    new Chart(ctx1, {
-      type: "pie",
-      data: {
-        labels: xValuesCountries,
-        datasets: [{
-          backgroundColor: barColors,
-          data: yValuesCountries
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {display:true},
-          title: {
-            display: true,
-            text: "",
-            font: {size:16}
-          }
-        }
-      }
-    });
+             // alert(xValuesCountries+"xValuesCountries");
+            console.log("xValuesCountries:", xValuesCountries);
+                const yValuesCountries = [@foreach(var item in Model.Countries)
+                                        {
+                            <text>@item.CountOrders,</text>
 
 
+            }
+    ];
+             // alert(yValuesCountries+"yValuesCountries");
+            const ctx1 = document.getElementById('myChart1');
+
+            new Chart(ctx1, {
+              type: "pie",
+              data: {
+                labels: xValuesCountries,
+                datasets: [{
+                  backgroundColor: barColors,
+                  data: yValuesCountries
+                }]
+              },
+              options: {
+                plugins: {
+                  legend: {display:true},
+                  title: {
+                    display: true,
+                    text: "أعلى خمس دول بالنسبة للوارد",
+                    font: {size:16}
+                  }
+                }
+              }
+            });
 
 
-        const ctx2 = document.getElementById('myChart2');
 
-    new Chart(ctx2, {
-      type: "doughnut",
-      data: {
-        labels: xValues,
-        datasets: [{
-          backgroundColor: barColors,
-          data: yValues
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {display:true},
-          title: {
-            display: true,
-            text: "",
-            font: {size:16}
-          }
-        }
-      }
-    });
+            // ///////////////////////////////doughnut//////////////////////products/////////////////////////////////////////////////////////
+                let xValuesproducts = [
+            @foreach (var item in Model.Products)
+            {
+                                <text>"@item.Country",</text>
+            }
+            ];
+                     xValuesproducts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Products.Select(x => x.Country)
+                                                                                                                                                        )    );
+
+                     // alert(xValuesproducts+"xValuesproducts");
+                    console.log("xValuesproducts:", xValuesproducts);
+                                const yValuesProducts = [@foreach(var item in Model.Products)
+                                                        {
+                                <text>@item.CountOrders,</text>
 
 
-        const ctx3 = document.getElementById('myChart3');
+            }
+        ];
+                const ctx2 = document.getElementById('myChart2');
 
-    new Chart(ctx3, {
-      type: "line",
-      data: {
-        labels: xValues,
-        datasets: [{
-          data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
-          borderColor: "red",
-          pointRadius: 2,
-          tension: 0.4,
-        }, {
-          data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
-          borderColor: "green",
-          pointRadius: 2,
-          tension: 0.4,
-        }, {
-          data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
-          borderColor: "blue",
-          pointRadius: 2,
-          tension: 0.4,
-        }]
-      },
-      options: {
-        plugins: {
-          legend: { display: false }
-
-        }
-      }
-    });
+            new Chart(ctx2, {
+              type: "doughnut",
+              data: {
+                    labels: xValuesproducts,
+                datasets: [{
+                  backgroundColor: barColors,
+                      data: yValuesProducts
+                }]
+              },
+              options: {
+                plugins: {
+                  legend: {display:true},
+                  title: {
+                    display: true,
+                    text: "أعلى أربع منتجات بالنسبة للوارد",
+                    font: {size:16}
+                  }
+                }
+              }
+            });
+    /////////////////////////////////////////////////
 </script>
 
 
