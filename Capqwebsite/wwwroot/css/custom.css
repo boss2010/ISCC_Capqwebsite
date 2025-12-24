@@ -764,6 +764,7 @@ Specificity:(0,5,1) {
 }
 .carousel-control-next {
     right: 0;
+    z-index: 9999999;
 }
 .btn-primary {
     color: #ffffff;
