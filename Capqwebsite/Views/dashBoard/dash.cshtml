@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EF.Models.WebsiteTypeDetail>
+﻿@model ViewModels.DashboardVM
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 <style>
     .col-md-4{
@@ -32,6 +32,10 @@
         <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
     </div>
 </div>
+@foreach (var item in @Model.Countries)
+{
+    item.CountOrders.ToString();
+}
 
 @* ViewBag.People
 ViewBag.Public_Organizations *@
@@ -43,7 +47,7 @@ ViewBag.Public_Organizations *@
     console.log(@ViewBag.People);
       
     const xValues = ["الشركات ", "الهيئات", "الأفراد"];
-    const yValues = [49,@ViewBag.Public_Organizations,@ViewBag.People];
+    const yValues = [@ViewBag.Company_Nationals,@ViewBag.Public_Organizations,@ViewBag.People];
     const barColors = ["red", "green","blue"];
 
     const ctx = document.getElementById('myChart');
@@ -62,7 +66,7 @@ ViewBag.Public_Organizations *@
           legend: {display: false},
           title: {
             display: true,
-            text: "التغيرات فى الموقع الزراعى ",
+            text: "التغيرات بالنسبة للأفراد والهيئات والشركات  ",
             font: {size: 16}
           }
         }
@@ -71,16 +75,26 @@ ViewBag.Public_Organizations *@
 
 
 
+     const xValuesCountries = ["اوكرانيا","اليابان","مصر","السعودية","قطر"];
+        // const yValuesCountries = [@ViewBag.Company_Nationals,@ViewBag.Public_Organizations,@ViewBag.People];
+        const yValuesCountries = @foreach(var item in Model.Countries)
+    {
+            @item.CountOrders
+                if (item != Model.Countries.Last())
+            {
+                    @: ,  // فاصلة بين العناصر
+            }
+    }
 
     const ctx1 = document.getElementById('myChart1');
 
     new Chart(ctx1, {
       type: "pie",
       data: {
-        labels: xValues,
+        labels: xValuesCountries,
         datasets: [{
           backgroundColor: barColors,
-          data: yValues
+          data: yValuesCountries
         }]
       },
       options: {
@@ -88,7 +102,7 @@ ViewBag.Public_Organizations *@
           legend: {display:true},
           title: {
             display: true,
-            text: "title of chart",
+            text: "",
             font: {size:16}
           }
         }
@@ -114,7 +128,7 @@ ViewBag.Public_Organizations *@
           legend: {display:true},
           title: {
             display: true,
-            text: "title of chart",
+            text: "",
             font: {size:16}
           }
         }
