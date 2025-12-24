@@ -29,7 +29,8 @@ namespace Capqwebsite.Controllers
                             User_Creation_Date = ne.User_Creation_Date
 
                         }).ToList();
-            string TypeAr = DBContext.Websitetypes.Where(a => a.ID == ID).ToList().FirstOrDefault()?.TypeAr;
+            string TypeAr = DBContext.Websitetypes
+                .Where(a => a.ID == ID).ToList().FirstOrDefault()?.TypeAr;
 
             ViewBag.TypeAr = TypeAr;
             return View(list);
