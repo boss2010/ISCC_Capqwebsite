@@ -19,195 +19,245 @@
     </div>
 </div>
 <br />
-<br>
+<br />
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
+        <canvas id="myChart4" style="width:100%;max-width:600px"></canvas>
+    </div>
+</div>
+<br />
+<br />
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-4">
         <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
     </div>
-    <div class="col-md-1"></div>
-   @*  <div class="col-md-4">
-        <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
-    </div> *@
-    
+    <div class="col-md-1"></div>  
     <div class="col-md-1"></div>
 </div>
-
-
-
-
-
-@* /////////////////////////////////////////script///////////////////////////////////////////////// *@
-
-
 <script>
+    /* ====================== BAR CHART ====================== */
+    console.log(@ViewBag.People);
 
-            console.log(@ViewBag.People);
-
-            const xValues = ["الشركات ", "الهيئات", "الأفراد"];
-            const yValues = [@ViewBag.Company_Nationals,@ViewBag.Public_Organizations,@ViewBag.People];
-            const barColors = ["red", "green","blue","yellow","pink"];
-
-            const ctx = document.getElementById('myChart');
-
-            new Chart(ctx, {
-              type: "bar",
-              data: {
-                labels: xValues,
-                datasets: [{
-                  backgroundColor: barColors,
-                  data: yValues
-                }]
-              },
-              options: {
-                plugins: {
-                  legend: {display: false},
-                  title: {
-                    display: true,
-                    text: "التغيرات بالنسبة للأفراد والهيئات والشركات  ",
-                    font: {size: 16}
-                  }
-                }
-              }
-            });
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                     
-                const ctx3 = document.getElementById('myChart3');
-
-                    new Chart(ctx3, {
-                      type: "line",
-                      data: {
-                        labels: xValues,
-                        datasets: [{
-                          data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
-        //                 data: [
-        //   @ViewBag.Company_Nationals,
-        //   @ViewBag.Company_Nationals,
-        //   @ViewBag.Company_Nationals
-        // ],
-                          borderColor: "red",
-                           label: "الشركات",
-                          pointRadius: 2,
-                          tension: 0.4,
-                        }, {
-                           data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
-        //                  data: [
-        //   @ViewBag.Public_Organizations,
-        //   @ViewBag.Public_Organizations,
-        //   @ViewBag.Public_Organizations
-        // ],
-                          borderColor: "green",
-    label: "الهيئات",
-                          pointRadius: 2,
-                          tension: 0.4,
-                        }, {
-                           data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
-        //                   data: [
-        //   @ViewBag.People,
-        //   @ViewBag.People,
-        //   @ViewBag.People
-        // ],
-                          borderColor: "blue",
-                           label: "الأفراد",
-                          pointRadius: 2,
-                          tension: 0.4,
-                        }]
-                      },
-
-                    });
-                            // ///////////////////////////////pie//////////////////////Countries/////////////////////////////////////////////////////////
-
-
-                let xValuesCountries = [
-            @foreach (var item in Model.Countries)
-            {
-                            <text>"@item.Country",</text>
-            }
-            ];
-                 xValuesCountries = @Html.Raw(
-                                                                                        System.Text.Json.JsonSerializer.Serialize(
-                                                                                                                        Model.Countries.Select(x => x.Country)
-                                                                                        )
-                                                        );
-
-             // alert(xValuesCountries+"xValuesCountries");
-            console.log("xValuesCountries:", xValuesCountries);
-                const yValuesCountries = [@foreach(var item in Model.Countries)
-                                        {
-                            <text>@item.CountOrders,</text>
-
-
-            }
+    const xValues = ["الشركات ", "الهيئات", "الأفراد"];
+    const yValues = [
+        @ViewBag.Company_Nationals,
+        @ViewBag.Public_Organizations,
+        @ViewBag.People
     ];
-             // alert(yValuesCountries+"yValuesCountries");
-            const ctx1 = document.getElementById('myChart1');
+    const barColors = ["red", "green", "blue", "yellow", "pink"];
 
-            new Chart(ctx1, {
-              type: "pie",
-              data: {
-                labels: xValuesCountries,
-                datasets: [{
-                  backgroundColor: barColors,
-                  data: yValuesCountries
-                }]
-              },
-              options: {
-                plugins: {
-                  legend: {display:true},
-                  title: {
+    const ctx = document.getElementById('myChart');
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "التغيرات بالنسبة للأفراد والهيئات والشركات",
+                    font: { size: 16 }
+                }
+            }
+        }
+    });
+
+
+    /* ====================== LINE CHART ====================== */
+    
+
+
+    /* ====================== PIE CHART (COUNTRIES) ====================== */
+    let xValuesCountries = [
+        @foreach (var item in Model.Countries)
+        {
+                <text>"@item.Country",</text>
+        }
+    ];
+
+    xValuesCountries = @Html.Raw(
+                System.Text.Json.JsonSerializer.Serialize(
+                        Model.Countries.Select(x => x.Country)
+                )
+        );
+
+    console.log("xValuesCountries:", xValuesCountries);
+
+    const yValuesCountries = [
+        @foreach (var item in Model.Countries)
+        {
+                <text>@item.CountOrders,</text>
+        }
+    ];
+
+    const ctx1 = document.getElementById('myChart1');
+    new Chart(ctx1, {
+        type: "pie",
+        data: {
+            labels: xValuesCountries,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValuesCountries
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: true },
+                title: {
                     display: true,
                     text: "أعلى خمس دول بالنسبة للوارد",
-                    font: {size:16}
-                  }
+                    font: { size: 16 }
                 }
-              }
-            });
-
-
-
-            // ///////////////////////////////doughnut//////////////////////products/////////////////////////////////////////////////////////
-                let xValuesproducts = [
-            @foreach (var item in Model.Products)
-            {
-                                <text>"@item.Country",</text>
             }
-            ];
-                     xValuesproducts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Products.Select(x => x.Country)
-                                                                                                                                                        )    );
-
-                     // alert(xValuesproducts+"xValuesproducts");
-                    console.log("xValuesproducts:", xValuesproducts);
-                                const yValuesProducts = [@foreach(var item in Model.Products)
-                                                        {
-                                <text>@item.CountOrders,</text>
+        }
+    });
 
 
-            }
-        ];
-                const ctx2 = document.getElementById('myChart2');
+    /* ====================== DOUGHNUT CHART (PRODUCTS) ====================== */
+    let xValuesproducts = [
+        @foreach (var item in Model.Products)
+        {
+                <text>"@item.Country",</text>
+        }
+    ];
 
-            new Chart(ctx2, {
-              type: "doughnut",
-              data: {
-                    labels: xValuesproducts,
-                datasets: [{
-                  backgroundColor: barColors,
-                      data: yValuesProducts
-                }]
-              },
-              options: {
-                plugins: {
-                  legend: {display:true},
-                  title: {
+    xValuesproducts = @Html.Raw(
+                System.Text.Json.JsonSerializer.Serialize(
+                        Model.Products.Select(x => x.Country)
+                )
+        );
+
+    console.log("xValuesproducts:", xValuesproducts);
+
+    const yValuesProducts = [
+        @foreach (var item in Model.Products)
+        {
+                <text>@item.CountOrders,</text>
+        }
+    ];
+
+    const ctx2 = document.getElementById('myChart2');
+    new Chart(ctx2, {
+        type: "doughnut",
+        data: {
+            labels: xValuesproducts,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValuesProducts
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: true },
+                title: {
                     display: true,
                     text: "أعلى أربع منتجات بالنسبة للوارد",
-                    font: {size:16}
-                  }
+                    font: { size: 16 }
                 }
-              }
-            });
-    /////////////////////////////////////////////////
+            }
+        }
+    });
+
+
+    /* ====================== DOUGHNUT CHART (PRODUCTS) ====================== */
+    let xValuesproductsEX = [
+         @foreach (var item in Model.ProductsEX)
+         {
+                     <text>"@item.Country",</text>
+         }
+     ];
+
+     xValuesproductsEX = @Html.Raw(
+                                  System.Text.Json.JsonSerializer.Serialize(
+                                                  Model.ProductsEX.Select(x => x.Country)
+                                  )
+                  );
+
+     const yValuesProductsEX = [
+         @foreach (var item in Model.ProductsEX)
+         {
+                     <text>@item.CountOrders,</text>
+         }
+     ];
+
+     const ctx3 = document.getElementById('myChart3');
+     new Chart(ctx3, {
+         type: "doughnut",
+         data: {
+             labels: xValuesproductsEX,
+             datasets: [{
+                 backgroundColor: barColors,
+                 data: yValuesProductsEX
+             }]
+         },
+         options: {
+             plugins: {
+                 legend: { display: true },
+                 title: {
+                     display: true,
+                     text: "أعلى أربع منتجات بالنسبة للصادر",
+                     font: { size: 16 }
+                 }
+             }
+         }
+     });
+
+     /* ====================== PIE CHART (COUNTRIES) ====================== */
+    let xValuesCountriesEX = [
+        @foreach (var item in Model.CountriesEx)
+        {
+                    <text>"@item.Country",</text>
+        }
+    ];
+
+    xValuesCountriesEX = @Html.Raw(
+                                System.Text.Json.JsonSerializer.Serialize(
+                                                Model.CountriesEx.Select(x => x.Country)
+                                )
+                );
+
+
+    const yValuesCountriesEX = [
+        @foreach (var item in Model.CountriesEx)
+        {
+                    <text>@item.CountOrders,</text>
+        }
+    ];
+
+    const ctx4 = document.getElementById('myChart4');
+    new Chart(ctx4, {
+        type: "pie",
+        data: {
+            labels: xValuesCountriesEX,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValuesCountriesEX
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: true },
+                title: {
+                    display: true,
+                    text: "أعلى خمس دول بالنسبة للصادر",
+                    font: { size: 16 }
+                }
+            }
+        }
+    });
 </script>
+
 
 

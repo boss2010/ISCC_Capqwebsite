@@ -68,11 +68,44 @@ namespace Capqwebsite.Controllers
                          }).ToList().Take(4);
 
 
+            //الصادر
+            var ProductEX = (from ex in db.Ex_CheckRequests.Where(a => a.IsAccepted == true
+                         //&& System.Data.Entity. DbFunctions.TruncateTime(a.IsAccepted_Date).Value.Day == DateTime.Now.Day
+                         //&& System.Data.Entity.DbFunctions.TruncateTime(a.IsAccepted_Date).Value.Month == DateTime.Now.Month
+                         //&& System.Data.Entity.DbFunctions.TruncateTime(a.IsAccepted_Date).Value.Year == DateTime.Now.Year
+                         )
+                            join It in db.Ex_CheckRequest_Items on ex.ID equals It.Ex_CheckRequest_ID
+
+                            join In in db.Item_ShortNames on It.Item_ShortName_ID equals In.ID
+                            group It by In.ShortName_Ar into g
+                            orderby Math.Round((double)g.Sum(It => It.GrossWeight)) descending
+                            select new ProductsEXVM
+                            {
+                                Country = g.Key,
+                                CountOrders = Math.Round((double)g.Sum(It => It.GrossWeight / 1000)),
+
+                            }).ToList().Take(4);
+
+            var CountriesEx = (from ex in db.Ex_CheckRequests.Where(a => a.IsAccepted == true)
+                             join It in db.Ex_CheckRequest_Items on ex.ID equals It.Ex_CheckRequest_ID
+                             join In in db.Ex_CheckRequest_Data on ex.ID equals In.Ex_CheckRequest_ID
+                             join IE in db.Countries on In.ExportCountry_Id equals IE.ID
+                             group It by IE.Ar_Name into g
+                             orderby Math.Round((double)g.Sum(It => It.GrossWeight)) descending
+                             select new CountriesExVM
+                             {
+                                 Country = g.Key,
+                                 CountOrders = Math.Round((double)g.Sum(It => It.GrossWeight) / 1000)
+
+                             }).ToList().Take(5);
             //return View();
             var vm = new DashboardVM
             {
                 Countries = Countries,
-                Products = Products
+                CountriesEx = CountriesEx,
+                Products = Products,
+                ProductsEX = ProductEX,
+
             };
 
             return View(vm);
