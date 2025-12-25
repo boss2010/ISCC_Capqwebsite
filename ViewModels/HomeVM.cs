@@ -42,6 +42,7 @@ namespace ViewModels
 
         public string? filepath { get; set; }
         public DateTime? User_Creation_Date { get; set; }
+        public string? linkURL { get; set; }
     }
     ///////////////////////////////Avertis///////////////////////////////////////
     public class ListAvertisVM

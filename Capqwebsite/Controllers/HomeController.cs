@@ -62,9 +62,10 @@ namespace Capqwebsite.Controllers
                                    ID = ne.ID,
                                    TitleAr = ne.TitleAr,
                                    filepath = ne.filepath,
+                                   linkURL=ne.linkURL,
                                    //descAr=ne.descAr,
                                    descAr = ne.descAr != null ?
-                               (ne.descAr.Length > 150 ? ne.descAr.Substring(0, 200) : ne.descAr)
+                               (ne.descAr.Length > 100 ? ne.descAr.Substring(0, 100) : ne.descAr)
                                : null,
                                    User_Creation_Date = ne.User_Creation_Date
 
