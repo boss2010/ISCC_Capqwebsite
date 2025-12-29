@@ -287,6 +287,7 @@ namespace Capqwebsite.Controllers
         [HttpGet]
         public IActionResult Edit(int id, int IdType)
         {
+
             try
             {
 
