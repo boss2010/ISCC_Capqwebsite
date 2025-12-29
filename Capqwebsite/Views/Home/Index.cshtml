@@ -21,11 +21,15 @@
 			}
 			@foreach (var item in Model.Slider)
 			{
-				<div class="carousel-item @(isFirst ? "active" : "")">
-					<img  src="@item.filepath" alt="Image">
+			
+				<div class="carousel-item  imgSlid @(isFirst ? "active" : "")">
+					<center>
+                    <img src="@item.filepath" alt="Image">
+				</center>
 					<div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
 					</div>
 				</div>
+				
 				isFirst = false;
 			}
 			@* //////////////////////// *@
@@ -101,7 +105,7 @@
 
 
 
-					<div class="col-md-5">
+					<div class="col-md-5" style="height: 480px;">
 						<div class="view d-flex flex-column align-items-center justify-content-center  h-100 py-3 px-3 width-inherit">
 							<img src="@item.filepath" class="img-logo-2" />
 						</div>
@@ -133,8 +137,7 @@
 		<div class="row pb-3">
 			@foreach (var item in Model.News) { 
 				<div class="col-md-4 mb-4">
-					<div class="card border-0 mb-2" style="    padding: 10px;">
-
+					<div class="card border-0 mb-2" style=" padding: 10px;">
 						<img class="card-img-top img-height" src="@item.filepath" alt="">
 						<div class="card-body bg-white p-4">
 							<div class="d-flex align-items-center mb-3">
@@ -149,6 +152,11 @@
 							</div>
 
 							<p>@item.descAr</p>
+							<br />
+							<center>
+								<a href="@item.linkURL" class="btn btn-primary"><i class="fa fa-file"></i> المصدر</a>
+							
+							</center>
 
 
 						</div>
@@ -201,7 +209,6 @@
 					<div class="swiper adsSwiper">
 						<div class="swiper-wrapper">
 
-
 							@foreach (var item in Model.Advertis)
 							{
 								<div class="swiper-slide">
@@ -233,7 +240,12 @@
 
 									</div>
 								</div>
+
+
 														}
+
+
+
 
 						</div>
 
@@ -323,7 +335,7 @@
 	document.addEventListener("DOMContentLoaded", function () {
 
 	  const adsSwiper = new Swiper(".adsSwiper", {
-		slidesPerView: 3,
+		slidesPerView: 5,
 		spaceBetween: 25,
 		loop: true,
 		grabCursor: true,
@@ -344,9 +356,19 @@
 	  });
 
 	});
-</script>
-<!-- Testimonial End -->
-<!-- Required JS -->
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+	var swiper = new Swiper(".adsSwiper", {
+		slidesPerView: 1,
+		spaceBetween: 20,
+		loop: true,
+		navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		},
+	});
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 

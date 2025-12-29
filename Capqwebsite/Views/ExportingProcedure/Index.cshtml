@@ -20,9 +20,9 @@
 						الصفحة الرئيسية
 					</a>
 					<i class="fas fa-angle-double-right text-primary mx-2"></i>
-					<a class="btn btn-secondary disabled" href="">التصدير</a>
+					<a class="disabled" href="">التصدير</a>
 					<i class="fas fa-angle-double-right text-primary mx-2"></i>
-					<a class="btn btn-secondary disabled" href="">اشترطات التصدير</a>
+					<a class=" disabled" href="">اشترطات التصدير</a>
 				</div>
 			</div>
 		</div>
@@ -59,12 +59,7 @@
 					<br>
 					<br>
 
-					@Html.DropDownList(
-											"ItemID",
-											(IEnumerable<SelectListItem>)ViewData["ItemList"],
-											"-- اختار --",
-											new { @id = "ItemListId", @class = "form-control" }
-											)
+					@Html.DropDownList("ItemID",(IEnumerable<SelectListItem>)ViewData["ItemList"],"-- اختار --",new { @id = "ItemListId", @class = "form-control" })
 
 
 				</div>
@@ -92,7 +87,7 @@
 
 					<center style="margin-bottom: 15px;">
 
-						<input id="btnsearch" type="submit" class="btn btn-secondary box-shadow mt-3 py-2 px-4" name="btnSave" value="بحث">
+						<input id="btnsearch" type="submit" class="btn-edit box-shadow mt-3 py-2 px-4" name="btnSave" value="بحث">
 					</center>
 				</div>
 				<div class="col-md-4"></div>
@@ -100,7 +95,7 @@
 		</form>
 
 		@* //////////////////////////partial view 23/9/2025////////////////////////// *@
-		<div class="card-body pt-5">
+		
 			<div id="divdata">
 				@if (@Model != null)
 				{
@@ -108,7 +103,7 @@
 				}
 
 			</div>
-		</div>
+		
 
 	</div>
 </div>
