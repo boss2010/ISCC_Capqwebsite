@@ -26,7 +26,7 @@ namespace Capqwebsite.Controllers
 
                     try
                     {
-                        ViewBag.TitleAr = "الاسم"; 
+                        ViewBag.TitleAr = "الاسم";
                         ViewBag.TitleEn = "";
                         ViewBag.descAr = "التفاصيل";
                         ViewBag.descEn = "التفاصيل";
@@ -36,11 +36,12 @@ namespace Capqwebsite.Controllers
 
                         switch (ID)
                         {
-                           
-                            case 12 ://مكاتبنا
+
+                            case 12://مكاتبنا
                                 ViewBag.descEn = "الهاتف";
                                 ViewBag.descAr = "العنوان";
                                 ViewBag.TitleEn = "البريد";
+                                ViewBag.linkURL = "عنوان الخريطة";
                                 break;
                             case 7://الاخبار
                                 ViewBag.TitleAr = "العنوان";
@@ -72,11 +73,12 @@ namespace Capqwebsite.Controllers
                         ////////////////////////////////////////////////////
                         return Redirect("/Login/Index");
                     }
-                    
+
                 }
                 else { return View(); }
             }
-            else {
+            else
+            {
                 //return View();
                 return Redirect("/Login/Index");
             }
@@ -88,9 +90,9 @@ namespace Capqwebsite.Controllers
             {
                 Console.WriteLine("❌ Model State غير صحيح:");
             }
-                try
+            try
             {
-            
+
 
                 int ID = int.Parse(GetSequencing("WebsiteTypeDetail_SEQ", "int"));
                 form.ID = ID;
@@ -283,35 +285,60 @@ namespace Capqwebsite.Controllers
 
         //////////////////////////////////////Edit//////////////////////////////////////////////////
         [HttpGet]
-        public IActionResult Edit(int id,int IdType)
+        public IActionResult Edit(int id, int IdType)
         {
             try
             {
 
-          
-            if (HttpContext.Session.GetString("UserSession") != null)
-            {
-                if (id != null)
-            {
-                var itemToEdit = DBContext.WebsiteTypeDetails.FirstOrDefault(a => a.ID == id);
-                if (itemToEdit != null)
+                ViewBag.TitleAr = "الاسم";
+                ViewBag.TitleEn = "";
+                ViewBag.descAr = "التفاصيل";
+                ViewBag.descEn = "التفاصيل";
+                ViewBag.filepath = "اختيار ملف";
+                ViewBag.linkURL = "الرابط";
+                ViewBag.Date = "التاريخ";
+
+                switch (IdType)
                 {
-                    string TypeAr = DBContext.Websitetypes.Where(a => a.ID == itemToEdit.WebsitetypeID).FirstOrDefault()?.TypeAr;
-                    ViewBag.TypeAr = TypeAr;
-                    ViewBag.ID = itemToEdit.WebsitetypeID;
-                    ViewBag.IdType = IdType;
-                    ViewBag.EditMode = true;
-                    return View(itemToEdit); // Pass single item for editing
+
+                    case 12://مكاتبنا
+                        ViewBag.descEn = "الهاتف";
+                        ViewBag.descAr = "العنوان";
+                        ViewBag.TitleEn = "البريد";
+                        ViewBag.linkURL = "عنوان الخريطة";
+                        break;
+                    case 7://الاخبار
+                        ViewBag.TitleAr = "العنوان";
+                        break;
+                    default:
+                        break;
                 }
-                return View();
-            }
-            return View();
-            }
-            else
-            {
-                //return View();
-                return Redirect("/Login/Index");
-            }
+                if (HttpContext.Session.GetString("UserSession") != null)
+                {
+                    if (id != null)
+                    {
+                        var itemToEdit = DBContext.WebsiteTypeDetails.FirstOrDefault(a => a.ID == id);
+                        if (itemToEdit != null)
+                        {
+                            string TypeAr = DBContext.Websitetypes.Where(a => a.ID == itemToEdit.WebsitetypeID).FirstOrDefault()?.TypeAr;
+                            ViewBag.TypeAr = TypeAr;
+                            ViewBag.ID = itemToEdit.WebsitetypeID;
+                            ViewBag.IdType = IdType;
+                            ViewBag.EditMode = true;
+                            return View(itemToEdit); // Pass single item for editing
+                        }
+                        
+
+
+                            return View();
+                    }
+                    return View();
+                }
+                else
+                {
+                    //return View();
+                    return Redirect("/Login/Index");
+                }
             }
             catch (Exception ex)
             {
@@ -341,38 +368,38 @@ namespace Capqwebsite.Controllers
             try
             {
 
-            
+
                 // Handle file upload
                 if (imageFile != null && imageFile.Length > 0)
-            {
-                // Get the original filename (e.g., "myphoto.jpg")
-                string originalFileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
-                string fileExtension = Path.GetExtension(imageFile.FileName); // .jpg, .png, etc.
-
-                // Add a timestamp or GUID to avoid duplicates
-                //string uniqueFileName = $"{originalFileName}_{DateTime.Now.Ticks}{fileExtension}";
-                string uniqueFileName = $"{originalFileName}{fileExtension}";
-                var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "img");
-                if (!Directory.Exists(directoryPath))
                 {
-                    Directory.CreateDirectory(directoryPath);
-                }
-                // Save to wwwroot/img/
-                string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "img", uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await imageFile.CopyToAsync(fileStream);
-                }
+                    // Get the original filename (e.g., "myphoto.jpg")
+                    string originalFileName = Path.GetFileNameWithoutExtension(imageFile.FileName);
+                    string fileExtension = Path.GetExtension(imageFile.FileName); // .jpg, .png, etc.
 
-                // Store the relative path (e.g., "~/img/myphoto_123456789.jpg")
-                form.filepath = $"/img/{uniqueFileName}";
+                    // Add a timestamp or GUID to avoid duplicates
+                    //string uniqueFileName = $"{originalFileName}_{DateTime.Now.Ticks}{fileExtension}";
+                    string uniqueFileName = $"{originalFileName}{fileExtension}";
+                    var directoryPath = Path.Combine(_hostingEnvironment.WebRootPath, "img");
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+                    // Save to wwwroot/img/
+                    string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "img", uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(fileStream);
+                    }
 
-            }
-                form.User_Updation_Date= DateTime.Now; 
+                    // Store the relative path (e.g., "~/img/myphoto_123456789.jpg")
+                    form.filepath = $"/img/{uniqueFileName}";
+
+                }
+                form.User_Updation_Date = DateTime.Now;
                 DBContext.WebsiteTypeDetails.Update(form);
-            DBContext.SaveChanges();
-            var returnedId = form.WebsitetypeID;
-            return RedirectToAction("Index", new { ID = returnedId });
+                DBContext.SaveChanges();
+                var returnedId = form.WebsitetypeID;
+                return RedirectToAction("Index", new { ID = returnedId });
             }
             catch (Exception ex)
             {
@@ -397,7 +424,7 @@ namespace Capqwebsite.Controllers
 
         public IActionResult Delete(int id)
         {
-            var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id ).ToList().FirstOrDefault();
+            var deletdRow = DBContext.WebsiteTypeDetails.Where(a => a.ID == id).ToList().FirstOrDefault();
             var returnedId = deletdRow.WebsitetypeID;
             try
             {
@@ -405,7 +432,7 @@ namespace Capqwebsite.Controllers
                 //int y = 5 / x;
                 deletdRow.IsActive = false;
                 DBContext.SaveChanges();
-                
+
                 return RedirectToAction("Index", new { ID = returnedId });
             }
             catch (Exception ex)

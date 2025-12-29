@@ -33,7 +33,7 @@
 
         <form asp-controller="DataEntry" id="myForm" asp-action="Index" method="post" enctype="multipart/form-data">
             <input name="WebsitetypeID" id="WebsitetypeID" type="hidden" value=@(ViewBag.ID ?? "Not specified") />
-            @if (ViewBag.ID != 9 && ViewBag.ID != 12)
+            @if (ViewBag.ID != 9 )
             {
                 <div class="row">
                     <label>@ViewBag.TitleAr</label>
@@ -46,7 +46,7 @@
             @if ( ViewBag.ID == 12)
             {
                 <div class="row">
-                    <label>الاسم  باللغة الانجليزية</label>
+                    <label>@ViewBag.TitleEn</label>
                     <input name="TitleEn" type="text" class="form-control p-4" data-validation-required-message="برجاء ادخال الاسم" aria-invalid="false">
                     <p class="help-block text-danger"></p>
                 </div>
@@ -93,7 +93,7 @@
             @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
             {
                 <div class="row">
-                    <label>الرابط الإلكتروني</label>
+                    <label>@ViewBag.linkURL</label>
                     <input name="linkURL" type="text" class="form-control p-4" autocomplete="off" />
                     <p class="help-block text-danger"></p>
                 </div>
@@ -108,7 +108,7 @@
             <table class="table table-bordered table-striped table-hover">
                 <thead class="bg-primary text-white">
                     <tr>
-                        @if (ViewBag.ID != 9 && ViewBag.ID != 12)
+                        @if (ViewBag.ID != 9 )
                         {
                             <th>@ViewBag.TitleAr</th>
                         }
@@ -118,15 +118,15 @@
                         }
                         @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
                         {
-                            <th> تفاصيل عربي </th>
+                            <th> @ViewBag.descAr</th>
                         }
                         @if (ViewBag.ID == 7 || ViewBag.ID == 12)
                         {
-                            <th> تفاصيل انجليزي </th>
+                            <th> @ViewBag.descEn </th>
                         }
                         @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10)
                         {
-                            <th> التاريخ </th>
+                            <th> @ViewBag.Date </th>
                         }
                         @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10)
                         {
@@ -134,7 +134,7 @@
                         }
                         @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
                         {
-                            <th> الرابط </th>
+                            <th> @ViewBag.linkURL </th>
                         }
                         <th> الاجراءات </th>
 
@@ -147,7 +147,7 @@
                         {
 
                             <tr>
-                                @if (ViewBag.ID != 9 && ViewBag.ID != 12)
+                                @if (ViewBag.ID != 9 )
                                 {
                                     <td> @item.TitleAr </td>
                                 }
