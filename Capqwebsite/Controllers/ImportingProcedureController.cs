@@ -11,7 +11,7 @@ namespace Capqwebsite.Controllers
     {
         [AllowAnonymous]
         [Route("/ImportingProcedure/Index")]
-        public IActionResult Index(long ImInitiatorID = 0, long ItemID = 0)
+        public IActionResult Index(long ImInitiatorID = 0, long ItemID = 0,string ShortName_Ar="")
         {
             AgricultureDBContext dbContext = new AgricultureDBContext();
 
@@ -29,7 +29,7 @@ namespace Capqwebsite.Controllers
                                         InitiatorNameAr = c.Ar_Name,
                                         InitiatorNameEn = c.En_Name,
                                         //Country_Id = im.Country_Id,
-                                        Item_ShortName_ID = im.Item_ShortName_ID,
+                                        //Item_ShortName_ID = im.Item_ShortName_ID,
                                     }).Distinct().OrderBy(x => x.InitiatorNameAr).ToList();
 
 
@@ -38,19 +38,18 @@ namespace Capqwebsite.Controllers
             //////////////////////list of Im_Initiators////////////////////////////////
            
             var DataItem = (from i in dbContext.Item_ShortNames
-                            join Im_In in dbContext.Im_Initiators
-                            on i.ID equals Im_In.Item_ShortName_ID
-
+                                join Im_In in dbContext.Im_Initiators on i.ID equals Im_In.Item_ShortName_ID
+                            where  i.User_Deletion_Date == null && i.User_Deletion_Id == null
                             select new ItemVM
                             {
-                                ID = i.ID,
+                                //ID = i.ID,
                                 Name_Ar = i.ShortName_Ar,
                                 Name_En = i.ShortName_En,
 
                                 //Country_Id = im.Country_Id,
                                 //Item_ShortName_ID = im.Item_ShortName_ID,
                             }).Where(i => i.Name_Ar != null).Distinct().OrderBy(i => i.Name_Ar).ToList();
-            ViewData["ItemList"] = new SelectList(DataItem, "ID", "Name_Ar");
+            ViewData["ItemList"] = new SelectList(DataItem, "Name_Ar", "Name_Ar");
             ////////////////////////////
 
             if (ImInitiatorID > 0 && ItemID > 0)
@@ -58,7 +57,7 @@ namespace Capqwebsite.Controllers
                 var List = (from Im_In in dbContext.Im_Initiators
                             join intext in dbContext.Im_Constrain_Initiator_Texts on Im_In.ID equals intext.Im_Initiator_ID
                             where Im_In.Country_Id == ImInitiatorID 
-                            && Im_In.Item_ShortName_ID == ItemID 
+                            && Im_In.Item_ShortName.ShortName_Ar == ShortName_Ar
                             && intext.IsActive==true
                             select new Im_InitiatorVM
                             {
