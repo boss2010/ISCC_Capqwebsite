@@ -369,7 +369,7 @@ namespace Capqwebsite.Controllers
             try
             {
 
-
+                form.IsActive = true;
                 // Handle file upload
                 if (imageFile != null && imageFile.Length > 0)
                 {
