@@ -7,6 +7,7 @@
 @* ////////////////////rr///////////////  *@
 <!-- Carousel Start -->
 <div class="container-fluid p-0 ">
+	
 	<div id="header-carousel" class="carousel slide row" data-ride="carousel">
 		
 
@@ -204,56 +205,51 @@
 			<div class="col-md-9 col-sm-6 p-0 mar-auto">
 				@* 				menna
  *@
-				<div class="ads-swiper-wrapper">
+		
 
-					<div class="swiper adsSwiper">
-						<div class="swiper-wrapper">
 
-							@foreach (var item in Model.Advertis)
-							{
-								<div class="swiper-slide">
-									<div class="card">
+				<div class="owl-carousel testimonial-carousel position-relative pb-5 mb-md-5">
+					@foreach (var item in Model.Advertis)
+					{
+						<div class="swiper-slide">
+							<div class="card">
 
-										<div class="image-content">
-											<span class="overlay"></span>
-											<div class="card-image">
-												<img src="@item.filepath" class="card-img">
-											</div>
-										</div>
-
-										<div class="card-content">
-											<h2 class="name">
-												@if (item.Date != null)
-												{
-													@item.Date.Value.ToString("dd/MM/yyyy") 
-												}
-												@item.descAr
-											</h2>
-
-											<a href="@Url.Action("RowDetail","News",
-					  			          new { ID = item.ID, Type = "الإعلانات" })"
-										   class="description">
-											<i class="fa fa-link"></i>
-										</a>
-
-										</div>
-
+								<div class="image-content">
+									<span class="overlay"></span>
+									<div class="card-image">
+										<img src="@item.filepath" class="card-img">
 									</div>
 								</div>
 
+								<div class="card-content">
+									<h2 class="name">
+										@if (item.Date != null)
+										{
+											@item.Date.Value.ToString("dd/MM/yyyy")
+										}
+										@item.descAr
+									</h2>
 
-														}
+									<a href="@Url.Action("RowDetail","News",
+					  			          new { ID = item.ID, Type = "الإعلانات" })"
+									   class="d bg-gree btn btn-secondary box-shadow mt-3 py-2 px-4">
 
 
+										التفاصيل
 
+										<i class="fa fa-link"></i>
+									</a>
 
+								</div>
+
+							</div>
 						</div>
 
-						<div class="swiper-button-next"></div>
-						<div class="swiper-button-prev"></div>
-					</div>
 
-				</div>
+					}
+
+
+					</div>
 			</div>
 
 
