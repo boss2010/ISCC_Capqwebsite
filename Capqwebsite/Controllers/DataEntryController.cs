@@ -41,10 +41,15 @@ namespace Capqwebsite.Controllers
                                 ViewBag.descEn = "الهاتف";
                                 ViewBag.descAr = "العنوان";
                                 ViewBag.TitleEn = "البريد";
-                                ViewBag.linkURL = "عنوان الخريطة";
+                                ViewBag.linkURL = "رابط الخريطة";
                                 break;
                             case 7://الاخبار
                                 ViewBag.TitleAr = "العنوان";
+                                ViewBag.linkURL = "رابط المصدر ";
+                                break;
+                            case 8://الاعلانات
+                                ViewBag.TitleAr = "العنوان";
+                                ViewBag.linkURL = "رابط المصدر ";
                                 break;
                             default:
                                 break;
@@ -310,6 +315,10 @@ namespace Capqwebsite.Controllers
                         break;
                     case 7://الاخبار
                         ViewBag.TitleAr = "العنوان";
+                        break;
+                    case 8://الاخبار
+                        ViewBag.TitleAr = "العنوان";
+                        ViewBag.linkURL = "رابط المصدر ";
                         break;
                     default:
                         break;
