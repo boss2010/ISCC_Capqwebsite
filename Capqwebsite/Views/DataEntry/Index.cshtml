@@ -81,7 +81,7 @@
                 <br />
             }
             @* @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12) *@
-            @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10))
+            @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 14 && ViewBag.ID != 6))
             {
                 <div class="row">
                     <label>@ViewBag.filepath</label>
@@ -90,7 +90,7 @@
                 </div>
                 <br />
             }
-            @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
+            @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12 || ViewBag.ID == 14 || ViewBag.ID == 6)
             {
                 <div class="row">
                     <label>@ViewBag.linkURL</label>
@@ -128,11 +128,11 @@
                         {
                             <th> @ViewBag.Date </th>
                         }
-                        @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10)
+                        @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10 && ViewBag.ID != 14 && ViewBag.ID != 6)
                         {
                             <th> الصورة  </th>
                         }
-                        @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
+                        @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12 || ViewBag.ID == 14 || ViewBag.ID == 6)
                         {
                             <th> @ViewBag.linkURL </th>
                         }
@@ -177,7 +177,7 @@
                                     </td>
                                 }
 
-                                @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12&& ViewBag.ID != 10)
+                                @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10 && ViewBag.ID != 14 && ViewBag.ID != 6)
                                 {
 
                                     <td>
@@ -214,7 +214,7 @@
                                     </td>
                                 }
 
-                                @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
+                                @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12 || ViewBag.ID == 14 || ViewBag.ID == 6)
                                 {
                                     <td>
                                         @if (!string.IsNullOrEmpty(item.linkURL))

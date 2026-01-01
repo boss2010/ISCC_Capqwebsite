@@ -73,7 +73,7 @@
             }
             @* ////////////////////////edit upload file/////////////////////////////////////////// *@
             @* @if (ViewBag.ID != 8 && ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12) *@
-            @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10))
+            @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 10 && ViewBag.ID != 14 && ViewBag.ID != 6))
             {
                 <div class="row">
                     <input type="hidden" asp-for="filepath" />
@@ -120,7 +120,7 @@
                 </div>
             }
             @* /////////////////////////////////////////////////////////////////// *@
-            @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12)
+            @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12 || ViewBag.ID == 14 || ViewBag.ID == 6)
             {
                 <div class="row">
                     <label>@ViewBag.linkURL</label>
