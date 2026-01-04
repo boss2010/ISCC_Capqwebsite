@@ -51,6 +51,12 @@ namespace Capqwebsite.Controllers
                                 ViewBag.TitleAr = "العنوان";
                                 ViewBag.linkURL = "رابط المصدر ";
                                 break;
+                            case 17://اتصل بنا
+                                ViewBag.TitleAr = "العنوان";
+                                ViewBag.linkURL = "رابط الخريطة";
+                                ViewBag.TitleEn = "البريد الالكترونى";
+                                ViewBag.descEn = "أرقام السويتش";
+                                break;
                             default:
                                 break;
                         }
@@ -319,6 +325,12 @@ namespace Capqwebsite.Controllers
                     case 8://الاخبار
                         ViewBag.TitleAr = "العنوان";
                         ViewBag.linkURL = "رابط المصدر ";
+                        break;
+                    case 17://اتصل بنا
+                        ViewBag.TitleAr = "العنوان";
+                        ViewBag.linkURL = "رابط الخريطة";
+                        ViewBag.TitleEn = "البريد الالكترونى";
+                        ViewBag.descEn = "أرقام السويتش";
                         break;
                     default:
                         break;

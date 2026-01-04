@@ -26,77 +26,118 @@
                 <div class="row">
                     @foreach (var item in Model)
                     {
-                        if (item.linkURL!=null)
+                        if (item.linkURL != null)
                         {
                             var embedUrl = item.linkURL.Contains("watch?v=")
-                        ? item.linkURL.Replace("watch?v=", "embed/").Split('&')[0]
-                        : item.linkURL;
+                            ? item.linkURL.Replace("watch?v=", "embed/").Split('&')[0]
+                            : item.linkURL;
 
-                        <div class="col-md-4 mar-b-20">
-                            <div class="card">
-                                <iframe src="@embedUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="card-img-top"></iframe>
-                                <div class="card-body card-height">
-                                    <h5 class="card-title">@item.TitleAr</h5>
-                                    <a href="@item.linkURL" class="btn btn-primary" target="_blank">مشاهدة عل يوتيوب</a>
+                            <div class="col-md-4 mar-b-20">
+                                <div class="card">
+                                    <iframe src="@embedUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="card-img-top"></iframe>
+                                    <div class="card-body card-height">
+                                        <h5 class="card-title">@item.TitleAr</h5>
+                                        <a href="@item.linkURL" class="btn btn-primary" target="_blank">مشاهدة عل يوتيوب</a>
+                                    </div>
+
                                 </div>
-
                             </div>
-                        </div>
-                    }}
+                        }
+                    }
 
                 </div>
 
             }
-       
-        else
-        {
-            <div class="row">
-                @if (Model != null && Model.Count > 0)
+            else if (Model.FirstOrDefault().WebsitetypeID == 17)
+            {
+                @foreach (var item in Model)
                 {
-                    foreach (var item in Model)
-                    {
-
-                        <div class="ag-format-container col-md-4">
-                            <div class="ag-courses_box">
-                                <div class="ag-courses_item">
-                                    <a href="#" class="ag-courses-item_link openPdf" data-pdf="@item.filepath">
-                                        <div class="ag-courses-item_bg"></div>
-                                        <div class="ag-courses-item_title">
-                                            <img src="~/img/pdf3.png" />
-                                            <span>@item.TitleAr</span>
-                                        </div>
-                                    </a>
+                    <div class="row">
+                        <div class="col-lg-5">
+                        <div class="d-flex flex-column justify-content-center  h-100 p-5">
+                            <div class="d-inline-flex border border-secondary p-4 mb-4">
+                                <h1 class="flaticon-office font-weight-normal text-secondary m-0 mr-3"></h1>
+                                <div class="d-flex flex-column">
+                                    <h4>العنوان</h4>
+                                    <p class="m-0 text-white">@item.TitleAr</p>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex border border-secondary p-4 mb-4">
+                                <h1 class="flaticon-email font-weight-normal text-secondary m-0 mr-3"></h1>
+                                <div class="d-flex flex-column">
+                                    <h4>البريد الإلكتروني</h4>
+                                    <p class="m-0 text-white">@item.TitleEn <br /></p>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex border border-secondary p-4">
+                                <h1 class="flaticon-telephone font-weight-normal text-secondary m-0 mr-3"></h1>
+                                <div class="d-flex flex-column">
+                                    <h4>أرقام السويتش</h4>
+                                    <p class="m-0 text-white">@item.descEn</p>
                                 </div>
                             </div>
                         </div>
-                    }
-                }
-                <!-- Pop-up -->
-                <div id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999;">
-                    <span id="closeModal" style="position:absolute; top:20px; right:30px; cursor:pointer; color:white; font-size:28px;">✖</span>
-                    <iframe id="pdfFrame" style="width:80%; height:80%; margin:50px auto; display:block; border:none;"></iframe>
+                    </div>
+                    <div class="col-lg-7 mb-5 my-lg-5 py-5 pl-lg-5">
+                        <div class="contact-form">
+                            @* <div id="success"></div><iframe class="if-hight" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.770120405209!2d31.212293284600715!3d30.043452225573766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458412c6f24548f%3A0xa151d0b0e3ec8407!2z2YjYstin2LHYqSDYp9mE2LLYsdin2LnYqQ!5e0!3m2!1sar!2seg!4v1554883067369!5m2!1sar!2seg" frameborder="0" allowfullscreen=""></iframe> *@
+                            <div id="success"></div><iframe class="if-hight" src="@item.linkURL" frameborder="0" allowfullscreen=""></iframe>
+                        </div>
+
+                    </div>
                 </div>
-                <script>
-                    const modal = document.getElementById("pdfModal");
-                    const frame = document.getElementById("pdfFrame");
-                    const closeBtn = document.getElementById("closeModal");
+                }
+            }
+            else
+            {
+                <div class="row">
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
 
-                    document.querySelectorAll(".openPdf").forEach(link => {
-                        link.addEventListener("click", function (e) {
-                            e.preventDefault();
-                            const pdfUrl = this.getAttribute("data-pdf");
-                            // alert(pdfUrl);
-                            frame.src = pdfUrl;
-                            modal.style.display = "block";
+                            <div class="ag-format-container col-md-4">
+                                <div class="ag-courses_box">
+                                    <div class="ag-courses_item">
+                                        <a href="#" class="ag-courses-item_link openPdf" data-pdf="@item.filepath">
+                                            <div class="ag-courses-item_bg"></div>
+                                            <div class="ag-courses-item_title">
+                                                <img src="~/img/pdf3.png" />
+                                                <span>@item.TitleAr</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <!-- Pop-up -->
+                    <div id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999;">
+                        <span id="closeModal" style="position:absolute; top:20px; right:30px; cursor:pointer; color:white; font-size:28px;">✖</span>
+                        <iframe id="pdfFrame" style="width:80%; height:80%; margin:50px auto; display:block; border:none;"></iframe>
+                    </div>
+                    <script>
+                        const modal = document.getElementById("pdfModal");
+                        const frame = document.getElementById("pdfFrame");
+                        const closeBtn = document.getElementById("closeModal");
+
+                        document.querySelectorAll(".openPdf").forEach(link => {
+                            link.addEventListener("click", function (e) {
+                                e.preventDefault();
+                                const pdfUrl = this.getAttribute("data-pdf");
+                                // alert(pdfUrl);
+                                frame.src = pdfUrl;
+                                modal.style.display = "block";
+                            });
                         });
-                    });
 
-                    closeBtn.onclick = function () {
-                        modal.style.display = "none";
-                        frame.src = "";
-                    };
-                </script>
-            </div>
+                        closeBtn.onclick = function () {
+                            modal.style.display = "none";
+                            frame.src = "";
+                        };
+                    </script>
+                </div>
+            }
         }
-     }</div>
+    </div>
 </div>

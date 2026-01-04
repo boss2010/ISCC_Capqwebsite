@@ -171,7 +171,10 @@
 								</div>
 							</div>
 							<a href="~/dashBoard/dash" class="nav-item nav-link">الإحصائيات</a>
-							<a asp-area="" asp-controller="contact" asp-action="Index" title="" class="nav-item nav-link">
+							@* <a asp-area="" asp-controller="contact" asp-action="Index" title="" class="nav-item nav-link">
+								اتصل بنا
+							</a> *@
+							<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 17 })" class="nav-item nav-link">
 								اتصل بنا
 							</a>
 						</div>
@@ -229,6 +232,9 @@
 							</a>
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 12 })" class="nav-item nav-link">
 								مكاتبنا
+							</a>
+							<a href="@Url.Action("Index", "DataEntry", new { ID = 17})" class="nav-item nav-link">
+								اتصل بنا
 							</a>
 						</div>
 					}
