@@ -898,7 +898,9 @@ Specificity:(0,5,1) {
     color: #457b39 !important;
 }
 
-
+p {
+    text-align:justify;
+}
 a {
     color: #457b39;
 }
@@ -906,4 +908,52 @@ a {
     color: #ffffff;
     border: none;
     background-color: #457b39;
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .carousel-item {
+        height: 330px !important;
+    }
+    .view {
+        margin-right: 40% !important;
+    }
+}
+@media (min-width: 1024px) and (max-width: 1366px) {
+    body{
+    direction:unset;
+    }
+    .container-fluid.bg-dark.py-3 {
+        direction: rtl;
+    }
+    .view {
+        width: 100%;
+    }
+    div#\#con {
+        direction: rtl;
+    }
+    .view {
+        margin-right: unset !important;
+    }
+    .carousel-item {
+        height: 700px !important;
+    }
+    }
+@media (min-width: 412px) and (max-width: 915px) {
+    body {
+        direction: unset;
+    }
+
+    .carousel-item {
+        height: 190px !important;
+    }
+
+   
+
+    .view {
+        width: 350px;
+    }
+    div#\#alert {
+        margin-top: 100%;
+    }
 }
