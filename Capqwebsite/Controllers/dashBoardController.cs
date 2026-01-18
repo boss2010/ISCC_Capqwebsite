@@ -113,7 +113,7 @@ namespace Capqwebsite.Controllers
                 ProductsEX = ProductEX,
 
             };
-
+            ViewBag.year = yearNo;
             return View(vm);
 
         }
