@@ -53,6 +53,7 @@ namespace Capqwebsite.Controllers
             ////////////////////////////
 
             if (ImInitiatorID > 0 && ItemID > 0)
+           
             {
                 var List = (from Im_In in dbContext.Im_Initiators
                             join intext in dbContext.Im_Constrain_Initiator_Texts on Im_In.ID equals intext.Im_Initiator_ID
