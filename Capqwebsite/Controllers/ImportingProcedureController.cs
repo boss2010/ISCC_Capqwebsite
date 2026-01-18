@@ -44,12 +44,12 @@ namespace Capqwebsite.Controllers
                             {
                                 //ID = i.ID,
                                 Name_Ar = i.ShortName_Ar,
-                                Name_En = i.ShortName_En,
+                                ID = i.ID,
 
                                 //Country_Id = im.Country_Id,
                                 //Item_ShortName_ID = im.Item_ShortName_ID,
                             }).Where(i => i.Name_Ar != null).Distinct().OrderBy(i => i.Name_Ar).ToList();
-            ViewData["ItemList"] = new SelectList(DataItem, "Name_Ar", "Name_Ar");
+            ViewData["ItemList"] = new SelectList(DataItem, "ID", "Name_Ar");
             ////////////////////////////
 
             if (ImInitiatorID > 0 && ItemID > 0)
@@ -58,7 +58,7 @@ namespace Capqwebsite.Controllers
                 var List = (from Im_In in dbContext.Im_Initiators
                             join intext in dbContext.Im_Constrain_Initiator_Texts on Im_In.ID equals intext.Im_Initiator_ID
                             where Im_In.Country_Id == ImInitiatorID 
-                            && Im_In.Item_ShortName.ShortName_Ar == ShortName_Ar
+                            && Im_In.Item_ShortName_ID == ItemID
                             && intext.IsActive==true
                             select new Im_InitiatorVM
                             {
