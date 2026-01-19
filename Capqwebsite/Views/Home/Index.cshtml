@@ -57,23 +57,27 @@
 
 	/* Dots */
 	.dots {
-		text-align: center;
-		margin-top: 35%;
-	}
+	position: absolute;
+	bottom: 15px; /* place it near the bottom of the slider */
+	width: 100%;
+	text-align: center;
+	z-index: 10;
+}
 
-	.dot {
-		display: inline-block;
-		width: 12px;
-		height: 12px;
-		margin: 0 5px;
-		background-color: #bbb;
-		border-radius: 50%;
-		cursor: pointer;
-	}
+.dot {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin: 0 5px;
+	background-color: #bbb;
+	border-radius: 50%;
+	cursor: pointer;
+}
 
-		.dot.active {
-			background-color: #717171;
-		}
+.dot.active {
+	background-color: #717171;
+}
+
 </style>
 <!-- Carousel Start -->
 @* ////////////////////rr///////////////  *@
