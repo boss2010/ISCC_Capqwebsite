@@ -110,7 +110,7 @@
 					<center>
 						<img src="@item.filepath" alt="Image">
 					</center>
-			
+
 				</div>
 
 				isFirst = false;
@@ -118,7 +118,7 @@
 
 
 
-		
+
 		</div>
 
 		<!-- Buttons -->
@@ -175,9 +175,11 @@
 <!-- About Start -->
 <div class="container-fluid  mt-3">
 	<div class="container" id="#con">
-		@if(Model.Intro != null && Model.Intro.Any()) {
+		@if (Model.Intro != null && Model.Intro.Any())
+		{
 
-			@foreach(var item in Model.Intro){
+			@foreach (var item in Model.Intro)
+			{
 
 				<div class="row">
 					<div class="col-lg-7 m-0 my-lg-5 pt-5 pb-5 pb-lg-2 pl-lg-5">
@@ -211,17 +213,18 @@
 	<div class="container py-5">
 		<div class="row justify-content-center">
 			<center>
-			<div class="col-lg-6 col-md-6 col text-center mb-4" style="display: flex;">
-			
-				<i class="fas fa-newspaper"></i>
+				<div class="col-lg-6 col-md-6 col text-center mb-4" style="display: flex;">
+
+					<i class="fas fa-newspaper"></i>
 					<h1 class="mb-4 align-center title2">الاخبار</h1>
 
-            </div>	
+				</div>
 			</center>
 		</div>
 		@*/////////////////////*@
 		<div class="row pb-3">
-			@foreach (var item in Model.News) { 
+			@foreach (var item in Model.News)
+			{
 				<div class="col-md-4 mb-4">
 					<div class="card border-0 mb-2" style=" padding: 10px;">
 						<img class="card-img-top img-height" src="@item.filepath" alt="">
@@ -241,7 +244,7 @@
 							<br />
 							<center>
 								<a href="@item.linkURL" class="btn btn-primary"><i class="fa fa-file"></i> المصدر</a>
-							
+
 							</center>
 
 
@@ -290,7 +293,7 @@
 			<div class="col-md-9 col-sm-6 p-0 mar-auto">
 				@* 				menna
  *@
-		
+
 
 
 				<div class="owl-carousel testimonial-carousel position-relative pb-5 mb-md-5">
@@ -334,7 +337,7 @@
 					}
 
 
-					</div>
+				</div>
 			</div>
 
 
@@ -345,7 +348,7 @@
 
 
 
-@* 				<div class="owl-carousel team-carousel position-relative p-0 py-sm-5"> 
+			@* 				<div class="owl-carousel team-carousel position-relative p-0 py-sm-5"> 
 					foreach (var item in Model.Advertis)
 					{
 						<div class="team d-flex flex-column text-center mx-3">
@@ -356,7 +359,7 @@
 							<div class="d-flex flex-column bg-secondary text-center align-center py-3">
 
 								<h5 class="text-white">(item.Date.HasValue ? item.Date.Value.ToString("dd/MM/yyyy") : "nodate") @item.descAr </h5>
-								
+
 								<a href="@Url.Action("RowDetail", "News", new { ID = item.ID,Type="الإعلانات" })" class="btn btn-primary">
 									<i class="fa fa-link"></i>
 								</a>
@@ -366,10 +369,10 @@
 
 
 
-				</div>
-			</div>
 		</div>
-	
+	</div>
+</div>
+
 <!-- Team End -->
 <!-- Testimonial Start -->
 @*////////////////التنبهات//////////////////////////////*@
@@ -379,31 +382,32 @@
 			<div class="col-md-7 py-5 pr-md-5">
 				<h1 class="mb-4 title2">التنبيهات</h1>
 				<div class="owl-carousel testimonial-carousel position-relative pb-5 mb-md-5">
-					@foreach (var item in Model.Alert) { 
-					<div class="d-flex flex-column" dir="rtl">
-						<div class="d-flex align-items-center mb-3">
-							<div class="ml-3">
-								<h5>
-@item.TitleAr
-									
-								</h5>
-								@if(item.Date != null)
-								{
-									<i>@item.Date.Value.ToString("dd-MM-yyyy") </i>
-								}
+					@foreach (var item in Model.Alert)
+					{
+						<div class="d-flex flex-column" dir="rtl">
+							<div class="d-flex align-items-center mb-3">
+								<div class="ml-3">
+									<h5>
+										@item.TitleAr
+
+									</h5>
+									@if (item.Date != null)
+									{
+										<i>@item.Date.Value.ToString("dd-MM-yyyy") </i>
+									}
+								</div>
 							</div>
-						</div>
 							<p> @item.descAr</p>
 						</div>
 					}
-					
-					
+
+
 				</div>
 			</div>
 			@* ////////////////////static one image for alerts this image not in loop///////////// *@
 			<div class="col-md-5">
 				<div class="d-flex flex-column align-items-center justify-content-center h-100 overflow-hidden width-inherit">
-					<i class="fa fa-bell bell" ></i>
+					<i class="fa fa-bell bell"></i>
 				</div>
 			</div>
 		</div>
@@ -436,7 +440,7 @@
 	  });
 
 	});
-
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script>
 	var swiper = new Swiper(".adsSwiper", {
