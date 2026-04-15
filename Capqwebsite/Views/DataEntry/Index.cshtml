@@ -99,10 +99,15 @@
                 </div>
                 <br />
             }
-            <div>
-                <button class="btn btn-primary py-3 px-5" type="submit">حفظ</button>
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 align-center">
+                    <button class="btn btn-primary py-3 px-5" type="submit">حفظ</button>
+                </div>
+                <div class="col-md-4"></div>
             </div>
-
+            <br />
+            <br />
         </form>
         <div id="div2">
             <table class="table table-bordered table-striped table-hover">
@@ -139,6 +144,7 @@
                             <th> @ViewBag.linkURL </th>
                         }
                         <th> الاجراءات </th>
+                        <th>  </th>
 
                     </tr>
                 </thead>
@@ -233,14 +239,14 @@
 
                                 <td>
 
-                                    <div class="btn-group">
+                               
 
                                         <a href="@Url.Action("Edit", new { id = item.ID, IdType = ViewBag.ID })"
                                            class="btn btn-sm btn-warning">
 
                                             <i class="fas fa-edit"></i> تعديل
                                         </a>
-
+                                      
                                         <a href="@Url.Action("Delete", "DataEntry", new { id = item.ID })"
                                            class="btn btn-sm btn-danger"
                                            onclick="return confirm('هل أنت متأكد من الحذف؟');">
@@ -248,7 +254,7 @@
                                             <i class="fas fa-trash"></i> حذف
                                         </a>
 
-                                    </div>
+                                 
 
                                 </td>
                             </tr>
