@@ -1,56 +1,52 @@
 ﻿@model ViewModels.DashboardVM
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
-<style>
-    .col-md-4 {
-        background: #e3e3e3;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    }
-</style>
-<br />
-<br>
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
+@{
+    ViewData["Title"] = "الإحصائيات";
+}
+<div class="container gov-dashboard">
+    <div class="gov-dashboard__header">
+        <h2 class="gov-dashboard__title">لوحة الإحصائيات</h2>
+        <p class="gov-dashboard__subtitle">مؤشرات الوارد والصادر والجهات المسجلة لسنة @ViewBag.year</p>
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
+    <div class="row gov-dashboard-grid">
+        <div class="col-lg-6">
+            <section class="gov-chart-card">
+                <canvas id="myChart2" class="gov-chart-canvas"></canvas>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="gov-chart-card">
+                <canvas id="myChart1" class="gov-chart-canvas"></canvas>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="gov-chart-card">
+                <canvas id="myChart3" class="gov-chart-canvas"></canvas>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="gov-chart-card">
+                <canvas id="myChart4" class="gov-chart-canvas"></canvas>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="gov-chart-card">
+                <canvas id="myChart" class="gov-chart-canvas"></canvas>
+            </section>
+        </div>
     </div>
-</div>
-<br />
-<br />
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <canvas id="myChart3" style="width:100%;max-width:600px"></canvas>
-    </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <canvas id="myChart4" style="width:100%;max-width:600px"></canvas>
-    </div>
-</div>
-<br />
-<br />
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-    </div>
-    <div class="col-md-1"></div>  
-    <div class="col-md-1"></div>
 </div>
 <script>
     /* ====================== BAR CHART ====================== */
-    console.log(@ViewBag.People);
-
     const xValues = ["الشركات ", "الهيئات", "الأفراد"];
     const yValues = [
         @ViewBag.Company_Nationals,
         @ViewBag.Public_Organizations,
         @ViewBag.People
     ];
-    const barColors = ["red", "green", "blue", "yellow", "pink"];
+    const barColors = ["#0d2d4d", "#2e6f57", "#b88a2d", "#5c6f82", "#0f6c8d"];
+    Chart.defaults.font.family = "'Cairo-Regular', Tahoma, Arial, sans-serif";
+    Chart.defaults.color = "#17212b";
 
     const ctx = document.getElementById('myChart');
     new Chart(ctx, {
@@ -92,8 +88,6 @@
                         Model.Countries.Select(x => x.Country)
                 )
         );
-
-    console.log("xValuesCountries:", xValuesCountries);
 
     const yValuesCountries = [
         @foreach (var item in Model.Countries)
@@ -138,8 +132,6 @@
                         Model.Products.Select(x => x.Country)
                 )
         );
-
-    console.log("xValuesproducts:", xValuesproducts);
 
     const yValuesProducts = [
         @foreach (var item in Model.Products)

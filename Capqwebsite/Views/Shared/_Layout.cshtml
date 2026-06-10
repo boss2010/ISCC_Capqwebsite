@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
-<meta charset="UTF-8">
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
 	<meta charset="utf-8" />
@@ -21,36 +20,51 @@
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<link href="~/css/style.css" rel="stylesheet">
 	<link href="~/css/custom.css" rel="stylesheet" />
+	<link href="~/css/government-theme.css" rel="stylesheet" asp-append-version="true" />
 
 
 	
 
 </head>
-<body>
+<body class="gov-portal">
 	<!-- Topbar Start -->
-	<div class="container-fluid bg-dark py-3">
+	<div class="container-fluid bg-dark py-3 gov-portal-header">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-6 text-center text-lg-right">
-					<div class="align-items-center ">
-						<img src="~/img/logo-cap.png" class="caplogo" />
-						@* <span class="color-white">وزارة الزراعة</span>
-						<br />
-						<span class="color-white" style="margin-right:10px;">الإدارة المركزيه للحجر الزراعي</span> *@
+			<div class="row align-items-center">
+				<div class="col-lg-7 col-md-12">
+					<div class="gov-brand">
+						<img src="~/img/logo-cap.png" class="caplogo gov-logo" alt="الإدارة المركزية للحجر الزراعي" />
+						<div class="gov-brand__text">
+							<span class="gov-brand__eyebrow">وزارة الزراعة واستصلاح الأراضي</span>
+							<h1 class="gov-brand__title">الإدارة المركزية للحجر الزراعي</h1>
+							<span class="gov-brand__subtitle">البوابة الرسمية لخدمات الحجر الزراعي</span>
+							<div class="gov-brand__badges" aria-label="مميزات البوابة">
+								<span><i class="fa fa-shield-alt"></i> بوابة رسمية</span>
+								<span><i class="fa fa-bolt"></i> خدمات رقمية</span>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
-					<div class="d-inline-flex align-items-center logindetails">
-						<a class="text-white" href=""><i class="fa fa-globe"></i>  <b>English</b></a>
-						<span class="text-white">|</span>
-						<a asp-area="" asp-controller="contact" asp-action="Index" title="" class="text-white " style="margin-right:5px;">
-							<i class="fa fa-mobile"></i>
+				<div class="col-lg-5 col-md-12 mb-2 mb-lg-0">
+					<div class="gov-actions logindetails">
+						<a class="gov-action text-white" href="">
+							<i class="fa fa-globe"></i>
+							<b>English</b>
+						</a>
+						<a asp-area="" asp-controller="contact" asp-action="Index" title="" class="gov-action text-white">
+							<i class="fa fa-phone-alt"></i>
 							اتصل بنا
 						</a>
-						<span class="text-white">|</span>
+						@if (Context.Session.GetString("UserSession") != null)
+						{
+							<span class="gov-user">
+								<i class="fa fa-user-shield"></i>
+								@Context.Session.GetString("UserSession")
+							</span>
+						}
 						@* ////////////////////log out icon///////////////////////////////// *@
 						@* <a class="text-white pr-3" href=""><img src="~/img/log2.png"  width="20px" height="20px"/></a> *@
-						<a href="@Url.Action("ClearSession", "Home")"><img src="~/img/log4.png" width="15px" height="20px" style="margin-right:5px;"/></a>
+						<a href="@Url.Action("ClearSession", "Home")" class="gov-logout" title="تسجيل الخروج"><img src="~/img/log4.png" width="15" height="20" alt="تسجيل الخروج" /></a>
 					</div>
 				</div>
 
@@ -60,7 +74,7 @@
 	<!-- Topbar End -->
 	<!-- Navbar Start -->
 	<div class=" position-relative nav-bar p-0">
-		<div class=" position-relative" style="z-index: 9;background: #457b39;">
+		<div class="position-relative">
 			<nav class="navbar navbar-expand-lg navbar-dark py-3 py-lg-0">
 
 
@@ -69,7 +83,7 @@
 					<!--<h1 class="m-0 display-5 text-white"><span class="text-primary">i</span>DESIGN</h1>-->
 				</a> *@
 
-				<a href="https://www.capq.gov.eg/Exporting/Main" class="navbar-toggler" target="_blank"> الخدمات الإلكترونية</a>
+				<a href="https://www.capq.gov.eg/Exporting/Main" class="navbar-toggler" target="_blank"><i class="fa fa-external-link-alt"></i> الخدمات الإلكترونية</a>
 
 				<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
 					<span class="navbar-toggler-icon"></span>
@@ -86,10 +100,11 @@
 						<div class="navbar-nav ml-auto py-0">
 
 							<a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
+								<i class="fa fa-home"></i>
 								الصفحه الرئيسية
 							</a>
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-balance-scale"></i>تشريعات</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									@* <a asp-area="" asp-controller="AgricultureLaw" asp-action="" title="" class="dropdown-item">
                                     قانون الزراعة
@@ -110,7 +125,7 @@
 							</div>
 
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ship"></i>الاستيراد</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									@* <a asp-area="" asp-controller="ImportingProcedure" asp-action="Index" title="" class="dropdown-item">
                                     اشتراطات الاستيراد
@@ -133,7 +148,7 @@
 
 
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-truck"></i>التصدير</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									<a href="@Url.Action("Index", "ExportingProcedure")" class="dropdown-item">اشتراطات التصدير</a>
 									<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 4 })" class="dropdown-item">المزارع المعتمدة</a>
@@ -159,22 +174,24 @@
 
 							@* <a href="service.html" class="nav-item nav-link">مكاتبنا</a> *@
 							<a href="@Url.Action("Index", "Offices")" class="nav-item nav-link">
+								<i class="fa fa-map-marker-alt"></i>
 								مكاتبنا
 							</a>
-							<a href="https://www.capq.gov.eg/Exporting/Main" class="nav-item nav-link" target="_blank"> الخدمات الإلكترونية</a>
+							<a href="https://www.capq.gov.eg/Exporting/Main" class="nav-item nav-link" target="_blank"><i class="fa fa-laptop"></i> الخدمات الإلكترونية</a>
 
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> شهادة الصحة النباتية</a>
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-certificate"></i> شهادة الصحة النباتية</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									<a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificate/Index" class="dropdown-item" target="_blank"> التحقق من الشهادة بالرقم</a>
 									<a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificateLogin/Index" class="dropdown-item" target="_blank">التحقق من الشهادات للدول</a>
 								</div>
 							</div>
-							<a href="~/dashBoard/dash" class="nav-item nav-link">الإحصائيات</a>
+							<a href="~/dashBoard/dash" class="nav-item nav-link"><i class="fa fa-chart-pie"></i>الإحصائيات</a>
 							@* <a asp-area="" asp-controller="contact" asp-action="Index" title="" class="nav-item nav-link">
 								اتصل بنا
 							</a> *@
-							<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 17 })" class="nav-item nav-link">
+							<a href="@Url.Action("Index", "contact")" class="nav-item nav-link">
+								<i class="fa fa-headset"></i>
 								اتصل بنا
 							</a>
 						</div>
@@ -184,13 +201,14 @@
 						<div class="navbar-nav ml-auto py-0">
 
 							<a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link active">
+								<i class="fa fa-home"></i>
 								الصفحه الرئيسية
 							</a>
 
 
 
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">تشريعات</a>
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-balance-scale"></i>تشريعات</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									<a href="@Url.Action("Index", "DataEntry", new { ID = 1 })" class="dropdown-item">قانون الزراعة</a>
 									<a href="@Url.Action("Index", "DataEntry", new { ID = 2 })" class="dropdown-item">قرارات وزارية</a>
@@ -198,7 +216,7 @@
 								</div>
 							</div>
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">الاستيراد</a>
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ship"></i>الاستيراد</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									<a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">إجراءات فتح المنشأ</a>
 									<a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">شرح الخدمات الالكترونية</a>
@@ -206,7 +224,7 @@
 								</div>
 							</div>
 							<div class="nav-item dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">التصدير</a>
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-truck"></i>التصدير</a>
 								<div class="dropdown-menu rounded-0 m-0">
 									<a href="@Url.Action("Index", "DataEntry", new { ID = 5 })" class="dropdown-item">المحطات المعتمدة</a>
 									<a href="@Url.Action("Index", "DataEntry", new { ID = 4 })" class="dropdown-item">المزارع المعتمدة</a>
@@ -216,24 +234,31 @@
 							</div>
 
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 9 })" class="nav-item nav-link">
+								<i class="fa fa-images"></i>
 								السليدر
 							</a>
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 7 })" class="nav-item nav-link">
+								<i class="fa fa-newspaper"></i>
 								الأخبار
 							</a>
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 8 })" class="nav-item nav-link">
+								<i class="fa fa-bullhorn"></i>
 								الإعلانات
 							</a>
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 10 })" class="nav-item nav-link">
+								<i class="fa fa-bell"></i>
 								التنبيهات
 							</a>
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 11 })" class="nav-item nav-link">
+								<i class="fa fa-info-circle"></i>
 								التعريف بالشركة
 							</a>
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 12 })" class="nav-item nav-link">
+								<i class="fa fa-map-marker-alt"></i>
 								مكاتبنا
 							</a>
 							<a href="@Url.Action("Index", "DataEntry", new { ID = 17})" class="nav-item nav-link">
+								<i class="fa fa-headset"></i>
 								اتصل بنا
 							</a>
 						</div>
@@ -247,24 +272,24 @@
 	<!-- Navbar End -->
 
 	<div class="">
-		<main role="main" class="pb-3">
+		<main role="main" class="pb-3 gov-main">
 			@RenderBody()
 		</main>
 	</div>
 	<!-- Footer Start -->
-	<div class="container-fluid bg-dark text-white py-5 px-sm-3 px-md-5">
+	<div class="container-fluid bg-dark text-white py-5 px-sm-3 px-md-5 gov-footer">
 		<div class="row pt-5">
 			<div class="col-lg-4 col-md-6 mb-5">
 				<h4 class="text-primary mb-4">اتصل بنا</h4>
-				<p style="text-align:right;"><i class="fa fa-map-marker-alt ml-2 float-right"></i>٦شارع د/ميشيل باخوم-الدقي-الجيزة-جمهورية مصر العربية</p>
-				<p style="text-align:right;"><i class="fa fa-phone-alt ml-2 float-right"></i>(202)37608574 - 3335162</p>
-				<p style="text-align:right;">
+				<p><i class="fa fa-map-marker-alt ml-2 float-right"></i>٦شارع د/ميشيل باخوم-الدقي-الجيزة-جمهورية مصر العربية</p>
+				<p><i class="fa fa-phone-alt ml-2 float-right"></i>(202)37608574 - 3335162</p>
+				<p>
 					<i class="fa fa-envelope ml-2 float-right"></i><a href="mailto:ippc@capq.gov.eg">ippc@capq.gov.eg</a>
-					<a href="mailto:tech.office@capq.gov.eg" style="margin-left:60px;" class="mar-right-95">tech.office@capq.gov.eg</a>
+					<a href="mailto:tech.office@capq.gov.eg" class="mar-right-95">tech.office@capq.gov.eg</a>
 				</p>
 				<div class="d-flex justify-content-start mt-4">
-					<a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="https://www.youtube.com/channel/UCom5EcnKh68bWAi6fii82kQ" target="_blank"><i class="fab fa-youtube"></i></a>
-					<a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 38px; height: 38px;" href="https://www.facebook.com/share/199Y374kXH/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+					<a class="btn btn-outline-light rounded-circle text-center mr-2 px-0 gov-social-link" href="https://www.youtube.com/channel/UCom5EcnKh68bWAi6fii82kQ" target="_blank"><i class="fab fa-youtube"></i></a>
+					<a class="btn btn-outline-light rounded-circle text-center mr-2 px-0 gov-social-link" href="https://www.facebook.com/share/199Y374kXH/" target="_blank"><i class="fab fa-facebook-f"></i></a>
 
 				</div>
 			</div>
@@ -281,7 +306,7 @@
 			</div>
 			<div class="col-lg-4 col-md-6 mb-5">
 				<h4 class="text-primary mb-4">الموقع الجغرافي</h4>
-				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.770120405209!2d31.212293284600715!3d30.043452225573766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458412c6f24548f%3A0xa151d0b0e3ec8407!2z2YjYstin2LHYqSDYp9mE2LLYsdin2LnYqQ!5e0!3m2!1sar!2seg!4v1554883067369!5m2!1sar!2seg" frameborder="0" style="border:0; line-height: 20px; margin: 15px 0px; width:inherit; " allowfullscreen=""></iframe>
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.770120405209!2d31.212293284600715!3d30.043452225573766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458412c6f24548f%3A0xa151d0b0e3ec8407!2z2YjYstin2LHYqSDYp9mE2LLYsdin2LnYqQ!5e0!3m2!1sar!2seg!4v1554883067369!5m2!1sar!2seg" frameborder="0" allowfullscreen=""></iframe>
 			</div>
 		</div>
 		<div class="container border-top border-secondary pt-5">

@@ -328,3 +328,213 @@ body {
         font-size: 13px;
     }
 }
+
+/* Visual redesign layer */
+:root {
+    --login-forest: #17351f;
+    --login-leaf: #2f6b3c;
+    --login-gold: #c79a35;
+    --login-page: #f3f7f1;
+    --login-line: #d7e4d4;
+    --login-ink: #111b15;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        linear-gradient(180deg, rgba(47, 107, 60, .12), rgba(47, 107, 60, 0) 42%),
+        var(--login-page);
+}
+
+.container {
+    position: relative;
+    padding: 32px;
+}
+
+.screen {
+    width: min(100%, 420px);
+    min-height: 590px;
+    border: 1px solid rgba(255, 255, 255, .72);
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 24px 60px rgba(17, 27, 21, .18);
+}
+
+.screen::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 132px;
+    background: linear-gradient(135deg, var(--login-forest), var(--login-leaf));
+    z-index: 0;
+}
+
+.screen::after {
+    content: "";
+    position: absolute;
+    right: 32px;
+    top: 112px;
+    width: calc(100% - 64px);
+    height: 5px;
+    border-radius: 999px;
+    background: var(--login-gold);
+    z-index: 2;
+}
+
+.screen__content {
+    min-height: 590px;
+    z-index: 2;
+}
+
+.screen__background {
+    display: none;
+}
+
+.login {
+    max-width: none;
+    padding: 178px 36px 24px;
+}
+
+.login::before {
+    content: "";
+    position: absolute;
+    top: 32px;
+    right: 50%;
+    width: 86px;
+    height: 86px;
+    transform: translateX(50%);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .94) url("../img/logo-capq.png") center / contain no-repeat;
+    border: 1px solid rgba(255, 255, 255, .75);
+    box-shadow: 0 16px 32px rgba(17, 27, 21, .2);
+}
+
+.login__field {
+    padding: 12px 0;
+}
+
+.login__input {
+    height: 50px;
+    padding: 0 44px 0 14px;
+    border: 1px solid var(--login-line);
+    border-radius: 8px;
+    background: #f8fbf6;
+    font-weight: 700;
+    box-shadow: 0 8px 18px rgba(17, 27, 21, .05);
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+    border-color: var(--login-leaf);
+    background: #ffffff;
+    box-shadow: 0 0 0 .18rem rgba(47, 107, 60, .14);
+}
+
+.login__icon {
+    top: 28px;
+    right: 15px;
+    left: auto;
+    color: var(--login-leaf);
+}
+
+.login__submit {
+    min-height: 52px;
+    margin-top: 22px;
+    padding: 13px 18px;
+    justify-content: center;
+    gap: 12px;
+    color: #ffffff;
+    background: var(--login-leaf);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 14px 28px rgba(47, 107, 60, .24);
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+    background: var(--login-forest);
+    color: #ffffff;
+}
+
+.button__icon {
+    margin-right: 0;
+    margin-left: 0;
+    color: #ffffff;
+}
+
+.button__text {
+    color: #ffffff;
+}
+
+.social-login {
+    right: 36px;
+    bottom: 26px;
+    width: calc(100% - 72px);
+    height: auto;
+    padding-top: 18px;
+    color: var(--login-ink);
+    border-top: 1px solid var(--login-line);
+}
+
+.social-login h3 {
+    margin-bottom: 8px;
+    color: var(--login-forest);
+    font-size: 1rem;
+    font-weight: 800 !important;
+}
+
+.social-login__icon {
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+    padding: 0;
+    color: var(--login-leaf);
+    background: #eef6ec;
+    border: 1px solid var(--login-line);
+    border-radius: 8px;
+    text-shadow: none;
+}
+
+.social-login__icon:hover {
+    color: #ffffff;
+    background: var(--login-leaf);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 575.98px) {
+    .container {
+        padding: 14px;
+    }
+
+    .screen {
+        min-height: 570px;
+    }
+
+    .screen__content {
+        min-height: 570px;
+    }
+
+    .login {
+        padding: 164px 22px 22px;
+    }
+
+    .login::before {
+        width: 76px;
+        height: 76px;
+    }
+
+    .screen::after {
+        right: 22px;
+        width: calc(100% - 44px);
+    }
+
+    .social-login {
+        right: 22px;
+        width: calc(100% - 44px);
+    }
+}
