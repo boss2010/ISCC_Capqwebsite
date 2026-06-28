@@ -57,7 +57,7 @@ app.UseSession();
 app.UseCors("AllowAll");
 app.UseCookiePolicy();
 app.UseAuthorization();
-
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
 
 
