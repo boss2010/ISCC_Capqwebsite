@@ -18,6 +18,7 @@ namespace Capqwebsite.Controllers
         }
         //rrrrr
         [AllowAnonymous]
+        [Route("/")]
         [Route("/Home/HomePage/Index")]
         public IActionResult Index()
         {

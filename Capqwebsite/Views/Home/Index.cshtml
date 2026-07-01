@@ -1,494 +1,271 @@
-﻿@model ViewModels.HomeVM
+@model ViewModels.HomeVM
 @{
-	ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Page";
+    var heroImg = "url('/img/hero-fields.jpg')";
 }
-<!-- Carousel Start -->
-@* ////////////////////rr///////////////  *@
-<!-- Carousel Start -->
-<section class="gov-home-hero" aria-label="بوابة الحجر الزراعي">
-	<div class="gov-home-hero__pattern" aria-hidden="true"></div>
-	<div class="container gov-home-hero__inner">
-		<div class="gov-home-hero__copy">
-			<span class="gov-kicker"><i class="fa fa-shield-alt"></i> بوابة حكومية رسمية</span>
-			<h1>خدمات الحجر الزراعي في واجهة رقمية موحدة</h1>
-			<p>معلومات موثقة، خدمات إلكترونية، تشريعات، تنبيهات وإحصائيات في تجربة أسرع وأكثر وضوحًا للمستوردين والمصدرين والجهات الحكومية.</p>
-			<div class="gov-home-hero__actions">
-				<a href="https://www.capq.gov.eg/Exporting/Main" class="btn btn-primary" target="_blank">
-					<i class="fa fa-laptop"></i>
-					الخدمات الإلكترونية
-				</a>
-				<a href="@Url.Action("Index", "ImportingProcedure")" class="btn btn-secondary">
-					<i class="fa fa-ship"></i>
-					اشتراطات الاستيراد
-				</a>
-				<a href="@Url.Action("Index", "ExportingProcedure")" class="btn btn-secondary">
-					<i class="fa fa-truck"></i>
-					اشتراطات التصدير
-				</a>
-			</div>
-			<div class="gov-home-hero__trust">
-				<span><i class="fa fa-check-circle"></i> تشريعات محدثة</span>
-				<span><i class="fa fa-chart-line"></i> مؤشرات مباشرة</span>
-				<span><i class="fa fa-bell"></i> تنبيهات رسمية</span>
-			</div>
-		</div>
-		<div class="gov-home-hero__media">
-			<div class="slider-container">
-				<div class="slider">
 
+@* ===== TOP BAR ===== *@
+<div class="capq-topbar">
+    <div class="container">
+        <span>جمهورية مصر العربية — وزارة الزراعة واستصلاح الأراضي</span>
+        <div class="capq-topbar__links">
+            <a href="@Url.Action("Index","contact")">اتصل بنا</a>
+            <span>|</span>
+            <a href="#">English</a>
+        </div>
+    </div>
+</div>
 
-
-					@{
-						bool isFirst = true; // Track the first item for 'active' class
-					}
-					@if (Model.Slider != null && Model.Slider.Any())
-					{
-						@foreach (var item in Model.Slider)
-						{
-
-							<div class="slide @(isFirst ? "active" : "")">
-								<img src="@item.filepath" alt="واجهة الحجر الزراعي">
-							</div>
-
-							isFirst = false;
-						}
-					}
-					else
-					{
-						<div class="slide active">
-							<img src="~/img/hero-bg.jpg" alt="واجهة الحجر الزراعي">
-						</div>
-					}
-
-
-
-		
-				</div>
-
-				<!-- Arrows -->
-				<button class="prev" type="button" aria-label="السابق">&#10095;</button>
-				<button class="next" type="button" aria-label="التالي">&#10094; </button>
-
-				<!-- Dots -->
-				<div class="dots">
-					@{
-						bool isFirstDot = true;
-						int sliderCount = Model.Slider?.Count ?? 1;
-						for (int i = 0; i < sliderCount; i++)
-						{
-							<span class="dot @(isFirstDot ? "active" : "")"></span>;
-							isFirstDot = false;
-						}
-					}
-				</div>
-
-
-			</div>
-		</div>
-	</div>
-	<div class="container gov-quick-links" aria-label="روابط مختصرة">
-		<a href="@Url.Action("Index", "AgricultureLaw", new { ID = 1 })" class="gov-quick-link">
-			<i class="fa fa-balance-scale"></i>
-			<span>التشريعات</span>
-		</a>
-		<a href="@Url.Action("Index", "Offices")" class="gov-quick-link">
-			<i class="fa fa-map-marker-alt"></i>
-			<span>مكاتبنا</span>
-		</a>
-		<a href="@Url.Action("Index", "News", new { ID = 8 })" class="gov-quick-link">
-			<i class="fa fa-bullhorn"></i>
-			<span>الإعلانات</span>
-		</a>
-		<a href="@Url.Action("dash", "dashBoard")" class="gov-quick-link">
-			<i class="fa fa-chart-pie"></i>
-			<span>الإحصائيات</span>
-		</a>
-	</div>
+@* ===== HERO ===== *@
+<section class="capq-hero" style="background-image:linear-gradient(to left,rgba(18,46,30,.95),rgba(18,46,30,.85),rgba(18,46,30,.5)),url('/img/hero-fields.jpg');background-size:cover;background-position:center">
+    <div class="container">
+        <div class="capq-hero__badge">
+            <span class="capq-hero__badge-dot"></span>
+            بوابة حكومية رسمية
+        </div>
+        <h1 class="capq-hero__h1">
+            خدمات الحجر الزراعي
+            <span class="capq-hero__h1-gold">في واجهة رقمية موحدة</span>
+        </h1>
+        <p class="capq-hero__lead">معلومات موثقة، خدمات إلكترونية، تشريعات، تنبيهات وإحصائيات في تجربة أسرع وأكثر وضوحاً للمستوردين والمصدرين والجهات الحكومية.</p>
+        <div class="capq-hero__actions">
+            <a href="https://www.capq.gov.eg/Exporting/Main" class="capq-btn capq-btn--gold" target="_blank">
+                الخدمات الإلكترونية
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <a href="@Url.Action("Index","ImportingProcedure")" class="capq-btn capq-btn--ghost">اشتراطات الاستيراد</a>
+            <a href="@Url.Action("Index","ExportingProcedure")" class="capq-btn capq-btn--ghost">اشتراطات التصدير</a>
+        </div>
+        <div class="capq-hero__trust">
+            <span>• تشريعات محدّثة</span>
+            <span>• مؤشرات مباشرة</span>
+            <span>• تنبيهات رسمية</span>
+        </div>
+    </div>
 </section>
 
-<!-- Carousel End -->
+@* ===== QUICK LINKS ===== *@
+<section class="capq-quicklinks">
+    <div class="container">
+        <div class="capq-quicklinks__grid">
+            <a href="@Url.Action("Index","AgricultureLaw",new{ID=1})" class="capq-quicklink">
+                <div class="capq-quicklink__icon"><i class="fas fa-file-alt"></i></div>
+                <div>
+                    <div class="capq-quicklink__title">التشريعات</div>
+                    <div class="capq-quicklink__sub">قوانين وقرارات الحجر الزراعي</div>
+                </div>
+            </a>
+            <a href="@Url.Action("Index","Offices")" class="capq-quicklink">
+                <div class="capq-quicklink__icon"><i class="fas fa-building"></i></div>
+                <div>
+                    <div class="capq-quicklink__title">مكاتبنا</div>
+                    <div class="capq-quicklink__sub">فروع ومنافذ الإدارة</div>
+                </div>
+            </a>
+            <a href="@Url.Action("Index","News",new{ID=8})" class="capq-quicklink">
+                <div class="capq-quicklink__icon"><i class="fas fa-bullhorn"></i></div>
+                <div>
+                    <div class="capq-quicklink__title">الإعلانات</div>
+                    <div class="capq-quicklink__sub">آخر إعلانات الإدارة</div>
+                </div>
+            </a>
+            <a href="@Url.Action("dash","dashBoard")" class="capq-quicklink">
+                <div class="capq-quicklink__icon"><i class="fas fa-chart-column"></i></div>
+                <div>
+                    <div class="capq-quicklink__title">الإحصائيات</div>
+                    <div class="capq-quicklink__sub">لوحة المؤشرات والبيانات</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
 
+@* ===== ABOUT ===== *@
+<section class="capq-about">
+    <div class="container">
+        <div class="capq-about__grid">
+            <div class="capq-about__content">
+                <div class="capq-ornament">عن الإدارة</div>
+                <h2 class="capq-about__h2">الحجر الزراعي المصري<br><span class="capq-gold">يرحب بكم</span></h2>
+                @if (Model.Intro != null && Model.Intro.Any())
+                {
+                    @foreach (var item in Model.Intro)
+                    {
+                        <div class="capq-about__text">
+                            <p>@item.descAr</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="capq-about__text">
+                        <p>يُعد الحجر الزراعي المصري أحد الركائز الأساسية للسياسة الزراعية في مصر، وقد ارتبطت نشأته بتطور التجارة الزراعية الدولية وازدياد مخاطر انتقال الآفات والأمراض النباتية عبر الحدود.</p>
+                        <p>يسهم الحجر الزراعي في دعم الصادرات الزراعية المصرية بتطبيق المعايير الدولية للصحة النباتية وفقاً لاتفاقية الوقاية الدولية للنبات (IPPC).</p>
+                    </div>
+                }
+                <div class="capq-about__cards">
+                    <div class="capq-about__card">
+                        <div class="capq-about__card-icon"><i class="fas fa-shield-check"></i></div>
+                        <div class="capq-about__card-title">حماية الثروة النباتية</div>
+                        <p>منع دخول وانتشار الآفات الحجرية عبر المنافذ.</p>
+                    </div>
+                    <div class="capq-about__card">
+                        <div class="capq-about__card-icon"><i class="fas fa-globe"></i></div>
+                        <div class="capq-about__card-title">تمثيل دولي</div>
+                        <p>عضو في الاتفاقية الدولية لوقاية النباتات (IPPC).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="capq-about__visual">
+                <div class="capq-about__img-wrap">
+                    @if (Model.Intro != null && Model.Intro.Any())
+                    {
+                        <img src="@Model.Intro.First().filepath" alt="فحص النباتات" class="capq-about__img" />
+                    }
+                    else
+                    {
+                        <img src="~/img/logo-capq.png" alt="الحجر الزراعي" class="capq-about__img" style="object-fit:contain;padding:2rem" />
+                    }
+                    <div class="capq-about__badge">
+                        <div class="capq-about__badge-title">القانون 356 لسنة 1954</div>
+                        <div class="capq-about__badge-sub">الإطار التشريعي الرئيسي المنظم لأعمال الحجر الزراعي في مصر</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-@*
-<div class="container-fluid p-0 ">
-	<div id="header-carousel" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner">
-			@{
-				bool isFirst = true; // Track the first item for 'active' class
-			}
-			@foreach (var item in Model.Slider)
-			{
-				<div class="carousel-item @(isFirst ? "active" : "")">
-					<img class="w-100" src="@item.filepath" alt="Image">
-					<div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-					</div>
-				</div>
-				isFirst = false;
-			}
+@* ===== NEWS ===== *@
+<section class="capq-news" id="news">
+    <div class="container">
+        <div class="capq-sec-head">
+            <div>
+                <div class="capq-sec-eyebrow">المركز الإعلامي</div>
+                <h2 class="capq-sec-h2">آخر الأخبار</h2>
+            </div>
+            <a href="@Url.Action("Index","News",new{ID=7})" class="capq-more-link">
+                مشاهدة المزيد <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="capq-news__grid">
+            @if (Model.News != null)
+            {
+                @foreach (var item in Model.News)
+                {
+                    <article class="capq-news__card">
+                        <div class="capq-news__img-wrap">
+                            <img src="@item.filepath" alt="@item.TitleAr" class="capq-news__img" loading="lazy">
+                            <div class="capq-news__type-badge"><i class="fas fa-newspaper"></i> خبر</div>
+                        </div>
+                        <div class="capq-news__body">
+                            <h3 class="capq-news__title">@item.TitleAr</h3>
+                            <p class="capq-news__desc">@item.descAr</p>
+                            <a href="@Url.Action("RowDetail","News",new{ID=item.ID,Type="الأخبار"})" class="capq-news__link">
+                                تفاصيل <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+                    </article>
+                }
+            }
+        </div>
+    </div>
+</section>
 
+@* ===== ANNOUNCEMENTS ===== *@
+<section class="capq-ads" id="announcements">
+    <div class="container">
+        <div class="capq-sec-head">
+            <div>
+                <div class="capq-sec-eyebrow capq-sec-eyebrow--gold">رسائل رسمية</div>
+                <h2 class="capq-sec-h2">الإعلانات</h2>
+            </div>
+            <a href="@Url.Action("Index","News",new{ID=8})" class="capq-more-link">
+                مشاهدة المزيد <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+        <div class="capq-ads__grid">
+            @if (Model.Advertis != null)
+            {
+                @foreach (var item in Model.Advertis)
+                {
+                    <a href="@Url.Action("RowDetail","News",new{ID=item.ID,Type="الإعلانات"})" class="capq-ad__item">
+                        <div class="capq-ad__icon"><i class="fas fa-bullhorn"></i></div>
+                        <div class="capq-ad__body">
+                            <div class="capq-ad__type">إعلان</div>
+                            <div class="capq-ad__title">@item.TitleAr</div>
+                            <div class="capq-ad__arrow">التفاصيل <i class="fas fa-arrow-left"></i></div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</section>
 
-		</div>
-		<a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-			<div class="btn btn-primary" style="width: 45px; height: 45px;">
-				<span class="carousel-control-prev-icon mb-n2"></span>
-			</div>
-		</a>
+@* ===== ALERTS ===== *@
+<section class="capq-alerts">
+    <div class="container">
+        <div class="capq-alerts__head">
+            <div class="capq-sec-eyebrow capq-sec-eyebrow--gold">رسائل مهمة</div>
+            <h2 class="capq-sec-h2 capq-sec-h2--white">التنبيهات</h2>
+        </div>
+        <div class="capq-alerts__grid">
+            @if (Model.Alert != null)
+            {
+                @foreach (var item in Model.Alert)
+                {
+                    <article class="capq-alert__card">
+                        <div class="capq-alert__top">
+                            <div class="capq-alert__icon"><i class="fas fa-bell"></i></div>
+                            @if (item.Date != null)
+                            {
+                                <div class="capq-alert__date"><i class="fas fa-calendar"></i> @item.Date.Value.ToString("dd-MM-yyyy")</div>
+                            }
+                        </div>
+                        <h3 class="capq-alert__title">@item.TitleAr</h3>
+                        <p class="capq-alert__desc">@item.descAr</p>
+                    </article>
+                }
+            }
+        </div>
+    </div>
+</section>
 
-		<a class="carousel-control-next" href="#header-carousel" data-slide="next">
-			<div class="btn btn-primary" style="width: 45px; height: 45px;">
-				<span class="carousel-control-next-icon mb-n2"></span>
-			</div>
-		</a>
-	</div>
-</div> 
-
-*@
-
-<!-- Load jQuery + Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Carousel End -->
-<!-- About Start -->
-<div class="container-fluid mt-3 gov-intro-section">
-	<div class="container" id="#con">
-		@if (Model.Intro != null && Model.Intro.Any())
-		{
-
-			@foreach (var item in Model.Intro)
-			{
-
-				<div class="row align-items-center gov-intro-row">
-					<div class="col-lg-7 m-0 my-lg-5 pt-5 pb-5 pb-lg-2 pl-lg-5">
-						<h2 class="mb-4 section-title">@item.TitleAr</h2>
-
-						<p>@item.descAr</p>
-
-
-
-					</div>
-
-
-
-					<div class="col-md-5 gov-intro-visual">
-						<div class="view d-flex flex-column align-items-center justify-content-center  h-100 py-3 px-3 width-inherit">
-							<img src="@item.filepath" class="img-logo-2" />
-						</div>
-					</div>
-				</div>
-			}
-		}
-		else
-		{
-			<p class="gov-empty-state-inline">لا توجد بيانات متاحة حاليًا</p>
-		}
-	</div>
-</div>
-<!-- About End -->
-<!-- Services Start -->
-<div class="container-fluid py-5 news-style gov-news-section">
-	<div class="container py-5">
-		<div class="gov-section-heading">
-			<span class="gov-section-heading__icon"><i class="fas fa-newspaper"></i></span>
-			<div>
-				<span class="gov-section-heading__eyebrow">المركز الإعلامي</span>
-				<h1 class="mb-0 title2">آخر الأخبار</h1>
-			</div>
-		</div>
-		@*/////////////////////*@
-		<div class="row pb-3">
-			@foreach (var item in Model.News)
-			{
-				<div class="col-md-4 mb-4">
-					<div class="card border-0 mb-2 gov-news-card">
-						<img class="card-img-top img-height" src="@item.filepath" alt="">
-						<div class="card-body bg-white p-4">
-							<div class="d-flex align-items-center mb-3">
-								<h5 class="m-0 ml-3 text-truncate">@item.TitleAr</h5>
-								<a href="@Url.Action("RowDetail", "News", new { ID = item.ID,Type="الأخبار" })" class="btn btn-primary">
-									<i class="fa fa-link"></i>
-								</a>
-								@* <a asp-area="" asp-controller="Newsdeteils" asp-action="Index" title="" class="btn btn-primary">
-								<i class="fa fa-link"></i>
-							</a> *@
-
-							</div>
-
-							<p>@item.descAr</p>
-							<br />
-							<center>
-								<a href="@item.linkURL" class="btn btn-primary"><i class="fa fa-file"></i> المصدر</a>
-
-							</center>
-
-
-						</div>
-					</div>
-				</div>
-			}
-
-		</div>
-		@*/////////////////////*@
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-4 align-center ">
-				@* ////////////////rrrrrr11-5-2025/////////////// *@
-				<a href="@Url.Action("Index", "News", new { ID = 7 })" class="bg-gree btn btn-secondary box-shadow mt-3 py-2 px-4">
-					مشاهدة المزيد من الاخبار
-				</a>
-				@* <a asp-area="" asp-controller="News" asp-action="Index" title="" class="btn btn-secondary box-shadow mt-3 py-2 px-4">
-                    مشاهدة المزيد من الاخبار
-                </a> *@
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-
-	</div>
-</div>
-<!-- Services End -->
-<!-- Team Start -->
-<div class="container-fluid gov-ads-section">
-	<div class="container" dir="ltr">
-		<div class="row  h-ads">
-			@*////////////////الاعلانات//////////////////////////////*@
-			<div class="col-md-3 col-sm-6">
-				<div class="py-5 px-4 h-ads bg-green d-flex flex-column align-items-center justify-content-center gov-ads-lead">
-					<i class="fa fa-bullhorn gov-ads-lead__icon"></i>
-					<h1 class="mb-0 text-center title2">الاعلانات</h1>
-
-					@* ////////////////rrrrrr11-5-2025/////////////// *@
-					<a href="@Url.Action("Index", "News", new { ID = 8 })" class="bg-gree btn btn-secondary box-shadow mt-3 py-2 px-4">
-						مشاهدة المزيد
-					</a>
-					@*  <a asp-area="" asp-controller="advList" asp-action="Index" title="" class="btn btn-secondary box-shadow mt-3 py-2 px-4">
-                        مشاهدة المزيد
-                    </a> *@
-				</div>
-			</div>
-			<div class="col-md-9 col-sm-6 p-0 mar-auto">
-				@* 				menna
- *@
-
-
-
-				<div class="owl-carousel testimonial-carousel position-relative pb-5 mb-md-5">
-					@foreach (var item in Model.Advertis)
-					{
-						<div class="swiper-slide">
-							<div class="card gov-ad-card">
-
-								<div class="image-content">
-									<span class="overlay"></span>
-									<div class="card-image">
-										<img src="@item.filepath" class="card-img">
-									</div>
-								</div>
-
-								<div class="card-content">
-									<h2 class="name">
-										@* @if (item.Date != null)
-										{
-											@item.Date.Value.ToString("dd/MM/yyyy")
-										} *@
-										@item.TitleAr
-									</h2>
-
-									<a href="@Url.Action("RowDetail","News",
-					  			          new { ID = item.ID, Type = "الإعلانات" })"
-									   class="d bg-gree btn btn-secondary box-shadow mt-3 py-2 px-4">
-
-
-										التفاصيل
-
-										<i class="fa fa-link"></i>
-									</a>
-
-								</div>
-
-							</div>
-						</div>
-
-
-					}
-
-
-				</div>
-			</div>
-
-
-
-
-
-
-
-
-
-			@* 				<div class="owl-carousel team-carousel position-relative p-0 py-sm-5"> 
-					foreach (var item in Model.Advertis)
-					{
-						<div class="team d-flex flex-column text-center mx-3">
-							<div class="position-relative">
-								<img class="img-fluid w-100 img-height" src="item.filepath" alt="rrrrrrr">
-
-							</div>
-							<div class="d-flex flex-column bg-secondary text-center align-center py-3">
-
-								<h5 class="text-white">(item.Date.HasValue ? item.Date.Value.ToString("dd/MM/yyyy") : "nodate") @item.descAr </h5>
-
-								<a href="@Url.Action("RowDetail", "News", new { ID = item.ID,Type="الإعلانات" })" class="btn btn-primary">
-									<i class="fa fa-link"></i>
-								</a>
-							</div>
-						</div>
-				}*@
-
-
-
-		</div>
-	</div>
-</div>
-
-<!-- Team End -->
-<!-- Testimonial Start -->
-@*////////////////التنبهات//////////////////////////////*@
-<div class="container-fluid bg-efefef gov-alerts-section" id="#alert">
-	<div class="container" dir="ltr">
-		<div class="row align-items-center">
-			<div class="col-md-7 py-5 pr-md-5">
-				<div class="gov-section-heading gov-section-heading--compact">
-					<span class="gov-section-heading__icon"><i class="fa fa-bell"></i></span>
-					<div>
-						<span class="gov-section-heading__eyebrow">رسائل مهمة</span>
-						<h1 class="mb-0 title2">التنبيهات</h1>
-					</div>
-				</div>
-				<div class="owl-carousel testimonial-carousel position-relative pb-5 mb-md-5">
-					@foreach (var item in Model.Alert)
-					{
-						<div class="d-flex flex-column gov-alert-item" dir="rtl">
-							<div class="d-flex align-items-center mb-3">
-								<div class="ml-3">
-									<h5>
-										@item.TitleAr
-
-									</h5>
-									@if (item.Date != null)
-									{
-										<i>@item.Date.Value.ToString("dd-MM-yyyy") </i>
-									}
-								</div>
-							</div>
-							<p> @item.descAr</p>
-						</div>
-					}
-
-
-				</div>
-			</div>
-			@* ////////////////////static one image for alerts this image not in loop///////////// *@
-			<div class="col-md-5">
-				<div class="d-flex flex-column align-items-center justify-content-center h-100 overflow-hidden width-inherit">
-					<i class="fa fa-bell bell gov-alert-bell"></i>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<script src="https://cdn.jsdelivr.net/gh/freeps2/a7rarpress@main/swiper-bundle.min.js"></script>
-
-<script>
-	document.addEventListener("DOMContentLoaded", function () {
-	  if (typeof Swiper === "undefined" || !document.querySelector(".adsSwiper")) {
-		return;
-	  }
-
-	  const adsSwiper = new Swiper(".adsSwiper", {
-		slidesPerView: 5,
-		spaceBetween: 25,
-		loop: true,
-		grabCursor: true,
-		observer: true,
-		observeParents: true,
-		dir: "rtl",
-
-		navigation: {
-		  nextEl: ".swiper-button-next",
-		  prevEl: ".swiper-button-prev",
-		},
-
-		breakpoints: {
-		  0: { slidesPerView: 1 },
-		  768: { slidesPerView: 2 },
-		  992: { slidesPerView: 3 },
-		},
-	  });
-
-	});
-</script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-@* <script>
-	var swiper = new Swiper(".adsSwiper", {
-		slidesPerView: 1,
-		spaceBetween: 50,
-		loop: true,
-		navigation: {
-			nextEl: ".swiper-button-next",
-			prevEl: ".swiper-button-prev",
-		},
-	});
-</script> *@
+@* ===== CONTACT ===== *@
+<section class="capq-contact" id="contact">
+    <div class="container">
+        <div class="capq-contact__grid">
+            <div class="capq-contact__intro">
+                <div class="capq-sec-eyebrow capq-sec-eyebrow--gold">تواصل معنا</div>
+                <h2 class="capq-sec-h2">نحن في خدمتكم<span class="capq-gold capq-block">على مدار أيام العمل</span></h2>
+                <p class="capq-contact__desc">للاستفسارات الفنية أو طلبات المعاينة وإصدار الشهادات يمكنكم التواصل مع الإدارة عبر القنوات الرسمية.</p>
+            </div>
+            <div class="capq-contact__items">
+                <div class="capq-contact__item">
+                    <div class="capq-contact__item-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div>
+                        <div class="capq-contact__item-label">العنوان</div>
+                        <div class="capq-contact__item-val">٦ شارع د/ ميشيل باخوم — الدقي — الجيزة، جمهورية مصر العربية</div>
+                    </div>
+                </div>
+                <div class="capq-contact__item">
+                    <div class="capq-contact__item-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div>
+                        <div class="capq-contact__item-label">الهاتف</div>
+                        <div class="capq-contact__item-val">(202) 37608574 — 3335162</div>
+                    </div>
+                </div>
+                <div class="capq-contact__item">
+                    <div class="capq-contact__item-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="capq-contact__item-label">البريد الإلكتروني</div>
+                        <div class="capq-contact__item-val">ippc@capq.gov.eg — tech.office@capq.gov.eg</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-	document.addEventListener("DOMContentLoaded", function () {
-		const slides = document.querySelectorAll('.slide');
-		const dots = document.querySelectorAll('.dot');
-		const prev = document.querySelector('.prev');
-		const next = document.querySelector('.next');
-		let current = 0;
-
-		if (!slides.length || !prev || !next) {
-			return;
-		}
-
-		function showSlide(index) {
-			slides.forEach((slide, i) => {
-				slide.classList.remove('active');
-				if (dots[i]) {
-					dots[i].classList.remove('active');
-				}
-				if (i === index) {
-					slide.classList.add('active');
-					if (dots[i]) {
-						dots[i].classList.add('active');
-					}
-				}
-			});
-		}
-
-		function nextSlide() {
-			current = (current + 1) % slides.length;
-			showSlide(current);
-		}
-
-		function prevSlide() {
-			current = (current - 1 + slides.length) % slides.length;
-			showSlide(current);
-		}
-
-		// Event listeners
-		next.addEventListener('click', nextSlide);
-		prev.addEventListener('click', prevSlide);
-
-		dots.forEach((dot, i) => {
-			dot.addEventListener('click', () => {
-				current = i;
-				showSlide(current);
-			});
-		});
-
-		// Auto slide
-		setInterval(nextSlide, 5000); // change slide every 5s
-	});
-
-</script>

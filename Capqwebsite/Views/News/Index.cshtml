@@ -1,152 +1,62 @@
-﻿@model List<ViewModels.ListNewsVM>
-<!-- Page Header Start -->
-<div class="container-fluid py-1">
-    <div class="container py-2">
-        <div class="row align-items-center py-4">
-            <div class="col-md-6 text-center text-md-right">
-                <i class="fas fa-newspaper icon-style"></i>
-                <h3 class="mb-4 mb-md-0 text-primary text-uppercase output">@ViewBag.TypeAr</h3>
-            </div>
-            <div class="col-md-6 text-center text-md-left">
-                <div class="d-inline-flex align-items-center">
-                    @* <a class="btn btn-secondary" href="http://localhost:5205/Home/HomePage/Index">الصفحة الرئيسية</a> *@
-                    <a href="@Url.Action("Index", "Home")" class="dropdown-item">
-                        الصفحة الرئيسية
-                    </a>
-                    <i class="fas fa-angle-double-right text-primary mx-2"></i>
-                    <a class="btn btn-secondary disabled" href="">@ViewBag.TypeAr</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Page Header Start -->
+@model List<ViewModels.ListNewsVM>
 
-<!-- Contact Start -->
-<div class="container-fluid bg-light" >
+<!-- Page Header -->
+<div class="gov-page-header">
     <div class="container">
-
-        <div class="row pb-3" hidden >
-            @foreach (var item in @Model) {
-                <div class="col-md-4 mb-4">
-                    <div class="card border-0 mb-2">
-                        <img class="card-img-top img-height" src="@item.filepath" alt="">
-                        <div class="card-body bg-white p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <h5 class="m-0 ml-3 text-truncate">@item.TitleAr</h5>
-                                <a href="@Url.Action("RowDetail", "News", new { ID = item.ID,Type=@ViewBag.TypeAr })" class="btn btn-primary">
-                                    <i class="fa fa-link"></i>
-                                </a>
-                               
-                            </div>
-                            <p>@item.descAr</p>
-
-                        </div>
-                    </div>
+        <div class="gov-page-header__inner">
+            <div class="gov-page-header__title">
+                <span class="gov-page-header__icon"><i class="fas fa-newspaper"></i></span>
+                <div>
+                    <span class="gov-page-header__eyebrow">المركز الإعلامي</span>
+                    <h1 class="gov-page-header__h1">@ViewBag.TypeAr</h1>
                 </div>
-               
-            }
-        </div>
-   
-
-
-
-        @*/////////////////////*@
-        <div class="row pb-3" >
-            @foreach (var item in Model)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card border-0 mb-2" style="    padding: 10px;">
-
-                        <img class="card-img-top img-height" src="@item.filepath" alt="">
-                        <div class="card-body bg-white p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <h5 class="m-0 ml-3 text-truncate">@item.TitleAr</h5>
-                                <a href="@Url.Action("RowDetail", "News", new { ID = item.ID, Type = "الأخبار" })" class="btn btn-primary">
-                                    <i class="fa fa-link"></i>
-                                </a>
-                                @* <a asp-area="" asp-controller="Newsdeteils" asp-action="Index" title="" class="btn btn-primary">
-								<i class="fa fa-link"></i>
-							</a> *@
-
-                            </div>
-
-                            <p>@item.descAr</p>
-
-
-                        </div>
-                    </div>
-                </div>
-            }
-
-        </div>
-        @*/////////////////////*@
-        @* ////////////////////////Page navigation//////////////////////// *@
-
-
-        @* ////////////////////////Page navigation//////////////////////// *@
-        <div class="col-md-12 mb-4">
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center mb-0">                                                                                       
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">«</span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">»</span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
+            </div>
+            <nav class="gov-breadcrumb">
+                <a href="@Url.Action("Index", "Home")" class="gov-breadcrumb__link">الرئيسية</a>
+                <i class="fas fa-chevron-left gov-breadcrumb__sep"></i>
+                <span class="gov-breadcrumb__current">@ViewBag.TypeAr</span>
             </nav>
         </div>
     </div>
 </div>
-<!-- Contact End -->
 
-<script>
-        document.addEventListener("DOMContentLoaded", function () {
-
-          const adsSwiper = new Swiper(".adsSwiper", {
-            slidesPerView: 5,
-            spaceBetween: 25,
-            loop: true,
-            grabCursor: true,
-            observer: true,
-            observeParents: true,
-            dir: "rtl",
-
-            navigation: {
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            },
-
-            breakpoints: {
-              0: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              992: { slidesPerView: 3 },
-            },
-          });
-
-        });
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script>
-    var swiper = new Swiper(".adsSwiper", {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<div class="container-fluid gov-inner-page">
+    <div class="container">
+        @if (Model != null && Model.Any())
+        {
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="gov-news-card card">
+                            <img class="card-img-top img-height" src="@item.filepath" alt="@item.TitleAr">
+                            <div class="card-body p-4">
+                                <h5 class="mb-3">@item.TitleAr</h5>
+                                <p class="mb-3">@item.descAr</p>
+                                <div class="d-flex gap-2 justify-content-between align-items-center">
+                                    <a href="@Url.Action("RowDetail", "News", new { ID = item.ID, Type = ViewBag.TypeAr })" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-eye ml-1"></i> التفاصيل
+                                    </a>
+                                    @if (!string.IsNullOrEmpty(item.linkURL))
+                                    {
+                                        <a href="@item.linkURL" target="_blank" class="btn btn-secondary btn-sm">
+                                            <i class="fas fa-external-link-alt ml-1"></i> المصدر
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="gov-empty-state">
+                <i class="fas fa-newspaper gov-empty-state__icon"></i>
+                <h3>لا توجد بيانات متاحة حالياً</h3>
+                <p>لم يتم إضافة أي محتوى لهذا القسم بعد.</p>
+            </div>
+        }
+    </div>
+</div>
