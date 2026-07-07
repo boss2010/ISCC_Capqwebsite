@@ -35,8 +35,8 @@ body {
     text-align: right;
     min-height: 100vh;
     color: var(--gov-gray-900);
-    background: var(--gov-gray-100);
-    font-family: var(--gov-font) !important;
+
+   
     letter-spacing: 0 !important;
     overflow-x: clip;
 }
@@ -55,18 +55,10 @@ textarea,
 .btn,
 .nav-link,
 .dropdown-item {
-    font-family: var(--gov-font) !important;
+
     letter-spacing: 0 !important;
 }
 
-a {
-    color: var(--gov-navy-700);
-}
-
-    a:hover,
-    a:focus {
-        color: var(--gov-green-700);
-    }
 
 img,
 iframe,
@@ -75,11 +67,7 @@ canvas {
     max-width: 100%;
 }
 
-p {
-    color: var(--gov-gray-700);
-    line-height: 1.9;
-    text-align: right;
-}
+
 
 .container {
     max-width: 1200px;
@@ -172,23 +160,7 @@ p {
     gap: 8px;
 }
 
-.gov-action,
-.gov-user,
-.gov-logout {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 38px;
-    padding: 7px 12px;
-    color: var(--gov-navy-800) !important;
-    background: rgba(255, 255, 255, .86);
-    border: 1px solid var(--gov-border);
-    border-radius: var(--gov-radius);
-    font-size: .92rem;
-    font-weight: 800;
-    text-decoration: none !important;
-    box-shadow: 0 5px 14px rgba(8, 31, 54, .04);
-}
+
 
     .gov-action i,
     .gov-user i,
@@ -206,132 +178,6 @@ p {
         width: 16px;
         height: 20px;
         object-fit: contain;
-    }
-
-.nav-bar {
-    position: sticky !important;
-    top: 0;
-    z-index: 1020;
-}
-
-    .nav-bar::before,
-    .nav-bar::after {
-        display: none !important;
-    }
-
-    .nav-bar > .position-relative,
-    nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
-        background: var(--gov-navy-800) !important;
-    }
-
-    .nav-bar > .position-relative {
-        border-bottom: 3px solid var(--gov-gold-600);
-        box-shadow: 0 12px 28px rgba(8, 31, 54, .18);
-    }
-
-nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
-    min-height: 60px;
-    padding-right: max(16px, calc((100vw - 1200px) / 2)) !important;
-    padding-left: max(16px, calc((100vw - 1200px) / 2)) !important;
-    margin-right: 0 !important;
-}
-
-.navbar-collapse {
-    min-width: 0;
-}
-
-.navbar-nav.ml-auto.py-0 {
-    width: 100%;
-    direction: rtl;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 4px;
-}
-
-.navbar-dark .navbar-nav .nav-link {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 10px;
-    color: #f8fbff !important;
-    border-radius: 6px;
-    font-size: .95rem;
-    font-weight: 800;
-    line-height: 1.4;
-    transition: background-color .18s ease, color .18s ease;
-}
-
-    .navbar-dark .navbar-nav .nav-link i {
-        color: var(--gov-gold-600);
-        font-size: .95rem;
-    }
-
-    .navbar-dark .navbar-nav .nav-link::after {
-        display: none;
-    }
-
-    .navbar-dark .navbar-nav .nav-link:hover,
-    .navbar-dark .navbar-nav .nav-link.active,
-    .navbar-dark .navbar-nav .show > .nav-link {
-        color: #fff !important;
-        background: rgba(255, 255, 255, .12);
-    }
-
-.navbar-toggler {
-    min-height: 40px;
-    margin: 6px 4px;
-    padding: 7px 12px;
-    color: #fff !important;
-    border: 1px solid rgba(255, 255, 255, .38) !important;
-    border-radius: 6px;
-}
-
-a.navbar-toggler {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none !important;
-    font-weight: 800;
-}
-
-.navbar-nav .dropdown-menu {
-    right: 0;
-    left: auto;
-    min-width: 14rem;
-    padding: 8px;
-    text-align: right;
-    border: 1px solid rgba(8, 31, 54, .10);
-    border-radius: 0 0 var(--gov-radius) var(--gov-radius);
-    background: rgba(255, 255, 255, .98);
-    box-shadow: var(--gov-shadow-md);
-}
-
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 9px 11px;
-    color: var(--gov-gray-900);
-    border-radius: 6px;
-    line-height: 1.65;
-    white-space: normal;
-    font-weight: 700;
-}
-
-    .dropdown-item::before {
-        content: "\f104";
-        color: var(--gov-gold-600);
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-    }
-
-    .dropdown-item:hover,
-    .dropdown-item:focus {
-        color: var(--gov-navy-900);
-        background: #eef4f9;
     }
 
 .container-fluid.py-1 {
@@ -508,20 +354,9 @@ a.btn.btn-secondary {
     white-space: normal;
 }
 
-.btn-primary,
-.bg-gree,
-.btn-edit {
-    color: #fff !important;
-    background: var(--gov-navy-800) !important;
-    border-color: var(--gov-navy-800) !important;
-}
 
-    .btn-primary:hover,
-    .bg-gree:hover,
-    .btn-edit:hover {
-        background: var(--gov-navy-900) !important;
-        border-color: var(--gov-navy-900) !important;
-    }
+
+   
 
 .btn-secondary,
 a.btn.btn-secondary {
@@ -839,64 +674,17 @@ img[src*="emptyData"] {
     padding: 0 !important;
 }
 
-.back-to-top {
-    color: #fff !important;
-    background: var(--gov-navy-800) !important;
-    border-color: var(--gov-navy-800) !important;
-}
+
 
 @media (max-width: 1199.98px) {
-    .navbar-dark .navbar-nav .nav-link {
-        font-size: .9rem;
-        padding-right: 8px;
-        padding-left: 8px;
-    }
-
+  
     .slider-container {
         aspect-ratio: 16 / 8;
     }
 }
 
 @media (max-width: 991.98px) {
-    .nav-bar {
-        position: relative !important;
-    }
-
-    nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
-        padding: .55rem 1rem !important;
-    }
-
-    .navbar {
-        justify-content: center;
-    }
-
-    .navbar-collapse {
-        width: 100%;
-        margin-top: .5rem;
-    }
-
-    .navbar-nav.ml-auto.py-0 {
-        flex-wrap: nowrap;
-        align-items: stretch;
-        gap: 0;
-        padding: 6px 0 !important;
-    }
-
-    .navbar-dark .navbar-nav .nav-link {
-        display: flex;
-        justify-content: flex-start;
-        padding: 12px 14px;
-        border-radius: 0;
-        border-top: 1px solid rgba(255, 255, 255, .10);
-    }
-
-    .navbar-nav .dropdown-menu {
-        position: static !important;
-        width: 100%;
-        margin: .25rem 0 .5rem;
-        border-radius: var(--gov-radius);
-        box-shadow: none;
-    }
+   
 
     .slider-container {
         width: calc(100% - 28px) !important;
@@ -954,11 +742,7 @@ img[src*="emptyData"] {
         justify-content: center;
     }
 
-    .navbar-toggler {
-        flex: 1 1 auto;
-        min-width: 0;
-        margin: 4px 0;
-    }
+  
 
     .slider-container {
         width: calc(100% - 20px) !important;
@@ -1036,13 +820,8 @@ img[src*="emptyData"] {
     --gov-pattern-line: rgba(255, 255, 255, .08);
 }
 
-body.gov-portal {
-    background: linear-gradient(180deg, #eef3f8 0, #f7f9fb 44%, #ffffff 100%);
-}
 
-.gov-main {
-    background: linear-gradient(180deg, rgba(13, 45, 77, .04), rgba(255, 255, 255, 0) 240px), #f6f8fb;
-}
+
 
 .gov-portal-header {
     padding-top: 10px !important;
@@ -1107,39 +886,6 @@ body.gov-portal {
         border-color: rgba(184, 138, 45, .42);
         box-shadow: 0 12px 22px rgba(8, 31, 54, .10);
     }
-
-.nav-bar > .position-relative,
-nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
-    background: linear-gradient(90deg, var(--gov-navy-900), var(--gov-navy-800) 48%, #164d47) !important;
-}
-
-.nav-bar > .position-relative {
-    border-bottom: 0;
-}
-
-    .nav-bar > .position-relative::after {
-        content: "";
-        display: block;
-        height: 4px;
-        background: linear-gradient(90deg, var(--gov-gold-600), #e1c16b, var(--gov-green-700));
-    }
-
-.navbar-dark .navbar-nav .nav-link {
-    min-height: 52px;
-    padding: 13px 11px;
-}
-
-    .navbar-dark .navbar-nav .nav-link:hover,
-    .navbar-dark .navbar-nav .nav-link.active,
-    .navbar-dark .navbar-nav .show > .nav-link {
-        color: #fff !important;
-        background: rgba(255, 255, 255, .12);
-    }
-
-.dropdown-menu {
-    margin-top: 4px !important;
-    overflow: hidden;
-}
 
 .gov-home-hero {
     position: relative;
@@ -1792,7 +1538,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
     background: var(--capq-gold);
 }
 .capq-hero__h1 {
-    font-family: var(--capq-font-display);
+  
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 700;
     line-height: 1.2;
@@ -1892,7 +1638,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
     box-shadow: 0 0 0 1px rgba(201,162,39,.3);
 }
 .capq-quicklink__title {
-    font-family: var(--capq-font-display);
+
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--capq-deep);
@@ -1934,7 +1680,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
 }
 .capq-ornament::before { order: -1; }
 .capq-about__h2 {
-    font-family: var(--capq-font-display);
+    
     font-size: clamp(1.8rem, 4vw, 3rem);
     font-weight: 700;
     line-height: 1.25;
@@ -1973,7 +1719,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
     margin-bottom: 10px;
 }
 .capq-about__card-title {
-    font-family: var(--capq-font-display);
+  
     font-weight: 700;
     color: var(--capq-deep);
     margin-bottom: 6px;
@@ -2019,7 +1765,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
     backdrop-filter: blur(4px);
 }
 .capq-about__badge-title {
-    font-family: var(--capq-font-display);
+    
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--capq-deep);
@@ -2044,7 +1790,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
 }
 .capq-sec-eyebrow--gold { color: var(--capq-gold); }
 .capq-sec-h2 {
-    font-family: var(--capq-font-display);
+   
     font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 700;
     color: var(--capq-deep);
@@ -2121,7 +1867,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
 }
 .capq-news__body { flex: 1; display: flex; flex-direction: column; padding: 24px; }
 .capq-news__title {
-    font-family: var(--capq-font-display);
+    
     font-size: 1.05rem;
     font-weight: 700;
     color: var(--capq-deep);
@@ -2190,7 +1936,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
     margin-bottom: 6px;
 }
 .capq-ad__title {
-    font-family: var(--capq-font-display);
+   
     font-size: 1rem;
     font-weight: 700;
     color: var(--capq-deep);
@@ -2255,7 +2001,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.py-3.py-lg-0 {
     color: rgba(248,250,246,.7);
 }
 .capq-alert__title {
-    font-family: var(--capq-font-display);
+    
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.4;
