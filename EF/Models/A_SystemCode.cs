@@ -25,6 +25,10 @@ public partial class A_SystemCode
 
     public virtual ICollection<Ex_ContactDatum> Ex_ContactData { get; set; } = new List<Ex_ContactDatum>();
 
+    public virtual ICollection<Fees_Altahsil> Fees_AltahsilAccount_TypeNavigations { get; set; } = new List<Fees_Altahsil>();
+
+    public virtual ICollection<Fees_Altahsil> Fees_AltahsilPayment_Types { get; set; } = new List<Fees_Altahsil>();
+
     public virtual ICollection<HagrContact> HagrContacts { get; set; } = new List<HagrContact>();
 
     public virtual ICollection<Im_Request_Port> Im_Request_PortIsNationalNavigations { get; set; } = new List<Im_Request_Port>();

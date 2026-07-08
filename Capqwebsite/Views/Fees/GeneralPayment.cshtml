@@ -1,0 +1,343 @@
+﻿@using ViewModels
+@model FeesAltahsilVM
+
+<form asp-action="SaveGeneralPayment" method="post" id="paymentForm">
+
+    <div id="feesError"
+         class="text-danger mb-3">
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <label>المكتب</label>
+            <input asp-for="office"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label>رقم الشهادة الجمركية</label>
+            <input asp-for="Customs_Certificate_Number"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+
+            <label>الرقم القومي</label>
+
+            <input asp-for="National_ID"
+                   id="National_ID"
+                   class="form-control"
+                   maxlength="14" />
+
+            <span id="nationalError"
+                  class="text-danger">
+            </span>
+
+        </div>
+
+        <div class="col-md-4">
+            <label>السجل الضريبي</label>
+            <input asp-for="Tax_Registry"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label>السجل التجاري</label>
+            <input asp-for="Commercial_Register"
+                   class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label>الاسم</label>
+            <input asp-for="Name"
+                   class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label>اسم المزرعة</label>
+            <input asp-for="FarmName"
+                   class="form-control" />
+        </div>
+
+    </div>
+
+    <hr />
+    <center>
+        <div id="feesError"
+             class="text-danger mb-3">
+        </div>
+    </center>
+
+
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>اختيار</th>
+                <th>نوع الرسم</th>
+                <th>المبلغ</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @for (int i = 0; i < Model.Fees.Count; i++)
+            {
+                <tr>
+
+                    <td>
+
+                        <input asp-for="Fees[i].Selected"
+                               class="fee-check" />
+
+                        <input type="hidden"
+                               asp-for="Fees[i].FeesType_ID" />
+
+                    </td>
+
+                    <td>
+                        @Model.Fees[i].FeesName
+                        <input type="hidden"
+                               asp-for="Fees[i].FeesName" />
+                    </td>
+
+                    <td>
+                        <input asp-for="Fees[i].Amount"
+                               class="form-control amount" />
+
+                        <span class="text-danger fee-error"></span>
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+    <div class="mb-3">
+
+        <label>الإجمالي</label>
+
+        <input id="Amount_Total" asp-for="Amount_Total"
+               readonly
+               class="form-control" />
+
+    </div>
+
+    <button type="button" id="btnmodel" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+        دفع&nbsp;
+        <img src="~/img/mastercard.png" />
+        <img src="~/img/visa.png" />
+
+    </button>
+
+
+
+    <div class="modal fade" id="myModal" role="dialog" dir="ltr">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <button type="button" class="close" dir="rtl" data-dismiss="modal">&times;</button>
+                <center>
+                    @*<h4 class="modal-title">الشروط و الأحكام</h4>*@
+                    <div class="panel-heading">
+                        <h3 class="panel-title">  شروط تقديم خدمة الدفع الالكتروني  علي موقع الحجر الزراعي المصري </h3>
+                    </div>
+                </center>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12" dir="rtl">
+                            <ul>
+                                <li class="li-style">	لا يجوز التنازل أو تقديم طلب تقديم خدمة او دفع الكترونى لصالح الغير من حساب الشركة حيث أنه خاص فقط للشركة المقدمة .</li>
+                                <li class="li-style">	تسرى الأحكام المقررة بقانون الزراعة رقم 53 لسنة 1966 والقرار الوزاري رقم 562 لسنة 2019م والقرار الوزاري رقم 386 لسنة 2021.</li>
+                                <li class="li-style">	المصاريف المسددة مقابل الخدمة غير قابلة للاسترداد وذلك بعد إتمام المعاملة بنجاح.</li>
+                                <li class="li-style">	يرجى التحقق من صحة رقم بطاقة الائتمان وجميع البيانات المطلوبة قبل إجراء عملية الدفع .</li>
+                                <li class="li-style">		تتحمل الشركة دون غيرها صحة ما جاء في الطلب وما ترتب عليه من رسوم ولا يجوز الإحتجاج بإستخدام أسم المستخدم و كلمة المرور الخاصة بالشركة من قبل الغير حيث أنها اختصاصات حصرية للشركة</li>
+                                <li class="li-style">		البيانات المدرجة في خدمات المنظومة الالكترونية سواء من صاحب الشأن أو مندوبه تكون مسئولية صاحب الشركة بشخصه ولا يجوز التنصل منها تحت أي ظرف .	 </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                </div>
+                <div class="modal-footer">
+                    <center>
+                        <button type="button" class="btn btn-info btn-lg" data-dismiss="modal">إلغاء</button>
+                        <input type="submit" class="btn btn-info btn-lg" id="btnpay" value="موافق" />
+              @*           <button type="submit"
+                                class="btn btn-primary">
+                            حفظ
+                        </button> *@
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        $("#paymentForm")
+        .on(
+        "submit",
+        function(e){
+
+        let valid=true;
+
+        // تنظيف الرسائل
+        $("#nationalError").text("");
+        $("#feesError").text("");
+        $(".fee-error").text("");
+
+        // الرقم القومي
+        let national=
+        $("#National_ID")
+        .val()
+        .trim();
+
+        if(
+        national.length!==14
+        ||
+        !/^\d+$/.test(national)
+        )
+        {
+        $("#nationalError")
+        .text(
+        "الرقم القومي يجب أن يكون 14 رقم"
+        );
+
+        valid=false;
+        }
+
+        // الرسوم
+        let selected=
+        $(".fee-check:checked");
+
+        if(
+        selected.length===0
+        )
+        {
+        $("#feesError")
+        .text(
+        "اختر رسم واحد على الأقل"
+        );
+
+        valid=false;
+        }
+
+        selected.each(function(){
+
+        let row=
+        $(this)
+        .closest("tr");
+
+        let amount=
+        row
+        .find(".amount")
+        .val();
+
+        if(
+        !amount
+        ||
+        parseFloat(amount)<=0
+        )
+        {
+        row
+        .find(".fee-error")
+        .text(
+        "ادخل قيمة الرسم"
+        );
+
+        valid=false;
+        }
+
+        });
+
+        // منع الحفظ
+        if(!valid)
+        {
+        e.preventDefault();
+        }
+
+        });
+
+
+        // أرقام فقط
+
+        $("#National_ID")
+        .on(
+        "input",
+        function(){
+
+        this.value=
+        this.value
+        .replace(/\D/g,'');
+
+        });
+
+        $(".amount")
+        .on(
+        "input",
+        function(){
+
+        this.value=
+        this.value
+        .replace(
+        /[^0-9.]/g,
+        ''
+        );
+
+        });
+
+    </script>
+
+    <script>
+
+        function calcTotal(){
+
+        let total=0;
+
+        $(".amount").each(function(){
+
+        let row=
+        $(this).closest("tr");
+
+        if(
+        row
+        .find(
+        "input[type='checkbox']"
+        )
+        .prop("checked")
+        )
+        {
+        total+=
+        parseFloat(
+        $(this).val()
+        )||0;
+        }
+
+        });
+
+        $("#Amount_Total")
+        .val(total);
+
+        }
+
+        $(document)
+        .on(
+        "keyup change",
+        ".amount,input[type='checkbox']",
+        calcTotal
+        );
+
+    </script>
+ 
+}

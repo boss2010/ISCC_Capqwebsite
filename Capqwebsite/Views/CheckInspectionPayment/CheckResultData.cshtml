@@ -1,0 +1,31 @@
+﻿@using ViewModels
+@model CheckResultVM
+
+<br />
+<br />
+<h3>
+    عدد العمليات الناجحة:
+    @Model.SuccessCount
+</h3>
+<hr />
+<br />
+@if (@Model.SuccessCount!=0)
+{
+
+    <table class="table table-bordered">
+
+        <tr>
+            <th style="color: #211cdb !important;">المبلغ</th>
+            <th style="color: #211cdb !important;">تاريخ الدفع</th>
+        </tr>
+
+        @foreach (var item in Model.Details)
+        {
+            <tr>
+                <td>@item.Amount_Total</td>
+                <td>@(item.date?.ToString("dd/MM/yyyy") ?? "-")</td>
+            </tr>
+        }
+
+    </table>
+}

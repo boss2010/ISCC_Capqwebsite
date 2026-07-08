@@ -107,6 +107,31 @@ public partial class Im_CheckRequest_Items_Lot_Category
 
     public DateTime? User_Deletion_Date { get; set; }
 
+    /// <summary>
+    /// علامة مميزة
+    /// </summary>
+    public string? DistinctiveMark { get; set; }
+
+    /// <summary>
+    /// عدد الطرود
+    /// </summary>
+    public string? PackagesCount { get; set; }
+
+    /// <summary>
+    /// علامة مميزة
+    /// </summary>
+    public string? ShipName { get; set; }
+
+    /// <summary>
+    /// عبوات او بدون
+    /// </summary>
+    public int? containers_type_ID { get; set; }
+
+    /// <summary>
+    /// تاريخ الرحلة
+    /// </summary>
+    public DateOnly? TripDate { get; set; }
+
     public virtual Im_CheckRequest_Item? Im_CheckRequest_Items { get; set; }
 
     public virtual ICollection<Im_Execution_Item> Im_Execution_Items { get; set; } = new List<Im_Execution_Item>();

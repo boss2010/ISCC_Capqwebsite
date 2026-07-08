@@ -3,7 +3,13 @@ using Microsoft.AspNetCore.Builder;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
+builder.Services
+.AddControllersWithViews()
+.AddCookieTempDataProvider(options =>
+{
+    options.Cookie.IsEssential = true;
+});
 /////////////////rrr8-5-2025/////////////////////////
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {

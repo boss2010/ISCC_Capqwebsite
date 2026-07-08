@@ -1,0 +1,79 @@
+﻿<form asp-action="Check" method="post" id="paymentFormCheck">
+
+    <div class="row">
+
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+
+            <label>الرقم القومي</label>
+
+            <input type="text"
+                   name="National_ID"
+                   id="National_ID"
+                   class="form-control"
+                   value="@ViewBag.National_ID"
+                   maxlength="14"
+                   required
+                   pattern="\d{14}" />
+
+            <span id="nationalError" class="text-danger"></span>
+
+        </div>
+
+        <div class="col-md-4"></div>
+
+    </div>
+
+    <hr />
+
+    <center>
+        <button type="submit"
+                id="btnmodel"
+                class="btn btn-info btn-lg">
+            مراجعة
+        </button>
+    </center>
+
+</form>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        $("#paymentFormCheck").on("submit", function (e) {
+
+            let valid = true;
+
+            $("#nationalError").text("");
+
+            let national = $("#National_ID").val().trim();
+
+            if (national.length !== 14 || !/^\d+$/.test(national)) {
+
+                $("#nationalError").text(
+                    "الرقم القومي يجب أن يكون 14 رقم"
+                );
+
+                valid = false;
+            }
+
+            if (!valid) {
+                e.preventDefault();
+            }
+
+        });
+
+
+        $("#National_ID").on("input", function () {
+
+            this.value = this.value
+                .replace(/\D/g, "")
+                .slice(0, 14);
+
+        });
+
+    </script>
+}
