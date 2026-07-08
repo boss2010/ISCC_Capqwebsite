@@ -2,6 +2,7 @@
 
 namespace Capqwebsite.Controllers
 {
+    //sayed
     public class AdvertisementsController : Controller
     {
         public IActionResult Index()

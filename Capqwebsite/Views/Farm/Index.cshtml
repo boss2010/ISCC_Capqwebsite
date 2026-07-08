@@ -1,58 +1,66 @@
-﻿ @model List<ViewModels.FarmStopVM>
+@model List<ViewModels.FarmStopVM>
 @{
-	var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "Lang").Value;
-	var lang = string.IsNullOrEmpty(langCookies) ? "ar" : langCookies;
+    var langCookies = Context.Request.Cookies.FirstOrDefault(c => c.Key == "Lang").Value;
+    var lang = string.IsNullOrEmpty(langCookies) ? "ar" : langCookies;
 }
-<!-- Page Header Start -->
-<div class="container-fluid py-1">
-	<div class="container py-2">
-		<div class="row align-items-center py-4">
-			<div class="col-md-6 text-center text-md-left">
-				<div class="d-inline-flex align-items-center">
-					<a class="btn btn-secondary" href="">التصدير</a>
-					<i class="fas fa-angle-double-right text-primary mx-2"></i>
-					<a class=" disabled" href="">المزارع المتوقفة</a>
-				</div>
-			</div>
-			<div class="col-md-6 text-center text-md-right">
-				@*                 <i class="fas fa-phone icon-style"></i>
- *@                <h3 class="mb-4 mb-md-0 text-primary text-uppercase output">المزارع المتوقفة</h3>
-			</div>
-			
-		</div>
-	</div>
+
+<!-- Page Header -->
+<div class="gov-page-header">
+    <div class="container">
+        <div class="gov-page-header__inner">
+            <div class="gov-page-header__title">
+                <span class="gov-page-header__icon"><i class="fas fa-tractor"></i></span>
+                <div>
+                    <span class="gov-page-header__eyebrow">خدمات التصدير</span>
+                    <h1 class="gov-page-header__h1">المزارع الموقوفة</h1>
+                </div>
+            </div>
+            <nav class="gov-breadcrumb">
+                <a href="@Url.Action("Index", "Home")" class="gov-breadcrumb__link">الرئيسية</a>
+                <i class="fas fa-chevron-left gov-breadcrumb__sep"></i>
+                <span class="gov-breadcrumb__current">المزارع الموقوفة</span>
+            </nav>
+        </div>
+    </div>
 </div>
-<!-- Page Header Start -->
-<!-- Contact Start -->
-<div class="container-fluid bg-light">
-	<div class="container pt-5">
-		<form class="text-start">
-			<div class="row">
-				<div class="col-md-4">
 
-					<label class="label lbl-style ">كود المزرعه</label>
-					<input type="text" name="FarmCode" id="FarmCode" class="form-control" />
-				</div>
+<div class="container-fluid gov-inner-page">
+    <div class="container">
+        <!-- Search Card -->
+        <div class="gov-form-card mb-4">
+            <div class="gov-form-card__header">
+                <span class="gov-form-card__icon"><i class="fas fa-search"></i></span>
+                <h2 class="gov-form-card__title">بحث عن مزرعة</h2>
+            </div>
+            <div class="gov-form-card__body">
+                <form class="row align-items-end" method="get">
+                    <div class="col-md-4 mb-3 mb-md-0">
+                        <label class="gov-label">كود المزرعة</label>
+                        <input type="text" name="FarmCode" id="FarmCode" class="form-control" placeholder="أدخل كود المزرعة" />
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" id="btnsearch" name="btnSave" class="btn btn-primary">
+                            <i class="fas fa-search ml-1"></i> بحث
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-				<div class="col-md-4">
-					<input id="btnsearch" type="submit" class="btn btn-secondary box-shadow mar-top py-2 px-4" name="btnSave" value="بحث">
-				</div>
-			</div>
-			<br />
-
-		</form>
-		<br />
-		<div class="card-body pt-5">
-			<div id="divdata">
-				@if (@Model != null)
-				{
-					<partial name="_PartialFarm.cshtml" for="@Model" />
-				}
-
-			</div>
-		</div>
-
-
-
-	</div>
+        <!-- Results Table -->
+        <div class="gov-table-card">
+            <div class="gov-table-card__header">
+                <span class="gov-form-card__icon"><i class="fas fa-list"></i></span>
+                <h2 class="gov-form-card__title">نتائج البحث</h2>
+            </div>
+            <div class="gov-table-card__body">
+                <div class="table-responsive" id="divdata">
+                    @if (Model != null)
+                    {
+                        <partial name="_PartialFarm.cshtml" for="@Model" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
