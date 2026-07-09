@@ -179,7 +179,7 @@ namespace Capqwebsite.Controllers.Fees
                     Succesurl = "http://41.33.237.90:8071/" + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
                 Cancelurl = "http://41.33.237.90:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
             }
-                else if (host == "www.capq.gov.eg")
+                else if (host == "www.site.capq.gov.eg")
                 {
                     Succesurl = DomainName + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
                 Cancelurl = DomainName + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
@@ -337,7 +337,7 @@ namespace Capqwebsite.Controllers.Fees
                 Succesurl = "http://41.33.237.90:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
                 Cancelurl = "http://41.33.237.90:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
             }
-            else if (host == "www.capq.gov.eg")
+            else if (host == "www.site.capq.gov.eg")
             {
                 Succesurl = DomainName + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
                 Cancelurl = DomainName + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
