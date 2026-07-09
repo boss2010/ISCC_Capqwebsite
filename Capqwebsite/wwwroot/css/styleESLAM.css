@@ -1,77 +1,17 @@
 ﻿/* Government portal theme
    Loaded last to standardize the public layout, tables, forms, dashboard and RTL behavior. */
 
-:root {
-    --gov-navy-900: #081f36;
-    --gov-navy-800: #0d2d4d;
-    --gov-navy-700: #123f67;
-    --gov-green-700: #2e6f57;
-    --gov-gold-600: #b88a2d;
-    --gov-gold-100: #fff6dc;
-    --gov-gray-900: #17212b;
-    --gov-gray-700: #44515f;
-    --gov-gray-500: #7a8794;
-    --gov-gray-200: #e5eaf0;
-    --gov-gray-100: #f4f7fa;
-    --gov-white: #ffffff;
-    --gov-danger: #b42318;
-    --gov-success: #177245;
-    --gov-warning: #b7791f;
-    --gov-info: #0f6c8d;
-    --gov-border: #d7dee8;
-    --gov-radius: 8px;
-    --gov-shadow-sm: 0 8px 18px rgba(8, 31, 54, .07);
-    --gov-shadow-md: 0 16px 36px rgba(8, 31, 54, .12);
-    --gov-font: "Cairo-Regular", "CairoPlay-Regular", Tahoma, Arial, sans-serif;
-}
+
 
 html {
     direction: rtl;
     scroll-behavior: smooth;
 }
 
-body {
-    direction: rtl !important;
-    text-align: right;
-    min-height: 100vh;
-    color: var(--gov-gray-900);
-
-   
-    letter-spacing: 0 !important;
-    overflow-x: clip;
-}
-
-@supports not (overflow-x: clip) {
-    body {
-        overflow-x: hidden;
-    }
-}
-
-body,
-button,
-input,
-select,
-textarea,
-.btn,
-.nav-link,
-.dropdown-item {
-
-    letter-spacing: 0 !important;
-}
-
-
-img,
-iframe,
-video,
-canvas {
-    max-width: 100%;
-}
 
 
 
-.container {
-    max-width: 1200px;
-}
+
 
 .gov-main {
     min-height: 52vh;
@@ -1483,7 +1423,7 @@ img[src*="emptyData"] {
     --capq-shadow-gold: 0 10px 40px -10px rgba(201,162,39,.4);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;900&display=swap');
+
 
 /* --- Top Bar --- */
 .capq-topbar {
