@@ -32,4 +32,6 @@ public partial class FeesType
     public virtual ICollection<FeesAmount_Fixed> FeesAmount_Fixeds { get; set; } = new List<FeesAmount_Fixed>();
 
     public virtual ICollection<Fees_Action> Fees_Actions { get; set; } = new List<Fees_Action>();
+
+    public virtual ICollection<Fees_Altahsil_Detile> Fees_Altahsil_Detiles { get; set; } = new List<Fees_Altahsil_Detile>();
 }

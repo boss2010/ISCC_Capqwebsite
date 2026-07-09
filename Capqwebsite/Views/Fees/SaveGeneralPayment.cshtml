@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = null;
+    //Layout = "~/Areas/Master/MasterDataEntryExportRequst.cshtml";
+}
+
+<html>
+<head>
+
+    @if (ViewBag.ScriptBankPort != 80 && ViewBag.ScriptBankPort != 443 && ViewBag.Url != "www.capq.gov.eg")
+    {
+        <script src="https://test-nbe.gateway.mastercard.com/checkout/version/61/checkout.js" data-error="error callback" data-cancel="cancel callback"></script>
+    }
+    else
+    {
+        <script src="https://nbe.gateway.mastercard.com/checkout/version/61/checkout.js" data-error="error callback" data-cancel="cancel callback"></script>
+    }
+
+
+
+    <link href="~/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/jquery-3.4.1.min.js"></script>
+    <script src="~/bootstrap.min.js"></script>
+    <script>
+        //$(document).ready(function(){
+        //    $("#btnpayVersiontwo").click();
+        //    alert("fgd");
+        //});
+        window.onload = function() {
+
+            $("#btnpayVersiontwo").click();
+        };
+
+        $(document).ready(function () {
+
+
+
+            var amount = 0;
+            if (@ViewBag.amount!='') {
+                amount=@ViewBag.amount;
+            }
+
+
+            //function completeCallback(resultIndicator, sessionVersion) {
+            //    alert(resultIndicator);
+            //    alert('done');
+            //    //handle payment completion
+            //}
+
+            function errorCallback(error) {
+                console.log(JSON.stringify(error));
+                alert(JSON.stringify(error));
+            }
+            function cancelCallback() {
+                console.log('Payment cancelled');
+            }
+            //function completeCallback() {
+            //    console.log('Payment completed');
+            //}
+
+
+            Checkout.configure({
+
+                session: {
+                    id: $("#SessionId").val()
+                },
+                order: {
+                    amount: function () {
+                        //Dynamic calculation of amount
+                        return amount // 100 + 0;
+                    },
+                    currency: 'EGP',
+                    description: 'Ordered goods',
+                    id: $("#OrderId").val(),
+                },
+
+
+                billing: {
+
+                    address: {
+
+                        street: '123 Customer Street',
+
+                        city: 'Metropolis',
+
+                        postcodeZip: '99999',
+
+                        stateProvince: 'NY',
+
+                        country: 'USA'
+
+                    }
+
+                },
+
+
+
+                interaction: {
+                    operation: 'PURCHASE',
+                    merchant: {
+                        name: 'NBE',
+                        address: {
+                            line1: '200 Sample St',
+                            line2: '1234 Example Town'
+                        }
+                    },
+                    displayControl: {
+                        billingAddress: 'HIDE',
+                        customerEmail: 'HIDE',
+                        orderSummary: 'HIDE',
+                        shipping: 'HIDE',
+                      //  paymentConfirmation: 'HIDE'
+                    }
+                },
+
+
+            });
+
+
+        });
+    </script>
+
+</head>
+
+<body>
+    <center>
+
+        @*@if (ViewBag.Url != "www.capq.gov.eg" && ViewBag.port!=80 && ViewBag.port!=443)
+        {*@
+
+        <input type="hidden" id="SessionId" name="SesId" value="@ViewBag.Ses_Id" />
+        <input type="hidden" id="OrderId" name="OrdId" value="@ViewBag.Ord_Id" />
+        @*<input type="button" style="visibility:hidden" id="btnpayVersionone" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />*@
+        <input type="button" style="visibility:hidden" id="btnpayVersiontwo" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" />
+        @*}*@
+    </center>
+
+
+
+</body>
+
+</html>
+
+
+

@@ -5338,3 +5338,8 @@ height:787px;
         border-color: rgba(184, 138, 45, .42);
         box-shadow: 0 12px 22px rgba(8, 31, 54, .10);
     }
+a.btn.btn-lg.btn-primary.back-to-top {
+    color: #ffffff;
+    background-color: #0d311a;
+    border-color: #ffffff;
+}

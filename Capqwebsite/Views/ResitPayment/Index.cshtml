@@ -1,0 +1,351 @@
+﻿@using ViewModels
+@model FeesAltahsilDTO
+
+@{
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8" />
+
+    <style>
+
+        body {
+            font-family: Tahoma;
+            background: #f5f7fa;
+        }
+
+        .receipt {
+            width: 1200px;
+            margin: auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+
+        .header {
+            text-align: center;
+            color: #0b2f6a;
+            margin-bottom: 30px;
+        }
+
+        .success {
+            color: green;
+            font-size: 22px;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .right {
+            width: 50%;
+        }
+
+        .left {
+            width: 50%;
+        }
+
+        .card {
+            border: 1px solid #d9e1ea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-title {
+            background: #032d6d;
+            color: white;
+            padding: 14px;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .info-row {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            padding: 14px;
+        }
+
+        .label {
+            width: 40%;
+            font-weight: bold;
+        }
+
+        .value {
+            width: 60%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            table th {
+                background: #f2f5fb;
+            }
+
+            table td,
+            table th {
+                padding: 12px;
+                border: 1px solid #ddd;
+                text-align: center;
+            }
+
+        .total {
+            background: #eef4ff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .paid {
+            color: white;
+            background: green;
+            padding: 10px 40px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+
+        .print-area {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .print-btn {
+            background: #032d6d;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+            .print-btn:hover {
+                background: #0b4bb3;
+            }
+
+        /* شكل الطباعة */
+        @@media print {
+            body
+
+        {
+            background: white !important;
+        }
+
+        .print-area {
+            display: none !important;
+        }
+
+        .receipt {
+            width: 100%;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        }
+
+        .link-btn {
+            background: #198754;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+            .link-btn:hover {
+                background: #157347;
+            }
+    </style>
+    <script>
+        function printReceipt() {
+            window.print();
+        }
+         function goToLink() {
+            window.location.href = '/Fees/Index';
+            
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="receipt">
+
+        <div class="header">
+
+            <h1>إيصال دفع رسوم</h1>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="success">
+                    ✓ @TempData["Success"]
+                </div>
+            }
+
+        </div>
+
+        <div class="row">
+
+            <!-- البيانات الأساسية -->
+
+            <div class="right">
+
+                <div class="card">
+
+                    <div class="card-title">
+                        البيانات الأساسية
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">اسم مقدم الطلب :</div>
+                        <div class="value">@Model.Name</div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">الرقم القومي :</div>
+                        <div class="value">@Model.National_ID</div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">السجل التجاري :</div>
+                        <div class="value">@Model.Commercial_Register</div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">الرقم الضريبي :</div>
+                        <div class="value">@Model.Tax_Registry</div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">مكتب  :</div>
+                        <div class="value">@Model.Office</div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="label">رقم شهادة الجمارك :</div>
+                        <div class="value">
+                            @Model.Customs_Certificate_Number
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="label">اسم المزرعة :</div>
+                        <div class="value">
+                            @Model.FarmName
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="label">التاريخ :</div>
+                        <div class="value">
+                            @(Model.Date?.ToString("dd/MM/yyyy") ?? "-")
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- الرسوم -->
+
+            <div class="left">
+
+                <div class="card">
+
+                    <div class="card-title">
+                        تفاصيل الرسوم
+                    </div>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>نوع الرسم</th>
+                                <th>القيمة</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @for (int i = 0; i < Model.Details.Count; i++)
+                            {
+                                <tr>
+
+                                    <td>@(i + 1)</td>
+
+                                    <td>
+                                        @Model.Details[i].FeesTypeName
+                                    </td>
+
+                                    <td>
+                                        @Model.Details[i].Amount
+                                        ج.م
+                                    </td>
+
+                                </tr>
+                            }
+
+                            <tr class="total">
+
+                                <td colspan="2">
+                                    الإجمالي
+                                </td>
+
+                                <td>
+
+                                    @Model.Amount_Total
+
+                                    ج.م
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer">
+
+            <div class="paid">
+                تم الدفع بنجاح
+            </div>
+
+        </div>
+
+    </div>
+    <div class="print-area">
+        <button onclick="printReceipt()" class="print-btn">
+            🖨️ طباعة الإيصال
+        </button>
+
+        <button onclick="goToLink()" class="link-btn">
+            ↩️ رجوع
+        </button>
+    </div>
+
+   
+</body>
+
+</html>

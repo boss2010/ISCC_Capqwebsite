@@ -91,6 +91,8 @@ public partial class Item_ShortName
 
     public long? ItemCategories_Group_ID { get; set; }
 
+    public string? HSCode { get; set; }
+
     public virtual ICollection<CompanyAccreditation> CompanyAccreditations { get; set; } = new List<CompanyAccreditation>();
 
     public virtual ICollection<EX_Choose_SampleDatum> EX_Choose_SampleData { get; set; } = new List<EX_Choose_SampleDatum>();
