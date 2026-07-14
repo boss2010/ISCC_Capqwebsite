@@ -93,8 +93,26 @@
                 <div class="row">
                     @foreach (var item in Model)
                     {
+
+
                         <div class="col-md-4 col-sm-6 mb-4">
-                            <a href="#" class="gov-pdf-card openPdf" data-pdf="@item.filepath">
+                            <a href="#" class="gov-pdf-card openPdf" data-pdf="@item.filepath"
+                               class="group flex items-start gap-5 rounded-xl border border-border bg-card p-6 transition-all hover:border-gold hover:shadow-elegant">
+                                <div class="grid size-14 shrink-0 place-items-center rounded-md bg-primary-deep text-gold ring-1 ring-gold/30">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-[11px] font-semibold uppercase tracking-wider text-gold">قانون</div>
+                                    <div class="mt-1 font-display text-lg font-bold text-primary-deep group-hover:text-gold">
+                                        @item.TitleAr
+                                    </div>
+                                    <div class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground group-hover:text-primary-deep">
+                                        <i class="fas fa-eye ml-1"></i> عرض
+                                    </div>
+                                </div>
+                            </a>
+
+@*                             <a href="#" class="gov-pdf-card openPdf" data-pdf="@item.filepath">
                                 <div class="gov-pdf-card__icon">
                                     <i class="fas fa-file-pdf"></i>
                                 </div>
@@ -103,7 +121,7 @@
                                     <i class="fas fa-eye ml-1"></i> عرض
                                 </div>
                             </a>
-                        </div>
+ *@                        </div>
                     }
                 </div>
             }

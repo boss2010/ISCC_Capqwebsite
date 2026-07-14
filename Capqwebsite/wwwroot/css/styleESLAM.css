@@ -226,6 +226,7 @@ h3.output,
 .card-body,
 .card-body.card-height {
     height: auto !important;
+    text-align: center;
 }
 
     .card-body h5,
@@ -2446,7 +2447,6 @@ img[src*="emptyData"] {
 /* ===== PDF Card ===== */
 .gov-pdf-card {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 12px;
@@ -2456,9 +2456,9 @@ img[src*="emptyData"] {
     border-radius: var(--gov-radius);
     box-shadow: var(--gov-shadow-sm);
     text-decoration: none !important;
-    text-align: center;
     height: 100%;
     transition: transform .18s ease, box-shadow .18s ease;
+    z-index: 1;
 }
 .gov-pdf-card:hover {
     transform: translateY(-4px);
@@ -2573,4 +2573,27 @@ img[src*="emptyData"] {
     .gov-detail-card { padding: 20px; }
     .gov-detail-title { font-size: 1.3rem; }
     .gov-form-card__body { padding: 18px 16px; }
+}
+.card-body a.btn.btn-primary.btn-sm {
+    margin-top: 15px;
+}
+.gov-pdf-card {
+    position: relative;
+    background-color: #f8f7f2;
+}
+
+    .gov-pdf-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('../img/bb.jpg') repeat;
+        background-size: 180px;
+        opacity: 0.3; 
+        pointer-events: none;
+        z-index: -1;
+    }
+
+.gov-pdf-card > * {
+    position: relative;
+    z-index: 1;
 }
