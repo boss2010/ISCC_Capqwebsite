@@ -46,10 +46,10 @@
                                     </div>
                                     <div class="card-body p-3">
                                         <h5 class="mb-2">@item.TitleAr</h5>
-
-                                    </div>  <a href="@item.linkURL" class="btn btn-primary btn-sm" target="_blank">
-                                        <i class="fab fa-youtube ml-1"></i> مشاهدة على يوتيوب
-                                    </a>
+                                        <a href="@item.linkURL" class="btn btn-primary btn-sm" target="_blank">
+                                            <i class="fab fa-youtube ml-1"></i> مشاهدة على يوتيوب
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         }
@@ -62,7 +62,7 @@
                 @foreach (var item in Model)
                 {
                     <div class="row">
-                        <div class="col-lg-5 ">
+                        <div class="col-lg-5 mb-4">
                             <div class="gov-contact-info-card">
                                 <div class="gov-contact-info-card__item">
                                     <div class="gov-contact-info-card__icon"><i class="fas fa-map-marker-alt"></i></div>

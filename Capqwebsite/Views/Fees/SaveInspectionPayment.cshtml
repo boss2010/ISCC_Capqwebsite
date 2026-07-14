@@ -7,7 +7,7 @@
 <html>
 <head>
 
-    @if (ViewBag.ScriptBankPort != 80 && ViewBag.ScriptBankPort != 443 && ViewBag.Url != "www.capq.gov.eg")
+    @if (ViewBag.ScriptBankPort != 80 && ViewBag.ScriptBankPort != 443 && ViewBag.Url != "www.site.capq.gov.eg")
     {
         <script src="https://test-nbe.gateway.mastercard.com/checkout/version/61/checkout.js" data-error="error callback" data-cancel="cancel callback"></script>
     }
@@ -19,7 +19,7 @@
 
 
     <link href="~/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/jquery-3.4.1.min.js"></script>
+    <script src="~/js/jquery-3.4.1.min.js"></script>
     <script src="~/bootstrap.min.js"></script>
     <script>
         //$(document).ready(function(){

@@ -16,17 +16,12 @@
 
     <link rel="stylesheet" href="~/css/swiper-bundle.min.css">
     <link href="~/css/select2.min.css" rel="stylesheet" />
-    <!-- jQuery first -->
-    <script src="~/js/jquery-3.7.1.min.js"></script>
-
-    <!-- Then Bootstrap JS -->
-    <script src="~/js/bootstrap.min.js"></script>
-    
-   @*  <link href="~/css/style.css" rel="stylesheet">  *@
-	@*<link href="~/css/custom.css" rel="stylesheet" />*@
+    @* <link href="~/css/style.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" /> *@
  	<link href="~/css/styleESLAM.css" rel="stylesheet"  /> 
     <link href="~/css/styles.css" rel="stylesheet" />
-  
+    <script src="~/js/jquery-3.7.1.min.js"></script>
+    @*<script src="~/js/bootstrap.min.js"></script> *@
 
 </head>
 <body class="gov-portal" >
@@ -64,7 +59,7 @@
 
     <header class="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <a href="#" class="flex items-center gap-3">
+            <a asp-controller="Home" asp-action="Index" class="flex items-center gap-3">
                 <div class="relative grid size-12 place-items-center rounded-full bg-primary-deep text-gold ring-2 ring-gold/40">
                     <img src="~/img/logo-capq2.png" />
                 </div>
@@ -103,11 +98,12 @@
                         <div class="navbar-nav ml-auto py-0">
                             @*  <nav class="hidden items-center gap-6 lg:flex"> *@
                             <a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-link text-sm">
-                          
-                                الرئيسية
+
+                                الرئيسية 
+                             
                             </a>
                             <div class="nav-item dropdown">
-                                <a href="#" data-toggle="dropdown" class="nav-link text-sm dropdown-toggle">تشريعات</a>
+                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link text-sm dropdown-toggle">تشريعات</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     @* <a asp-area="" asp-controller="AgricultureLaw" asp-action="" title="" class="dropdown-item">
                                     قانون الزراعة
@@ -128,7 +124,7 @@
                             </div>
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle text-sm" data-toggle="dropdown">الاستيراد</a>
+                                <a href="#" class="nav-link dropdown-toggle text-sm" data-bs-toggle="dropdown">الاستيراد</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     @* <a asp-area="" asp-controller="ImportingProcedure" asp-action="Index" title="" class="dropdown-item">
                                     اشتراطات الاستيراد
@@ -151,7 +147,7 @@
 
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle text-sm" data-toggle="dropdown">التصدير</a>
+                                <a href="#" class="nav-link dropdown-toggle text-sm" data-bs-toggle="dropdown">التصدير</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="@Url.Action("Index", "ExportingProcedure")" class="dropdown-item">اشتراطات التصدير</a>
                                     <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 4 })" class="dropdown-item">المزارع المعتمدة</a>
@@ -183,7 +179,7 @@
                            
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle text-sm" data-toggle="dropdown"> شهادة الصحة النباتية</a>
+                                <a href="#" class="nav-link dropdown-toggle text-sm" data-bs-toggle="dropdown"> شهادة الصحة النباتية</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificate/Index" class="dropdown-item" target="_blank"> التحقق من الشهادة بالرقم</a>
                                     <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificateLogin/Index" class="dropdown-item" target="_blank">التحقق من الشهادات للدول</a>
@@ -207,7 +203,7 @@
 
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-balance-scale"></i>تشريعات</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-balance-scale"></i>تشريعات</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 1 })" class="dropdown-item">قانون الزراعة</a>
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 2 })" class="dropdown-item">قرارات وزارية</a>
@@ -215,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ship"></i>الاستيراد</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-ship"></i>الاستيراد</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">إجراءات فتح المنشأ</a>
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">شرح الخدمات الالكترونية</a>
@@ -223,7 +219,7 @@
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-truck"></i>التصدير</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-truck"></i>التصدير</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 5 })" class="dropdown-item">المحطات المعتمدة</a>
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 4 })" class="dropdown-item">المزارع المعتمدة</a>
@@ -379,15 +375,9 @@
     <a href="#" class="btn btn-lg btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
+    <script src="~/js/select2.min.js"></script>
 
-    <!-- JavaScript Libraries -->
-    <script src="~/js/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    @*     <script src="~/bootstrap.bundle.min.js"></script>
- *@   
- @*     <script src="~/js/bootstrap-select.js"></script>
- *@
+
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/lib/isotope/isotope.pkgd.min.js"></script>
@@ -397,8 +387,7 @@
 
     <script src="~/js/site.js"></script>
     <script src="~/js/bootstrap.bundle5.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
