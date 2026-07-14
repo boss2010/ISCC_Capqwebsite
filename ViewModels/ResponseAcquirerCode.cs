@@ -19,7 +19,7 @@ namespace ViewModels
                 
                 string Code;
                 var url = "";
-                if (BankUrL == "www.capq.gov.eg" || BankPort == 80 || BankPort == 443)
+                if (BankUrL == "www.site.capq.gov.eg" || BankPort == 80 || BankPort == 443)
                 {
                     url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE/order/" + order + "";
 
@@ -36,7 +36,7 @@ namespace ViewModels
                 var httpRequest = (HttpWebRequest)WebRequest.Create(url);
 
                 httpRequest.Accept = "application/json";
-                if (BankUrL == "www.capq.gov.eg" || BankPort == 80 || BankPort == 443)
+                if (BankUrL == "www.site.capq.gov.eg" || BankPort == 80 || BankPort == 443)
                 {
                     httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
 
@@ -121,7 +121,7 @@ namespace ViewModels
                
           
 
-                    if (BankUrL == "www.capq.gov.eg" || BankPort == 80 || BankPort == 443)
+                    if (BankUrL == "www.site.capq.gov.eg" || BankPort == 80 || BankPort == 443)
                     {
                         url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE2/order/" + order + "";
 
@@ -137,7 +137,7 @@ namespace ViewModels
 
 
                     httpRequest.Accept = "application/json";
-                    if (BankPort == 80 || BankPort == 443 || BankUrL == "www.capq.gov.eg")
+                    if (BankPort == 80 || BankPort == 443 || BankUrL == "www.site.capq.gov.eg")
                     {
 
                         httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";

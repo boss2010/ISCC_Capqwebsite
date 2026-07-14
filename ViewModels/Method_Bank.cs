@@ -22,7 +22,7 @@ namespace ViewModels
                 String Order_No = order; //"2" +Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 9)+ Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 3);
                 CancelURL = CancelURL + Order_No;
                 var url = "";
-                if (PortBank == 80 || PortBank == 443 || hostName == "www.capq.gov.eg")
+                if (PortBank == 80 || PortBank == 443 || hostName == "www.site.capq.gov.eg")
                 {
                     url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE/session";
 
@@ -38,7 +38,7 @@ namespace ViewModels
                 httpRequest.Method = "POST";
 
                 httpRequest.Accept = "application/json";
-                if (PortBank == 80 || PortBank == 443 || hostName == "www.capq.gov.eg")
+                if (PortBank == 80 || PortBank == 443 || hostName == "www.site.capq.gov.eg")
                 {
                     httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
 
@@ -125,7 +125,7 @@ namespace ViewModels
 
                 ///////////////////////////////////////////
               
-                    if (PortBank == 80 || PortBank == 443 || hostName == "www.capq.gov.eg")
+                    if (PortBank == 80 || PortBank == 443 || hostName == "www.site.capq.gov.eg")
                     {
                         url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE2/session";
 
@@ -142,7 +142,7 @@ namespace ViewModels
 
 
                     httpRequest.Accept = "application/json";
-                    if (PortBank == 80 || PortBank == 443 || hostName == "www.capq.gov.eg")
+                    if (PortBank == 80 || PortBank == 443 || hostName == "www.site.capq.gov.eg")
                     {
                         httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";
                     }
@@ -215,7 +215,7 @@ namespace ViewModels
 
             if (port == 80 || port == 443)
             {
-                return "https://www.capq.gov.eg/";
+                return "https://www.site.capq.gov.eg/";
             }
             else if (port == 8071)
             {
