@@ -475,7 +475,7 @@ body {
     height: auto;
     padding-top: 18px;
     color: var(--login-ink);
-    border-top: 1px solid var(--login-line);
+  
 }
 
 .social-login h3 {
