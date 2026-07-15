@@ -5,27 +5,22 @@
 }
 
 <!-- Page Header Start -->
-<div class="container-fluid py-1">
-	<div class="container py-2">
-		<div class="row align-items-center py-4">
-			<div class="col-md-6 text-center text-md-left">
-				<div class="d-inline-flex align-items-center">
-					@* <a class="btn btn-secondary" href="">الصفحة الرئيسية</a> *@
-					<a href="@Url.Action("Index", "Home")" class="btn btn-secondary">
-						الصفحة الرئيسية
-					</a>
-					<i class="fas fa-angle-double-right text-primary mx-2"></i>
-					<a class="disabled" href="">التصدير</a>
-					<i class="fas fa-angle-double-right text-primary mx-2"></i>
-					<a class=" disabled" href="">اشترطات التصدير</a>
+
+<div class="gov-page-header">
+	<div class="container">
+		<div class="gov-page-header__inner">
+			<div class="gov-page-header__title">
+				<span class="gov-page-header__icon"><i class="fas fa-balance-scale"></i></span>
+				<div>
+					<span class="gov-page-header__eyebrow"> التصدير </span>
+					<h1 class="gov-page-header__h1"> اشترطات التصدير</h1>
 				</div>
 			</div>
-			<div class="col-md-6 text-center text-md-right">
-				<h3 class="mb-4 mb-md-0 text-primary text-uppercase output">
-					اشترطات التصدير
-				</h3>
-			</div>
-			
+			<nav class="gov-breadcrumb">
+				<a href="/Home/HomePage/Index" class="gov-breadcrumb__link">الرئيسية</a>
+				<i class="fas fa-chevron-left gov-breadcrumb__sep"></i>
+				<span class="gov-breadcrumb__current"> اشترطات التصدير</span>
+			</nav>
 		</div>
 	</div>
 </div>
@@ -88,7 +83,7 @@
 
 					<center style="margin-bottom: 15px;">
 
-						<input id="btnsearch" type="submit" class="btn-edit box-shadow mt-3 py-2 px-4" name="btnSave" value="بحث">
+						<input id="btnsearch" type="submit" class="bg-primary-deep text-primary-foreground py-2 px-4" name="btnSave" value="بحث">
 					</center>
 				</div>
 				<div class="col-md-4"></div>

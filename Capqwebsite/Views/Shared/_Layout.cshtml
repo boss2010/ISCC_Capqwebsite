@@ -20,9 +20,8 @@
     <link href="~/css/style.css" rel="stylesheet" /> *@
  	<link href="~/css/styleESLAM.css" rel="stylesheet"  /> 
     <link href="~/css/styles.css" rel="stylesheet" />
-    <link href="~/css/portal-polish.css" rel="stylesheet" />
     <script src="~/js/jquery-3.7.1.min.js"></script>
-@*     <script src="~/js/bootstrap.min.js"></script> *@
+    @*<script src="~/js/bootstrap.min.js"></script> *@
 
 </head>
 <body class="gov-portal" >
@@ -60,7 +59,7 @@
 
     <header class="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <a href="#" class="flex items-center gap-3">
+            <a asp-controller="Home" asp-action="Index" class="flex items-center gap-3">
                 <div class="relative grid size-12 place-items-center rounded-full bg-primary-deep text-gold ring-2 ring-gold/40">
                     <img src="~/img/logo-capq2.png" />
                 </div>
@@ -104,7 +103,7 @@
                              
                             </a>
                             <div class="nav-item dropdown">
-                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link text-sm dropdown-toggle">تشريعات</a>
+                                <a href="#" data-bs-toggle="dropdown" class="nav-link text-sm dropdown-toggle">تشريعات</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     @* <a asp-area="" asp-controller="AgricultureLaw" asp-action="" title="" class="dropdown-item">
                                     قانون الزراعة
@@ -354,9 +353,12 @@
             <div>
                 <div class="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-gold">اتصل بنا</div>
                 <ul class="space-y-2 text-sm text-primary-foreground/85">
-                    <li>٦ شارع د/ ميشيل باخوم — الدقي — الجيزة</li>
+                    <li>١ ش نادي الصيد — الدقي — الجيزة</li>
+                    <li>مبني الاصلاح الزراعي الدور السادس</li>
                     <li>(202) 37608574 — 3335162</li>
-                    <li>ippc@capq.gov.eg</li>
+                    <li>
+                        <a href="mailto:ippc@capq.gov.eg">ippc@capq.gov.eg</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -378,7 +380,17 @@
 
     <script src="~/js/select2.min.js"></script>
 
+    <script src="~/js/select2.min.js"></script>
 
+    <!-- JavaScript Libraries -->
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="~/js/bootstrap.bundle5.min.js"></script>
+    
+    @*     <script src="~/bootstrap.bundle.min.js"></script>
+ *@   
+ @*     <script src="~/js/bootstrap-select.js"></script>
+ *@
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="~/lib/isotope/isotope.pkgd.min.js"></script>
