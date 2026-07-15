@@ -125,7 +125,7 @@ namespace ViewModels
 
                 ///////////////////////////////////////////
               
-                    if (PortBank == 80 || PortBank == 443 || hostName == "www.site.capq.gov.eg")
+                    if (PortBank == 80 || PortBank == 443 || hostName == "www.capq.gov.eg")
                     {
                         url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE2/session";
 
@@ -202,8 +202,10 @@ namespace ViewModels
                 ErrorMessage += "LineNumber :" + line.ToString();
                 ErrorMessage += "TargetSite :" + ex.TargetSite.ToString();
                 ErrorMessage += "InnerException :" + ex.InnerException;
+
                 out_SessionDTO2.ErrorMess = ErrorMessage;
-                return out_SessionDTO2;
+				Console.WriteLine(out_SessionDTO2.ErrorMess);
+				return out_SessionDTO2;
             }
 
 
