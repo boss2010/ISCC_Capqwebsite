@@ -4,14 +4,19 @@
     // Dropdown on mouse hover
     $(document).ready(function () {
         function toggleNavbarMethod() {
+            var $dropdowns = $('.navbar .dropdown');
+
+            // Avoid stacking handlers every time the window is resized.
+            $dropdowns.off('.navbarHover');
+
             if ($(window).width() > 992) {
-                $('.navbar .dropdown').on('mouseover', function () {
-                    $('.dropdown-toggle', this).trigger('click');
-                }).on('mouseout', function () {
-                    $('.dropdown-toggle', this).trigger('click').blur();
+                $dropdowns.on('mouseenter.navbarHover', function () {
+                    var toggle = this.querySelector('.dropdown-toggle');
+                    bootstrap.Dropdown.getOrCreateInstance(toggle).show();
+                }).on('mouseleave.navbarHover', function () {
+                    var toggle = this.querySelector('.dropdown-toggle');
+                    bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
                 });
-            } else {
-                $('.navbar .dropdown').off('mouseover').off('mouseout');
             }
         }
         toggleNavbarMethod();
