@@ -46,8 +46,7 @@ namespace Capqwebsite.Controllers
                 else
                 {
 
-                    _logger.LogInformation("userName && password غير صحيح",
-       DateTime.Now.ToLongTimeString());
+                    _logger.LogInformation("userName && password غير صحيح",DateTime.Now.ToLongTimeString());
                     ///////////////////////errorrloooooooooog////////////////////////////////////
                     var log = new A__plant_Error_Save
                     {
