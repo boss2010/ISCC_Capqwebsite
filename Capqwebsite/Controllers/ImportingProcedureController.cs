@@ -40,25 +40,27 @@ namespace Capqwebsite.Controllers
             var DataItem = (from i in dbContext.Item_ShortNames
                                 join Im_In in dbContext.Im_Initiators on i.ID equals Im_In.Item_ShortName_ID
                             where  i.User_Deletion_Date == null && i.User_Deletion_Id == null
-                            select new ItemVM
+                                  && i.ShortName_Ar != null
+                            select new { i.ID, i.ShortName_Ar })
+                            .GroupBy(x => x.ShortName_Ar)
+                            .Select(g => new ItemVM
                             {
-                                //ID = i.ID,
-                                Name_Ar = i.ShortName_Ar,
-                                ID = i.ID,
-
-                                //Country_Id = im.Country_Id,
-                                //Item_ShortName_ID = im.Item_ShortName_ID,
-                            }).Where(i => i.Name_Ar != null).Distinct().OrderBy(i => i.Name_Ar).ToList();
+                                ID = g.Min(x => x.ID),
+                                Name_Ar = g.Key,
+                            })
+                            .OrderBy(x => x.Name_Ar).ToList();
             ViewData["ItemList"] = new SelectList(DataItem, "ID", "Name_Ar");
             ////////////////////////////
 
             if (ImInitiatorID > 0 && ItemID > 0)
            
             {
+                var selectedShortName = dbContext.Item_ShortNames.Where(x => x.ID == ItemID).Select(x => x.ShortName_Ar).FirstOrDefault();
+
                 var List = (from Im_In in dbContext.Im_Initiators
                             join intext in dbContext.Im_Constrain_Initiator_Texts on Im_In.ID equals intext.Im_Initiator_ID
                             where Im_In.Country_Id == ImInitiatorID 
-                            && Im_In.Item_ShortName_ID == ItemID
+                            && Im_In.Item_ShortName.ShortName_Ar == selectedShortName
                             && intext.IsActive==true
                             select new Im_InitiatorVM
                             {
