@@ -54,8 +54,7 @@ namespace Capqwebsite.Controllers
 
             if (CountryID > 0 && ItemID > 0)
             {
-
-
+                var selectedShortName = dbContext.Item_ShortNames.Where(x => x.ID == ItemID).Select(x => x.ShortName_Ar).FirstOrDefault();
 
                 var dataConstrains_Country =
                       (from ecc in dbContext.Ex_CountryConstrains
@@ -66,7 +65,7 @@ namespace Capqwebsite.Controllers
                        join exTxt in dbContext.EX_Constrain_Texts
                            on exCTxt.ID equals exTxt.EX_Constrain_Country_Item_ID
                        where ecc.Import_Country_ID == CountryID
-                       && ecc.Item_ShortName_id == ItemID
+                       && ecc.Item_ShortName.ShortName_Ar == selectedShortName
                        && ecc.IsActive == true
                        && ecc.User_Deletion_Id == null
                        select new ExportingProcedureVM
