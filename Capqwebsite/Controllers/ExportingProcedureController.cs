@@ -40,16 +40,16 @@ namespace Capqwebsite.Controllers
             var DataItem = (from i in dbContext.Item_ShortNames
                             join ecc in dbContext.Ex_CountryConstrains
                             on i.ID equals ecc.Item_ShortName_id
-
-                            select new ItemVM
+                            where i.ShortName_Ar != null
+                            select new { i.ID, i.ShortName_Ar, i.ShortName_En })
+                            .GroupBy(x => x.ShortName_Ar)
+                            .Select(g => new ItemVM
                             {
-                                ID = i.ID,
-                                Name_Ar = i.ShortName_Ar,
-                                Name_En = i.ShortName_En,
-
-                                //Country_Id = im.Country_Id,
-                                //Item_ShortName_ID = im.Item_ShortName_ID,
-                            }).Where(i => i.Name_Ar != null).Distinct().OrderBy(i => i.Name_Ar).ToList();
+                                ID = g.Min(x => x.ID),
+                                Name_Ar = g.Key,
+                                Name_En = g.Min(x => x.ShortName_En),
+                            })
+                            .OrderBy(x => x.Name_Ar).ToList();
             ViewData["ItemList"] = new SelectList(DataItem, "ID", "Name_Ar");
 
             if (CountryID > 0 && ItemID > 0)

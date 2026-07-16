@@ -40,15 +40,15 @@ namespace Capqwebsite.Controllers
             var DataItem = (from i in dbContext.Item_ShortNames
                                 join Im_In in dbContext.Im_Initiators on i.ID equals Im_In.Item_ShortName_ID
                             where  i.User_Deletion_Date == null && i.User_Deletion_Id == null
-                            select new ItemVM
+                                  && i.ShortName_Ar != null
+                            select new { i.ID, i.ShortName_Ar })
+                            .GroupBy(x => x.ShortName_Ar)
+                            .Select(g => new ItemVM
                             {
-                                //ID = i.ID,
-                                Name_Ar = i.ShortName_Ar,
-                                ID = i.ID,
-
-                                //Country_Id = im.Country_Id,
-                                //Item_ShortName_ID = im.Item_ShortName_ID,
-                            }).Where(i => i.Name_Ar != null).Distinct().OrderBy(i => i.Name_Ar).ToList();
+                                ID = g.Min(x => x.ID),
+                                Name_Ar = g.Key,
+                            })
+                            .OrderBy(x => x.Name_Ar).ToList();
             ViewData["ItemList"] = new SelectList(DataItem, "ID", "Name_Ar");
             ////////////////////////////
 
