@@ -170,7 +170,7 @@ namespace Capqwebsite.Controllers.Fees
             
                 Out_SessionDTO ss = new Out_SessionDTO();
 
-                string DomainName = Method_Bank.DomainName(port);
+                //string DomainName = Method_Bank.DomainName(port);
 
                 string host = Request.Host.Host;
                 string Succesurl = "";
@@ -185,21 +185,21 @@ namespace Capqwebsite.Controllers.Fees
                     Succesurl = "http://41.33.237.90:8071/" + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
                 Cancelurl = "http://41.33.237.90:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
             }
-                else if (host == "www.site.capq.gov.eg")
+                else if (host == "site.capq.gov.eg")
                 {
-                    Succesurl = DomainName + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-                Cancelurl = DomainName + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+                    Succesurl = "https://site.capq.gov.eg/" + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+                Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
             }
                 else
                 {
-                Succesurl = DomainName + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-                Cancelurl = DomainName + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+                Succesurl = "http://localhost:5205/" + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+                Cancelurl = "http://localhost:5205/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
             }
 
 
-                ss = Method_Bank.Create_Session(amount, Order_No, Cancelurl, Succesurl, Bank_port, host);
+                ss = Method_Bank.Create_Session(amount, Order_No, Cancelurl, Succesurl,/* Bank_port,*/ host);
                 ViewBag.Url = Url;
 
                 ViewBag.Ses_Id = ss.Session_Id;
@@ -308,12 +308,14 @@ namespace Capqwebsite.Controllers.Fees
 				decimal amount = 0;
 				HttpClient client = new HttpClient();
 
-				int? port = Request.Host.Port;
-				int? Bank_port = Request.Host.Port;
-				ViewBag.port = port;
-				ViewBag.ScriptBankPort = Bank_port;
-				_logger.LogInformation("Port: {port}", port);
-				_logger.LogInformation("Bank Port: {BankPort}", Bank_port);
+				//int? port = Request.Host.Port;
+				//int? Bank_port = Request.Host.Port;
+
+				//ViewBag.port = port;
+				//ViewBag.ScriptBankPort = Bank_port;
+
+				//_logger.LogInformation("Port: {port}", port);
+				//_logger.LogInformation("Bank Port: {BankPort}", Bank_port);
 
 				///في حالة الدفع بالفيزا///
 
@@ -329,7 +331,7 @@ namespace Capqwebsite.Controllers.Fees
 
 				Out_SessionDTO ss = new Out_SessionDTO();
 
-				string DomainName = Method_Bank.DomainName(port);
+				//string DomainName = Method_Bank.DomainName(port);
 
 				string host = Request.Host.Host;
 
@@ -338,26 +340,26 @@ namespace Capqwebsite.Controllers.Fees
 
 				string Succesurl = "";
 				string Cancelurl = "";
-				if (host == "10.10.21.12")
+				//if (host == "10.10.21.12")
+				//{
+				//	Succesurl = "http://10.10.21.12:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+				//	Cancelurl = "http://10.10.21.12:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+				//}
+				//else if (host == "41.33.237.90")
+				//{
+				//	Succesurl = "http://41.33.237.90:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+				//	Cancelurl = "http://41.33.237.90:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+				//}
+				 if (host == "site.capq.gov.eg")
 				{
-					Succesurl = "http://10.10.21.12:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-					Cancelurl = "http://10.10.21.12:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
-				}
-				else if (host == "41.33.237.90")
-				{
-					Succesurl = "http://41.33.237.90:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-					Cancelurl = "http://41.33.237.90:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
-				}
-				else if (host == "www.capq.gov.eg")
-				{
-					Succesurl = DomainName + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-					Cancelurl = DomainName + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+					Succesurl = "https://site.capq.gov.eg/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+					Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
 				}
 				else
 				{
-					Succesurl = DomainName + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-					Cancelurl = DomainName + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+					Succesurl = "http://localhost:5205/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+					Cancelurl = "http://localhost:5205/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
 				}
 
@@ -369,22 +371,14 @@ namespace Capqwebsite.Controllers.Fees
 				System.IO.File.AppendAllText(
 					logPath,
 					$"Date: {DateTime.Now}\r\n" +
-					$"Host: {host}\r\n" +
-					$"Port: {Bank_port}\r\n" +
-					$"Domain: {DomainName}\r\n\r\n"
+					$"Host: {host}\r\n" 
+					
+					
 				);
 
-				ss = Method_Bank.Create_SessionFor_Inspection(amount, Order_No, Cancelurl, Succesurl, Bank_port, host);
+				ss = Method_Bank.Create_SessionFor_Inspection(amount, Order_No, Cancelurl, Succesurl/*, Bank_port*/, host);
 
-				if (ss == null)
-				{
-					return Content("ss is null");
-				}
-
-				if (string.IsNullOrEmpty(ss.Session_Id))
-				{
-					return Content("Session_Id is empty");
-				}
+				
 				ViewBag.Url = Url;
 
 				ViewBag.Ses_Id = ss.Session_Id;
