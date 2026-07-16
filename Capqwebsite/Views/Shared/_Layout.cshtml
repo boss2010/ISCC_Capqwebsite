@@ -200,15 +200,36 @@
                     {
                         <div class="navbar-nav ml-auto py-0">
 
-                            <a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-item nav-link ">
+                     @*        <a asp-area="" asp-controller="Home" asp-action="Index" title="" class="nav-link text-sm ">
                
                                  الرئيسية
-                            </a>
+                            </a> *@
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link text-sm dropdown-toggle" data-bs-toggle="dropdown">الرئيسية</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 9 })" class="dropdown-item">
 
+                                        السليدر
+                                    </a>
+                         
+                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 8 })" class="dropdown-item">
+
+                                        الإعلانات
+                                    </a>
+                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 10 })" class="dropdown-item">
+
+                                        التنبيهات
+                                    </a>
+                                    <a href="@Url.Action("Index", "DataEntry", new { ID = 11 })" class="dropdown-item">
+
+                                        التعريف بالشركة
+                                    </a>
+ </div>
+                            </div>
 
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-balance-scale"></i>تشريعات</a>
+                                <a href="#" class="nav-link text-sm dropdown-toggle" data-bs-toggle="dropdown">تشريعات</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 1 })" class="dropdown-item">قانون الزراعة</a>
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 2 })" class="dropdown-item">قرارات وزارية</a>
@@ -216,7 +237,7 @@
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-ship"></i>الاستيراد</a>
+                                <a href="#" class="nav-link dropdown-toggle text-sm" data-bs-toggle="dropdown">الاستيراد</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 13 })" class="dropdown-item">إجراءات فتح المنشأ</a>
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 16 })" class="dropdown-item">شرح الخدمات الالكترونية</a>
@@ -224,7 +245,7 @@
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-truck"></i>التصدير</a>
+                                <a href="#" class="nav-link dropdown-toggle text-sm" data-bs-toggle="dropdown">التصدير</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 5 })" class="dropdown-item">المحطات المعتمدة</a>
                                     <a href="@Url.Action("Index", "DataEntry", new { ID = 4 })" class="dropdown-item">المزارع المعتمدة</a>
@@ -233,34 +254,25 @@
                                 </div>
                             </div>
 
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 9 })" class="nav-item nav-link">
-                                <i class="fa fa-images"></i>
-                                السليدر
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 7 })" class="nav-item nav-link">
-                                <i class="fa fa-newspaper"></i>
-                                الأخبار
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 8 })" class="nav-item nav-link">
-                                <i class="fa fa-bullhorn"></i>
-                                الإعلانات
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 10 })" class="nav-item nav-link">
-                                <i class="fa fa-bell"></i>
-                                التنبيهات
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 11 })" class="nav-item nav-link">
-                                <i class="fa fa-info-circle"></i>
-                                التعريف بالشركة
-                            </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 12 })" class="nav-item nav-link">
-                                <i class="fa fa-map-marker-alt"></i>
+                           
+                            <a href="@Url.Action("Index", "DataEntry", new { ID = 12 })" class="nav-item nav-link text-sm">
+                              
                                 مكاتبنا
                             </a>
-                            <a href="@Url.Action("Index", "DataEntry", new { ID = 17 })" class="nav-item nav-link">
-                                <i class="fa fa-headset"></i>
+                            <a href="@Url.Action("Index", "DataEntry", new { ID = 17 })" class="nav-item nav-link text-sm">
+                                
                                 اتصل بنا
                             </a>
+
+
+
+                 
+
+                            <a href="@Url.Action("Index", "DataEntry", new { ID = 7 })" class="nav-item nav-link text-sm">
+
+                                الأخبار
+                            </a>
+
                         </div>
                     }
                     @* ////////////////////////////////rrr////22-5-2025/////////////////////////////////// *@

@@ -113,12 +113,13 @@
                     }
 
                     <div class="gov-form-actions">
-                        <a class="btn btn-secondary ml-2" href="@Url.Action("Index", new { ID = Model.WebsitetypeID })">
-                            <i class="fas fa-times ml-1"></i> إلغاء
-                        </a>
-                        <button class="btn btn-primary" type="submit">
+                        <button class="mar-l-10  md:inline-flex  items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors services btn-pay" type="submit">
                             <i class="fas fa-save ml-1"></i> حفظ التعديلات
                         </button>
+                        <a class="btn bg-secondary ml-2" href="@Url.Action("Index", new { ID = Model.WebsitetypeID })">
+                            <i class="fas fa-times ml-1"></i> إلغاء
+                        </a>
+                      
                     </div>
                 </form>
             </div>

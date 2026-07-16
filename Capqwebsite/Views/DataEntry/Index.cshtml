@@ -85,7 +85,7 @@
                         </div>
                     }
                     <div class="gov-form-actions">
-                        <button class="btn btn-primary" type="submit">
+                        <button class="  md:inline-flex  items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors services btn-pay" type="submit">
                             <i class="fas fa-save ml-1"></i> حفظ
                         </button>
                     </div>
@@ -95,10 +95,10 @@
 
         <!-- Data Table Card -->
         <div class="gov-table-card">
-            <div class="gov-table-card__header">
+          @*   <div class="gov-table-card__header">
                 <span class="gov-form-card__icon"><i class="fas fa-list"></i></span>
                 <h2 class="gov-form-card__title">البيانات المدخلة</h2>
-            </div>
+            </div> *@
             <div class="gov-table-card__body">
                 <div class="table-responsive" id="div2">
                     <table class="table table-bordered table-striped table-hover">
@@ -132,7 +132,8 @@
                                 {
                                     <th>@ViewBag.linkURL</th>
                                 }
-                                <th style="width:120px;">الإجراءات</th>
+                                <th >الإجراءات</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>

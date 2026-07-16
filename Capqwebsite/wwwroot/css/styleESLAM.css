@@ -435,7 +435,7 @@ form .row,
     thead tr,
     .table-bordered thead th {
         color: #fff !important;
-        background: var(--gov-navy-800) !important;
+        background: var(--capq-primary);
         border-color: rgba(255, 255, 255, .16) !important;
         font-weight: 900;
         vertical-align: middle;
@@ -2119,7 +2119,7 @@ img[src*="emptyData"] {
     align-items: center;
     gap: 12px;
     padding: 16px 22px;
-    background: var(--gov-navy-800);
+    background: var(--capq-primary);
     color: #fff;
 }
 .gov-form-card__icon {
@@ -2596,4 +2596,11 @@ img[src*="emptyData"] {
 .gov-pdf-card > * {
     position: relative;
     z-index: 1;
+}
+.mar-l-10 {
+    margin-left: 15px;
+}
+.bg-secondary {
+    background: var(--capq-gold);
+    color: #fff;
 }
