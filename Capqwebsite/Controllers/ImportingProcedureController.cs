@@ -55,10 +55,12 @@ namespace Capqwebsite.Controllers
             if (ImInitiatorID > 0 && ItemID > 0)
            
             {
+                var selectedShortName = dbContext.Item_ShortNames.Where(x => x.ID == ItemID).Select(x => x.ShortName_Ar).FirstOrDefault();
+
                 var List = (from Im_In in dbContext.Im_Initiators
                             join intext in dbContext.Im_Constrain_Initiator_Texts on Im_In.ID equals intext.Im_Initiator_ID
                             where Im_In.Country_Id == ImInitiatorID 
-                            && Im_In.Item_ShortName_ID == ItemID
+                            && Im_In.Item_ShortName.ShortName_Ar == selectedShortName
                             && intext.IsActive==true
                             select new Im_InitiatorVM
                             {
