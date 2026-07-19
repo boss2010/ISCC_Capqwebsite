@@ -1,5 +1,25 @@
 ﻿/* Government portal theme
    Loaded last to standardize the public layout, tables, forms, dashboard and RTL behavior. */
+:root {
+    --capq-deep: #0d2b1e;
+    --capq-forest: #1a3d2b;
+    --capq-primary: oklch(42% .09 160);
+    --capq-gold: #c9a227;
+    --capq-gold-soft: #f7f0dc;
+    --capq-fg: #f8faf6;
+    --capq-card: #ffffff;
+    --capq-muted: #6b7c6b;
+    --capq-border: #e0e8dd;
+    --capq-bg: #f5f8f4;
+    --capq-font-display: 'Amiri', 'Cairo', serif;
+    --capq-font-body: 'Cairo', Tahoma, Arial, sans-serif;
+    --capq-radius: 12px;
+    --capq-radius-sm: 8px;
+    --capq-shadow: 0 20px 60px -20px rgba(13,43,30,.35);
+    --capq-shadow-sm: 0 4px 16px rgba(13,43,30,.10);
+    --capq-shadow-gold: 0 10px 40px -10px rgba(201,162,39,.4);
+}
+
 
 
 
@@ -445,8 +465,8 @@ form .row,
 .table th {
     padding: .78rem .85rem;
     vertical-align: middle;
-    border-color: var(--gov-border) !important;
     line-height: 1.75;
+    border-left: 2px solid white;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -1404,26 +1424,6 @@ img[src*="emptyData"] {
    ============================================================ */
 
 /* --- CSS Variables (Lovable palette) --- */
-:root {
-    --capq-deep: #0d2b1e;
-    --capq-forest: #1a3d2b;
-    --capq-primary: #2a6040;
-    --capq-gold: #c9a227;
-    --capq-gold-soft: #f7f0dc;
-    --capq-fg: #f8faf6;
-    --capq-card: #ffffff;
-    --capq-muted: #6b7c6b;
-    --capq-border: #e0e8dd;
-    --capq-bg: #f5f8f4;
-    --capq-font-display: 'Amiri', 'Cairo', serif;
-    --capq-font-body: 'Cairo', Tahoma, Arial, sans-serif;
-    --capq-radius: 12px;
-    --capq-radius-sm: 8px;
-    --capq-shadow: 0 20px 60px -20px rgba(13,43,30,.35);
-    --capq-shadow-sm: 0 4px 16px rgba(13,43,30,.10);
-    --capq-shadow-gold: 0 10px 40px -10px rgba(201,162,39,.4);
-}
-
 
 
 /* --- Top Bar --- */
