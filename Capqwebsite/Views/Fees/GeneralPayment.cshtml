@@ -12,8 +12,14 @@
 
         <div class="col-md-4">
             <label>المكتب</label>
-            <input asp-for="office"
-                   class="form-control" />
+            <select asp-for="office" class="form-control">
+                <option value="">&#1575;&#1582;&#1578;&#1585; &#1575;&#1604;&#1605;&#1603;&#1578;&#1576;</option>
+                @foreach (var officeName in Model.Offices)
+                {
+                    <option value="@officeName">@officeName</option>
+                }
+            </select>
+            <span asp-validation-for="office" id="officeError" class="text-danger"></span>
         </div>
 
         <div class="col-md-4">
@@ -127,7 +133,7 @@
 
     </div>
 
-    <button type="button" id="btnmodel" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+    <button type="button" id="btnmodel" class="btn btn-info btn-lg">
         دفع&nbsp;
         <img src="~/img/mastercard.png" />
         <img src="~/img/visa.png" />
@@ -186,6 +192,15 @@
 
     <script>
 
+        $("#btnmodel").on("click", function () {
+            let validationEvent = $.Event("submit");
+            $("#paymentForm").triggerHandler(validationEvent);
+
+            if (!validationEvent.isDefaultPrevented()) {
+                $("#myModal").modal("show");
+            }
+        });
+
         $("#paymentForm")
         .on(
         "submit",
@@ -195,6 +210,7 @@
 
         // تنظيف الرسائل
         $("#nationalError").text("");
+        $("#officeError").text("");
         $("#feesError").text("");
         $(".fee-error").text("");
 
@@ -215,6 +231,13 @@
         "الرقم القومي يجب أن يكون 14 رقم"
         );
 
+        valid=false;
+        }
+
+        // المكتب
+        if (!$("#office").val())
+        {
+        $("#officeError").text("المكتب مطلوب");
         valid=false;
         }
 
