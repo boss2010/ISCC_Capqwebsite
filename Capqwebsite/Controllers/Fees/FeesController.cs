@@ -24,6 +24,8 @@ namespace Capqwebsite.Controllers.Fees
 
             var model = new FeesAltahsilVM();
 
+            model.Offices = GetOfficeNames(_context);
+
             var ids = new byte[] {20,21,22,23,24,25,28,29,30,31,32,33,34, 35 };
 
             model.Fees = _context.FeesTypes
@@ -43,7 +45,8 @@ namespace Capqwebsite.Controllers.Fees
             AgricultureDBContext _context = new AgricultureDBContext();
 
             var model = new FeesAltahsilVM();
-            var ids = new byte[] { 26, 27 };
+            model.Offices = GetOfficeNames(_context);
+            var ids = new byte[] { 26, 27, 35 };
 
             model.Fees = _context.FeesTypes
                 .Where(x => ids.Contains(x.ID))
@@ -106,6 +109,7 @@ namespace Capqwebsite.Controllers.Fees
 
             if (!ModelState.IsValid)
             {
+                model.Offices = GetOfficeNames(_context);
                 return View(model);
             }
             //save in database
@@ -201,6 +205,17 @@ namespace Capqwebsite.Controllers.Fees
 
          
         }
+
+        private static List<string> GetOfficeNames(AgricultureDBContext context)
+        {
+            return context.Outlets
+                .Where(x => x.IsActive && x.Ar_Name != null && x.Ar_Name != "" && x.User_Deletion_Id == null)
+                .Select(x => x.Ar_Name!)
+                .Distinct()
+                .OrderBy(x => x)
+                .ToList();
+        }
+
         [HttpPost]
         public async Task<IActionResult> SaveInspectionPayment(FeesAltahsilVM model)
         {
@@ -253,6 +268,7 @@ namespace Capqwebsite.Controllers.Fees
 
 				if (!ModelState.IsValid)
 				{
+					model.Offices = GetOfficeNames(_context);
 					return View(model);
 				}
 				//save in database

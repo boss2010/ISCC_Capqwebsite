@@ -10,7 +10,10 @@ namespace ViewModels
 
     public class FeesAltahsilVM
     {
+        [Required(ErrorMessage = "\u0627\u0644\u0645\u0643\u062A\u0628 \u0645\u0637\u0644\u0648\u0628")]
         public string? office { get; set; }
+
+        public List<string> Offices { get; set; } = new();
 
         public string? Customs_Certificate_Number { get; set; }
 
