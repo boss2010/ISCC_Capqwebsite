@@ -1,0 +1,630 @@
+@using ViewModels
+@model SuccessfulPaymentsVM
+
+@{
+    ViewData["Title"] = Model.Title;
+    var firstPage = Math.Max(1, Model.Page - 2);
+    var lastPage = Math.Min(Model.TotalPages, Model.Page + 2);
+}
+
+<style>
+    .payments-page {
+        direction: rtl;
+        max-width: 1480px;
+        margin: 0 auto;
+        padding: 28px 22px 45px;
+        color: #19352c;
+        text-align: right;
+    }
+
+    .payments-hero,
+    .payments-filter,
+    .payments-table-card {
+        background: #fff;
+        border: 1px solid #dce6e1;
+        border-radius: 14px;
+        box-shadow: 0 5px 18px rgba(0, 70, 45, .07);
+    }
+
+    .payments-hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+        padding: 22px 24px;
+        margin-bottom: 16px;
+        border-right: 5px solid #0c6b49;
+    }
+
+    .payments-title h2 {
+        margin: 0 0 8px;
+        color: #064b34;
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    .payments-count {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 4px 13px;
+        border-radius: 18px;
+        background: #e7f5ee;
+        color: #086343;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .payments-switcher {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .payments-nav-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 8px 17px;
+        border: 1px solid #b8cdc4;
+        border-radius: 9px;
+        background: #fff;
+        color: #175b43;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: .2s ease;
+    }
+
+    .payments-nav-btn:hover,
+    .payments-nav-btn.active {
+        border-color: #0c6b49;
+        background: #0c6b49;
+        color: #fff;
+    }
+
+    .payments-filter {
+        display: grid;
+        grid-template-columns: minmax(300px, 2fr) minmax(155px, .7fr) minmax(155px, .7fr) auto;
+        align-items: end;
+        gap: 14px;
+        padding: 19px 22px;
+        margin-bottom: 18px;
+    }
+
+    .filter-field label {
+        display: block;
+        margin-bottom: 7px;
+        color: #315e4e;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .filter-control {
+        width: 100%;
+        height: 44px;
+        padding: 8px 12px;
+        border: 1px solid #cbdad4;
+        border-radius: 8px;
+        background: #fbfdfc;
+        color: #233c34;
+        outline: none;
+    }
+
+    .filter-control:focus {
+        border-color: #14845c;
+        box-shadow: 0 0 0 3px rgba(20, 132, 92, .12);
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .filter-btn {
+        min-width: 76px;
+        height: 44px;
+        padding: 8px 15px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none !important;
+    }
+
+    .filter-btn.search {
+        background: #0c6b49;
+        color: #fff;
+    }
+
+    .filter-btn.reset {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-color: #cbdad4;
+        background: #f5f8f7;
+        color: #365e50;
+    }
+
+    .payments-table-card {
+        overflow: hidden;
+    }
+
+    .table-summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e1e9e5;
+        color: #41685a;
+        font-size: 14px;
+    }
+
+    .payments-table-wrap {
+        overflow-x: auto;
+    }
+
+    .payments-table {
+        width: 100%;
+        min-width: 1050px;
+        margin: 0;
+        border-collapse: collapse;
+    }
+
+    .payments-table th {
+        padding: 14px 12px;
+        border: 0;
+        background: #07563d;
+        color: #fff;
+        font-size: 14px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .payments-table td {
+        padding: 13px 12px;
+        border-bottom: 1px solid #e5ece9;
+        color: #29483d;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .payments-table tbody tr.payment-row:nth-of-type(4n+1) {
+        background: #fbfdfc;
+    }
+
+    .payments-table tbody tr.payment-row:hover {
+        background: #f0f8f4;
+    }
+
+    .order-number,
+    .national-number {
+        direction: ltr;
+        display: inline-block;
+        font-family: Consolas, monospace;
+    }
+
+    .date-cell {
+        direction: ltr;
+        white-space: nowrap;
+    }
+
+    .date-cell small {
+        display: block;
+        margin-top: 3px;
+        color: #789087;
+    }
+
+    .amount-cell {
+        color: #07563d;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .details-toggle {
+        min-width: 105px;
+        padding: 7px 12px;
+        border: 1px solid #0c6b49;
+        border-radius: 7px;
+        background: #fff;
+        color: #0c6b49;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .details-toggle:hover {
+        background: #0c6b49;
+        color: #fff;
+    }
+
+    .payment-details-row td {
+        padding: 0;
+        background: #f4f9f7;
+        text-align: right;
+    }
+
+    .details-content {
+        display: grid;
+        grid-template-columns: minmax(280px, .8fr) minmax(420px, 1.2fr);
+        gap: 20px;
+        padding: 20px 24px;
+    }
+
+    .details-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .details-info-item {
+        padding: 11px 13px;
+        border: 1px solid #dce7e2;
+        border-radius: 7px;
+        background: #fff;
+    }
+
+    .details-info-item span {
+        display: block;
+        margin-bottom: 4px;
+        color: #71877f;
+        font-size: 12px;
+    }
+
+    .fees-details-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+    }
+
+    .fees-details-table th,
+    .fees-details-table td {
+        padding: 10px 12px;
+        border: 1px solid #dce7e2;
+        text-align: center;
+    }
+
+    .fees-details-table th {
+        background: #e8f3ee;
+        color: #245743;
+    }
+
+    .empty-payments {
+        padding: 42px 20px !important;
+        color: #71877f !important;
+        font-size: 16px;
+    }
+
+    .payments-pagination {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding: 17px 20px;
+        border-top: 1px solid #e1e9e5;
+        background: #fbfdfc;
+    }
+
+    .pager-status {
+        position: absolute;
+        right: 20px;
+        color: #547066;
+        font-size: 14px;
+    }
+
+    .pager-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .pager-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 38px;
+        height: 38px;
+        padding: 0 11px;
+        border: 1px solid #cbdad4;
+        border-radius: 7px;
+        background: #fff;
+        color: #285b48;
+        font-weight: 700;
+        text-decoration: none !important;
+    }
+
+    .pager-link:hover,
+    .pager-link.active {
+        border-color: #0c6b49;
+        background: #0c6b49;
+        color: #fff;
+    }
+
+    .pager-link.disabled {
+        opacity: .45;
+        pointer-events: none;
+    }
+
+    @@media (max-width: 1050px) {
+        .payments-filter {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .filter-search,
+        .filter-actions {
+            grid-column: 1 / -1;
+        }
+
+        .details-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width: 680px) {
+        .payments-page {
+            padding: 16px 10px 30px;
+        }
+
+        .payments-hero {
+            align-items: stretch;
+            flex-direction: column;
+            padding: 18px;
+        }
+
+        .payments-switcher,
+        .payments-nav-btn {
+            width: 100%;
+        }
+
+        .payments-filter {
+            grid-template-columns: 1fr;
+            padding: 16px;
+        }
+
+        .filter-search,
+        .filter-actions {
+            grid-column: auto;
+        }
+
+        .filter-actions .filter-btn {
+            flex: 1;
+        }
+
+        .details-info {
+            grid-template-columns: 1fr;
+        }
+
+        .payments-pagination {
+            justify-content: center;
+        }
+
+        .pager-status {
+            position: static;
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="payments-page">
+    <section class="payments-hero">
+        <div class="payments-title">
+            <h2>@Model.Title</h2>
+            <span class="payments-count">@Model.TotalCount عملية دفع ناجحة</span>
+        </div>
+
+        <div class="payments-switcher">
+            <a asp-action="GovernmentPayments"
+               class="payments-nav-btn @(Model.AccountType == 138 ? "active" : "")">الدفع الحكومي</a>
+            <a asp-action="PrivatePayments"
+               class="payments-nav-btn @(Model.AccountType == 139 ? "active" : "")">الدفع الخاص</a>
+            <a asp-action="Index" class="payments-nav-btn">رجوع</a>
+        </div>
+    </section>
+
+    <form method="get" asp-action="@Model.ActionName" class="payments-filter">
+        <div class="filter-field filter-search">
+            <label for="search">ابحث في العمليات</label>
+            <input id="search"
+                   name="search"
+                   value="@Model.Search"
+                   class="filter-control"
+                   placeholder="رقم العملية أو الطلب، الرقم القومي، الاسم، المكتب أو رقم الشهادة" />
+        </div>
+
+        <div class="filter-field">
+            <label for="fromDate">من تاريخ</label>
+            <input id="fromDate"
+                   name="fromDate"
+                   type="date"
+                   value="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
+                   class="filter-control" />
+        </div>
+
+        <div class="filter-field">
+            <label for="toDate">إلى تاريخ</label>
+            <input id="toDate"
+                   name="toDate"
+                   type="date"
+                   value="@(Model.ToDate?.ToString("yyyy-MM-dd"))"
+                   class="filter-control" />
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="filter-btn search">بحث</button>
+            <a asp-action="@Model.ActionName" class="filter-btn reset">مسح</a>
+        </div>
+    </form>
+
+    <section class="payments-table-card">
+        <div class="table-summary">
+            <strong>نتائج العمليات</strong>
+            @if (Model.TotalCount > 0)
+            {
+                <span>عرض @((Model.Page - 1) * Model.PageSize + 1)–@Math.Min(Model.Page * Model.PageSize, Model.TotalCount) من @Model.TotalCount</span>
+            }
+        </div>
+
+        <div class="payments-table-wrap">
+            <table class="payments-table">
+                <thead>
+                    <tr>
+                        <th>رقم العملية</th>
+                        <th>رقم الطلب</th>
+                        <th>التاريخ</th>
+                        <th>الاسم / الشركة</th>
+                        <th>الرقم القومي</th>
+                        <th>المكتب</th>
+                        <th>الإجمالي</th>
+                        <th>التفاصيل</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Payments.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="8" class="empty-payments">لا توجد عمليات دفع ناجحة مطابقة لمعايير البحث.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var payment in Model.Payments)
+                        {
+                            var detailsId = $"payment-details-{payment.ID}";
+                            <tr class="payment-row">
+                                <td><strong>@payment.ID</strong></td>
+                                <td><span class="order-number">@(payment.OrderNumber ?? "-")</span></td>
+                                <td class="date-cell">
+                                    @payment.CreationDate.ToString("dd/MM/yyyy")
+                                    <small>@payment.CreationDate.ToString("hh:mm tt")</small>
+                                </td>
+                                <td>@(payment.Name ?? "-")</td>
+                                <td><span class="national-number">@(payment.NationalID ?? "-")</span></td>
+                                <td>@(payment.Office ?? "-")</td>
+                                <td class="amount-cell">@payment.TotalAmount.ToString("N2") ج.م</td>
+                                <td>
+                                    <button type="button"
+                                            class="details-toggle"
+                                            data-details-target="@detailsId"
+                                            aria-expanded="false"
+                                            aria-controls="@detailsId">عرض التفاصيل</button>
+                                </td>
+                            </tr>
+                            <tr id="@detailsId" class="payment-details-row" hidden>
+                                <td colspan="8">
+                                    <div class="details-content">
+                                        <div class="details-info">
+                                            <div class="details-info-item">
+                                                <span>رقم الشهادة / الفحص</span>
+                                                <strong>@(payment.CustomsCertificateNumber ?? "-")</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>اسم المحطة</span>
+                                                <strong>@(payment.FarmName ?? "-")</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>السجل التجاري</span>
+                                                <strong>@(payment.CommercialRegister ?? "-")</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>السجل الضريبي</span>
+                                                <strong>@(payment.TaxRegistry ?? "-")</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>كود البنك</span>
+                                                <strong>@(payment.BankCode ?? "-")</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>إجمالي العملية</span>
+                                                <strong>@payment.TotalAmount.ToString("N2") ج.م</strong>
+                                            </div>
+                                        </div>
+
+                                        <table class="fees-details-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>نوع الرسم</th>
+                                                    <th>المبلغ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (payment.Details.Count == 0)
+                                                {
+                                                    <tr><td colspan="2">لا توجد تفاصيل رسوم.</td></tr>
+                                                }
+                                                else
+                                                {
+                                                    @foreach (var detail in payment.Details)
+                                                    {
+                                                        <tr>
+                                                            <td>@(detail.FeesTypeName ?? "-")</td>
+                                                            <td>@(detail.Amount?.ToString("N2") ?? "0.00") ج.م</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPages > 1)
+        {
+            <div class="payments-pagination">
+                <span class="pager-status">صفحة @Model.Page من @Model.TotalPages</span>
+                <nav class="pager-links" aria-label="صفحات النتائج">
+                    <a class="pager-link @(Model.Page == 1 ? "disabled" : "")"
+                       asp-action="@Model.ActionName"
+                       asp-route-page="@(Model.Page - 1)"
+                       asp-route-search="@Model.Search"
+                       asp-route-fromDate="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
+                       asp-route-toDate="@(Model.ToDate?.ToString("yyyy-MM-dd"))">السابق</a>
+
+                    @for (var pageNumber = firstPage; pageNumber <= lastPage; pageNumber++)
+                    {
+                        <a class="pager-link @(pageNumber == Model.Page ? "active" : "")"
+                           asp-action="@Model.ActionName"
+                           asp-route-page="@pageNumber"
+                           asp-route-search="@Model.Search"
+                           asp-route-fromDate="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
+                           asp-route-toDate="@(Model.ToDate?.ToString("yyyy-MM-dd"))">@pageNumber</a>
+                    }
+
+                    <a class="pager-link @(Model.Page == Model.TotalPages ? "disabled" : "")"
+                       asp-action="@Model.ActionName"
+                       asp-route-page="@(Model.Page + 1)"
+                       asp-route-search="@Model.Search"
+                       asp-route-fromDate="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
+                       asp-route-toDate="@(Model.ToDate?.ToString("yyyy-MM-dd"))">التالي</a>
+                </nav>
+            </div>
+        }
+    </section>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".details-toggle").forEach(function (button) {
+            button.addEventListener("click", function () {
+                const detailsRow = document.getElementById(button.dataset.detailsTarget);
+
+                if (!detailsRow) {
+                    return;
+                }
+
+                const willOpen = detailsRow.hidden;
+                detailsRow.hidden = !willOpen;
+                button.setAttribute("aria-expanded", willOpen.toString());
+                button.textContent = willOpen ? "إخفاء التفاصيل" : "عرض التفاصيل";
+            });
+        });
+    });
+</script>

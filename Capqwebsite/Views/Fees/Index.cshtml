@@ -22,6 +22,21 @@
         معاينة وعينات
     </button>
 
+    @if (Context.Session.GetString("UserSession") != null)
+    {
+        <hr />
+        <h4>متابعة عمليات الدفع الناجحة</h4>
+        <br />
+
+        <a asp-action="GovernmentPayments" class="btn btn-outline-primary btn-lg">
+            عمليات الدفع الحكومي
+        </a>
+
+        <a asp-action="PrivatePayments" class="btn btn-outline-success btn-lg">
+            عمليات الدفع الخاص
+        </a>
+    }
+
 </div>
 
 @section Scripts

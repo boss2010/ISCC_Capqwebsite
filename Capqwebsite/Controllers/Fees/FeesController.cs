@@ -1,5 +1,6 @@
 ﻿using EF.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ViewModels;
 
@@ -16,6 +17,152 @@ namespace Capqwebsite.Controllers.Fees
 		public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult GovernmentPayments(
+            string? search,
+            DateTime? fromDate,
+            DateTime? toDate,
+            int page = 1)
+        {
+            return SuccessfulPayments(
+                138,
+                "عمليات الدفع الحكومي الناجحة",
+                nameof(GovernmentPayments),
+                search,
+                fromDate,
+                toDate,
+                page);
+        }
+
+        [HttpGet]
+        public IActionResult PrivatePayments(
+            string? search,
+            DateTime? fromDate,
+            DateTime? toDate,
+            int page = 1)
+        {
+            return SuccessfulPayments(
+                139,
+                "عمليات الدفع الخاص الناجحة",
+                nameof(PrivatePayments),
+                search,
+                fromDate,
+                toDate,
+                page);
+        }
+
+        private IActionResult SuccessfulPayments(
+            int accountType,
+            string title,
+            string actionName,
+            string? search,
+            DateTime? fromDate,
+            DateTime? toDate,
+            int page)
+        {
+            if (HttpContext.Session.GetString("UserSession") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            const int pageSize = 5;
+            search = search?.Trim();
+
+            using var context = new AgricultureDBContext();
+
+            var query = context.Fees_Altahsils
+                .AsNoTracking()
+                .Where(x =>
+                    x.Account_Type == accountType &&
+                    x.IsSuccess_Bank == true &&
+                    x.Code_Bank == "00");
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var hasNumericSearch = long.TryParse(search, out var numericSearch);
+
+                query = query.Where(x =>
+                    (hasNumericSearch && x.ID == numericSearch) ||
+                    (x.OrderNumber != null && x.OrderNumber.Contains(search)) ||
+                    x.National_ID.Contains(search) ||
+                    (x.Name != null && x.Name.Contains(search)) ||
+                    (x.office != null && x.office.Contains(search)) ||
+                    (x.Customs_Certificate_Number != null &&
+                     x.Customs_Certificate_Number.Contains(search)));
+            }
+
+            if (fromDate.HasValue)
+            {
+                query = query.Where(x =>
+                    x.User_Creation_Date >= fromDate.Value.Date);
+            }
+
+            if (toDate.HasValue)
+            {
+                var endDate = toDate.Value.Date.AddDays(1);
+                query = query.Where(x => x.User_Creation_Date < endDate);
+            }
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+            page = Math.Max(1, page);
+
+            if (totalPages > 0)
+            {
+                page = Math.Min(page, totalPages);
+            }
+
+            var payments = query
+                .OrderByDescending(x => x.User_Creation_Date)
+                .ThenByDescending(x => x.ID)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(x => new SuccessfulPaymentVM
+                {
+                    ID = x.ID,
+                    OrderNumber = x.OrderNumber,
+                    CreationDate = x.User_Creation_Date,
+                    PaymentDate = x.date,
+                    TotalAmount = x.Amount_Total,
+                    Office = x.office,
+                    CustomsCertificateNumber = x.Customs_Certificate_Number,
+                    NationalID = x.National_ID,
+                    TaxRegistry = x.Tax_Registry,
+                    CommercialRegister = x.Commercial_Register,
+                    Name = x.Name,
+                    FarmName = x.FarmName,
+                    BankCode = x.Code_Bank,
+                    Details = x.Fees_Altahsil_Detiles
+                        .OrderBy(d => d.ID)
+                        .Select(d => new FeesAltahsilDetileDTO
+                        {
+                            Amount = d.Amount,
+                            FeesTypeName = d.FeesType != null
+                                ? d.FeesType.Name_Ar
+                                : null
+                        })
+                        .ToList()
+                })
+                .ToList();
+
+            var model = new SuccessfulPaymentsVM
+            {
+                Title = title,
+                ActionName = actionName,
+                AccountType = accountType,
+                Search = search,
+                FromDate = fromDate,
+                ToDate = toDate,
+                Page = page,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                TotalPages = totalPages,
+                Payments = payments
+            };
+
+            return View("SuccessfulPayments", model);
         }
 
         public IActionResult GeneralPayment()

@@ -8,11 +8,16 @@ namespace Capqwebsite.Controllers.Fees
     {
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("UserSession") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
         [HttpPost]
         public IActionResult Check(string National_ID)
         {
+           
             if (
                 string.IsNullOrWhiteSpace(National_ID) ||
                 National_ID.Length != 14 ||
