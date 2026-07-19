@@ -29,7 +29,7 @@ namespace Capqwebsite.Controllers.Fees
 
             using var context = new AgricultureDBContext();
 
-            int bankPort = Request.Host.Port ?? 80;
+            //int bankPort = Request.Host.Port ?? 80;
             string url = Request.Host.Host;
 
             var checklist = context.Fees_Altahsils
@@ -49,7 +49,7 @@ namespace Capqwebsite.Controllers.Fees
                 string response =
                     ResponseAcquirerCode.Response_Inspection(
                         item.OrderNumber,
-                        bankPort,
+                        //bankPort,
                         url);
 
                 if (response == "00")

@@ -16,9 +16,9 @@ namespace Capqwebsite.Controllers.Fees
                 AgricultureDBContext _context = new AgricultureDBContext();
 
                 HttpClient client = new HttpClient();
-                int Bank_port = Request.Host.Port.Value;
+                //int Bank_port = Request.Host.Port.Value;
                 string Url = Request.Host.Host;
-                string ResponseCode = ResponseAcquirerCode.Response(Order_No, Bank_port, Url);
+                string ResponseCode = ResponseAcquirerCode.Response(Order_No, /*Bank_port,*/ Url);
                 if (ResponseCode == "00")
                 {
                     var dataupdate = _context.Fees_Altahsils.Where(a => a.ID == ID && a.OrderNumber == Order_No).FirstOrDefault();
