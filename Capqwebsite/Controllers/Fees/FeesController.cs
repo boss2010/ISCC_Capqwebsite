@@ -24,7 +24,7 @@ namespace Capqwebsite.Controllers.Fees
 
             var model = new FeesAltahsilVM();
 
-            var ids = new byte[] {20,21,22,23,24,25,28,29,30,31,32,33,34};
+            var ids = new byte[] {20,21,22,23,24,25,28,29,30,31,32,33,34, 35 };
 
             model.Fees = _context.FeesTypes
                 .Where(x => ids.Contains(x.ID))
@@ -43,7 +43,7 @@ namespace Capqwebsite.Controllers.Fees
             AgricultureDBContext _context = new AgricultureDBContext();
 
             var model = new FeesAltahsilVM();
-            var ids = new byte[] { 26, 27, 35 };
+            var ids = new byte[] { 26, 27 };
 
             model.Fees = _context.FeesTypes
                 .Where(x => ids.Contains(x.ID))
