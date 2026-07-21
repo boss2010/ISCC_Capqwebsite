@@ -5907,9 +5907,10 @@ text-align:justify;
     color: #777777;
     text-align: right;
     list-style: none;
-    background-color: #fff;
+    background-color: #04321e4a;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5%;
 }
 
 .dropdown-menu-left {
