@@ -7095,3 +7095,18 @@ textarea.form-control {
 i.fa.fa-bars {
     color: #0c5c3c;
 }
+
+@media (max-width: 768px) {.dropdown-menu 
+{
+  
+  
+    color: #777777;
+ 
+    background-color: #04321e4a;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5%;
+}
+
+
+}
