@@ -1,41 +1,59 @@
-﻿<form asp-action="Check" method="post" id="paymentFormCheck">
+﻿<!-- Page Header -->
+<div class="gov-page-header">
+    <div class="container">
+        <div class="gov-page-header__inner">
+            <div class="gov-page-header__title">
+                <span class="gov-page-header__icon"><i class="fas fa-edit"></i></span>
+                <div>
+                    <span class="gov-page-header__eyebrow">الدفع</span>
+                    <h1 class="gov-page-header__h1">اعادة مراجعة الحساب الحكومى</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid gov-inner-page">
+    <div class="container">
 
+
+        <!-- Add Form Card -->
+        <div class="gov-form-card mb-4">
+            <div class="gov-form-card__header">
+                <span class="gov-form-card__icon"><i class="fas fa-clipboard-check"></i></span>
+                <h2 class="gov-form-card__title">مراجعة الحساب الحكومى</h2>
+            </div>
+            <div class="gov-form-card__body">
+
+<form asp-action="Check" method="post" id="paymentFormCheck">
     <div class="row">
-
-        <div class="col-md-4"></div>
-
         <div class="col-md-4">
-
-            <label>الرقم القومي</label>
-
-            <input type="text"
-                   name="National_ID"
-                   id="National_ID"
-                   class="form-control"
-                   value="@ViewBag.National_ID"
-                   maxlength="14"
-                   required
-                   pattern="\d{14}" />
-
-            <span id="nationalError" class="text-danger"></span>
-
+                            <div class="form-group">
+                                <label class="gov-label">الرقم القومي</label>
+                                <input type="text"
+                                       name="National_ID"
+                                       id="National_ID"
+                                       class="form-control"
+                                       value="@ViewBag.National_ID"
+                                       maxlength="14"
+                                       required
+                                       pattern="\d{14}" />
+                                <span id="nationalError" class="text-danger"></span>
+                            </div>
         </div>
 
         <div class="col-md-4"></div>
 
+        </div>
+                    <div class="gov-form-actions">
+                        <button id="btnmodel" class=" md:inline-flex  items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors services btn-pay" type="submit">
+                            <i class="fas fa-clipboard-check"></i>مراجعة
+                        </button>
+                    </div>
+        </form>
+            </div>
+        </div>
     </div>
-
-    <hr />
-
-    <center>
-        <button type="submit"
-                id="btnmodel"
-                class="btn btn-info btn-lg">
-            مراجعة
-        </button>
-    </center>
-
-</form>
+</div>
 
 @section Scripts
 {
