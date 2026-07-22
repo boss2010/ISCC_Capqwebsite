@@ -8,6 +8,8 @@ namespace Capqwebsite.Controllers.Fees
 {
     public class FeesController : Controller
     {
+		private const byte MartyrFeeTypeId = 34;
+		private const decimal MartyrFeeAmount = 5m;
 		private readonly ILogger<FeesController> _logger;
 
 		public FeesController(ILogger<FeesController> logger)
@@ -51,6 +53,66 @@ namespace Capqwebsite.Controllers.Fees
                 fromDate,
                 toDate,
                 page);
+        }
+
+        [HttpGet]
+        public IActionResult PrintPayment(long id, int accountType)
+        {
+            if (HttpContext.Session.GetString("UserSession") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            if (accountType != 138 && accountType != 139)
+            {
+                return BadRequest();
+            }
+
+            using var context = new AgricultureDBContext();
+
+            var receipt = context.Fees_Altahsils
+                .AsNoTracking()
+                .Where(x =>
+                    x.ID == id &&
+                    x.Account_Type == accountType &&
+                    x.IsSuccess_Bank == true &&
+                    x.Code_Bank == "00")
+                .Select(x => new FeesAltahsilDTO
+                {
+                    ID = x.ID,
+                    OrderNumber = x.OrderNumber,
+                    Amount_Total = x.Amount_Total,
+                    User_Creation_Date = x.User_Creation_Date,
+                    Date = x.date,
+                    Office = x.office,
+                    Customs_Certificate_Number = x.Customs_Certificate_Number,
+                    National_ID = x.National_ID,
+                    Tax_Registry = x.Tax_Registry,
+                    Commercial_Register = x.Commercial_Register,
+                    Name = x.Name,
+                    FarmName = x.FarmName,
+                    Details = x.Fees_Altahsil_Detiles
+                        .OrderBy(d => d.ID)
+                        .Select(d => new FeesAltahsilDetileDTO
+                        {
+                            Amount = d.Amount,
+                            FeesTypeName = d.FeesType != null
+                                ? d.FeesType.Name_Ar
+                                : null
+                        })
+                        .ToList()
+                })
+                .FirstOrDefault();
+
+            if (receipt == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["SuccessMessage"] = "تم الدفع بنجاح";
+            ViewData["AutoPrint"] = true;
+
+            return View("~/Views/Resit/Index.cshtml", receipt);
         }
 
         private IActionResult SuccessfulPayments(
@@ -180,9 +242,15 @@ namespace Capqwebsite.Controllers.Fees
                 .Select(x => new FeeVM
                 {
                     FeesType_ID = x.ID,
-                    FeesName = x.Name_Ar
+                    FeesName = x.Name_Ar,
+                    Selected = x.ID == MartyrFeeTypeId,
+                    Amount = x.ID == MartyrFeeTypeId
+                        ? MartyrFeeAmount
+                        : null
                 })
                 .ToList();
+
+            model.Amount_Total = MartyrFeeAmount;
 
             return View(model);
         }
@@ -210,6 +278,24 @@ namespace Capqwebsite.Controllers.Fees
         public async Task<IActionResult> SaveGeneralPayment(FeesAltahsilVM model)
         {
             AgricultureDBContext _context = new AgricultureDBContext();
+
+            var martyrFeeIndex = model.Fees?.FindIndex(x =>
+                x.FeesType_ID == MartyrFeeTypeId) ?? -1;
+
+            if (martyrFeeIndex < 0)
+            {
+                ModelState.AddModelError(
+                    "",
+                    "رسوم الشهيد مطلوبة");
+            }
+            else
+            {
+                model.Fees[martyrFeeIndex].Selected = true;
+                model.Fees[martyrFeeIndex].Amount = MartyrFeeAmount;
+
+                ModelState.Remove($"Fees[{martyrFeeIndex}].Selected");
+                ModelState.Remove($"Fees[{martyrFeeIndex}].Amount");
+            }
 
             // الرقم القومي
             if (string.IsNullOrWhiteSpace(model.National_ID))
@@ -257,8 +343,13 @@ namespace Capqwebsite.Controllers.Fees
             if (!ModelState.IsValid)
             {
                 model.Offices = GetOfficeNames(_context);
-                return View(model);
+                return View("GeneralPayment", model);
             }
+
+            model.Amount_Total = model.Fees
+                .Where(x => x.Selected && x.Amount.HasValue)
+                .Sum(x => x.Amount!.Value);
+
             //save in database
 
             String Order_No = "7" + Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 9) + Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 3);
@@ -283,7 +374,8 @@ namespace Capqwebsite.Controllers.Fees
             _context.Fees_Altahsils.Add(fe);
             _context.SaveChanges(); 
 
-            foreach (var item in model.Fees.Where(x => x.Amount != null))
+            foreach (var item in model.Fees.Where(x =>
+                x.Selected && x.Amount != null))
             {
                 Fees_Altahsil_Detile det = new Fees_Altahsil_Detile
                 {
@@ -323,24 +415,25 @@ namespace Capqwebsite.Controllers.Fees
 
                 //string DomainName = Method_Bank.DomainName(port);
 
-                string host = Request.Host.Host;
+                //string host = Request.Host.Host;
                 string Succesurl = "";
                 string Cancelurl = "";
-            if (host == "site.capq.gov.eg")
-            {
-                Succesurl = "https://site.capq.gov.eg/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-                Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+            //if (host == "site.capq.gov.eg")
+            //{
+            //    Succesurl = "https://site.capq.gov.eg/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+            //    Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
-            }
-            else
-            {
-                Succesurl = "http://localhost:5205/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-                Cancelurl = "http://localhost:5205/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+            //}
+            //else
+            //{
+            //    Succesurl = "http://localhost:5205/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+            //    Cancelurl = "http://localhost:5205/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
-            }
+            //}
+            Succesurl = "https://site.capq.gov.eg/" + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+            Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
-
-            ss = Method_Bank.Create_Session(amount, Order_No, Cancelurl, Succesurl,/* Bank_port,*/ host);
+            ss = Method_Bank.Create_Session(amount, Order_No, Cancelurl, Succesurl/* Bank_port, host*/);
                 ViewBag.Url = Url;
 
                 ViewBag.Ses_Id = ss.Session_Id;
@@ -416,7 +509,7 @@ namespace Capqwebsite.Controllers.Fees
 				if (!ModelState.IsValid)
 				{
 					model.Offices = GetOfficeNames(_context);
-					return View(model);
+					return View("InspectionPayment", model);
 				}
 				//save in database
 
@@ -486,52 +579,54 @@ namespace Capqwebsite.Controllers.Fees
 
 				//string DomainName = Method_Bank.DomainName(port);
 
-				string host = Request.Host.Host;
+				//string host = Request.Host.Host;
 
-                _logger.LogInformation("Host: {host}", host);
-                _logger.LogInformation("Session ID: {Session}", ss?.Session_Id);
+    //            _logger.LogInformation("Host: {host}", host);
+    //            _logger.LogInformation("Session ID: {Session}", ss?.Session_Id);
 
                 string Succesurl = "";
 				string Cancelurl = "";
-				//if (host == "10.10.21.12")
-				//{
-				//	Succesurl = "http://10.10.21.12:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-				//	Cancelurl = "http://10.10.21.12:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
-				//}
-				//else if (host == "41.33.237.90")
-				//{
-				//	Succesurl = "http://41.33.237.90:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-				//	Cancelurl = "http://41.33.237.90:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
-				//}
-				 if (host == "site.capq.gov.eg")
-				{
-					Succesurl = "https://site.capq.gov.eg/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-					Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+                //if (host == "10.10.21.12")
+                //{
+                //	Succesurl = "http://10.10.21.12:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+                //	Cancelurl = "http://10.10.21.12:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+                //}
+                //else if (host == "41.33.237.90")
+                //{
+                //	Succesurl = "http://41.33.237.90:8071/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+                //	Cancelurl = "http://41.33.237.90:8071/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+                //}
+                // if (host == "site.capq.gov.eg")
+                //{
+                //	Succesurl = "https://site.capq.gov.eg/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+                //	Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
-				}
-				else
-				{
-					Succesurl = "http://localhost:5205/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
-					Cancelurl = "http://localhost:5205/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
+                //}
+                //else
+                //{
+                //	Succesurl = "http://localhost:5205/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+                //	Cancelurl = "http://localhost:5205/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
-				}
+                //}
+                Succesurl = "https://site.capq.gov.eg/" + "ResitPayment/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
+                Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
-                string logPath = Path.Combine(
-                AppContext.BaseDirectory,
-                "payment_log.txt"
-            );
+            //    string logPath = Path.Combine(
+            //    AppContext.BaseDirectory,
+            //    "payment_log.txt"
+            //);
 
-                System.IO.File.AppendAllText(
-                    logPath,
-                    $"Date: {DateTime.Now}\r\n" +
-                    $"port: {port}\r\n" +
-                    $"Bankport: {Bank_port}\r\n" +
-                    $"Host: {host}\r\n"
+            //    System.IO.File.AppendAllText(
+            //        logPath,
+            //        $"Date: {DateTime.Now}\r\n" +
+            //        $"port: {port}\r\n" +
+            //        $"Bankport: {Bank_port}\r\n" +
+            //        $"Host: {host}\r\n"
 
 
-                );
+            //    );
 
-                ss = Method_Bank.Create_SessionFor_Inspection(amount, Order_No, Cancelurl, Succesurl/*, Bank_port*/, host);
+                ss = Method_Bank.Create_SessionFor_Inspection(amount, Order_No, Cancelurl, Succesurl/*, Bank_port, host*/);
 
 				
 				ViewBag.Url = Url;

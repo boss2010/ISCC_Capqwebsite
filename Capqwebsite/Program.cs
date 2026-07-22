@@ -60,6 +60,30 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
+app.Use(async (context, next) =>
+{
+    if (context.Session.GetString("UserRole") == "PaymentOnly")
+    {
+        var path = context.Request.Path;
+        var isAllowed =
+            path.StartsWithSegments("/Fees") ||
+            path.StartsWithSegments("/CheckGeneralPayment") ||
+            path.StartsWithSegments("/CheckInspectionPayment") ||
+            path.StartsWithSegments("/Resit") ||
+            path.StartsWithSegments("/ResitPayment") ||
+            path.StartsWithSegments("/Login") ||
+            path.StartsWithSegments("/Home/ClearSession") ||
+            path.StartsWithSegments("/Error");
+
+        if (!isAllowed)
+        {
+            context.Response.Redirect("/Fees/GovernmentPayments");
+            return;
+        }
+    }
+
+    await next();
+});
 app.UseCors("AllowAll");
 app.UseCookiePolicy();
 app.UseAuthorization();

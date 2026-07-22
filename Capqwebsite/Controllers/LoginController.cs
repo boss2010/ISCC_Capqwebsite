@@ -39,9 +39,21 @@ namespace Capqwebsite.Controllers
                     CookieOptions option = new CookieOptions();
 
                     //Response.Cookies.Append("UserId", "1", option);
+                    HttpContext.Session.Clear();
                     HttpContext.Session.SetString("UserSession", "Authenticated");
+                    HttpContext.Session.SetString("UserRole", "Administrator");
                     //string id = Request.Cookies.FirstOrDefault(c => c.Key == "UserId").Value;
                     return View();
+                }
+                else if (userName == "Fess" && password == "Fess@123888")
+                {
+                    HttpContext.Session.Clear();
+                    HttpContext.Session.SetString("UserSession", "Fess");
+                    HttpContext.Session.SetString("UserRole", "PaymentOnly");
+
+                    return RedirectToAction(
+                        "GovernmentPayments",
+                        "Fees");
                 }
                 else
                 {

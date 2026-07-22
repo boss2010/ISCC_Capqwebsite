@@ -27,6 +27,7 @@ namespace ViewModels
 
         public string? Commercial_Register { get; set; }
 
+        [Required(ErrorMessage = "اسم الشركة مطلوب")]
         public string? Name { get; set; }
         public decimal Amount_Total { get; set; }
         public string? FarmName { get; set; }

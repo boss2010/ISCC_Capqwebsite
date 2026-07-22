@@ -11,7 +11,7 @@ namespace ViewModels
 {
     public class ResponseAcquirerCode
     {
-        public static string Response(string order,/* int BankPort,*/ string BankUrL)
+        public static string Response(string order/* int BankPort,string BankUrL*/ )
         {
 
             try
@@ -19,33 +19,34 @@ namespace ViewModels
                 
                 string Code;
                 var url = "";
-                if (BankUrL == "site.capq.gov.eg" /*|| BankPort == 80 || BankPort == 443*/)
-                {
-                    url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE/order/" + order + "";
+                //if (BankUrL == "site.capq.gov.eg" /*|| BankPort == 80 || BankPort == 443*/)
+                //{
+                //    url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE/order/" + order + "";
 
-                }
-                else
-                {
-                    url = "https://test-nbe.gateway.mastercard.com/api/rest/version/64/merchant/TESTAGRICULTURE/order/" + order + "";
+                //}
+                //else
+                //{
+                //    url = "https://test-nbe.gateway.mastercard.com/api/rest/version/64/merchant/TESTAGRICULTURE/order/" + order + "";
 
-                }
-
+                //}
+                url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE/order/" + order + "";
 
 
 
                 var httpRequest = (HttpWebRequest)WebRequest.Create(url);
 
                 httpRequest.Accept = "application/json";
-                if (BankUrL == "site.capq.gov.eg" /*|| BankPort == 80 || BankPort == 443*/)
-                {
-                    httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
+                //if (BankUrL == "site.capq.gov.eg" /*|| BankPort == 80 || BankPort == 443*/)
+                //{
+                //    httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
 
-                }
-                else
-                {
-                    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
+                //}
+                //else
+                //{
+                //    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
 
-                }
+                //}
+                httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
 
 
 
@@ -108,7 +109,7 @@ namespace ViewModels
 
 
         }
-        public static string Response_Inspection(string order, /*int BankPort,*/ string BankUrL)
+        public static string Response_Inspection(string order/*int BankPort, string BankUrL*/)
         {
 
             try
@@ -116,38 +117,42 @@ namespace ViewModels
 
                 string Code;
                 var url = "";
-                var httpRequest = (HttpWebRequest)WebRequest.Create("https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE/order");
+                var httpRequest = (HttpWebRequest)WebRequest.Create("https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE2/order");
 
                
           
 
-                    if (BankUrL == "site.capq.gov.eg" /*|| BankPort == 80 || BankPort == 443*/)
-                    {
-                        url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE2/order/" + order + "";
+                    //if (BankUrL == "site.capq.gov.eg" /*|| BankPort == 80 || BankPort == 443*/)
+                    //{
+                    //    url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE2/order/" + order + "";
 
-                    }
-                    else
-                    {
-                        url = "https://test-nbe.gateway.mastercard.com/api/rest/version/64/merchant/TESTAGRICULTURE/order/" + order + "";
+                    //}
+                    //else
+                    //{
+                    //    url = "https://test-nbe.gateway.mastercard.com/api/rest/version/64/merchant/TESTAGRICULTURE/order/" + order + "";
 
-                    }
+                    //}
+
+                url = "https://nbe.gateway.mastercard.com/api/rest/version/64/merchant/AGRICULTURE2/order/" + order + "";
 
 
-                    httpRequest = (HttpWebRequest)WebRequest.Create(url);
+
+                httpRequest = (HttpWebRequest)WebRequest.Create(url);
 
 
                     httpRequest.Accept = "application/json";
-                    if (/*BankPort == 80 || BankPort == 443 ||*/ BankUrL == "site.capq.gov.eg")
-                    {
+                    //if (/*BankPort == 80 || BankPort == 443 ||*/ BankUrL == "site.capq.gov.eg")
+                    //{
 
-                        httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";
-                    }
-                    else
-                    {
+                    //    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";
+                    //}
+                    //else
+                    //{
 
-                        httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
-                    }
+                    //    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
+                    //}
 
+                httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";
 
 
                 var httpResponse = (HttpWebResponse)httpRequest.GetResponse();

@@ -17,7 +17,7 @@ namespace Capqwebsite.Controllers.Fees
                 HttpClient client = new HttpClient();
                 //int Bank_port = Request.Host.Port.Value;
                 string Url = Request.Host.Host;
-                string ResponseCode = ResponseAcquirerCode.Response_Inspection(Order_No,/* Bank_port,*/ Url);
+                string ResponseCode = ResponseAcquirerCode.Response_Inspection(Order_No/* Bank_port, Url*/);
                 if (ResponseCode == "00")
                 {
                     var dataupdate = _context.Fees_Altahsils.Where(a => a.ID == ID && a.OrderNumber == Order_No).FirstOrDefault();
@@ -33,7 +33,8 @@ namespace Capqwebsite.Controllers.Fees
                             .Where(a => a.ID == ID && a.OrderNumber == Order_No)
                             .Select(x => new FeesAltahsilDTO
                             {
-
+                                ID = x.ID,
+                                OrderNumber = x.OrderNumber,
                                 Amount_Total = x.Amount_Total,
                                 User_Creation_Date = x.User_Creation_Date,
                                 Date = x.date,

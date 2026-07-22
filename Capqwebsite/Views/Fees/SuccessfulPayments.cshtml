@@ -238,6 +238,34 @@
         color: #fff;
     }
 
+    .payment-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        white-space: nowrap;
+    }
+
+    .print-receipt {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 76px;
+        padding: 7px 12px;
+        border: 1px solid #032d6d;
+        border-radius: 7px;
+        background: #032d6d;
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none !important;
+    }
+
+    .print-receipt:hover {
+        background: #0b4bb3;
+        border-color: #0b4bb3;
+        color: #fff;
+    }
+
     .payment-details-row td {
         padding: 0;
         background: #f4f9f7;
@@ -506,11 +534,19 @@
                                 <td>@(payment.Office ?? "-")</td>
                                 <td class="amount-cell">@payment.TotalAmount.ToString("N2") ج.م</td>
                                 <td>
+                                    <div class="payment-actions">
                                     <button type="button"
                                             class="details-toggle"
                                             data-details-target="@detailsId"
                                             aria-expanded="false"
                                             aria-controls="@detailsId">عرض التفاصيل</button>
+                                        <a asp-action="PrintPayment"
+                                           asp-route-id="@payment.ID"
+                                           asp-route-accountType="@Model.AccountType"
+                                           class="print-receipt"
+                                           target="_blank"
+                                           rel="noopener">🖨 طباعة</a>
+                                    </div>
                                 </td>
                             </tr>
                             <tr id="@detailsId" class="payment-details-row" hidden>

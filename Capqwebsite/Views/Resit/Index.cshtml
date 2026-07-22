@@ -2,7 +2,9 @@
 @model FeesAltahsilDTO
 
 @{
-    Layout = null; 
+    Layout = null;
+    var successMessage = TempData["Success"]?.ToString()
+        ?? ViewData["SuccessMessage"]?.ToString();
  }
 
 <!DOCTYPE html>
@@ -18,12 +20,33 @@
         }
 
         .receipt {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
             width: 1200px;
             margin: auto;
             background: #fff;
             border-radius: 10px;
             padding: 30px;
             border: 1px solid #ddd;
+        }
+
+        .receipt-watermark {
+            position: absolute;
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            width: 610px;
+            max-width: 72%;
+            transform: translate(-50%, -46%);
+            opacity: .055;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .receipt > :not(.receipt-watermark) {
+            position: relative;
+            z-index: 1;
         }
 
         .header {
@@ -35,6 +58,32 @@
         .success {
             color: green;
             font-size: 22px;
+        }
+
+        .receipt-reference {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .reference-item {
+            min-width: 245px;
+            padding: 9px 16px;
+            border: 1px solid #cad6e5;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, .9);
+            color: #18385f;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .reference-value {
+            direction: ltr;
+            display: inline-block;
+            margin-right: 6px;
+            font-family: Consolas, Tahoma, sans-serif;
         }
 
         .row {
@@ -182,16 +231,32 @@
 
     <div class="receipt">
 
+        <img src="/img/logo-capq2.png"
+             class="receipt-watermark"
+             alt=""
+             aria-hidden="true" />
+
         <div class="header">
 
             <h1>إيصال دفع رسوم</h1>
           
-            @if (TempData["Success"] != null)
+            @if (!string.IsNullOrWhiteSpace(successMessage))
             {
                 <div class="success">
-                    ✓ @TempData["Success"]
+                    ✓ @successMessage
                 </div>
             }
+
+            <div class="receipt-reference">
+                <div class="reference-item">
+                    رقم العملية:
+                    <span class="reference-value">@Model.ID</span>
+                </div>
+                <div class="reference-item">
+                    رقم الطلب:
+                    <span class="reference-value">@(Model.OrderNumber ?? "-")</span>
+                </div>
+            </div>
 
         </div>
 
@@ -342,6 +407,14 @@
             ↩️ رجوع
         </button>
     </div>
+    @if (ViewData["AutoPrint"] as bool? == true)
+    {
+        <script>
+            window.addEventListener("load", function () {
+                window.print();
+            });
+        </script>
+    }
 </body>
 
 </html>

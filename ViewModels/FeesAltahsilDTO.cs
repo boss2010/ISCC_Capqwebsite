@@ -8,6 +8,9 @@ namespace ViewModels
 {
     public class FeesAltahsilDTO
     {
+        public long ID { get; set; }
+
+        public string? OrderNumber { get; set; }
 
         public decimal Amount_Total { get; set; }
 

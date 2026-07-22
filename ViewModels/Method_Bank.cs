@@ -11,7 +11,7 @@ namespace ViewModels
 {
     public class Method_Bank
     {
-        public static Out_SessionDTO Create_Session(decimal amount, string order, string CancelURL, string SuccessUrl,/* int? PortBank*/ string hostName)
+        public static Out_SessionDTO Create_Session(decimal amount, string order, string CancelURL, string SuccessUrl/* int? PortBank string hostName*/)
         {
 
             try
@@ -22,32 +22,36 @@ namespace ViewModels
                 String Order_No = order; //"2" +Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 9)+ Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 3);
                 CancelURL = CancelURL + Order_No;
                 var url = "";
-                if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
-                {
-                    url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE/session";
+                url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE/session";
 
-                }
-                else
-                {
-                    url = "https://test-nbe.gateway.mastercard.com/api/rest/version/61/merchant/TESTAGRICULTURE/session";
 
-                }
+                //if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
+                //{
+
+                //}
+                //else
+                //{
+                //    url = "https://test-nbe.gateway.mastercard.com/api/rest/version/61/merchant/TESTAGRICULTURE/session";
+
+                //}
 
 
                 var httpRequest = (HttpWebRequest)WebRequest.Create(url);
                 httpRequest.Method = "POST";
 
                 httpRequest.Accept = "application/json";
-                if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
-                {
-                    httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
+                //if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
+                //{
+                //    httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
 
-                    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
-                }
+                //    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
+                //}
+
+                httpRequest.Headers["Authorization"] = "Basic TWVyY2hhbnQuQUdSSUNVTFRVUkU6ZWVkZTUzOGY2N2RlZDE5OTBkYmYwMTllYzM3Mzk0ODk=";
 
 
                 httpRequest.ContentType = "application/json";
@@ -107,7 +111,7 @@ namespace ViewModels
 
         }
 
-        public static Out_SessionDTO Create_SessionFor_Inspection(decimal amount, string order, string CancelURL, string SuccessUrl, /*int? PortBank,*/ string hostName)
+        public static Out_SessionDTO Create_SessionFor_Inspection(decimal amount, string order, string CancelURL, string SuccessUrl /*int? PortBank, string hostName*/)
         {
 
             try
@@ -118,23 +122,24 @@ namespace ViewModels
 
                 CancelURL = CancelURL + Order_No;
                 var url = "";
-                var httpRequest = (HttpWebRequest)WebRequest.Create("https://test-nbe.gateway.mastercard.com/api/rest/version/61/merchant/TESTAGRICULTURE/session");
+                var httpRequest = (HttpWebRequest)WebRequest.Create("https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE2/session");
 
 
-               
+
 
                 ///////////////////////////////////////////
-              
-                    if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
-                    {
-                        url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE2/session";
 
-                    }
-                    else
-                    {
-                        url = "https://test-nbe.gateway.mastercard.com/api/rest/version/61/merchant/TESTAGRICULTURE/session";
+                url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE2/session";
+                //if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
+                //    {
+                //        url = "https://nbe.gateway.mastercard.com/api/rest/version/61/merchant/AGRICULTURE2/session";
 
-                    }
+                //    }
+                //    else
+                //    {
+                //        url = "https://test-nbe.gateway.mastercard.com/api/rest/version/61/merchant/TESTAGRICULTURE/session";
+
+                //    }
 
                     httpRequest = (HttpWebRequest)WebRequest.Create(url);
                     httpRequest.Method = "POST";
@@ -142,16 +147,18 @@ namespace ViewModels
 
 
                     httpRequest.Accept = "application/json";
-                    if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
-                    {
-                        httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";
-                    }
-                    else
-                    {
+                    //if (/*PortBank == 80 || PortBank == 443 ||*/ hostName == "site.capq.gov.eg")
+                    //{
+                    //    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";
+                    //}
+                    //else
+                    //{
 
-                        httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
-                    }
-              
+                    //    httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuVEVTVEFHUklDVUxUVVJFOjU1ZWMyMmNjOTMyNTA3NzA3MGJiMTVkYzc3NWEwNTAz";
+                    //}
+
+                httpRequest.Headers["Authorization"] = "Basic bWVyY2hhbnQuQUdSSUNVTFRVUkUyOjRiMDQwZTVkOTIwZDA5MDc5ZjdkMTllZWQxZmRmM2Jh";
+
 
                 httpRequest.ContentType = "application/json";
                 var data = @"{'apiOperation': 'CREATE_CHECKOUT_SESSION', 'interaction': { 'operation': 'PURCHASE', 'returnUrl': '" + SuccessUrl + "&&Order_No=" + Order_No + "',  'cancelUrl': '" + CancelURL + "' },'order': {  'currency': 'EGP', 'id': '" + Order_No + "',  'amount': '" + amount + "'  } }";

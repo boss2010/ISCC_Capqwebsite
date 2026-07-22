@@ -53,9 +53,10 @@ namespace Capqwebsite.Controllers.Fees
             {
                 string response =
                     ResponseAcquirerCode.Response_Inspection(
-                        item.OrderNumber,
+                        item.OrderNumber
                         //bankPort,
-                        url);
+                       // url
+                        );
 
                 if (response == "00")
                 {

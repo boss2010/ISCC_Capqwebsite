@@ -263,6 +263,25 @@
    
 
                     }
+                    else if (Context.Session.GetString("UserRole") == "PaymentOnly")
+                    {
+                        <div class="navbar-nav ml-auto py-0">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link text-sm dropdown-toggle" data-bs-toggle="dropdown">الدفع</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="@Url.Action("GovernmentPayments", "Fees")" class="dropdown-item">
+                                        تقارير الدفع
+                                    </a>
+                                    <a href="@Url.Action("Index", "CheckGeneralPayment")" class="dropdown-item">
+                                        اعادة مراجعة الحساب الحكومى
+                                    </a>
+                                    <a href="@Url.Action("Index", "CheckInspectionPayment")" class="dropdown-item">
+                                        اعادة مراجعة الحساب الخاص
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     else
                     {
                         <div class="navbar-nav ml-auto py-0" >

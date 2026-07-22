@@ -56,9 +56,14 @@
         </div>
 
         <div class="col-md-4">
-            <label>اسم الشركة</label>
+            <label>اسم الشركة <span class="text-danger">*</span></label>
             <input asp-for="Name"
-                   class="form-control" />
+                   id="CompanyName"
+                   class="form-control"
+                   required />
+            <span asp-validation-for="Name"
+                  id="companyNameError"
+                  class="text-danger"></span>
         </div>
         <div class="col-md-4">
             <label>اسم المحطة</label>
@@ -90,12 +95,26 @@
 
             @for (int i = 0; i < Model.Fees.Count; i++)
             {
+                var isMartyrFee = Model.Fees[i].FeesType_ID == 34;
                 <tr>
 
                     <td>
-
-                        <input asp-for="Fees[i].Selected"
-                               class="fee-check" />
+                        @if (isMartyrFee)
+                        {
+                            <input type="checkbox"
+                                   class="fee-check"
+                                   checked
+                                   disabled
+                                   aria-label="رسوم الشهيد إجبارية" />
+                            <input type="hidden"
+                                   name="Fees[@i].Selected"
+                                   value="true" />
+                        }
+                        else
+                        {
+                            <input asp-for="Fees[i].Selected"
+                                   class="fee-check" />
+                        }
 
                         <input type="hidden"
                                asp-for="Fees[i].FeesType_ID" />
@@ -109,8 +128,18 @@
                     </td>
 
                     <td>
-                        <input asp-for="Fees[i].Amount"
-                               class="form-control amount" />
+                        @if (isMartyrFee)
+                        {
+                            <input asp-for="Fees[i].Amount"
+                                   value="5"
+                                   readonly
+                                   class="form-control amount" />
+                        }
+                        else
+                        {
+                            <input asp-for="Fees[i].Amount"
+                                   class="form-control amount" />
+                        }
 
                         <span class="text-danger fee-error"></span>
 
@@ -211,8 +240,16 @@
         // تنظيف الرسائل
         $("#nationalError").text("");
         $("#officeError").text("");
+        $("#companyNameError").text("");
         $("#feesError").text("");
         $(".fee-error").text("");
+
+        // اسم الشركة
+        if (!$("#CompanyName").val().trim())
+        {
+        $("#companyNameError").text("اسم الشركة مطلوب");
+        valid=false;
+        }
 
         // الرقم القومي
         let national=
@@ -361,6 +398,8 @@
         ".amount,input[type='checkbox']",
         calcTotal
         );
+
+        calcTotal();
 
     </script>
  

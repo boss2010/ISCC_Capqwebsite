@@ -55,9 +55,14 @@
         </div>
 
         <div class="col-md-4">
-            <label>اسم الشركة</label>
+            <label>اسم الشركة <span class="text-danger">*</span></label>
             <input asp-for="Name"
-                   class="form-control" />
+                   id="CompanyName"
+                   class="form-control"
+                   required />
+            <span asp-validation-for="Name"
+                  id="companyNameError"
+                  class="text-danger"></span>
         </div>
         <div class="col-md-4">
             <label>اسم المحطة</label>
@@ -209,8 +214,16 @@
         // تنظيف الرسائل
         $("#nationalError").text("");
         $("#officeError").text("");
+        $("#companyNameError").text("");
         $("#feesError").text("");
         $(".fee-error").text("");
+
+        // اسم الشركة
+        if (!$("#CompanyName").val().trim())
+        {
+        $("#companyNameError").text("اسم الشركة مطلوب");
+        valid=false;
+        }
 
         // الرقم القومي
         let national=
