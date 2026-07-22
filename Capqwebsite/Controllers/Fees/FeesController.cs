@@ -129,7 +129,7 @@ namespace Capqwebsite.Controllers.Fees
                 return RedirectToAction("Index", "Login");
             }
 
-            const int pageSize = 5;
+            const int pageSize = 10;
             search = search?.Trim();
 
             using var context = new AgricultureDBContext();
@@ -261,7 +261,7 @@ namespace Capqwebsite.Controllers.Fees
 
             var model = new FeesAltahsilVM();
             model.Offices = GetOfficeNames(_context);
-            var ids = new byte[] { 26, 27, 35 };
+            var ids = new byte[] { 26, 27, 35,36,37,38,39,40,41,42,43,44,45,46,47,48,49 };
 
             model.Fees = _context.FeesTypes
                 .Where(x => ids.Contains(x.ID))
