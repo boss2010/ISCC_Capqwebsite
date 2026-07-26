@@ -43,6 +43,8 @@ public partial class Outlet
 
     public bool IsActive { get; set; }
 
+    public bool? CanAcceptPayment { get; set; }
+
     /// <summary>
     /// from system code 21
     /// صادر	/وارد	/صادر+ وارد

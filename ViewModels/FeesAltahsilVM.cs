@@ -43,6 +43,12 @@ namespace ViewModels
         public bool Selected { get; set; }
 
         [Range(
+            0,
+            999999,
+            ErrorMessage = "العدد يجب أن يكون صفرًا أو أكبر")]
+        public int Quantity { get; set; }
+
+        [Range(
             0.01,
             999999999,
             ErrorMessage =

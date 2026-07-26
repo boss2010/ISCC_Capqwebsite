@@ -1,379 +1,937 @@
-﻿@using ViewModels
+@using ViewModels
 @model FeesAltahsilVM
-<script src="~/bootstrap.bundle.min.js"></script>
-<form asp-action="SaveInspectionPayment" method="post" id="paymentForm">
 
-    <div id="feesError"
-         class="text-danger mb-3">
+@{
+    var isGeneralPayment =
+        ViewData["IsGeneralPayment"] as bool? ?? false;
+    var paymentAction =
+        ViewData["PaymentAction"]?.ToString() ??
+        "SaveInspectionPayment";
+    var paymentTitle =
+        ViewData["PaymentTitle"]?.ToString() ??
+        "دفع رسوم الاعتمادات والعينات والبدلات";
+    var paymentDescription =
+        ViewData["PaymentDescription"]?.ToString() ??
+        "أدخل بيانات الطلب واختر الرسوم المطلوبة ثم راجع الإجمالي قبل الدفع.";
+    var feesSectionTitle =
+        ViewData["FeesSectionTitle"]?.ToString() ??
+        "الخدمات والرسوم";
+    ViewData["Title"] = paymentTitle;
+}
+
+<style>
+    .inspection-payment-page {
+        --payment-primary: #087f5b;
+        --payment-primary-dark: #066649;
+        --payment-ink: #17352d;
+        --payment-muted: #667a74;
+        --payment-border: #dce8e4;
+        direction: rtl;
+        color: var(--payment-ink);
+        width: min(1320px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 1.25rem 0 2.5rem;
+    }
+
+    .payment-hero {
+        position: relative;
+        overflow: hidden;
+        padding: 1.6rem;
+        margin-bottom: 1.25rem;
+        border-radius: 22px;
+        color: #fff;
+        background: linear-gradient(135deg, #065f46, #0b8f68);
+        box-shadow: 0 14px 34px rgba(6, 95, 70, .18);
+    }
+
+    .payment-hero::after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        left: -70px;
+        top: -115px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.09);
+    }
+
+    .payment-hero h1 {
+        margin: 0 0 .45rem;
+        font-size: clamp(1.45rem, 3vw, 2rem);
+        font-weight: 800;
+    }
+
+    .payment-hero p {
+        max-width: 720px;
+        margin: 0;
+        opacity: .88;
+        line-height: 1.8;
+    }
+
+    .payment-card {
+        margin-bottom: 1.25rem;
+        border: 1px solid var(--payment-border);
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 8px 28px rgba(28, 61, 51, .07);
+    }
+
+    .payment-card-header {
+        display: flex;
+        align-items: center;
+        gap: .8rem;
+        padding: 1.15rem 1.35rem;
+        border-bottom: 1px solid var(--payment-border);
+    }
+
+    .step-number {
+        display: inline-grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        border-radius: 11px;
+        color: #fff;
+        background: var(--payment-primary);
+        font-weight: 800;
+    }
+
+    .payment-card-header h2 {
+        margin: 0;
+        font-size: 1.08rem;
+        font-weight: 800;
+    }
+
+    .payment-card-body {
+        padding: 1.35rem;
+    }
+
+    .payment-fields-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.1rem;
+    }
+
+    .payment-field {
+        min-width: 0;
+    }
+
+    .payment-type-field {
+        grid-column: span 2;
+    }
+
+    .payment-type-label {
+        display: block;
+        margin-bottom: .45rem;
+        font-weight: 700;
+        color: #284c42;
+    }
+
+    .payment-type-switcher {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .7rem;
+    }
+
+    .payment-type-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .55rem;
+        min-height: 48px;
+        padding: .65rem .8rem;
+        border: 1px solid #c9dcd5;
+        border-radius: 11px;
+        background: #f8fbfa;
+        color: #315e4e !important;
+        font-size: .92rem;
+        font-weight: 800;
+        text-align: center;
+        text-decoration: none !important;
+        transition: border-color .15s ease, background .15s ease, color .15s ease;
+    }
+
+    .payment-type-button:hover {
+        border-color: var(--payment-primary);
+        background: #edf8f4;
+        color: var(--payment-primary-dark) !important;
+    }
+
+    .payment-type-button.active {
+        border-color: var(--payment-primary);
+        background: var(--payment-primary);
+        color: #fff !important;
+        box-shadow: 0 6px 14px rgba(8, 127, 91, .18);
+    }
+
+    .payment-type-button i {
+        font-size: 1rem;
+    }
+
+    .payment-content-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(285px, .85fr);
+        align-items: start;
+        gap: 1.25rem;
+    }
+
+    .field-label {
+        display: block;
+        margin-bottom: .45rem;
+        font-weight: 700;
+        color: #284c42;
+    }
+
+    .inspection-payment-page .form-control,
+    .inspection-payment-page .payment-select {
+        display: block;
+        width: 100%;
+        min-height: 48px;
+        padding: .65rem .85rem;
+        border: 1px solid #cfddd8;
+        border-color: #cfddd8;
+        border-radius: 11px;
+        background-color: #fbfdfc;
+        color: var(--payment-ink);
+        font: inherit;
+    }
+
+    .inspection-payment-page .form-control:focus,
+    .inspection-payment-page .payment-select:focus {
+        outline: 0;
+        border-color: var(--payment-primary);
+        box-shadow: 0 0 0 .2rem rgba(8,127,91,.12);
+    }
+
+    .office-autocomplete {
+        position: relative;
+    }
+
+    .office-autocomplete .form-control {
+        padding-left: 2.6rem;
+    }
+
+    .office-autocomplete-icon {
+        position: absolute;
+        left: .9rem;
+        top: 50%;
+        color: var(--payment-primary);
+        pointer-events: none;
+        transform: translateY(-50%);
+    }
+
+    .office-note {
+        display: flex;
+        gap: .45rem;
+        margin-top: .55rem;
+        color: var(--payment-muted);
+        font-size: .84rem;
+    }
+
+    .fees-table {
+        margin: 0;
+        vertical-align: middle;
+    }
+
+    .fees-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        padding: 1.2rem;
+    }
+
+    .fee-card {
+        min-width: 0;
+        padding: 1rem;
+        border: 1px solid #dce8e4;
+        border-radius: 14px;
+        background: #fbfdfc;
+        transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .fee-card:focus-within {
+        border-color: var(--payment-primary);
+        box-shadow: 0 0 0 .18rem rgba(8, 127, 91, .09);
+    }
+
+    .fee-card-title {
+        min-height: 46px;
+        margin-bottom: .8rem;
+        color: #204c3f;
+        font-size: 1.12rem;
+        font-weight: 800;
+        line-height: 1.55;
+    }
+
+    .fee-inputs {
+        display: grid;
+        grid-template-columns: minmax(90px, .65fr) minmax(130px, 1fr);
+        gap: .75rem;
+    }
+
+    .fee-input-group label {
+        display: block;
+        margin-bottom: .35rem;
+        color: #58736a;
+        font-size: .8rem;
+        font-weight: 700;
+    }
+
+    .fee-card-total {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .7rem;
+        padding-top: .75rem;
+        margin-top: .75rem;
+        border-top: 1px dashed #d5e3de;
+        color: #60776f;
+        font-size: .83rem;
+    }
+
+    .fee-card-total strong {
+        color: var(--payment-primary-dark);
+        font-size: 1rem;
+    }
+
+    .fees-table thead th {
+        padding: .9rem 1rem;
+        border: 0;
+        color: #42665c;
+        background: #f2f8f6;
+        font-size: .88rem;
+        white-space: nowrap;
+    }
+
+    .fees-table tbody td {
+        padding: .85rem 1rem;
+        border-color: #edf3f1;
+    }
+
+    .fee-check {
+        width: 1.2rem;
+        height: 1.2rem;
+        accent-color: var(--payment-primary);
+        cursor: pointer;
+    }
+
+    .amount {
+        max-width: 190px;
+    }
+
+    .payment-summary {
+        position: sticky;
+        top: 1rem;
+    }
+
+    .total-box {
+        padding: 1rem 1.1rem;
+        border-radius: 14px;
+        background: #eef8f5;
+    }
+
+    .summary-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .8rem;
+        padding: .7rem 0;
+        border-bottom: 1px solid #d9ebe5;
+    }
+
+    .summary-line:first-child {
+        padding-top: 0;
+    }
+
+    .summary-line span {
+        color: #4c6b62;
+        font-weight: 700;
+    }
+
+    .summary-line strong {
+        color: #214c3f;
+        font-size: 1rem;
+    }
+
+    .summary-grand-total {
+        padding: 1rem;
+        margin-top: .9rem;
+        border: 1px solid #c9e4db;
+        border-radius: 13px;
+        background: #fff;
+        text-align: center;
+    }
+
+    .summary-grand-total > span {
+        display: block;
+        margin-bottom: .35rem;
+        color: #214c3f;
+        font-weight: 800;
+    }
+
+    .summary-grand-total strong {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: .35rem;
+        max-width: 100%;
+        color: var(--payment-primary-dark);
+        font-size: 1.8rem;
+    }
+
+    .summary-grand-total small {
+        font-size: .78rem;
+        font-weight: 700;
+    }
+
+    .summary-empty {
+        padding: .85rem;
+        margin-bottom: .9rem;
+        border: 1px dashed #c9ddd6;
+        border-radius: 11px;
+        color: #688078;
+        background: #fbfdfc;
+        font-size: .84rem;
+        line-height: 1.7;
+        text-align: center;
+    }
+
+    #AmountTotalDisplay {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        direction: ltr;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.2;
+    }
+
+    .pay-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .7rem;
+        width: 100%;
+        min-height: 52px;
+        margin-top: 1rem;
+        border: 0;
+        border-radius: 13px;
+        color: #fff;
+        background: var(--payment-primary);
+        font-size: 1.05rem;
+        font-weight: 800;
+        transition: transform .15s ease, background .15s ease;
+    }
+
+    .pay-button:hover {
+        color: #fff;
+        background: var(--payment-primary-dark);
+        transform: translateY(-1px);
+    }
+
+    .payment-logos img {
+        height: 21px;
+        width: auto;
+        object-fit: contain;
+    }
+
+    .security-note {
+        margin: .85rem 0 0;
+        color: var(--payment-muted);
+        font-size: .82rem;
+        text-align: center;
+    }
+
+    .payment-methods {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .5rem;
+        padding-top: .9rem;
+        margin-top: .9rem;
+        border-top: 1px solid var(--payment-border);
+        color: var(--payment-muted);
+        font-size: .78rem;
+    }
+
+    .payment-methods img {
+        height: 20px;
+        width: auto;
+    }
+
+    .validation-summary-valid {
+        display: none;
+    }
+
+    .validation-summary-errors {
+        padding: .85rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #f1b8b8;
+        border-radius: 12px;
+        color: #9f2525;
+        background: #fff5f5;
+    }
+
+    .validation-summary-errors ul {
+        margin: 0;
+        padding-right: 1.2rem;
+    }
+
+    .terms-list {
+        margin: 0;
+        padding-right: 1.25rem;
+        line-height: 1.9;
+    }
+
+    @@media (max-width: 767.98px) {
+        .inspection-payment-page {
+            width: min(100% - 20px, 1320px);
+            padding-top: .5rem;
+        }
+
+        .payment-hero,
+        .payment-card {
+            border-radius: 16px;
+        }
+
+        .payment-hero,
+        .payment-card-body {
+            padding: 1rem;
+        }
+
+        .fees-table thead {
+            display: none;
+        }
+
+        .fees-table,
+        .fees-table tbody,
+        .fees-table tr,
+        .fees-table td {
+            display: block;
+            width: 100%;
+        }
+
+        .fees-table tr {
+            display: grid;
+            grid-template-columns: 42px 1fr;
+            gap: .2rem .65rem;
+            padding: .85rem;
+            border-bottom: 1px solid var(--payment-border);
+        }
+
+        .fees-table td {
+            padding: 0;
+            border: 0;
+        }
+
+        .fees-table td:first-child {
+            grid-row: 1 / 3;
+            align-self: center;
+        }
+
+        .fees-table td:last-child {
+            margin-top: .5rem;
+        }
+
+        .amount {
+            max-width: none;
+        }
+
+        .payment-summary {
+            position: static;
+        }
+
+        .fees-grid {
+            grid-template-columns: 1fr;
+            padding: .85rem;
+        }
+    }
+
+    @@media (max-width: 991.98px) {
+        .payment-fields-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .payment-type-field {
+            grid-column: span 2;
+        }
+
+        .payment-content-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width: 575.98px) {
+        .payment-fields-grid {
+            grid-template-columns: 1fr;
+            gap: .9rem;
+        }
+
+        .payment-type-field {
+            grid-column: auto;
+        }
+
+        .payment-type-switcher {
+            grid-template-columns: 1fr;
+        }
+
+        .payment-card-header {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<div class="inspection-payment-page">
+    <div class="payment-hero">
+        <h1>@paymentTitle</h1>
+        <p>@paymentDescription</p>
     </div>
 
-    <div class="row">
+    <form asp-action="@paymentAction" method="post" id="paymentForm" novalidate>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div id="feesError" class="validation-summary-errors" style="display:none"></div>
 
-        <div class="col-md-4">
-            <label>المكتب</label>
-            <select asp-for="office" class="form-control">
-                <option value="">اختر المكتب</option>
-                @foreach (var officeName in Model.Offices)
-                {
-                    <option value="@officeName">@officeName</option>
-                }
-            </select>
-            <span asp-validation-for="office" id="officeError" class="text-danger"></span>
-        </div>
-
-        <div class="col-md-4">
-            <label>رقم الشهادة الجمركية/رقم الفحص</label>
-            <input asp-for="Customs_Certificate_Number"
-                   class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-
-            <label>الرقم القومي</label>
-
-            <input asp-for="National_ID"
-                   id="National_ID"
-                   class="form-control"
-                   maxlength="14" />
-
-            <span id="nationalError"
-                  class="text-danger">
-            </span>
-
-        </div>
-
-        <div class="col-md-4">
-            <label>السجل الضريبي</label>
-            <input asp-for="Tax_Registry"
-                   class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label>السجل التجاري</label>
-            <input asp-for="Commercial_Register"
-                   class="form-control" />
-        </div>
-
-        <div class="col-md-4">
-            <label>اسم الشركة <span class="text-danger">*</span></label>
-            <input asp-for="Name"
-                   id="CompanyName"
-                   class="form-control"
-                   required />
-            <span asp-validation-for="Name"
-                  id="companyNameError"
-                  class="text-danger"></span>
-        </div>
-        <div class="col-md-4">
-            <label>اسم المحطة</label>
-            <input asp-for="FarmName"
-                   class="form-control" />
-        </div>
-    </div>
-
-    <hr />
-    <center>
-        <div id="feesError"
-             class="text-danger mb-3">
-        </div>
-    </center>
-
-
-    <table class="table">
-
-        <thead>
-            <tr>
-                <th>اختيار</th>
-                <th>نوع الرسم</th>
-                <th>المبلغ</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @for (int i = 0; i < Model.Fees.Count; i++)
-            {
-                <tr>
-
-                    <td>
-
-                        <input asp-for="Fees[i].Selected"
-                               class="fee-check" />
-
-                        <input type="hidden"
-                               asp-for="Fees[i].FeesType_ID" />
-
-                    </td>
-
-                    <td>
-                        @Model.Fees[i].FeesName
-                        <input type="hidden"
-                               asp-for="Fees[i].FeesName" />
-                    </td>
-
-                    <td>
-                        <input asp-for="Fees[i].Amount"
-                               class="form-control amount" />
-
-                        <span class="text-danger fee-error"></span>
-
-                    </td>
-
-                </tr>
-            }
-
-        </tbody>
-
-    </table>
-
-    <div class="mb-3">
-
-        <label>الإجمالي</label>
-
-        <input id="Amount_Total" asp-for="Amount_Total"
-               readonly
-               class="form-control" />
-
-    </div>
-
-    <button type="button" id="btnmodel" class="btn btn-info btn-lg">
-        دفع&nbsp;
-        <img src="~/img/mastercard.png" />
-        <img src="~/img/visa.png" />
-
-    </button>
-
-
-
-    <div class="modal fade" id="myModal" role="dialog" dir="ltr">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-
-                <button type="button" class="close" dir="rtl" data-dismiss="modal">&times;</button>
-                <center>
-                    @*<h4 class="modal-title">الشروط و الأحكام</h4>*@
-                    <div class="panel-heading">
-                        <h3 class="panel-title">  شروط تقديم خدمة الدفع الالكتروني  علي موقع الحجر الزراعي المصري </h3>
+        <section class="payment-card">
+            <div class="payment-card-header">
+                <span class="step-number">1</span>
+                <h2>بيانات الطلب</h2>
+            </div>
+            <div class="payment-card-body">
+                <div class="payment-fields-grid">
+                    <div class="payment-field">
+                        <label asp-for="office" class="field-label">المكتب <span class="text-danger">*</span></label>
+                        <div class="office-autocomplete">
+                            <input asp-for="office"
+                                   class="form-control"
+                                   list="officesList"
+                                   autocomplete="off"
+                                   placeholder="اكتب اسم المكتب أو اختر من القائمة"
+                                   aria-describedby="officeHelp" />
+                            <i class="fas fa-search office-autocomplete-icon" aria-hidden="true"></i>
+                        </div>
+                        <datalist id="officesList">
+                            @foreach (var officeName in Model.Offices)
+                            {
+                                <option value="@officeName">@officeName</option>
+                            }
+                        </datalist>
+                        <div class="office-note" id="officeHelp">
+                            <span aria-hidden="true">●</span>
+                            <span>تظهر المكاتب المتاحة لاستقبال الدفع فقط</span>
+                        </div>
+                        <span asp-validation-for="office" id="officeError" class="text-danger small"></span>
                     </div>
-                </center>
 
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12" dir="rtl">
-                            <ul>
-                                <li class="li-style">	لا يجوز التنازل أو تقديم طلب تقديم خدمة او دفع الكترونى لصالح الغير من حساب الشركة حيث أنه خاص فقط للشركة المقدمة .</li>
-                                <li class="li-style">	تسرى الأحكام المقررة بقانون الزراعة رقم 53 لسنة 1966 والقرار الوزاري رقم 562 لسنة 2019م والقرار الوزاري رقم 386 لسنة 2021.</li>
-                                <li class="li-style">	المصاريف المسددة مقابل الخدمة غير قابلة للاسترداد وذلك بعد إتمام المعاملة بنجاح.</li>
-                                <li class="li-style">	يرجى التحقق من صحة رقم بطاقة الائتمان وجميع البيانات المطلوبة قبل إجراء عملية الدفع .</li>
-                                <li class="li-style">		تتحمل الشركة دون غيرها صحة ما جاء في الطلب وما ترتب عليه من رسوم ولا يجوز الإحتجاج بإستخدام أسم المستخدم و كلمة المرور الخاصة بالشركة من قبل الغير حيث أنها اختصاصات حصرية للشركة</li>
-                                <li class="li-style">		البيانات المدرجة في خدمات المنظومة الالكترونية سواء من صاحب الشأن أو مندوبه تكون مسئولية صاحب الشركة بشخصه ولا يجوز التنصل منها تحت أي ظرف .	 </li>
-                            </ul>
+                    <div class="payment-field">
+                        <label asp-for="Customs_Certificate_Number" class="field-label">رقم الشهادة الجمركية / رقم الفحص</label>
+                        <input asp-for="Customs_Certificate_Number" class="form-control" placeholder="أدخل الرقم" />
+                    </div>
+
+                    <div class="payment-field">
+                        <label asp-for="National_ID" class="field-label">الرقم القومي <span class="text-danger">*</span></label>
+                        <input asp-for="National_ID" class="form-control" maxlength="14" inputmode="numeric" placeholder="14 رقمًا" />
+                        <span asp-validation-for="National_ID" id="nationalError" class="text-danger small"></span>
+                    </div>
+
+                    <div class="payment-field">
+                        <label asp-for="Tax_Registry" class="field-label">السجل الضريبي</label>
+                        <input asp-for="Tax_Registry" class="form-control" placeholder="رقم السجل الضريبي" />
+                    </div>
+
+                    <div class="payment-field">
+                        <label asp-for="Commercial_Register" class="field-label">السجل التجاري</label>
+                        <input asp-for="Commercial_Register" class="form-control" placeholder="رقم السجل التجاري" />
+                    </div>
+
+                    <div class="payment-field">
+                        <label asp-for="Name" class="field-label">اسم الشركة <span class="text-danger">*</span></label>
+                        <input asp-for="Name" id="CompanyName" class="form-control" placeholder="اسم الشركة" />
+                        <span asp-validation-for="Name" id="companyNameError" class="text-danger small"></span>
+                    </div>
+
+                    <div class="payment-field">
+                        <label asp-for="FarmName" class="field-label">اسم المحطة</label>
+                        <input asp-for="FarmName" class="form-control" placeholder="اسم المحطة" />
+                    </div>
+
+                    <div class="payment-field payment-type-field">
+                        <span class="payment-type-label">نوع الخدمة <span class="text-danger">*</span></span>
+                        <div class="payment-type-switcher" role="group" aria-label="اختيار نوع الخدمة">
+                            <a asp-action="GeneralPayment"
+                               class="payment-type-button @(isGeneralPayment ? "active" : "")"
+                               aria-current="@(isGeneralPayment ? "page" : null)">
+                                <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+                                <span>رسوم وخدمات وشهادات</span>
+                            </a>
+                            <a asp-action="InspectionPayment"
+                               class="payment-type-button @(!isGeneralPayment ? "active" : "")"
+                               aria-current="@(!isGeneralPayment ? "page" : null)">
+                                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                                <span>اعتمادات وعينات وبدلات</span>
+                            </a>
                         </div>
                     </div>
-
-                    <hr />
-
                 </div>
-                <div class="modal-footer">
-                    <center>
-                        <button type="button" class="btn btn-info btn-lg" data-dismiss="modal">إلغاء</button>
-                        <input type="submit" class="btn btn-info btn-lg" id="btnpay" value="موافق" />
-                        @*           <button type="submit"
-                                class="btn btn-primary">
-                            حفظ
-                        </button> *@
-                    </center>
+            </div>
+        </section>
+
+        <div class="payment-content-grid">
+            <div>
+                <section class="payment-card mb-0">
+                    <div class="payment-card-header">
+                        <span class="step-number">2</span>
+                        <h2>@feesSectionTitle</h2>
+                    </div>
+                    <div class="fees-grid">
+                        @for (int i = 0; i < Model.Fees.Count; i++)
+                        {
+                            <article class="fee-card">
+                                <div class="fee-card-title">@Model.Fees[i].FeesName</div>
+                                <input type="hidden" asp-for="Fees[i].FeesType_ID" />
+                                <input type="hidden" asp-for="Fees[i].FeesName" />
+
+                                <div class="fee-inputs">
+                                    <div class="fee-input-group">
+                                        <label asp-for="Fees[i].Quantity">العدد</label>
+                                        <input asp-for="Fees[i].Quantity"
+                                               type="number"
+                                               min="1"
+                                               step="1"
+                                               class="form-control quantity"
+                                               aria-label="عدد @Model.Fees[i].FeesName" />
+                                        <span asp-validation-for="Fees[i].Quantity" class="text-danger small"></span>
+                                    </div>
+                                    <div class="fee-input-group">
+                                        <label asp-for="Fees[i].Amount">قيمة الوحدة</label>
+                                        <input asp-for="Fees[i].Amount"
+                                               class="form-control amount"
+                                               inputmode="decimal"
+                                               placeholder="0.00"
+                                               aria-label="قيمة @Model.Fees[i].FeesName" />
+                                        <span asp-validation-for="Fees[i].Amount" class="text-danger fee-error small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="fee-card-total">
+                                    <span>إجمالي الخدمة</span>
+                                    <strong><span class="line-total">0.00</span> جنيه</strong>
+                                </div>
+                            </article>
+                        }
+                    </div>
+                </section>
+            </div>
+
+            <div>
+                <aside class="payment-card payment-summary mb-0">
+                    <div class="payment-card-header">
+                        <span class="step-number">3</span>
+                        <h2>ملخص الدفع</h2>
+                    </div>
+                    <div class="payment-card-body">
+                        <div id="summaryEmpty" class="summary-empty">
+                            أدخل عددًا وقيمة لإحدى الخدمات ليظهر ملخص العملية.
+                        </div>
+                        <div class="total-box">
+                            <div class="summary-line">
+                                <span>الخدمات المختارة</span>
+                                <strong id="selectedServicesCount">0</strong>
+                            </div>
+                            <div class="summary-line">
+                                <span>إجمالي العدد</span>
+                                <strong id="totalQuantity">0</strong>
+                            </div>
+                            <div class="summary-grand-total">
+                                <span>الإجمالي النهائي</span>
+                                <strong>
+                                    <input id="Amount_Total" asp-for="Amount_Total" type="hidden" />
+                                    <span id="AmountTotalDisplay">@Model.Amount_Total.ToString("N2")</span>
+                                    <small>جنيه</small>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <button type="button" id="btnmodel" class="pay-button">
+                            <span>الانتقال للدفع</span>
+                            <i class="fas fa-lock" aria-hidden="true"></i>
+                        </button>
+                        <p class="security-note">سيتم عرض الشروط قبل تحويلك إلى بوابة الدفع.</p>
+                        <div class="payment-methods">
+                            <span>دفع آمن بواسطة</span>
+                            <img src="~/img/visa.png" alt="Visa" />
+                            <img src="~/img/mastercard.png" alt="Mastercard" />
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <div class="modal fade" id="paymentTermsModal" tabindex="-1" aria-labelledby="paymentTermsTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content" dir="rtl">
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5 fw-bold" id="paymentTermsTitle">شروط تقديم خدمة الدفع الإلكتروني</h2>
+                        <button type="button" class="btn-close ms-0 me-auto" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="terms-list">
+                            <li>لا يجوز التنازل أو تقديم طلب أو دفع إلكتروني لصالح الغير من حساب الشركة.</li>
+                            <li>تسري الأحكام المقررة بقانون الزراعة والقرارات الوزارية المنظمة.</li>
+                            <li>المصاريف المسددة مقابل الخدمة غير قابلة للاسترداد بعد إتمام المعاملة بنجاح.</li>
+                            <li>يرجى التحقق من صحة جميع البيانات المطلوبة قبل إجراء عملية الدفع.</li>
+                            <li>تتحمل الشركة مسؤولية صحة البيانات والرسوم الواردة في الطلب.</li>
+                            <li>البيانات المسجلة مسؤولية صاحب الشركة ولا يجوز التنصل منها.</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">إلغاء</button>
+                        <button type="submit" class="btn btn-success px-4" id="btnpay">موافق والدفع</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
-@section Scripts
-{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-
     <script>
+        (() => {
+            const form = document.getElementById("paymentForm");
+            const nationalId = document.getElementById("National_ID");
+            const companyName = document.getElementById("CompanyName");
+            const office = document.getElementById("office");
+            const feesError = document.getElementById("feesError");
+            const totalInput = document.getElementById("Amount_Total");
+            const totalDisplay = document.getElementById("AmountTotalDisplay");
+            const modalElement = document.getElementById("paymentTermsModal");
+            const termsModal = bootstrap.Modal.getOrCreateInstance(modalElement);
 
-        $("#btnmodel").on("click", function () {
-            let validationEvent = $.Event("submit");
-            $("#paymentForm").triggerHandler(validationEvent);
-
-            if (!validationEvent.isDefaultPrevented()) {
-                $("#myModal").modal("show");
+            function setError(elementId, message) {
+                const element = document.getElementById(elementId);
+                if (element) element.textContent = message;
             }
-        });
 
-        $("#paymentForm")
-        .on(
-        "submit",
-        function(e){
+            function calculateTotal() {
+                let total = 0;
+                let totalQuantity = 0;
+                let selectedServices = 0;
+                document.querySelectorAll(".fee-card").forEach(card => {
+                    const quantity = Math.max(1, Number.parseInt(
+                        card.querySelector(".quantity").value,
+                        10) || 1);
+                    const amount = Number.parseFloat(
+                        card.querySelector(".amount").value) || 0;
+                    const lineTotal = quantity * amount;
+                    card.querySelector(".line-total").textContent =
+                        lineTotal.toFixed(2);
+                    if (amount > 0) {
+                        total += lineTotal;
+                        selectedServices++;
+                        totalQuantity += quantity;
+                    }
+                });
+                totalInput.value = total.toFixed(2);
+                totalDisplay.textContent = total.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                document.getElementById("selectedServicesCount").textContent =
+                    selectedServices.toString();
+                document.getElementById("totalQuantity").textContent =
+                    totalQuantity.toString();
+                document.getElementById("summaryEmpty").style.display =
+                    selectedServices > 0 ? "none" : "block";
+            }
 
-        let valid=true;
+            function validatePayment() {
+                let valid = true;
+                setError("nationalError", "");
+                setError("officeError", "");
+                setError("companyNameError", "");
+                feesError.textContent = "";
+                feesError.style.display = "none";
+                document.querySelectorAll(".fee-error").forEach(x => x.textContent = "");
 
-        // تنظيف الرسائل
-        $("#nationalError").text("");
-        $("#officeError").text("");
-        $("#companyNameError").text("");
-        $("#feesError").text("");
-        $(".fee-error").text("");
+                if (!companyName.value.trim()) {
+                    setError("companyNameError", "اسم الشركة مطلوب");
+                    valid = false;
+                }
 
-        // اسم الشركة
-        if (!$("#CompanyName").val().trim())
-        {
-        $("#companyNameError").text("اسم الشركة مطلوب");
-        valid=false;
-        }
+                if (!/^\d{14}$/.test(nationalId.value.trim())) {
+                    setError("nationalError", "الرقم القومي يجب أن يكون 14 رقمًا");
+                    valid = false;
+                }
 
-        // الرقم القومي
-        let national=
-        $("#National_ID")
-        .val()
-        .trim();
+                const validOffices = [...document.querySelectorAll("#officesList option")]
+                    .map(option => option.value);
+                if (!office.value.trim()) {
+                    setError("officeError", "المكتب مطلوب");
+                    valid = false;
+                } else if (!validOffices.includes(office.value.trim())) {
+                    setError("officeError", "اختر مكتبًا صحيحًا من القائمة");
+                    valid = false;
+                }
 
-        if(
-        national.length!==14
-        ||
-        !/^\d+$/.test(national)
-        )
-        {
-        $("#nationalError")
-        .text(
-        "الرقم القومي يجب أن يكون 14 رقم"
-        );
+                const selected = [...document.querySelectorAll(".fee-card")]
+                    .filter(card =>
+                        (Number.parseFloat(
+                            card.querySelector(".amount").value) || 0) > 0);
+                if (!selected.length) {
+                    feesError.textContent = "أدخل قيمة لخدمة واحدة على الأقل";
+                    feesError.style.display = "block";
+                    valid = false;
+                }
 
-        valid=false;
-        }
+                selected.forEach(card => {
+                    const amount = card.querySelector(".amount");
+                    if (!amount.value || Number.parseFloat(amount.value) <= 0) {
+                        card.querySelector(".fee-error").textContent =
+                            "أدخل قيمة صحيحة للوحدة";
+                        valid = false;
+                    }
+                });
 
-        // المكتب
-        if (!$("#office").val())
-        {
-        $("#officeError").text("المكتب مطلوب");
-        valid=false;
-        }
+                if (!valid) {
+                    form.querySelector(".text-danger:not(:empty), .validation-summary-errors:not(:empty)")
+                        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+                return valid;
+            }
 
-        // الرسوم
-        let selected=
-        $(".fee-check:checked");
+            nationalId.addEventListener("input", () => {
+                nationalId.value = nationalId.value.replace(/\D/g, "");
+            });
 
-        if(
-        selected.length===0
-        )
-        {
-        $("#feesError")
-        .text(
-        "اختر رسم واحد على الأقل"
-        );
+            document.querySelectorAll(".amount").forEach(amount => {
+                amount.addEventListener("input", () => {
+                    amount.value = amount.value
+                        .replace(/[^0-9.]/g, "")
+                        .replace(/(\..*)\./g, "$1");
+                    calculateTotal();
+                });
+            });
 
-        valid=false;
-        }
+            document.querySelectorAll(".quantity").forEach(quantity => {
+                quantity.addEventListener("input", () => {
+                    quantity.value = quantity.value.replace(/\D/g, "");
+                    calculateTotal();
+                });
+                quantity.addEventListener("blur", () => {
+                    if (!quantity.value || Number.parseInt(quantity.value, 10) < 1) {
+                        quantity.value = "1";
+                        calculateTotal();
+                    }
+                });
+            });
 
-        selected.each(function(){
+            document.getElementById("btnmodel").addEventListener("click", () => {
+                if (validatePayment()) termsModal.show();
+            });
 
-        let row=
-        $(this)
-        .closest("tr");
+            form.addEventListener("submit", event => {
+                if (!validatePayment()) event.preventDefault();
+            });
 
-        let amount=
-        row
-        .find(".amount")
-        .val();
-
-        if(
-        !amount
-        ||
-        parseFloat(amount)<=0
-        )
-        {
-        row
-        .find(".fee-error")
-        .text(
-        "ادخل قيمة الرسم"
-        );
-
-        valid=false;
-        }
-
-        });
-
-        // منع الحفظ
-        if(!valid)
-        {
-        e.preventDefault();
-        }
-
-        });
-
-
-        // أرقام فقط
-
-        $("#National_ID")
-        .on(
-        "input",
-        function(){
-
-        this.value=
-        this.value
-        .replace(/\D/g,'');
-
-        });
-
-        $(".amount")
-        .on(
-        "input",
-        function(){
-
-        this.value=
-        this.value
-        .replace(
-        /[^0-9.]/g,
-        ''
-        );
-
-        });
-
+            calculateTotal();
+        })();
     </script>
-
-    <script>
-
-        function calcTotal(){
-
-        let total=0;
-
-        $(".amount").each(function(){
-
-        let row=
-        $(this).closest("tr");
-
-        if(
-        row
-        .find(
-        "input[type='checkbox']"
-        )
-        .prop("checked")
-        )
-        {
-        total+=
-        parseFloat(
-        $(this).val()
-        )||0;
-        }
-
-        });
-
-        $("#Amount_Total")
-        .val(total);
-
-        }
-
-        $(document)
-        .on(
-        "keyup change",
-        ".amount,input[type='checkbox']",
-        calcTotal
-        );
-
-    </script>
-
 }
-

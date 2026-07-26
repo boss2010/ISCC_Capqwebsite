@@ -1,49 +1,253 @@
-﻿@if (TempData.Peek("Error") != null)
-{
-    <div class="alert alert-danger">
-        @TempData.Peek("Error")
-    </div>
+@{
+    ViewData["Title"] = "خدمات الدفع";
 }
-<br />
 
-<div class="container text-center">
+<style>
+    .fees-home {
+        direction: rtl;
+        width: min(1050px, calc(100% - 30px));
+        margin: 0 auto;
+        padding: 38px 0 55px;
+        color: #17352d;
+    }
 
-    <h3>اختر نوع الدفع</h3>
+    .fees-home-header {
+        margin-bottom: 25px;
+        text-align: center;
+    }
 
-    <br />
+    .fees-home-header h1 {
+        margin: 0 0 10px;
+        color: #07563d;
+        font-size: clamp(25px, 4vw, 34px);
+        font-weight: 800;
+    }
 
-    <button class="btn btn-primary btn-lg"
-            onclick="location.href='@Url.Action("GeneralPayment", "Fees")'">
-        رسوم / خدمات / شهادات
-    </button>
+    .fees-home-header p {
+        margin: 0;
+        color: #687e76;
+        font-size: 16px;
+    }
 
-    <button class="btn btn-success btn-lg"
-            onclick="location.href='@Url.Action("InspectionPayment", "Fees")'">
-        اعتمادات / عينات / بدلات
-    </button>
+    .fees-options {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .fees-option {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        min-height: 145px;
+        padding: 24px;
+        border: 1px solid #d8e6e0;
+        border-radius: 18px;
+        background: #fff;
+        color: #17352d !important;
+        text-align: right;
+        text-decoration: none !important;
+        box-shadow: 0 8px 26px rgba(18, 75, 56, .08);
+        transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .fees-option:hover {
+        border-color: #13835c;
+        color: #17352d !important;
+        transform: translateY(-3px);
+        box-shadow: 0 14px 34px rgba(18, 75, 56, .14);
+    }
+
+    .fees-option-icon {
+        display: grid;
+        place-items: center;
+        width: 68px;
+        height: 68px;
+        flex: 0 0 68px;
+        border-radius: 18px;
+        color: #fff;
+        background: linear-gradient(145deg, #087f5b, #07563d);
+        font-size: 27px;
+        box-shadow: 0 8px 18px rgba(7, 86, 61, .2);
+    }
+
+    .fees-option-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .fees-option-content strong {
+        display: block;
+        margin-bottom: 7px;
+        color: #07563d;
+        font-size: 19px;
+        font-weight: 800;
+    }
+
+    .fees-option-content span {
+        display: block;
+        color: #6b8078;
+        line-height: 1.7;
+    }
+
+    .fees-option-arrow {
+        color: #17835e;
+        font-size: 18px;
+        transition: transform .2s ease;
+    }
+
+    .fees-option:hover .fees-option-arrow {
+        transform: translateX(-4px);
+    }
+
+    .fees-error {
+        padding: 13px 16px;
+        margin-bottom: 20px;
+        border: 1px solid #efb7b7;
+        border-radius: 11px;
+        background: #fff3f3;
+        color: #a32121;
+        text-align: right;
+    }
+
+    .payments-followup {
+        padding-top: 30px;
+        margin-top: 34px;
+        border-top: 1px solid #dce7e2;
+    }
+
+    .payments-followup h2 {
+        margin: 0 0 16px;
+        color: #315e4e;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    .followup-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .followup-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        min-width: 220px;
+        min-height: 48px;
+        padding: 10px 18px;
+        border: 1px solid #17835e;
+        border-radius: 11px;
+        background: #fff;
+        color: #126244 !important;
+        font-weight: 700;
+        text-decoration: none !important;
+        transition: background .2s ease, color .2s ease;
+    }
+
+    .followup-button:hover {
+        background: #087f5b;
+        color: #fff !important;
+    }
+
+    @@media (max-width: 720px) {
+        .fees-home {
+            width: min(100% - 20px, 1050px);
+            padding-top: 24px;
+        }
+
+        .fees-options {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        .fees-option {
+            min-height: 125px;
+            padding: 18px;
+            border-radius: 15px;
+        }
+
+        .fees-option-icon {
+            width: 58px;
+            height: 58px;
+            flex-basis: 58px;
+            border-radius: 15px;
+            font-size: 23px;
+        }
+
+        .fees-option-content strong {
+            font-size: 17px;
+        }
+
+        .followup-button {
+            width: 100%;
+        }
+    }
+</style>
+
+<main class="fees-home">
+    @if (TempData.Peek("Error") != null)
+    {
+        <div class="fees-error" role="alert">
+            <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+            @TempData.Peek("Error")
+        </div>
+    }
+
+    <header class="fees-home-header">
+        <h1>اختر نوع الدفع</h1>
+        <p>اختر الخدمة المطلوبة للانتقال إلى شاشة تسجيل البيانات والدفع.</p>
+    </header>
+
+    <section class="fees-options" aria-label="أنواع الدفع">
+        <a asp-action="GeneralPayment" class="fees-option">
+            <span class="fees-option-icon" aria-hidden="true">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </span>
+            <span class="fees-option-content">
+                <strong>رسوم وخدمات وشهادات</strong>
+                <span>سداد الرسوم الحكومية ورسوم الخدمات والشهادات.</span>
+            </span>
+            <i class="fas fa-chevron-left fees-option-arrow" aria-hidden="true"></i>
+        </a>
+
+        <a asp-action="InspectionPayment" class="fees-option">
+            <span class="fees-option-icon" aria-hidden="true">
+                <i class="fas fa-clipboard-check"></i>
+            </span>
+            <span class="fees-option-content">
+                <strong>اعتمادات وعينات وبدلات</strong>
+                <span>سداد رسوم الفحص والاعتمادات والعينات والبدلات.</span>
+            </span>
+            <i class="fas fa-chevron-left fees-option-arrow" aria-hidden="true"></i>
+        </a>
+    </section>
 
     @if (Context.Session.GetString("UserSession") != null)
     {
-        <hr />
-        <h4>متابعة عمليات الدفع الناجحة</h4>
-        <br />
-
-        <a asp-action="GovernmentPayments" class="btn btn-outline-primary btn-lg">
-            عمليات الدفع الحكومي
-        </a>
-
-        <a asp-action="PrivatePayments" class="btn btn-outline-success btn-lg">
-            عمليات الدفع الخاص
-        </a>
+        <section class="payments-followup">
+            <h2>متابعة عمليات الدفع الناجحة</h2>
+            <div class="followup-actions">
+                <a asp-action="GovernmentPayments" class="followup-button">
+                    <i class="fas fa-landmark" aria-hidden="true"></i>
+                    <span>عمليات الدفع الحكومي</span>
+                </a>
+                <a asp-action="PrivatePayments" class="followup-button">
+                    <i class="fas fa-building" aria-hidden="true"></i>
+                    <span>عمليات الدفع الخاص</span>
+                </a>
+            </div>
+        </section>
     }
+</main>
 
-</div>
-
-@section Scripts
-{
-<script>
-    setTimeout(function () {
-        $('.alert').fadeOut();
-    }, 10000);
-</script>
+@section Scripts {
+    <script>
+        window.setTimeout(() => {
+            $(".fees-error").fadeOut();
+        }, 10000);
+    </script>
 }

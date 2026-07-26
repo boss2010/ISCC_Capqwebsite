@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ViewModels;
+using Capqwebsite.Services;
 
 namespace Capqwebsite.Controllers.Fees
 {
     public class FeesController : Controller
     {
-		private const byte MartyrFeeTypeId = 34;
-		private const decimal MartyrFeeAmount = 5m;
 		private readonly ILogger<FeesController> _logger;
 
 		public FeesController(ILogger<FeesController> logger)
@@ -18,7 +17,7 @@ namespace Capqwebsite.Controllers.Fees
 		}
 		public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(GeneralPayment));
         }
 
         [HttpGet]
@@ -53,6 +52,99 @@ namespace Capqwebsite.Controllers.Fees
                 fromDate,
                 toDate,
                 page);
+        }
+
+        [HttpGet]
+        public IActionResult ExportGovernmentPayments(
+            string? search,
+            DateTime? fromDate,
+            DateTime? toDate)
+        {
+            if (HttpContext.Session.GetString("UserSession") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            search = search?.Trim();
+            using var context = new AgricultureDBContext();
+
+            var query = context.Fees_Altahsils
+                .AsNoTracking()
+                .Where(x =>
+                    x.Account_Type == 138 &&
+                    x.IsSuccess_Bank == true &&
+                    x.Code_Bank == "00");
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var hasNumericSearch = long.TryParse(
+                    search,
+                    out var numericSearch);
+
+                query = query.Where(x =>
+                    (hasNumericSearch && x.ID == numericSearch) ||
+                    (x.OrderNumber != null && x.OrderNumber.Contains(search)) ||
+                    x.National_ID.Contains(search) ||
+                    (x.Name != null && x.Name.Contains(search)) ||
+                    (x.office != null && x.office.Contains(search)) ||
+                    (x.Customs_Certificate_Number != null &&
+                     x.Customs_Certificate_Number.Contains(search)));
+            }
+
+            if (fromDate.HasValue)
+            {
+                query = query.Where(x =>
+                    x.User_Creation_Date >= fromDate.Value.Date);
+            }
+
+            if (toDate.HasValue)
+            {
+                var endDate = toDate.Value.Date.AddDays(1);
+                query = query.Where(x =>
+                    x.User_Creation_Date < endDate);
+            }
+
+            var payments = query
+                .OrderByDescending(x => x.User_Creation_Date)
+                .ThenByDescending(x => x.ID)
+                .Select(x => new SuccessfulPaymentVM
+                {
+                    ID = x.ID,
+                    OrderNumber = x.OrderNumber,
+                    CreationDate = x.User_Creation_Date,
+                    PaymentDate = x.date,
+                    TotalAmount = x.Amount_Total,
+                    Office = x.office,
+                    CustomsCertificateNumber = x.Customs_Certificate_Number,
+                    NationalID = x.National_ID,
+                    TaxRegistry = x.Tax_Registry,
+                    CommercialRegister = x.Commercial_Register,
+                    Name = x.Name,
+                    FarmName = x.FarmName,
+                    BankCode = x.Code_Bank,
+                    Details = x.Fees_Altahsil_Detiles
+                        .OrderBy(d => d.ID)
+                        .Select(d => new FeesAltahsilDetileDTO
+                        {
+                            Amount = d.Amount,
+                            FeesTypeName = d.FeesType != null
+                                ? d.FeesType.Name_Ar
+                                : null
+                        })
+                        .ToList()
+                })
+                .ToList();
+
+            var workbook = PaymentsExcelExporter.Create(
+                payments,
+                "عمليات الدفع الحكومي الناجحة");
+            var fileName =
+                $"GovernmentPayments_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+
+            return File(
+                workbook,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
         }
 
         [HttpGet]
@@ -243,16 +335,15 @@ namespace Capqwebsite.Controllers.Fees
                 {
                     FeesType_ID = x.ID,
                     FeesName = x.Name_Ar,
-                    Selected = x.ID == MartyrFeeTypeId,
-                    Amount = x.ID == MartyrFeeTypeId
-                        ? MartyrFeeAmount
-                        : null
+                    Quantity = 1,
+                    Amount = null
                 })
                 .ToList();
 
-            model.Amount_Total = MartyrFeeAmount;
+            model.Amount_Total = 0;
 
-            return View(model);
+            ConfigurePaymentView(isGeneralPayment: true);
+            return View("InspectionPayment", model);
         }
 
         public IActionResult InspectionPayment()
@@ -260,7 +351,7 @@ namespace Capqwebsite.Controllers.Fees
             AgricultureDBContext _context = new AgricultureDBContext();
 
             var model = new FeesAltahsilVM();
-            model.Offices = GetOfficeNames(_context);
+            model.Offices = GetOfficeNames(_context, canAcceptPaymentOnly: true);
             var ids = new byte[] { 26, 27, 35,36,37,38,39,40,41,42,43,44,34,46,47,48,49,50 };
 
             model.Fees = _context.FeesTypes
@@ -268,9 +359,11 @@ namespace Capqwebsite.Controllers.Fees
                 .Select(x => new FeeVM
                 {
                     FeesType_ID = x.ID,
-                    FeesName = x.Name_Ar
+                    FeesName = x.Name_Ar,
+                    Quantity = 1
                 })
                 .ToList();
+            ConfigurePaymentView(isGeneralPayment: false);
             return View(model);
         }
 
@@ -279,22 +372,9 @@ namespace Capqwebsite.Controllers.Fees
         {
             AgricultureDBContext _context = new AgricultureDBContext();
 
-            var martyrFeeIndex = model.Fees?.FindIndex(x =>
-                x.FeesType_ID == MartyrFeeTypeId) ?? -1;
-
-            if (martyrFeeIndex < 0)
+            foreach (var fee in model.Fees ?? new List<FeeVM>())
             {
-                ModelState.AddModelError(
-                    "",
-                    "رسوم الشهيد مطلوبة");
-            }
-            else
-            {
-                model.Fees[martyrFeeIndex].Selected = true;
-                model.Fees[martyrFeeIndex].Amount = MartyrFeeAmount;
-
-                ModelState.Remove($"Fees[{martyrFeeIndex}].Selected");
-                ModelState.Remove($"Fees[{martyrFeeIndex}].Amount");
+                fee.Selected = fee.Quantity > 0 && fee.Amount > 0;
             }
 
             // الرقم القومي
@@ -343,12 +423,13 @@ namespace Capqwebsite.Controllers.Fees
             if (!ModelState.IsValid)
             {
                 model.Offices = GetOfficeNames(_context);
-                return View("GeneralPayment", model);
+                ConfigurePaymentView(isGeneralPayment: true);
+                return View("InspectionPayment", model);
             }
 
             model.Amount_Total = model.Fees
                 .Where(x => x.Selected && x.Amount.HasValue)
-                .Sum(x => x.Amount!.Value);
+                .Sum(x => x.Amount!.Value * x.Quantity);
 
             //save in database
 
@@ -380,7 +461,7 @@ namespace Capqwebsite.Controllers.Fees
                 Fees_Altahsil_Detile det = new Fees_Altahsil_Detile
                 {
                     FeesType_ID = item.FeesType_ID,
-                    Amount = item.Amount,
+                    Amount = item.Amount * item.Quantity,
                     Fees_Altahsil_ID = fe.ID,
                     User_Creation_Date = DateTime.Now,
                 };
@@ -446,14 +527,44 @@ namespace Capqwebsite.Controllers.Fees
          
         }
 
-        private static List<string> GetOfficeNames(AgricultureDBContext context)
+        private static List<string> GetOfficeNames(
+            AgricultureDBContext context,
+            bool canAcceptPaymentOnly = false)
         {
-            return context.Outlets
-                .Where(x => x.IsActive && x.Ar_Name != null && x.Ar_Name != "" && x.User_Deletion_Id == null)
+            var query = context.Outlets
+                .Where(x =>
+                    x.IsActive &&
+                    x.Ar_Name != null &&
+                    x.Ar_Name != "" &&
+                    x.User_Deletion_Id == null);
+
+            if (canAcceptPaymentOnly)
+            {
+                query = query.Where(x => x.CanAcceptPayment == true);
+            }
+
+            return query
                 .Select(x => x.Ar_Name!)
                 .Distinct()
                 .OrderBy(x => x)
                 .ToList();
+        }
+
+        private void ConfigurePaymentView(bool isGeneralPayment)
+        {
+            ViewData["IsGeneralPayment"] = isGeneralPayment;
+            ViewData["PaymentAction"] = isGeneralPayment
+                ? nameof(SaveGeneralPayment)
+                : nameof(SaveInspectionPayment);
+            ViewData["PaymentTitle"] = isGeneralPayment
+                ? "دفع رسوم الخدمات والشهادات"
+                : "دفع رسوم الاعتمادات والعينات والبدلات";
+            ViewData["PaymentDescription"] = isGeneralPayment
+                ? "أدخل بيانات الطلب، ثم اختر الخدمات أو الشهادات المطلوبة وراجع الإجمالي قبل الدفع."
+                : "أدخل بيانات الطلب، ثم اختر رسوم الاعتمادات أو العينات أو البدلات المطلوبة وراجع الإجمالي قبل الدفع.";
+            ViewData["FeesSectionTitle"] = isGeneralPayment
+                ? "الخدمات والشهادات"
+                : "الاعتمادات والعينات والبدلات";
         }
 
         [HttpPost]
@@ -462,6 +573,26 @@ namespace Capqwebsite.Controllers.Fees
             try
             {
 				AgricultureDBContext _context = new AgricultureDBContext();
+
+                foreach (var fee in model.Fees ?? new List<FeeVM>())
+                {
+                    fee.Selected = fee.Quantity > 0 && fee.Amount > 0;
+                }
+
+                var officeCanAcceptPayment =
+                    !string.IsNullOrWhiteSpace(model.office) &&
+                    _context.Outlets.Any(x =>
+                        x.Ar_Name == model.office &&
+                        x.IsActive &&
+                        x.User_Deletion_Id == null &&
+                        x.CanAcceptPayment == true);
+
+                if (!officeCanAcceptPayment)
+                {
+                    ModelState.AddModelError(
+                        nameof(model.office),
+                        "المكتب المحدد غير متاح لاستقبال مدفوعات الفحص");
+                }
 
 				// الرقم القومي
 				if (string.IsNullOrWhiteSpace(model.National_ID))
@@ -508,9 +639,16 @@ namespace Capqwebsite.Controllers.Fees
 
 				if (!ModelState.IsValid)
 				{
-					model.Offices = GetOfficeNames(_context);
+					model.Offices = GetOfficeNames(
+                        _context,
+                        canAcceptPaymentOnly: true);
+                    ConfigurePaymentView(isGeneralPayment: false);
 					return View("InspectionPayment", model);
 				}
+
+                model.Amount_Total = model.Fees
+                    .Where(x => x.Selected && x.Amount.HasValue)
+                    .Sum(x => x.Amount!.Value * x.Quantity);
 				//save in database
 
 				String Order_No = "8" + Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 9) + Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 3);
@@ -535,12 +673,13 @@ namespace Capqwebsite.Controllers.Fees
 				_context.Fees_Altahsils.Add(fe);
 				_context.SaveChanges();
 
-				foreach (var item in model.Fees.Where(x => x.Amount != null))
+				foreach (var item in model.Fees.Where(x =>
+                    x.Selected && x.Amount != null))
 				{
 					Fees_Altahsil_Detile det = new Fees_Altahsil_Detile
 					{
 						FeesType_ID = item.FeesType_ID,
-						Amount = item.Amount,
+						Amount = item.Amount * item.Quantity,
 						Fees_Altahsil_ID = fe.ID,
 						User_Creation_Date = DateTime.Now,
 					};

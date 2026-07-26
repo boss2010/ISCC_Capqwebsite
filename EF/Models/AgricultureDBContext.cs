@@ -5867,6 +5867,8 @@ public partial class AgricultureDBContext : DbContext
                 .HasComment("الاسم بالانجليزية");
             entity.Property(e => e.GrAdmin_ID).HasComment("الادارة العامة");
             entity.Property(e => e.ID_HR).HasComment("رقم المنفذ بالنسبة لل HR");
+            entity.Property(e => e.CanAcceptPayment)
+                .HasColumnName("CanAcceptPayment");
             entity.Property(e => e.IsDisplay)
                 .HasDefaultValue((byte)1)
                 .HasComment("from system code 21\r\nصادر	/وارد	/صادر+ وارد");

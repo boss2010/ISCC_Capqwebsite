@@ -83,6 +83,17 @@
         color: #fff;
     }
 
+    .payments-nav-btn.export {
+        border-color: #18794e;
+        background: #e9f7ef;
+        color: #12633f;
+    }
+
+    .payments-nav-btn.export:hover {
+        background: #18794e;
+        color: #fff;
+    }
+
     .payments-filter {
         display: grid;
         grid-template-columns: minmax(300px, 2fr) minmax(155px, .7fr) minmax(155px, .7fr) auto;
@@ -445,6 +456,14 @@
         </div>
 
         <div class="payments-switcher">
+            @if (Model.AccountType == 138)
+            {
+                <a asp-action="ExportGovernmentPayments"
+                   asp-route-search="@Model.Search"
+                   asp-route-fromDate="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
+                   asp-route-toDate="@(Model.ToDate?.ToString("yyyy-MM-dd"))"
+                   class="payments-nav-btn export">تصدير Excel</a>
+            }
             <a asp-action="GovernmentPayments"
                class="payments-nav-btn @(Model.AccountType == 138 ? "active" : "")">الدفع الحكومي</a>
             <a asp-action="PrivatePayments"
