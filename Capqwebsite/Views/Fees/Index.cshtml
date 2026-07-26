@@ -14,12 +14,12 @@
 
     <button class="btn btn-primary btn-lg"
             onclick="location.href='@Url.Action("GeneralPayment", "Fees")'">
-        رسوم / خدمات
+        رسوم / خدمات / شهادات
     </button>
 
     <button class="btn btn-success btn-lg"
             onclick="location.href='@Url.Action("InspectionPayment", "Fees")'">
-        معاينة وعينات
+        اعتمادات / عينات / بدلات
     </button>
 
     @if (Context.Session.GetString("UserSession") != null)

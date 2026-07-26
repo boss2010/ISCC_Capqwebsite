@@ -235,7 +235,7 @@ namespace Capqwebsite.Controllers.Fees
 
             model.Offices = GetOfficeNames(_context);
 
-            var ids = new byte[] {20,21,22,23,24,25,28,29,30,31,32,33,34, 35 };
+            var ids = new byte[] {20,21,22,23,24,25,28,29,30,31,32,33,34 };
 
             model.Fees = _context.FeesTypes
                 .Where(x => ids.Contains(x.ID))
@@ -261,7 +261,7 @@ namespace Capqwebsite.Controllers.Fees
 
             var model = new FeesAltahsilVM();
             model.Offices = GetOfficeNames(_context);
-            var ids = new byte[] { 26, 27, 35,36,37,38,39,40,41,42,43,44,45,46,47,48,49 };
+            var ids = new byte[] { 26, 27, 35,36,37,38,39,40,41,42,43,44,34,46,47,48,49,50 };
 
             model.Fees = _context.FeesTypes
                 .Where(x => ids.Contains(x.ID))
