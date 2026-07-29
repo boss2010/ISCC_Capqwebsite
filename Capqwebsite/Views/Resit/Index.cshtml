@@ -283,13 +283,8 @@
                     </div>
 
                     <div class="info-row">
-                        <div class="label">السجل التجاري :</div>
-                        <div class="value">@Model.Commercial_Register</div>
-                    </div>
-
-                    <div class="info-row">
-                        <div class="label">الرقم الضريبي :</div>
-                        <div class="value">@Model.Tax_Registry</div>
+                        <div class="label">رقم السجل (الدفتر) :</div>
+                        <div class="value">@(Model.Ledger_Number ?? "-")</div>
                     </div>
 
                     <div class="info-row">

@@ -9,6 +9,8 @@ namespace Capqwebsite.Controllers.Fees
 {
     public class FeesController : Controller
     {
+        private const byte MartyrFeeTypeId = 34;
+        private const decimal MartyrFeeMinimumAmount = 5m;
 		private readonly ILogger<FeesController> _logger;
 
 		public FeesController(ILogger<FeesController> logger)
@@ -60,6 +62,38 @@ namespace Capqwebsite.Controllers.Fees
             DateTime? fromDate,
             DateTime? toDate)
         {
+            return ExportPayments(
+                138,
+                "عمليات الدفع الحكومي الناجحة",
+                "GovernmentPayments",
+                search,
+                fromDate,
+                toDate);
+        }
+
+        [HttpGet]
+        public IActionResult ExportPrivatePayments(
+            string? search,
+            DateTime? fromDate,
+            DateTime? toDate)
+        {
+            return ExportPayments(
+                139,
+                "عمليات الدفع الخاص الناجحة",
+                "PrivatePayments",
+                search,
+                fromDate,
+                toDate);
+        }
+
+        private IActionResult ExportPayments(
+            int accountType,
+            string reportTitle,
+            string filePrefix,
+            string? search,
+            DateTime? fromDate,
+            DateTime? toDate)
+        {
             if (HttpContext.Session.GetString("UserSession") == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -71,7 +105,7 @@ namespace Capqwebsite.Controllers.Fees
             var query = context.Fees_Altahsils
                 .AsNoTracking()
                 .Where(x =>
-                    x.Account_Type == 138 &&
+                    x.Account_Type == accountType &&
                     x.IsSuccess_Bank == true &&
                     x.Code_Bank == "00");
 
@@ -87,6 +121,8 @@ namespace Capqwebsite.Controllers.Fees
                     x.National_ID.Contains(search) ||
                     (x.Name != null && x.Name.Contains(search)) ||
                     (x.office != null && x.office.Contains(search)) ||
+                    (x.Ledger_Number != null &&
+                     x.Ledger_Number.Contains(search)) ||
                     (x.Customs_Certificate_Number != null &&
                      x.Customs_Certificate_Number.Contains(search)));
             }
@@ -119,6 +155,7 @@ namespace Capqwebsite.Controllers.Fees
                     NationalID = x.National_ID,
                     TaxRegistry = x.Tax_Registry,
                     CommercialRegister = x.Commercial_Register,
+                    LedgerNumber = x.Ledger_Number,
                     Name = x.Name,
                     FarmName = x.FarmName,
                     BankCode = x.Code_Bank,
@@ -137,9 +174,9 @@ namespace Capqwebsite.Controllers.Fees
 
             var workbook = PaymentsExcelExporter.Create(
                 payments,
-                "عمليات الدفع الحكومي الناجحة");
+                reportTitle);
             var fileName =
-                $"GovernmentPayments_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+                $"{filePrefix}_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
 
             return File(
                 workbook,
@@ -181,6 +218,7 @@ namespace Capqwebsite.Controllers.Fees
                     National_ID = x.National_ID,
                     Tax_Registry = x.Tax_Registry,
                     Commercial_Register = x.Commercial_Register,
+                    Ledger_Number = x.Ledger_Number,
                     Name = x.Name,
                     FarmName = x.FarmName,
                     Details = x.Fees_Altahsil_Detiles
@@ -243,6 +281,8 @@ namespace Capqwebsite.Controllers.Fees
                     x.National_ID.Contains(search) ||
                     (x.Name != null && x.Name.Contains(search)) ||
                     (x.office != null && x.office.Contains(search)) ||
+                    (x.Ledger_Number != null &&
+                     x.Ledger_Number.Contains(search)) ||
                     (x.Customs_Certificate_Number != null &&
                      x.Customs_Certificate_Number.Contains(search)));
             }
@@ -285,6 +325,7 @@ namespace Capqwebsite.Controllers.Fees
                     NationalID = x.National_ID,
                     TaxRegistry = x.Tax_Registry,
                     CommercialRegister = x.Commercial_Register,
+                    LedgerNumber = x.Ledger_Number,
                     Name = x.Name,
                     FarmName = x.FarmName,
                     BankCode = x.Code_Bank,
@@ -325,22 +366,30 @@ namespace Capqwebsite.Controllers.Fees
 
             var model = new FeesAltahsilVM();
 
-            model.Offices = GetOfficeNames(_context);
-
-            var ids = new byte[] {20,21,22,23,24,25,28,29,30,31,32,33,34 };
+            model.Offices = GetOfficeNames(
+                _context,
+                canAcceptPaymentOnly: true);
 
             model.Fees = _context.FeesTypes
-                .Where(x => ids.Contains(x.ID))
+                .Where(x =>
+                    x.IsActive &&
+                    x.User_Deletion_Id == null &&
+                    (x.Account_Type == 138 || x.Account_Type == 0))
+                .OrderBy(x => x.ID)
                 .Select(x => new FeeVM
                 {
                     FeesType_ID = x.ID,
-                    FeesName = x.Name_Ar,
+                    FeesName = !string.IsNullOrWhiteSpace(x.Full_Name)
+                        ? x.Full_Name
+                        : x.Name_Ar,
                     Quantity = 1,
-                    Amount = null
+                    Amount = x.ID == MartyrFeeTypeId
+                        ? MartyrFeeMinimumAmount
+                        : null
                 })
                 .ToList();
 
-            model.Amount_Total = 0;
+            model.Amount_Total = MartyrFeeMinimumAmount;
 
             ConfigurePaymentView(isGeneralPayment: true);
             return View("InspectionPayment", model);
@@ -352,17 +401,25 @@ namespace Capqwebsite.Controllers.Fees
 
             var model = new FeesAltahsilVM();
             model.Offices = GetOfficeNames(_context, canAcceptPaymentOnly: true);
-            var ids = new byte[] { 26, 27, 35,36,37,38,39,40,41,42,43,44,34,46,47,48,49,50 };
-
             model.Fees = _context.FeesTypes
-                .Where(x => ids.Contains(x.ID))
+                .Where(x =>
+                    x.IsActive &&
+                    x.User_Deletion_Id == null &&
+                    (x.Account_Type == 139 || x.Account_Type == 0))
+                .OrderBy(x => x.ID)
                 .Select(x => new FeeVM
                 {
                     FeesType_ID = x.ID,
-                    FeesName = x.Name_Ar,
-                    Quantity = 1
+                    FeesName = !string.IsNullOrWhiteSpace(x.Full_Name)
+                        ? x.Full_Name
+                        : x.Name_Ar,
+                    Quantity = 1,
+                    Amount = x.ID == MartyrFeeTypeId
+                        ? MartyrFeeMinimumAmount
+                        : null
                 })
                 .ToList();
+            model.Amount_Total = MartyrFeeMinimumAmount;
             ConfigurePaymentView(isGeneralPayment: false);
             return View(model);
         }
@@ -375,6 +432,37 @@ namespace Capqwebsite.Controllers.Fees
             foreach (var fee in model.Fees ?? new List<FeeVM>())
             {
                 fee.Selected = fee.Quantity > 0 && fee.Amount > 0;
+            }
+
+            ValidateRequiredMartyrFee(model);
+
+            var allowedGovernmentFeeIds = _context.FeesTypes
+                .Where(x =>
+                    x.IsActive &&
+                    x.User_Deletion_Id == null &&
+                    (x.Account_Type == 138 || x.Account_Type == 0))
+                .Select(x => x.ID)
+                .ToHashSet();
+
+            if ((model.Fees ?? new List<FeeVM>())
+                .Any(x => x.Selected && !allowedGovernmentFeeIds.Contains(x.FeesType_ID)))
+            {
+                ModelState.AddModelError("", "يوجد رسم غير تابع للحساب الحكومي");
+            }
+
+            var officeCanAcceptPayment =
+                !string.IsNullOrWhiteSpace(model.office) &&
+                _context.Outlets.Any(x =>
+                    x.Ar_Name == model.office &&
+                    x.IsActive &&
+                    x.User_Deletion_Id == null &&
+                    x.CanAcceptPayment == true);
+
+            if (!officeCanAcceptPayment)
+            {
+                ModelState.AddModelError(
+                    nameof(model.office),
+                    "المكتب المحدد غير متاح لاستقبال الدفع");
             }
 
             // الرقم القومي
@@ -422,7 +510,9 @@ namespace Capqwebsite.Controllers.Fees
 
             if (!ModelState.IsValid)
             {
-                model.Offices = GetOfficeNames(_context);
+                model.Offices = GetOfficeNames(
+                    _context,
+                    canAcceptPaymentOnly: true);
                 ConfigurePaymentView(isGeneralPayment: true);
                 return View("InspectionPayment", model);
             }
@@ -445,8 +535,7 @@ namespace Capqwebsite.Controllers.Fees
                 OrderNumber = Order_No,
                 Account_Type = 138,
                 Payment_Type_ID = 125,
-                Commercial_Register = model.Commercial_Register,
-                Tax_Registry = model.Tax_Registry,
+                Ledger_Number = model.Ledger_Number,
                 User_Creation_Date = DateTime.Now,
                 FarmName=model.FarmName,
                 date = DateOnly.FromDateTime(DateTime.Now)
@@ -567,6 +656,37 @@ namespace Capqwebsite.Controllers.Fees
                 : "الاعتمادات والعينات والبدلات";
         }
 
+        private void ValidateRequiredMartyrFee(FeesAltahsilVM model)
+        {
+            var martyrFeeIndex = model.Fees?.FindIndex(x =>
+                x.FeesType_ID == MartyrFeeTypeId) ?? -1;
+
+            if (martyrFeeIndex < 0)
+            {
+                ModelState.AddModelError(
+                    "",
+                    "رسوم صندوق الشهداء إلزامية");
+                return;
+            }
+
+            var martyrFee = model.Fees![martyrFeeIndex];
+
+            if (martyrFee.Quantity < 1)
+            {
+                ModelState.AddModelError(
+                    $"Fees[{martyrFeeIndex}].Quantity",
+                    "عدد رسوم صندوق الشهداء يجب ألا يقل عن 1");
+            }
+
+            if (!martyrFee.Amount.HasValue ||
+                martyrFee.Amount.Value < MartyrFeeMinimumAmount)
+            {
+                ModelState.AddModelError(
+                    $"Fees[{martyrFeeIndex}].Amount",
+                    "رسوم صندوق الشهداء إلزامية والحد الأدنى 5 جنيه");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> SaveInspectionPayment(FeesAltahsilVM model)
         {
@@ -577,6 +697,22 @@ namespace Capqwebsite.Controllers.Fees
                 foreach (var fee in model.Fees ?? new List<FeeVM>())
                 {
                     fee.Selected = fee.Quantity > 0 && fee.Amount > 0;
+                }
+
+                ValidateRequiredMartyrFee(model);
+
+                var allowedPrivateFeeIds = _context.FeesTypes
+                    .Where(x =>
+                        x.IsActive &&
+                        x.User_Deletion_Id == null &&
+                        (x.Account_Type == 139 || x.Account_Type == 0))
+                    .Select(x => x.ID)
+                    .ToHashSet();
+
+                if ((model.Fees ?? new List<FeeVM>())
+                    .Any(x => x.Selected && !allowedPrivateFeeIds.Contains(x.FeesType_ID)))
+                {
+                    ModelState.AddModelError("", "يوجد رسم غير تابع للحساب الخاص");
                 }
 
                 var officeCanAcceptPayment =
@@ -663,8 +799,7 @@ namespace Capqwebsite.Controllers.Fees
 					OrderNumber = Order_No,
 					Account_Type = 139,
 					Payment_Type_ID = 125,
-					Commercial_Register = model.Commercial_Register,
-					Tax_Registry = model.Tax_Registry,
+					Ledger_Number = model.Ledger_Number,
 					User_Creation_Date = DateTime.Now,
 					FarmName = model.FarmName,
 					date = DateOnly.FromDateTime(DateTime.Now)

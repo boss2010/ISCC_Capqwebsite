@@ -26,6 +26,8 @@ namespace ViewModels
 
         public string? Commercial_Register { get; set; }
 
+        public string? Ledger_Number { get; set; }
+
         public string? Name { get; set; }
         public string? FarmName { get; set; }
 

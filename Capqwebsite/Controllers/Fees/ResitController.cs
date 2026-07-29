@@ -44,6 +44,7 @@ namespace Capqwebsite.Controllers.Fees
                                 National_ID = x.National_ID,
                                 Tax_Registry = x.Tax_Registry,
                                 Commercial_Register = x.Commercial_Register,
+                                Ledger_Number = x.Ledger_Number,
                                 Name = x.Name,
                                 FarmName=x.FarmName,
 

@@ -27,6 +27,7 @@ namespace ViewModels
         public string? NationalID { get; set; }
         public string? TaxRegistry { get; set; }
         public string? CommercialRegister { get; set; }
+        public string? LedgerNumber { get; set; }
         public string? Name { get; set; }
         public string? FarmName { get; set; }
         public string? BankCode { get; set; }

@@ -27,6 +27,11 @@ namespace ViewModels
 
         public string? Commercial_Register { get; set; }
 
+        [StringLength(
+            100,
+            ErrorMessage = "رقم السجل (الدفتر) لا يتجاوز 100 حرف")]
+        public string? Ledger_Number { get; set; }
+
         [Required(ErrorMessage = "اسم الشركة مطلوب")]
         public string? Name { get; set; }
         public decimal Amount_Total { get; set; }

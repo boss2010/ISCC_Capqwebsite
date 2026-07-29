@@ -15,6 +15,13 @@ public partial class FeesType
 
     public string? Name_En { get; set; }
 
+    public string? Full_Name { get; set; }
+
+    /// <summary>
+    /// 138 = حساب حكومي، 139 = حساب خاص، 0 = كلا الحسابين، -1 = غير معروض بالدفع الإلكتروني
+    /// </summary>
+    public int Account_Type { get; set; }
+
     public bool IsActive { get; set; }
 
     public short? User_Updation_Id { get; set; }

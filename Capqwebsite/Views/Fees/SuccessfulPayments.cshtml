@@ -456,14 +456,13 @@
         </div>
 
         <div class="payments-switcher">
-            @if (Model.AccountType == 138)
-            {
-                <a asp-action="ExportGovernmentPayments"
-                   asp-route-search="@Model.Search"
-                   asp-route-fromDate="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
-                   asp-route-toDate="@(Model.ToDate?.ToString("yyyy-MM-dd"))"
-                   class="payments-nav-btn export">تصدير Excel</a>
-            }
+            <a asp-action="@(Model.AccountType == 138
+                                ? "ExportGovernmentPayments"
+                                : "ExportPrivatePayments")"
+               asp-route-search="@Model.Search"
+               asp-route-fromDate="@(Model.FromDate?.ToString("yyyy-MM-dd"))"
+               asp-route-toDate="@(Model.ToDate?.ToString("yyyy-MM-dd"))"
+               class="payments-nav-btn export">تصدير Excel</a>
             <a asp-action="GovernmentPayments"
                class="payments-nav-btn @(Model.AccountType == 138 ? "active" : "")">الدفع الحكومي</a>
             <a asp-action="PrivatePayments"
@@ -581,12 +580,8 @@
                                                 <strong>@(payment.FarmName ?? "-")</strong>
                                             </div>
                                             <div class="details-info-item">
-                                                <span>السجل التجاري</span>
-                                                <strong>@(payment.CommercialRegister ?? "-")</strong>
-                                            </div>
-                                            <div class="details-info-item">
-                                                <span>السجل الضريبي</span>
-                                                <strong>@(payment.TaxRegistry ?? "-")</strong>
+                                                <span>رقم السجل (الدفتر)</span>
+                                                <strong>@(payment.LedgerNumber ?? "-")</strong>
                                             </div>
                                             <div class="details-info-item">
                                                 <span>كود البنك</span>

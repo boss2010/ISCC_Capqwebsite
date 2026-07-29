@@ -3307,6 +3307,10 @@ public partial class AgricultureDBContext : DbContext
         {
             entity.ToTable("FeesType", tb => tb.HasComment("ثابت - معالجة - نبات - نوباتجية - سحب\r\n"));
 
+            entity.Property(e => e.Account_Type)
+                .HasDefaultValue(-1)
+                .HasComment("138 حكومي، 139 خاص، 0 كلا الحسابين، -1 غير معروض");
+            entity.Property(e => e.Full_Name).HasMaxLength(250);
             entity.Property(e => e.Name_Ar).HasMaxLength(50);
             entity.Property(e => e.Name_En)
                 .HasMaxLength(50)
@@ -3363,6 +3367,7 @@ public partial class AgricultureDBContext : DbContext
             entity.Property(e => e.Commercial_Register).HasMaxLength(50);
             entity.Property(e => e.Customs_Certificate_Number).HasMaxLength(200);
             entity.Property(e => e.IsSuccess_Bank).HasComment("0 تم رفض عملية البنك\r\n1 تم قبول العملية \r\nnull تم الارسال ولم الرد من البنك");
+            entity.Property(e => e.Ledger_Number).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(250);
             entity.Property(e => e.National_ID).HasMaxLength(14);
             entity.Property(e => e.OrderNumber).HasMaxLength(50);

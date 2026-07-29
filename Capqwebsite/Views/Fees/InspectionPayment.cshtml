@@ -263,6 +263,19 @@
         line-height: 1.55;
     }
 
+    .required-fee-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: .15rem .5rem;
+        margin-right: .4rem;
+        border-radius: 999px;
+        color: #a33a2b;
+        background: #fff0ed;
+        font-size: .72rem;
+        font-weight: 800;
+        vertical-align: middle;
+    }
+
     .fee-inputs {
         display: grid;
         grid-template-columns: minmax(90px, .65fr) minmax(130px, 1fr);
@@ -632,13 +645,12 @@
                     </div>
 
                     <div class="payment-field">
-                        <label asp-for="Tax_Registry" class="field-label">السجل الضريبي</label>
-                        <input asp-for="Tax_Registry" class="form-control" placeholder="رقم السجل الضريبي" />
-                    </div>
-
-                    <div class="payment-field">
-                        <label asp-for="Commercial_Register" class="field-label">السجل التجاري</label>
-                        <input asp-for="Commercial_Register" class="form-control" placeholder="رقم السجل التجاري" />
+                        <label asp-for="Ledger_Number" class="field-label">رقم السجل (الدفتر)</label>
+                        <input asp-for="Ledger_Number"
+                               class="form-control"
+                               maxlength="100"
+                               placeholder="أدخل رقم السجل (الدفتر)" />
+                        <span asp-validation-for="Ledger_Number" class="text-danger small"></span>
                     </div>
 
                     <div class="payment-field">
@@ -683,8 +695,16 @@
                     <div class="fees-grid">
                         @for (int i = 0; i < Model.Fees.Count; i++)
                         {
-                            <article class="fee-card">
-                                <div class="fee-card-title">@Model.Fees[i].FeesName</div>
+                            var isMartyrFee = Model.Fees[i].FeesType_ID == 34;
+                            <article class="fee-card"
+                                     data-required-martyr="@(isMartyrFee ? "true" : "false")">
+                                <div class="fee-card-title">
+                                    @Model.Fees[i].FeesName
+                                    @if (isMartyrFee)
+                                    {
+                                        <span class="required-fee-badge">إجباري — الحد الأدنى 5 جنيه</span>
+                                    }
+                                </div>
                                 <input type="hidden" asp-for="Fees[i].FeesType_ID" />
                                 <input type="hidden" asp-for="Fees[i].FeesName" />
 
@@ -704,6 +724,7 @@
                                         <input asp-for="Fees[i].Amount"
                                                class="form-control amount"
                                                inputmode="decimal"
+                                               min="@(isMartyrFee ? "5" : "0.01")"
                                                placeholder="0.00"
                                                aria-label="قيمة @Model.Fees[i].FeesName" />
                                         <span asp-validation-for="Fees[i].Amount" class="text-danger fee-error small"></span>
@@ -881,11 +902,32 @@
                     valid = false;
                 }
 
+                const martyrCard = document.querySelector(
+                    '.fee-card[data-required-martyr="true"]');
+                if (!martyrCard) {
+                    feesError.textContent = "رسوم صندوق الشهداء غير موجودة";
+                    feesError.style.display = "block";
+                    valid = false;
+                } else {
+                    const martyrAmount = martyrCard.querySelector(".amount");
+                    const martyrQuantity = martyrCard.querySelector(".quantity");
+                    if ((Number.parseInt(martyrQuantity.value, 10) || 0) < 1) {
+                        valid = false;
+                    }
+                    if ((Number.parseFloat(martyrAmount.value) || 0) < 5) {
+                        martyrCard.querySelector(".fee-error").textContent =
+                            "رسوم صندوق الشهداء إلزامية والحد الأدنى 5 جنيه";
+                        valid = false;
+                    }
+                }
+
                 selected.forEach(card => {
                     const amount = card.querySelector(".amount");
-                    if (!amount.value || Number.parseFloat(amount.value) <= 0) {
+                    const minimumAmount = Number.parseFloat(amount.min) || 0.01;
+                    if (!amount.value ||
+                        Number.parseFloat(amount.value) < minimumAmount) {
                         card.querySelector(".fee-error").textContent =
-                            "أدخل قيمة صحيحة للوحدة";
+                            `الحد الأدنى ${minimumAmount.toFixed(2)} جنيه`;
                         valid = false;
                     }
                 });
