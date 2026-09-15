@@ -16,7 +16,12 @@ namespace ViewModels
 
         public DateTime User_Creation_Date { get; set; }
         public DateOnly? Date { get; set; }
+        public int? Account_Type { get; set; }
         public string? Office { get; set; }
+
+        public string? Department { get; set; }
+
+        public string? Item { get; set; }
 
         public string? Customs_Certificate_Number { get; set; }
 
@@ -38,6 +43,10 @@ namespace ViewModels
 
         public decimal? Amount { get; set; }
 
+        public int? Quantity { get; set; }
+
         public string? FeesTypeName { get; set; }
+
+        public string? FeeDescription { get; set; }
     }
 }

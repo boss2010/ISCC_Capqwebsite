@@ -42,6 +42,7 @@ namespace Capqwebsite.Controllers
                     HttpContext.Session.Clear();
                     HttpContext.Session.SetString("UserSession", "Authenticated");
                     HttpContext.Session.SetString("UserRole", "Administrator");
+                    HttpContext.Session.SetString("LoginUserName", "admin");
                     //string id = Request.Cookies.FirstOrDefault(c => c.Key == "UserId").Value;
                     return View();
                 }
@@ -52,8 +53,8 @@ namespace Capqwebsite.Controllers
                     HttpContext.Session.SetString("UserRole", "PaymentOnly");
 
                     return RedirectToAction(
-                        "GovernmentPayments",
-                        "Fees");
+                        "Index",
+                        "CheckGeneralPayment");
                 }
                 else
                 {

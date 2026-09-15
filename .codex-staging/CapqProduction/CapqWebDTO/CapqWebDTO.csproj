@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5A63960B-5E26-46C2-80F0-B7FDEC491045}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CapqWebDTO</RootNamespace>
+    <AssemblyName>CapqWebDTO</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="PlantQuar.DTO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\hossa\Desktop\DestoTop\PlantQuar.DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>F:\LastVersionCAPQ\HOSSAM\12-2-2020NEW\CapqWebAPP\CapqWebDTO\bin\Debug\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivityTypeDTO.cs" />
+    <Compile Include="AdditionDeclartion.cs" />
+    <Compile Include="AdvertismentDTO.cs" />
+    <Compile Include="AlertDTO.cs" />
+    <Compile Include="AllCountDto.cs" />
+    <Compile Include="AllPlantDetailsDTO.cs" />
+    <Compile Include="ALLPlantDto.cs" />
+    <Compile Include="APIConfiguration.cs" />
+    <Compile Include="ArrivalTextDTO.cs" />
+    <Compile Include="AttachmentDTo.cs" />
+    <Compile Include="CertificateFileDTO.cs" />
+    <Compile Include="ChangeDestinationDTO.cs" />
+    <Compile Include="CheckOrderDto.cs" />
+    <Compile Include="CheckOrderStationDto.cs" />
+    <Compile Include="CheckRequestDataExtra.cs" />
+    <Compile Include="CheckRequest_Total_FeesDTO.cs" />
+    <Compile Include="CheckStationDTo.cs" />
+    <Compile Include="ClassTesting.cs" />
+    <Compile Include="committeDTO.cs" />
+    <Compile Include="CompainesInofrmationDto.cs" />
+    <Compile Include="CompanyFile.cs" />
+    <Compile Include="CompanyResult.cs" />
+    <Compile Include="Company_National.cs" />
+    <Compile Include="ConstrainResult.cs" />
+    <Compile Include="ConstraintMoreDetailes.cs" />
+    <Compile Include="ConstraintPermissionRequestDTO.cs" />
+    <Compile Include="contactNew.cs" />
+    <Compile Include="ContactType.cs" />
+    <Compile Include="ContactTypeDTO.cs" />
+    <Compile Include="ContactUsDTo.cs" />
+    <Compile Include="ContainerRegistrationDTO.cs" />
+    <Compile Include="CountryAdminDTO.cs" />
+    <Compile Include="CountryArEN.cs" />
+    <Compile Include="CountrypasswordDisplayDTO.cs" />
+    <Compile Include="CountrypasswordDTO.cs" />
+    <Compile Include="CustomActivty.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerDTO.cs" />
+    <Compile Include="CustomerModelDTO.cs" />
+    <Compile Include="Custome_ExCheckRequestDTO.cs" />
+    <Compile Include="Custome_ExCheckRequest_FillItem_attachmentDTO.cs" />
+    <Compile Include="Custome_ExPlant_ImCheckRequestDto.cs" />
+    <Compile Include="Custome_ExPlant_ImCheckRequestPermissionDto.cs" />
+    <Compile Include="Custome_ImportCheckRequest.cs" />
+    <Compile Include="CustomLongStation.cs" />
+    <Compile Include="Custom_Attatchment_FramDto.cs" />
+    <Compile Include="Custom_Attatchment_plant.cs" />
+    <Compile Include="Custom_ConstrainsDTO.cs" />
+    <Compile Include="Custom_ExAliveLiableItems11.cs" />
+    <Compile Include="Custom_ExAliveLiableItemsPermissionRequestDTO.cs" />
+    <Compile Include="Custom_ExImportCompanies11.cs" />
+    <Compile Include="Custom_ExImportCompanies111.cs" />
+    <Compile Include="Custom_ExImportCompaniesPermissionRequestDTO.cs" />
+    <Compile Include="Custom_ExNotAliveLiableItems11.cs" />
+    <Compile Include="Custom_ExNotAliveLiableItemsPermissionRequestDTO.cs" />
+    <Compile Include="Custom_ExPlants11.cs" />
+    <Compile Include="Custom_ExPlantsItemsIm_CheckRequestDTO.cs" />
+    <Compile Include="Custom_ExPlantsItemsPermissionRequestDTO.cs" />
+    <Compile Include="Custom_ExPlantsPermissionRequestDTO.cs" />
+    <Compile Include="Custom_ExProducts11.cs" />
+    <Compile Include="Custom_ExProductsPermissionRequestDTO.cs" />
+    <Compile Include="Custom_ExShortName.cs" />
+    <Compile Include="Custom_Import_ReqplantDTO.cs" />
+    <Compile Include="Custom_ScientificResearch.cs" />
+    <Compile Include="Datalot11.cs" />
+    <Compile Include="DescriptionErrorDTO.cs" />
+    <Compile Include="EditIm_CheckRequestDTO.cs" />
+    <Compile Include="EmailsDTO.cs" />
+    <Compile Include="ErrorSaveDTO.cs" />
+    <Compile Include="ExCheckReqItemDetailsForDistribuationDTO.cs" />
+    <Compile Include="ExCheckRequestDistributionDTO.cs" />
+    <Compile Include="ExportsData.cs" />
+    <Compile Include="Ex_CertificatepalnDetailsDTO.cs" />
+    <Compile Include="Ex_CertificateRequestPayment.cs" />
+    <Compile Include="Ex_CheckReqDetailsDTO.cs" />
+    <Compile Include="Ex_CheckRequestDTO.cs" />
+    <Compile Include="Ex_CheckRequestDTONew.cs" />
+    <Compile Include="Ex_CheckRequestPayment.cs" />
+    <Compile Include="Ex_CheckRequest_Organization_Distribution_Master_GrossWeightResult_DTO.cs" />
+    <Compile Include="Ex_CountryConstrain_measure_CheckDTO.cs" />
+    <Compile Include="Ex_plantCategoryDTO.cs" />
+    <Compile Include="Ex_plantCategory_checkRequestDTO.cs" />
+    <Compile Include="Ex_Plant_Shipping_MethodDTO.cs" />
+    <Compile Include="FarmAcceridationSave.cs" />
+    <Compile Include="FarmCommiteeResultDTO.cs" />
+    <Compile Include="FarmCountry.cs" />
+    <Compile Include="FarmDetailsMainDTO.cs" />
+    <Compile Include="FarmFactoringDTO.cs" />
+    <Compile Include="FarmFile.cs" />
+    <Compile Include="FarmPlant.cs" />
+    <Compile Include="FarmreqCommiteedataDTO.cs" />
+    <Compile Include="FarmRequest.cs" />
+    <Compile Include="FarmRequestDTO.cs" />
+    <Compile Include="FarmsData.cs" />
+    <Compile Include="FarmsDataWebDTO.cs" />
+    <Compile Include="FeesDetailsDto.cs" />
+    <Compile Include="Fess_AmountDTO.cs" />
+    <Compile Include="FillDropsFor_EXRequestDTO.cs" />
+    <Compile Include="FrameFess.cs" />
+    <Compile Include="FrameFessDetailsDTO.cs" />
+    <Compile Include="FrameFessNewDTO.cs" />
+    <Compile Include="Fram_PLantResult.cs" />
+    <Compile Include="GetAllImportCheckRequestDataDTO.cs" />
+    <Compile Include="GEtAndriodLocationResultDto.cs" />
+    <Compile Include="getExportdataResult.cs" />
+    <Compile Include="Get_reuestDataResult.cs" />
+    <Compile Include="GlobalEmailConfiguration.cs" />
+    <Compile Include="GlobalSendEmail.cs" />
+    <Compile Include="GovernateResult.cs" />
+    <Compile Include="ImCheckReqItemDetailsForDistribuationDTO.cs" />
+    <Compile Include="ImCheckRequestDistributionDTO.cs" />
+    <Compile Include="ImCheckRequestDTO.cs" />
+    <Compile Include="ImCheckRequestExplant_LotData.cs" />
+    <Compile Include="ImCheckRequestExplant_LotDataPermission.cs" />
+    <Compile Include="ImCheckRequestForUpdate.cs" />
+    <Compile Include="ImCommiteeResult.cs" />
+    <Compile Include="ImportCheckRequest.cs" />
+    <Compile Include="ImporterCompanies.cs" />
+    <Compile Include="ImportingCheckReqDetailsDTO.cs" />
+    <Compile Include="ImportRequestAll.cs" />
+    <Compile Include="ImportRequestDetailIDDTO.cs" />
+    <Compile Include="ImportRequestWithPermissionRequestDTO.cs" />
+    <Compile Include="Import_RequestFillDetails.cs" />
+    <Compile Include="Im_CheckRequestCustomsMessageDTO.cs" />
+    <Compile Include="Im_CheckRequestDTO.cs" />
+    <Compile Include="Im_CheckRequestFileAttachmentsDTO.cs" />
+    <Compile Include="Im_CheckRequestFillDetailsDTO.cs" />
+    <Compile Include="Im_CheckRequestItemDTO.cs" />
+    <Compile Include="Im_CheckRequestPayment.cs" />
+    <Compile Include="Im_CheckRequestSaveDto.cs" />
+    <Compile Include="Im_CheckRequestViewModel.cs" />
+    <Compile Include="Im_CheckRequest_Customs_MessageDTO.cs" />
+    <Compile Include="Im_CheckRequest_Import_FillData_DTO.cs" />
+    <Compile Include="Im_PermissionItem_DivisionCustpdyDTO.cs" />
+    <Compile Include="Im_PermissionRequest_EndDate.cs" />
+    <Compile Include="Item_QualitativeGroupDto.cs" />
+    <Compile Include="ListCheckRequestFees.cs" />
+    <Compile Include="LocationSelect.cs" />
+    <Compile Include="LotCertifiedPlant.cs" />
+    <Compile Include="MainCompanyInformation.cs" />
+    <Compile Include="MainEx_CountryConstranDto.cs" />
+    <Compile Include="mainIm_CustodyPlaceDTO.cs" />
+    <Compile Include="MemoryPostedFile.cs" />
+    <Compile Include="MenuDTo.cs" />
+    <Compile Include="Method_Bank.cs" />
+    <Compile Include="NetworkShare.cs" />
+    <Compile Include="NewCustomCompany.cs" />
+    <Compile Include="NewCustomExplants.cs" />
+    <Compile Include="NewExportRequest_PortDTO.cs" />
+    <Compile Include="NEWIm_CustodyPlaceDTO.cs" />
+    <Compile Include="NewsDTO.cs" />
+    <Compile Include="NewStationData.cs" />
+    <Compile Include="OrganizationNewDTO.cs" />
+    <Compile Include="OutLitContactDto.cs" />
+    <Compile Include="Out_SessionDTO.cs" />
+    <Compile Include="PaymentOnlineDTO.cs" />
+    <Compile Include="PaymentOnlinePrintDTO.cs" />
+    <Compile Include="PaymentOnlinePrintShiftDTO.cs" />
+    <Compile Include="PaymentOnlineShiftCountDTO.cs" />
+    <Compile Include="PaymentOnlineShiftCountprintDTO.cs" />
+    <Compile Include="PaymentOnlineShiftDTO.cs" />
+    <Compile Include="PermissionItemID.cs" />
+    <Compile Include="PermissionItemSaveDTO.cs" />
+    <Compile Include="PermissionRequestConstrainArrivalport.cs" />
+    <Compile Include="PermissionRequestDetailsDTO.cs" />
+    <Compile Include="PermissionRequestDTO.cs" />
+    <Compile Include="PermissionRequestFileAttachmentsDTO.cs" />
+    <Compile Include="PermissionRequestFillDetailsDTO.cs" />
+    <Compile Include="PermissionRequestfillRequestDataDTO.cs" />
+    <Compile Include="PermissionRequestitemDTO.cs" />
+    <Compile Include="PermissionRequestPayment.cs" />
+    <Compile Include="PermissionRequestPayment_print.cs" />
+    <Compile Include="PermissionRequestPlantsDTO.cs" />
+    <Compile Include="CheckRequestFeesDTO.cs" />
+    <Compile Include="PermisstionDetailsForDifferenertPermiossionsTypes.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="PersonInformation.cs" />
+    <Compile Include="PersonInformationNew.cs" />
+    <Compile Include="PhytosanitaryCertificateCountriesDTO.cs" />
+    <Compile Include="PhytosanitaryCertificateLoginDTO.cs" />
+    <Compile Include="PlantCertificateFeesDTO.cs" />
+    <Compile Include="PlantCertificatesRequest.cs" />
+    <Compile Include="PlantCertificatesRequestDTO.cs" />
+    <Compile Include="PlantCount.cs" />
+    <Compile Include="PlantsContraint.cs" />
+    <Compile Include="procedurePermissionRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicOrganization.cs" />
+    <Compile Include="Public_OrganizationDTOForPermissionRequest.cs" />
+    <Compile Include="ReCalcWeightForTreatment.cs" />
+    <Compile Include="ResponseAcquirerCode.cs" />
+    <Compile Include="ResponseDTO.cs" />
+    <Compile Include="Select_intiatorCountry_quantitiveNameDTO.cs" />
+    <Compile Include="SessionDTO.cs" />
+    <Compile Include="ShortNameDtO.cs" />
+    <Compile Include="ShortName_MeasureDtO.cs" />
+    <Compile Include="SmsConfiguration.cs" />
+    <Compile Include="StatioCompanyNew.cs" />
+    <Compile Include="StationAcceditionclass.cs" />
+    <Compile Include="StationAccredationDataDTO.cs" />
+    <Compile Include="StationAccreditionNotExpiredDTO.cs" />
+    <Compile Include="StationActivityNewDTO.cs" />
+    <Compile Include="StationActivtyType.cs" />
+    <Compile Include="StationActivtyTypeDTONew.cs" />
+    <Compile Include="StationattachmentDTO.cs" />
+    <Compile Include="StationCompany.cs" />
+    <Compile Include="StationCountryNew.cs" />
+    <Compile Include="StationData.cs" />
+    <Compile Include="StationRequestDTO.cs" />
+    <Compile Include="Station_Accredition_ShortName_Dto.cs" />
+    <Compile Include="Station_InformationRequestDTO.cs" />
+    <Compile Include="StoragePlaces.cs" />
+    <Compile Include="stringtextDTO.cs" />
+    <Compile Include="SuccessfulPaymentsReportDTO.cs" />
+    <Compile Include="TafketDto.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="test1.cs" />
+    <Compile Include="test2.cs" />
+    <Compile Include="test3.cs" />
+    <Compile Include="UserDTO.cs" />
+    <Compile Include="UserLoginModelDTO.cs" />
+    <Compile Include="UsersAdminDTO.cs" />
+    <Compile Include="WebUserDto.cs" />
+    <Compile Include="WeightCalculationWebDTO.cs" />
+    <Compile Include="WelcomeUDTO.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

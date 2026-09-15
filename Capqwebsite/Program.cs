@@ -65,6 +65,20 @@ app.Use(async (context, next) =>
     if (context.Session.GetString("UserRole") == "PaymentOnly")
     {
         var path = context.Request.Path;
+        var isPaymentReportPath =
+            path.StartsWithSegments("/Fees/GovernmentPayments") ||
+            path.StartsWithSegments("/Fees/PrivatePayments") ||
+            path.StartsWithSegments("/Fees/ExportGovernmentPayments") ||
+            path.StartsWithSegments("/Fees/ExportPrivatePayments") ||
+            path.StartsWithSegments("/Fees/MarkPaymentUsed") ||
+            path.StartsWithSegments("/Fees/PrintPayment");
+
+        if (isPaymentReportPath)
+        {
+            context.Response.Redirect("/CheckGeneralPayment");
+            return;
+        }
+
         var isAllowed =
             path.StartsWithSegments("/Fees") ||
             path.StartsWithSegments("/CheckGeneralPayment") ||
@@ -77,7 +91,7 @@ app.Use(async (context, next) =>
 
         if (!isAllowed)
         {
-            context.Response.Redirect("/Fees/GovernmentPayments");
+            context.Response.Redirect("/CheckGeneralPayment");
             return;
         }
     }

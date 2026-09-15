@@ -43,6 +43,10 @@ public partial class Fees_Altahsil
 
     public string? office { get; set; }
 
+    public string? Department { get; set; }
+
+    public string? Item { get; set; }
+
     public string? Customs_Certificate_Number { get; set; }
 
     public string National_ID { get; set; } = null!;
@@ -56,6 +60,20 @@ public partial class Fees_Altahsil
     public string? Name { get; set; }
 
     public string? FarmName { get; set; }
+
+    /// <summary>
+    /// هل تم استخدام العملية
+    /// </summary>
+    public bool Is_Used { get; set; }
+
+    /// <summary>
+    /// تاريخ ووقت الاستخدام
+    /// </summary>
+    public DateTime? Used_Date { get; set; }
+
+    public short? Used_By_User_Id { get; set; }
+
+    public string? Used_By_User_Name { get; set; }
 
     public virtual A_SystemCode? Account_TypeNavigation { get; set; }
 

@@ -1,5 +1,6 @@
 @using ViewModels
 @model FeesAltahsilVM
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 
 @{
     var isGeneralPayment =
@@ -16,6 +17,18 @@
     var feesSectionTitle =
         ViewData["FeesSectionTitle"]?.ToString() ??
         "الخدمات والرسوم";
+    var requiredMartyrFeeTypeId = Convert.ToByte(
+        ViewData["RequiredMartyrFeeTypeId"] ?? (byte)56);
+    var differenceFeeTypeId = Convert.ToByte(
+        ViewData["DifferenceFeeTypeId"] ?? (byte)81);
+    var mechanizationFixedAmount = Convert.ToDecimal(
+        ViewData["MechanizationFixedAmount"] ?? 2m);
+    var mechanizationRate = Convert.ToDecimal(
+        ViewData["MechanizationRate"] ?? 0.009m);
+    var showPrivatePayment = string.Equals(
+        Configuration["Features:ShowPrivatePayment"],
+        "true",
+        StringComparison.OrdinalIgnoreCase);
     ViewData["Title"] = paymentTitle;
 }
 
@@ -634,8 +647,9 @@
                     </div>
 
                     <div class="payment-field">
-                        <label asp-for="Customs_Certificate_Number" class="field-label">رقم الشهادة الجمركية / رقم الفحص</label>
-                        <input asp-for="Customs_Certificate_Number" class="form-control" placeholder="أدخل الرقم" />
+                        <label asp-for="Name" class="field-label">اسم الشركة <span class="text-danger">*</span></label>
+                        <input asp-for="Name" id="CompanyName" class="form-control" placeholder="اسم الشركة" />
+                        <span asp-validation-for="Name" id="companyNameError" class="text-danger small"></span>
                     </div>
 
                     <div class="payment-field">
@@ -645,18 +659,29 @@
                     </div>
 
                     <div class="payment-field">
+                        <label asp-for="Customs_Certificate_Number" class="field-label">رقم الشهادة الجمركية / رقم طلب الفحص / رقم العينة</label>
+                        <input asp-for="Customs_Certificate_Number" class="form-control" placeholder="أدخل الرقم" />
+                    </div>
+
+                    <div class="payment-field">
+                        <label asp-for="Department" class="field-label">القسم</label>
+                        <input asp-for="Department" class="form-control" maxlength="250" placeholder="أدخل القسم" />
+                        <span asp-validation-for="Department" class="text-danger small"></span>
+                    </div>
+
+                    <div class="payment-field">
+                        <label asp-for="Item" class="field-label">الصنف</label>
+                        <input asp-for="Item" class="form-control" maxlength="250" placeholder="أدخل الصنف" />
+                        <span asp-validation-for="Item" class="text-danger small"></span>
+                    </div>
+
+                    <div class="payment-field">
                         <label asp-for="Ledger_Number" class="field-label">رقم السجل (الدفتر)</label>
                         <input asp-for="Ledger_Number"
                                class="form-control"
                                maxlength="100"
                                placeholder="أدخل رقم السجل (الدفتر)" />
                         <span asp-validation-for="Ledger_Number" class="text-danger small"></span>
-                    </div>
-
-                    <div class="payment-field">
-                        <label asp-for="Name" class="field-label">اسم الشركة <span class="text-danger">*</span></label>
-                        <input asp-for="Name" id="CompanyName" class="form-control" placeholder="اسم الشركة" />
-                        <span asp-validation-for="Name" id="companyNameError" class="text-danger small"></span>
                     </div>
 
                     <div class="payment-field">
@@ -673,12 +698,15 @@
                                 <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
                                 <span>رسوم وخدمات وشهادات</span>
                             </a>
-                            <a asp-action="InspectionPayment"
-                               class="payment-type-button @(!isGeneralPayment ? "active" : "")"
-                               aria-current="@(!isGeneralPayment ? "page" : null)">
-                                <i class="fas fa-clipboard-check" aria-hidden="true"></i>
-                                <span>اعتمادات وعينات وبدلات</span>
-                            </a>
+                            @if (showPrivatePayment)
+                            {
+                                <a asp-action="InspectionPayment"
+                                   class="payment-type-button @(!isGeneralPayment ? "active" : "")"
+                                   aria-current="@(!isGeneralPayment ? "page" : null)">
+                                    <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+                                    <span>اعتمادات وعينات وبدلات</span>
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -695,9 +723,13 @@
                     <div class="fees-grid">
                         @for (int i = 0; i < Model.Fees.Count; i++)
                         {
-                            var isMartyrFee = Model.Fees[i].FeesType_ID == 34;
+                            var isMartyrFee =
+                                Model.Fees[i].FeesType_ID == requiredMartyrFeeTypeId;
+                            var isDifferenceFee =
+                                Model.Fees[i].FeesType_ID == differenceFeeTypeId;
                             <article class="fee-card"
-                                     data-required-martyr="@(isMartyrFee ? "true" : "false")">
+                                     data-required-martyr="@(isMartyrFee ? "true" : "false")"
+                                     data-difference-fee="@(isDifferenceFee ? "true" : "false")">
                                 <div class="fee-card-title">
                                     @Model.Fees[i].FeesName
                                     @if (isMartyrFee)
@@ -709,26 +741,64 @@
                                 <input type="hidden" asp-for="Fees[i].FeesName" />
 
                                 <div class="fee-inputs">
+                                    @if (isDifferenceFee)
+                                    {
+                                        <input asp-for="Fees[i].Quantity"
+                                               type="hidden"
+                                               value="1"
+                                               class="quantity" />
+                                        <div class="fee-input-group">
+                                            <label asp-for="Fees[i].FeeDescription">بيان فرق الرسوم</label>
+                                            <input asp-for="Fees[i].FeeDescription"
+                                                   class="form-control difference-description"
+                                                   maxlength="250"
+                                                   placeholder="اكتب بيان فرق الرسوم"
+                                                   aria-label="بيان فرق الرسوم" />
+                                            <span asp-validation-for="Fees[i].FeeDescription"
+                                                  class="text-danger description-error small"></span>
+                                        </div>
+                                        <div class="fee-input-group">
+                                            <label asp-for="Fees[i].Amount">القيمة</label>
+                                            <input asp-for="Fees[i].Amount"
+                                                   class="form-control amount"
+                                                   inputmode="decimal"
+                                                   min="0.01"
+                                                   placeholder="0.00"
+                                                   aria-label="قيمة فرق الرسوم" />
+                                            <span asp-validation-for="Fees[i].Amount"
+                                                  class="text-danger fee-error small"></span>
+                                        </div>
+                                    }
+                                    else
+                                    {
                                     <div class="fee-input-group">
                                         <label asp-for="Fees[i].Quantity">العدد</label>
                                         <input asp-for="Fees[i].Quantity"
                                                type="number"
-                                               min="1"
+                                               min="@(isMartyrFee ? "1" : "0")"
                                                step="1"
                                                class="form-control quantity"
                                                aria-label="عدد @Model.Fees[i].FeesName" />
                                         <span asp-validation-for="Fees[i].Quantity" class="text-danger small"></span>
                                     </div>
                                     <div class="fee-input-group">
-                                        <label asp-for="Fees[i].Amount">قيمة الوحدة</label>
+                                        <label asp-for="Fees[i].Amount">
+                                            @(isGeneralPayment && Model.Fees[i].IsFixedPrice
+                                                ? "قيمة الوحدة"
+                                                : isGeneralPayment
+                                                    ? "إجمالي القيمة"
+                                                    : "قيمة الوحدة")
+                                        </label>
                                         <input asp-for="Fees[i].Amount"
                                                class="form-control amount"
                                                inputmode="decimal"
                                                min="@(isMartyrFee ? "5" : "0.01")"
+                                               readonly="@(Model.Fees[i].IsFixedPrice ? "readonly" : null)"
                                                placeholder="0.00"
                                                aria-label="قيمة @Model.Fees[i].FeesName" />
                                         <span asp-validation-for="Fees[i].Amount" class="text-danger fee-error small"></span>
                                     </div>
+                                    }
                                 </div>
 
                                 <div class="fee-card-total">
@@ -759,6 +829,14 @@
                             <div class="summary-line">
                                 <span>إجمالي العدد</span>
                                 <strong id="totalQuantity">0</strong>
+                            </div>
+                            <div class="summary-line">
+                                <span>إجمالي الرسوم</span>
+                                <strong><span id="feesSubtotal">0.00</span> جنيه</strong>
+                            </div>
+                            <div class="summary-line">
+                                <span>رسوم الميكنة</span>
+                                <strong><span id="mechanizationAmount">0.00</span> جنيه</strong>
                             </div>
                             <div class="summary-grand-total">
                                 <span>الإجمالي النهائي</span>
@@ -823,6 +901,9 @@
             const feesError = document.getElementById("feesError");
             const totalInput = document.getElementById("Amount_Total");
             const totalDisplay = document.getElementById("AmountTotalDisplay");
+            const usesDatabasePricing = @isGeneralPayment.ToString().ToLowerInvariant();
+            const mechanizationFixedAmount = @mechanizationFixedAmount.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            const mechanizationRate = @mechanizationRate.ToString(System.Globalization.CultureInfo.InvariantCulture);
             const modalElement = document.getElementById("paymentTermsModal");
             const termsModal = bootstrap.Modal.getOrCreateInstance(modalElement);
 
@@ -836,22 +917,41 @@
                 let totalQuantity = 0;
                 let selectedServices = 0;
                 document.querySelectorAll(".fee-card").forEach(card => {
-                    const quantity = Math.max(1, Number.parseInt(
+                    const quantity = Math.max(0, Number.parseInt(
                         card.querySelector(".quantity").value,
-                        10) || 1);
-                    const amount = Number.parseFloat(
-                        card.querySelector(".amount").value) || 0;
-                    const lineTotal = quantity * amount;
+                        10) || 0);
+                    const amountInput = card.querySelector(".amount");
+                    const amount = Number.parseFloat(amountInput.value) || 0;
+                    const lineTotal = usesDatabasePricing && amountInput.readOnly
+                        ? quantity * amount
+                        : usesDatabasePricing
+                            ? amount
+                            : quantity * amount;
                     card.querySelector(".line-total").textContent =
                         lineTotal.toFixed(2);
-                    if (amount > 0) {
+                    if (quantity > 0 && amount > 0) {
                         total += lineTotal;
                         selectedServices++;
                         totalQuantity += quantity;
                     }
                 });
-                totalInput.value = total.toFixed(2);
-                totalDisplay.textContent = total.toLocaleString("en-US", {
+                const mechanizationAmount = Math.floor(
+                    (mechanizationFixedAmount +
+                        (total * mechanizationRate) + 1e-9) * 100) / 100;
+                const finalTotal = total + mechanizationAmount;
+                const feesSubtotalDisplay = document.getElementById(
+                    "feesSubtotal");
+                if (feesSubtotalDisplay) {
+                    feesSubtotalDisplay.textContent = total.toFixed(2);
+                }
+                const mechanizationDisplay = document.getElementById(
+                    "mechanizationAmount");
+                if (mechanizationDisplay) {
+                    mechanizationDisplay.textContent =
+                        mechanizationAmount.toFixed(2);
+                }
+                totalInput.value = finalTotal.toFixed(2);
+                totalDisplay.textContent = finalTotal.toLocaleString("en-US", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 });
@@ -871,6 +971,7 @@
                 feesError.textContent = "";
                 feesError.style.display = "none";
                 document.querySelectorAll(".fee-error").forEach(x => x.textContent = "");
+                document.querySelectorAll(".description-error").forEach(x => x.textContent = "");
 
                 if (!companyName.value.trim()) {
                     setError("companyNameError", "اسم الشركة مطلوب");
@@ -893,13 +994,33 @@
                 }
 
                 const selected = [...document.querySelectorAll(".fee-card")]
-                    .filter(card =>
-                        (Number.parseFloat(
-                            card.querySelector(".amount").value) || 0) > 0);
+                    .filter(card => {
+                        const quantity = Number.parseInt(
+                            card.querySelector(".quantity").value,
+                            10) || 0;
+                        const amount = Number.parseFloat(
+                            card.querySelector(".amount").value) || 0;
+                        return quantity > 0 && amount > 0;
+                    });
                 if (!selected.length) {
                     feesError.textContent = "أدخل قيمة لخدمة واحدة على الأقل";
                     feesError.style.display = "block";
                     valid = false;
+                }
+
+                const differenceFeeCard = document.querySelector(
+                    '.fee-card[data-difference-fee="true"]');
+                if (differenceFeeCard) {
+                    const differenceAmount = Number.parseFloat(
+                        differenceFeeCard.querySelector(".amount").value) || 0;
+                    const differenceDescription = differenceFeeCard.querySelector(
+                        ".difference-description");
+                    if (differenceAmount > 0 &&
+                        !differenceDescription.value.trim()) {
+                        differenceFeeCard.querySelector(".description-error").textContent =
+                            "بيان فرق الرسوم مطلوب عند إدخال القيمة";
+                        valid = false;
+                    }
                 }
 
                 const martyrCard = document.querySelector(
@@ -958,8 +1079,12 @@
                     calculateTotal();
                 });
                 quantity.addEventListener("blur", () => {
-                    if (!quantity.value || Number.parseInt(quantity.value, 10) < 1) {
-                        quantity.value = "1";
+                    const minimumQuantity = Number.parseInt(
+                        quantity.min,
+                        10) || 0;
+                    if (!quantity.value ||
+                        Number.parseInt(quantity.value, 10) < minimumQuantity) {
+                        quantity.value = minimumQuantity.toString();
                         calculateTotal();
                     }
                 });

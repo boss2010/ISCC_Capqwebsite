@@ -16,6 +16,16 @@ public partial class Fees_Altahsil_Detile
     /// </summary>
     public decimal? Amount { get; set; }
 
+    /// <summary>
+    /// العدد
+    /// </summary>
+    public int? Quantity { get; set; }
+
+    /// <summary>
+    /// بيان إضافي لبند فرق الرسوم
+    /// </summary>
+    public string? Fee_Description { get; set; }
+
     public DateTime User_Creation_Date { get; set; }
 
     public virtual FeesType? FeesType { get; set; }

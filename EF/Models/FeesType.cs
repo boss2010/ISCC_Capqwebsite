@@ -22,6 +22,16 @@ public partial class FeesType
     /// </summary>
     public int Account_Type { get; set; }
 
+    /// <summary>
+    /// السعر الافتراضي للرسم
+    /// </summary>
+    public decimal? Price { get; set; }
+
+    /// <summary>
+    /// ترتيب ظهور الرسم في صفحات الدفع
+    /// </summary>
+    public int? Display_Order { get; set; }
+
     public bool IsActive { get; set; }
 
     public short? User_Updation_Id { get; set; }

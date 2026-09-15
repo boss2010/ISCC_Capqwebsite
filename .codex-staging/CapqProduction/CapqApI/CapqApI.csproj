@@ -1,0 +1,752 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D64BD18F-3A86-4EF1-BF44-43B1AEAAF552}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CapqApI</RootNamespace>
+    <AssemblyName>CapqApI</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Calculateweight">
+      <HintPath>C:\Users\hossa\Desktop\Calculateweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Encrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Files\Encrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.0.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.0.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.0.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.0.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.0.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PlantQuar.DTO">
+      <HintPath>C:\Users\Hossam\Desktop\PlantQuar.DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="scripts\ai.0.22.9-build00167.js" />
+    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AddComapnyAccerdationStationController.cs" />
+    <Compile Include="Controllers\AddExCheckRequestDistributionController.cs" />
+    <Compile Include="Controllers\AddFarmCountryEditController.cs" />
+    <Compile Include="Controllers\AddFarmRequestFactoringController.cs" />
+    <Compile Include="Controllers\AddImCheckRequestDistributionController.cs" />
+    <Compile Include="Controllers\AddNewCompActivityController.cs" />
+    <Compile Include="Controllers\AdvertismentController.cs" />
+    <Compile Include="Controllers\ALLConstraintsController.cs" />
+    <Compile Include="Controllers\ALLConstraintsProduectController.cs" />
+    <Compile Include="Controllers\ALLConstratintLibaleController.cs" />
+    <Compile Include="Controllers\ApprovedDisApprovedExCommitteeTreatmentController.cs" />
+    <Compile Include="Controllers\ApprovedDisApprovedImCommitteeController.cs" />
+    <Compile Include="Controllers\ApprovedDisApprovedImCommitteeTreatmentController.cs" />
+    <Compile Include="Controllers\ApproveDisApproveStationAcceredationCommiteeController.cs" />
+    <Compile Include="Controllers\ArrivalNoticeDetailsController.cs" />
+    <Compile Include="Controllers\ArrivalNoticeSaveController.cs" />
+    <Compile Include="Controllers\A_SystemCodeController.cs" />
+    <Compile Include="Controllers\BannerController.cs" />
+    <Compile Include="Controllers\Biological_PhaseController.cs" />
+    <Compile Include="Controllers\CentersController.cs" />
+    <Compile Include="Controllers\CertificateFileController.cs" />
+    <Compile Include="Controllers\CertifictedGetLotController.cs" />
+    <Compile Include="Controllers\chargingUnitsController.cs" />
+    <Compile Include="Controllers\CheckEmailExistController.cs" />
+    <Compile Include="Controllers\CheckFarmDistribuationExistToRemoveController.cs" />
+    <Compile Include="Controllers\CheckMainEmailExistController.cs" />
+    <Compile Include="Controllers\CheckMainEmailExistForProfileController.cs" />
+    <Compile Include="Controllers\CheckPhoneExistController.cs" />
+    <Compile Include="Controllers\CheckRequestFeesController.cs" />
+    <Compile Include="Controllers\CheckReq_FeesController.cs" />
+    <Compile Include="Controllers\CheckTaxCommertialRecordController.cs" />
+    <Compile Include="Controllers\Check_CompanyAccreditationController.cs" />
+    <Compile Include="Controllers\Check_Organization_DistributionController.cs" />
+    <Compile Include="Controllers\CommitteIsApprovedController.cs" />
+    <Compile Include="Controllers\CommittePaidSendController.cs" />
+    <Compile Include="Controllers\CompanyActivitionController.cs" />
+    <Compile Include="Controllers\CompanyActivityByIDController.cs" />
+    <Compile Include="Controllers\CompanyActivtyTypeController.cs" />
+    <Compile Include="Controllers\CompanyFesssController.cs" />
+    <Compile Include="Controllers\CompanyInformationDetailsController.cs" />
+    <Compile Include="Controllers\CompanyMainActvityController.cs" />
+    <Compile Include="Controllers\CompanySaveController.cs" />
+    <Compile Include="Controllers\Company_NationalController.cs" />
+    <Compile Include="Controllers\ConstraintCheckRequestController.cs" />
+    <Compile Include="Controllers\ConstraintExportPermissionRequestController.cs" />
+    <Compile Include="Controllers\ContactTypeController.cs" />
+    <Compile Include="Controllers\CounteryDeleteController.cs" />
+    <Compile Include="Controllers\CountryAdminController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\CountryFarmController.cs" />
+    <Compile Include="Controllers\CountryNewController.cs" />
+    <Compile Include="Controllers\CountrypasswordController.cs" />
+    <Compile Include="Controllers\CountryPasswordDisplayController.cs" />
+    <Compile Include="Controllers\CountryPersonController.cs" />
+    <Compile Include="Controllers\Default1Controller.cs" />
+    <Compile Include="Controllers\Default2Controller.cs" />
+    <Compile Include="Controllers\Default3Controller.cs" />
+    <Compile Include="Controllers\Default4Controller.cs" />
+    <Compile Include="Controllers\Default5Controller.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
+    <Compile Include="Controllers\DeleteAttachmentForFarmEditController.cs" />
+    <Compile Include="Controllers\DeleteCountryForFarmEditController.cs" />
+    <Compile Include="Controllers\DeleteFarmDestribuationCompanyController.cs" />
+    <Compile Include="Controllers\DEleteUSerController.cs" />
+    <Compile Include="Controllers\DescriptionErrorController.cs" />
+    <Compile Include="Controllers\DifferentTypesIMCheckreqDetailsController.cs" />
+    <Compile Include="Controllers\DisApprovedCommitteController.cs" />
+    <Compile Include="Controllers\DisApprovedFarmCommitteController.cs" />
+    <Compile Include="Controllers\DisApprovedStationCommitteController.cs" />
+    <Compile Include="Controllers\DisplayPortInternationalController.cs" />
+    <Compile Include="Controllers\DrawMenuController.cs" />
+    <Compile Include="Controllers\EditImCheckRequestController.cs" />
+    <Compile Include="Controllers\EditProfileController.cs" />
+    <Compile Include="Controllers\ExCheckReqShipping_MethodController.cs" />
+    <Compile Include="Controllers\Export_CheckRequestController.cs" />
+    <Compile Include="Controllers\Ex_CertificateReqPaymentVisaController.cs" />
+    <Compile Include="Controllers\Ex_CheckReqPaymentVisaController.cs" />
+    <Compile Include="Controllers\Ex_CheckRequestBales_SaveController.cs" />
+    <Compile Include="Controllers\Ex_CheckRequestDetalis_ForUpdateController.cs" />
+    <Compile Include="Controllers\Ex_CheckRequestPaymentController.cs" />
+    <Compile Include="Controllers\Ex_CheckRequestPaymentForPalletsController.cs" />
+    <Compile Include="Controllers\Ex_CheckRequestSaveController.cs" />
+    <Compile Include="Controllers\Ex_CheckRequest_Bales_DistributionController.cs" />
+    <Compile Include="Controllers\Ex_CompanyCheckRequestPaymentController.cs" />
+    <Compile Include="Controllers\Ex_EachCommiteePaymentVisaBankProcessingController.cs" />
+    <Compile Include="Controllers\Ex_EachCommiteePaymentVisaController.cs" />
+    <Compile Include="Controllers\EX_GetAll_ExCheckRequestController.cs" />
+    <Compile Include="Controllers\EX_GetAll_ExCheckRequestSpeedController.cs" />
+    <Compile Include="Controllers\Ex_PlantCheckRequestDetalis_ForCertifactionController.cs" />
+    <Compile Include="Controllers\Ex_PlantCheckRequestDetalis_ForUpdateController.cs" />
+    <Compile Include="Controllers\Ex_RequestComittCertifCationController.cs" />
+    <Compile Include="Controllers\FarmAcceridationController.cs" />
+    <Compile Include="Controllers\FarmAccrediationFirstRegistrationController.cs" />
+    <Compile Include="Controllers\FarmDataController.cs" />
+    <Compile Include="Controllers\FarmDetailsNewController.cs" />
+    <Compile Include="Controllers\FarmEditController.cs" />
+    <Compile Include="Controllers\FarmPlantCategoryController.cs" />
+    <Compile Include="Controllers\FarmPlantController.cs" />
+    <Compile Include="Controllers\FarmRequestController.cs" />
+    <Compile Include="Controllers\Farms_ListController.cs" />
+    <Compile Include="Controllers\FarmUpateFeesController.cs" />
+    <Compile Include="Controllers\Farm_CountryController.cs" />
+    <Compile Include="Controllers\Farm_CountryUnionController.cs" />
+    <Compile Include="Controllers\FileAPiController.cs" />
+    <Compile Include="Controllers\FillDropsFor_EXRequestController.cs" />
+    <Compile Include="Controllers\FillDropsFor_EXRequest_BalesController.cs" />
+    <Compile Include="Controllers\FillImporterTypeForImCheckReqDistribuationController.cs" />
+    <Compile Include="Controllers\FinalComitteResultWithNullLotController.cs" />
+    <Compile Include="Controllers\FinalCommitteResultController.cs" />
+    <Compile Include="Controllers\FrameSaveController.cs" />
+    <Compile Include="Controllers\FramFesssController.cs" />
+    <Compile Include="Controllers\GeFarmAttachmentTypeController.cs" />
+    <Compile Include="Controllers\GeOperationNameController.cs" />
+    <Compile Include="Controllers\GetAccerdationStationsNotExpiredController.cs" />
+    <Compile Include="Controllers\GetAliveDataController.cs" />
+    <Compile Include="Controllers\GetAllApprovalController.cs" />
+    <Compile Include="Controllers\GetAllCheckReqsController.cs" />
+    <Compile Include="Controllers\GetAllCheckReqsNewController.cs" />
+    <Compile Include="Controllers\GetALLCompainesAdminController.cs" />
+    <Compile Include="Controllers\GETALLCOMPANYController.cs" />
+    <Compile Include="Controllers\GetAllCompanyInformationController.cs" />
+    <Compile Include="Controllers\GetAllCountController.cs" />
+    <Compile Include="Controllers\GetAllCustodyPlaceFor_Im_CheckReqController.cs" />
+    <Compile Include="Controllers\GetAllDetailsOfExCheckReqForDistribuationController.cs" />
+    <Compile Include="Controllers\GetAllDetailsOfImCheckReqForDistribuationController.cs" />
+    <Compile Include="Controllers\GetAllExCertificatesReqFeesPrintController.cs" />
+    <Compile Include="Controllers\GetAllExCheckReqCommiteePaiedController.cs" />
+    <Compile Include="Controllers\GetAllExCheckReqFeesPrintController.cs" />
+    <Compile Include="Controllers\GetAllExCheckReqPaiedController.cs" />
+    <Compile Include="Controllers\GetAllExReqCommiteeController.cs" />
+    <Compile Include="Controllers\GetAllExReqCommiteeNotpaiedController.cs" />
+    <Compile Include="Controllers\GetAllFarmActiveController.cs" />
+    <Compile Include="Controllers\GetAllFarmCountryAcceptedController.cs" />
+    <Compile Include="Controllers\GetAllImCheckReqCommiteePaiedController.cs" />
+    <Compile Include="Controllers\GetAllImCheckReqPaiedController.cs" />
+    <Compile Include="Controllers\GetAllImCheckRequestInfoController.cs" />
+    <Compile Include="Controllers\GetAllImPermissinCheckReqsController.cs" />
+    <Compile Include="Controllers\GetAllImPermissinCheckReqsNewController.cs" />
+    <Compile Include="Controllers\GetAllOrganizationController.cs" />
+    <Compile Include="Controllers\GetALLpersonINformationController.cs" />
+    <Compile Include="Controllers\GetAllStationCommiteePaiedToPrintController.cs" />
+    <Compile Include="Controllers\GetAllTreatmentCommiteeNotpaiedController.cs" />
+    <Compile Include="Controllers\GetAll_Ex_CheckRequestController.cs" />
+    <Compile Include="Controllers\GetAll_ImICheckRequestController.cs" />
+    <Compile Include="Controllers\GetAll_PlantController.cs" />
+    <Compile Include="Controllers\GetAmount_FarmRequestController.cs" />
+    <Compile Include="Controllers\GetAmount_ImPermissionRequestController.cs" />
+    <Compile Include="Controllers\GetAttachemrntFilesWithFilesTypenameController.cs" />
+    <Compile Include="Controllers\GetAttachemrntFilesWithFilesTypenameNewController.cs" />
+    <Compile Include="Controllers\GetAttachmentTypeController.cs" />
+    <Compile Include="Controllers\GetCertificatePlantDetailsController.cs" />
+    <Compile Include="Controllers\GetCertificationPlantController.cs" />
+    <Compile Include="Controllers\GetCertificationProduectController.cs" />
+    <Compile Include="Controllers\GetCheckFeesController.cs" />
+    <Compile Include="Controllers\GetCheckFeesExportController.cs" />
+    <Compile Include="Controllers\GetCheckRequestFeesController.cs" />
+    <Compile Include="Controllers\GetComActivitesController.cs" />
+    <Compile Include="Controllers\GetCommiteeInfoController.cs" />
+    <Compile Include="Controllers\GetCommiteeshifeBycheckReqIdController.cs" />
+    <Compile Include="Controllers\GetCommiteeshifeBycheckReqIdNewController.cs" />
+    <Compile Include="Controllers\GetCommiteeShiftingFeesController.cs" />
+    <Compile Include="Controllers\GetCommitteteIdController.cs" />
+    <Compile Include="Controllers\GetCompanyActivitiesController.cs" />
+    <Compile Include="Controllers\GetCompanyFilesController.cs" />
+    <Compile Include="Controllers\GetCompanyProfileController.cs" />
+    <Compile Include="Controllers\GetContactDataController.cs" />
+    <Compile Include="Controllers\GetContactForOrganizationController.cs" />
+    <Compile Include="Controllers\GetCountryAccerdationDetailsController.cs" />
+    <Compile Include="Controllers\GetDetailsForFeesController.cs" />
+    <Compile Include="Controllers\GetDistribuationDetailsExCheckReqController.cs" />
+    <Compile Include="Controllers\GetDistribuationDetailsImCheckReqController.cs" />
+    <Compile Include="Controllers\GetExCertificateRequestFessController.cs" />
+    <Compile Include="Controllers\GetExCheckReqCommiteeENGFeesController.cs" />
+    <Compile Include="Controllers\GetExcheckReqFessForRequestController.cs" />
+    <Compile Include="Controllers\GetExCheckReqPalletsDetailsController.cs" />
+    <Compile Include="Controllers\GetExCheckReqShifFeesPaymentController.cs" />
+    <Compile Include="Controllers\GetExCheckReq_CommiteeFeesController.cs" />
+    <Compile Include="Controllers\GetExCommiteeENGPaymentController.cs" />
+    <Compile Include="Controllers\GetExportCheckRequestAttachmentTypeController.cs" />
+    <Compile Include="Controllers\GetExportsDetailsController.cs" />
+    <Compile Include="Controllers\GetEx_CheckRequestDetailsController.cs" />
+    <Compile Include="Controllers\GetFarmAccrediationItemCategoriesController.cs" />
+    <Compile Include="Controllers\GetFarmAllRequestsController.cs" />
+    <Compile Include="Controllers\GetfarmByIdController.cs" />
+    <Compile Include="Controllers\GetFarmCodeByfarmIDController.cs" />
+    <Compile Include="Controllers\GetFarmCommiteeFeesController.cs" />
+    <Compile Include="Controllers\GetfarmCommiteeResultController.cs" />
+    <Compile Include="Controllers\GetfarmCommiteesFinalResultController.cs" />
+    <Compile Include="Controllers\GetfarmConstrainController.cs" />
+    <Compile Include="Controllers\GetFarmCountryBeforeAcceptController.cs" />
+    <Compile Include="Controllers\GetFarmDataForFactoringController.cs" />
+    <Compile Include="Controllers\GetFarmDetailesController.cs" />
+    <Compile Include="Controllers\GetFarmInfoController.cs" />
+    <Compile Include="Controllers\GetFarmItemDetailsController.cs" />
+    <Compile Include="Controllers\GetFarmItemFinalSituationController.cs" />
+    <Compile Include="Controllers\GetfarmItemWithAdminFinalAcceptController.cs" />
+    <Compile Include="Controllers\GetfarmItemwiyholdreqnotexistexaminationController.cs" />
+    <Compile Include="Controllers\GetFarmNameByCompanyIDController.cs" />
+    <Compile Include="Controllers\GetFarmNewItemCategorywithreqController.cs" />
+    <Compile Include="Controllers\GetFarmOldRequestDataController.cs" />
+    <Compile Include="Controllers\GetFarmReqCommiteeDataController.cs" />
+    <Compile Include="Controllers\GetFarmreqdatawithReqcommiteeController.cs" />
+    <Compile Include="Controllers\GetfarmrequestdataController.cs" />
+    <Compile Include="Controllers\GetfarmRequestdataWithAbilityNewRequestController.cs" />
+    <Compile Include="Controllers\GetFarmRequestDetailsController.cs" />
+    <Compile Include="Controllers\GetFarmsitemsCategoriesOfCompanyForFactoringController.cs" />
+    <Compile Include="Controllers\GetFarms_Organization_DistributionDetailsForExportingController.cs" />
+    <Compile Include="Controllers\getFrameByVilageController.cs" />
+    <Compile Include="Controllers\GetGAController.cs" />
+    <Compile Include="Controllers\GetGenerlAdminByoutletController.cs" />
+    <Compile Include="Controllers\GetGenerlAdminController.cs" />
+    <Compile Include="Controllers\GETGOVBYPORTNATIONALController.cs" />
+    <Compile Include="Controllers\GetImcheckReqEachCommiteeWithSamplesController.cs" />
+    <Compile Include="Controllers\GetImcheckReqEachCommiteeWithSamplesNewController.cs" />
+    <Compile Include="Controllers\GetImcheckReqEachCommiteeWithShiftController.cs" />
+    <Compile Include="Controllers\GetImcheckReqEachCommiteeWithShiftNewController.cs" />
+    <Compile Include="Controllers\GetImcheckReqFessForRequestController.cs" />
+    <Compile Include="Controllers\GetImcheckReqFessForRequestNewController.cs" />
+    <Compile Include="Controllers\GetImcheckReqNum_byOperationIdController.cs" />
+    <Compile Include="Controllers\GetImCheckReqShifFeesPaymentController.cs" />
+    <Compile Include="Controllers\GetImCheckRequest_Customs_MessageDataController.cs" />
+    <Compile Include="Controllers\GetImCheckRequest_Customs_MessageDataNewController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_CommiteeFeesController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_CommiteeFeesNewController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_CommitteByCommitteIDController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_CommitteByCommitteIDNewController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_FinalResultsController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_FinalResultsNewController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_FinalVisaResultsController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_FinalVisaResultsNewController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_LotCatFinalResultsController.cs" />
+    <Compile Include="Controllers\GetImCheckReq_LotCatFinalResultsNewController.cs" />
+    <Compile Include="Controllers\GetImportCompainesByImportIDController.cs" />
+    <Compile Include="Controllers\GetImportersCompaniesController.cs" />
+    <Compile Include="Controllers\GetImporterTypeNameController.cs" />
+    <Compile Include="Controllers\GetImportertypesForDistributionController.cs" />
+    <Compile Include="Controllers\GetImportRequestByIDController.cs" />
+    <Compile Include="Controllers\GetImTreatmentCompaniesController.cs" />
+    <Compile Include="Controllers\GetImTreatmentCompaniesNewController.cs" />
+    <Compile Include="Controllers\GetIm_CommiteeInfoController.cs" />
+    <Compile Include="Controllers\GetIm_CommiteeInfoNewController.cs" />
+    <Compile Include="Controllers\GetInternationalTransportationController.cs" />
+    <Compile Include="Controllers\GetItemNameController.cs" />
+    <Compile Include="Controllers\GetItemShortNameController.cs" />
+    <Compile Include="Controllers\GetItemShortNameNewController.cs" />
+    <Compile Include="Controllers\GetItemShortName_ForExportCheckController.cs" />
+    <Compile Include="Controllers\GetItemTypeController.cs" />
+    <Compile Include="Controllers\GetLoctionController.cs" />
+    <Compile Include="Controllers\GetLotsDataController.cs" />
+    <Compile Include="Controllers\GetLotsForCheckRequestController.cs" />
+    <Compile Include="Controllers\GetNewProductController.cs" />
+    <Compile Include="Controllers\GetNotAliveDataController.cs" />
+    <Compile Include="Controllers\GetOutLitContactInfoController.cs" />
+    <Compile Include="Controllers\GetOutLitContactInfoNewController.cs" />
+    <Compile Include="Controllers\GetOutLitController.cs" />
+    <Compile Include="Controllers\GetPermissionDataForImcheckRequestController.cs" />
+    <Compile Include="Controllers\GetPermissionFileController.cs" />
+    <Compile Include="Controllers\GetPlantNameByItemIdController.cs" />
+    <Compile Include="Controllers\GetPlantsDataController.cs" />
+    <Compile Include="Controllers\GetPlant_DetailsController.cs" />
+    <Compile Include="Controllers\getPortInternationalController.cs" />
+    <Compile Include="Controllers\GetProductsDataController.cs" />
+    <Compile Include="Controllers\getRequestDataController.cs" />
+    <Compile Include="Controllers\GetShipping_AgencyController.cs" />
+    <Compile Include="Controllers\GetStationAccredationCheckListTextConstrainController.cs" />
+    <Compile Include="Controllers\GetStationAccredationCountryController.cs" />
+    <Compile Include="Controllers\GetStationAttachmentTypeController.cs" />
+    <Compile Include="Controllers\GetStationCommiteeWithENGShiftController.cs" />
+    <Compile Include="Controllers\GetStationCommiteeWithShiftController.cs" />
+    <Compile Include="Controllers\GetStationController.cs" />
+    <Compile Include="Controllers\GetStationDetailsController.cs" />
+    <Compile Include="Controllers\GetTransitPortController.cs" />
+    <Compile Include="Controllers\GetTransportAndReservationCommitteeController.cs" />
+    <Compile Include="Controllers\GetTransportAndReservationCommitteeNewController.cs" />
+    <Compile Include="Controllers\GetTreatmentCommitteeFeesDetailsController.cs" />
+    <Compile Include="Controllers\GetTreatmentPaymentForVisaController.cs" />
+    <Compile Include="Controllers\GetTreatmentPaymentForVisaNewController.cs" />
+    <Compile Include="Controllers\GetUpdatedCounryController.cs" />
+    <Compile Include="Controllers\getVillagesController.cs" />
+    <Compile Include="Controllers\Get_Im_PermissionRequest_EndDateController.cs" />
+    <Compile Include="Controllers\Get_PlantCertificateDetailsController.cs" />
+    <Compile Include="Controllers\Get_PlantCertificateDetailsForEditeController.cs" />
+    <Compile Include="Controllers\Get_StationInfoController.cs" />
+    <Compile Include="Controllers\GovermentByShipmentIDController.cs" />
+    <Compile Include="Controllers\GovernateController.cs" />
+    <Compile Include="Controllers\GovernmnetController.cs" />
+    <Compile Include="Controllers\HasCommitteController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityController.cs" />
+    <Compile Include="Controllers\IMCheckReqDetailsController.cs" />
+    <Compile Include="Controllers\ImCheckRequestDetalisUpdateController.cs" />
+    <Compile Include="Controllers\ImCheckRequestRegistrationEditController.cs" />
+    <Compile Include="Controllers\ImCheckRequestRegistrationSaveController.cs" />
+    <Compile Include="Controllers\ImCheckRequestSaveController.cs" />
+    <Compile Include="Controllers\ImCheckRequestWithPermissionRequestExPlantController.cs" />
+    <Compile Include="Controllers\ImExportRequestAllDataController.cs" />
+    <Compile Include="Controllers\ImportCheckrequestController.cs" />
+    <Compile Include="Controllers\ImportpermissionController.cs" />
+    <Compile Include="Controllers\ImportRequestAllController.cs" />
+    <Compile Include="Controllers\ImportRequestWithPermissionRequestSaveController.cs" />
+    <Compile Include="Controllers\Import_ConstraintController.cs" />
+    <Compile Include="Controllers\ImRequestDetailsByIDController.cs" />
+    <Compile Include="Controllers\Im_CheckReqPaymentVisaController.cs" />
+    <Compile Include="Controllers\Im_CheckReqPaymentVisaNewController.cs" />
+    <Compile Include="Controllers\Im_CheckRequestDetailsFromPermissionController.cs" />
+    <Compile Include="Controllers\Im_CheckRequestFillDataController.cs" />
+    <Compile Include="Controllers\Im_CheckRequestFillDataUpdateController.cs" />
+    <Compile Include="Controllers\Im_CheckRequestFillitemUpdateController.cs" />
+    <Compile Include="Controllers\Im_CheckRequestPaymentController.cs" />
+    <Compile Include="Controllers\Im_CheckRequestPosPaymentController.cs" />
+    <Compile Include="Controllers\Im_CheckRequest_ImportApiController.cs" />
+    <Compile Include="Controllers\Im_CheckRequest_Importing_SavingController.cs" />
+    <Compile Include="Controllers\Im_CustodyPlaceSaveController.cs" />
+    <Compile Include="Controllers\Im_EachCommiteePaymentVisaController.cs" />
+    <Compile Include="Controllers\Im_EachCommiteePaymentVisaNewController.cs" />
+    <Compile Include="Controllers\Im_PermissionRequest_SelectController.cs" />
+    <Compile Include="Controllers\Im_plant_Request_DataController.cs" />
+    <Compile Include="Controllers\Im_RequestData_GetController.cs" />
+    <Compile Include="Controllers\LegislationsController.cs" />
+    <Compile Include="Controllers\LiableItemsController.cs" />
+    <Compile Include="Controllers\LiableItems_ShortNameController.cs" />
+    <Compile Include="Controllers\LiableItems_StatusController.cs" />
+    <Compile Include="Controllers\LiableItems_StrainController.cs" />
+    <Compile Include="Controllers\MapFarmController.cs" />
+    <Compile Include="Controllers\NewEx_CheckRequestSaveController.cs" />
+    <Compile Include="Controllers\NewEx_CheckRequestSaveEditeController.cs" />
+    <Compile Include="Controllers\NewFarmCountryUnionController.cs" />
+    <Compile Include="Controllers\NewFarmCountryUnionFirstRegistartionController.cs" />
+    <Compile Include="Controllers\NewGetGovController.cs" />
+    <Compile Include="Controllers\NewgetPortInternationalController.cs" />
+    <Compile Include="Controllers\NewItemSelectItemController.cs" />
+    <Compile Include="Controllers\NewOutLetController.cs" />
+    <Compile Include="Controllers\NewPlantController.cs" />
+    <Compile Include="Controllers\NewPreviousPaymentController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\NewStationCountryUnionController.cs" />
+    <Compile Include="Controllers\NotLiableItems_ShortNameController.cs" />
+    <Compile Include="Controllers\OpertionTypeController.cs" />
+    <Compile Include="Controllers\OrganizationActivitionController.cs" />
+    <Compile Include="Controllers\OrganizationController.cs" />
+    <Compile Include="Controllers\OrganizationTypeController.cs" />
+    <Compile Include="Controllers\OrginizationProfileNewController.cs" />
+    <Compile Include="Controllers\OutletByCenterController.cs" />
+    <Compile Include="Controllers\OutLetBYGeneralAdminController.cs" />
+    <Compile Include="Controllers\OutLetController.cs" />
+    <Compile Include="Controllers\PackageMaterialController.cs" />
+    <Compile Include="Controllers\PackageTypeController.cs" />
+    <Compile Include="Controllers\PayImCheckReqTreatmentCommiteeController.cs" />
+    <Compile Include="Controllers\PaymentFarmDetailsApiController.cs" />
+    <Compile Include="Controllers\PaymentForPlantFeesController.cs" />
+    <Compile Include="Controllers\PaymentOnlineController.cs" />
+    <Compile Include="Controllers\PaymentOnlinePrintController.cs" />
+    <Compile Include="Controllers\SuccessfulPaymentsController.cs" />
+    <Compile Include="Controllers\PermissionRequestConstrainArrivalController.cs" />
+    <Compile Include="Controllers\PermissionRequestConstrainArrivalForItemController.cs" />
+    <Compile Include="Controllers\PermissionRequestConstrainController.cs" />
+    <Compile Include="Controllers\PermissionRequestController.cs" />
+    <Compile Include="Controllers\PermissionRequestDetailsController.cs" />
+    <Compile Include="Controllers\PermissionRequestPaymentController.cs" />
+    <Compile Include="Controllers\PermissionRequestRenewPaymentController.cs" />
+    <Compile Include="Controllers\PermissionRequestSaveController.cs" />
+    <Compile Include="Controllers\permistionRenewController.cs" />
+    <Compile Include="Controllers\PersonActivtionController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\PersonDataController.cs" />
+    <Compile Include="Controllers\PersonInformationNewController.cs" />
+    <Compile Include="Controllers\Personprofile_dataController.cs" />
+    <Compile Include="Controllers\PerviousPermissionRequestPaymentController.cs" />
+    <Compile Include="Controllers\Pervious_Renew_PermissionRequestPaymentController.cs" />
+    <Compile Include="Controllers\PhytosanitaryCertificateLoginController.cs" />
+    <Compile Include="Controllers\PlaceDeleteController.cs" />
+    <Compile Include="Controllers\PlaceSelectController.cs" />
+    <Compile Include="Controllers\PlaceTypeController.cs" />
+    <Compile Include="Controllers\PlaceType_ListController.cs" />
+    <Compile Include="Controllers\PlantCategoryController.cs" />
+    <Compile Include="Controllers\PlantCategoryGroupCheckRequestController.cs" />
+    <Compile Include="Controllers\PlantCategoryGroupController.cs" />
+    <Compile Include="Controllers\PlantCertificatesControllerSaveController.cs" />
+    <Compile Include="Controllers\PlantCertificatesControllerSaveEditeController.cs" />
+    <Compile Include="Controllers\PlantNameByProductIdController.cs" />
+    <Compile Include="Controllers\PlantPartController.cs" />
+    <Compile Include="Controllers\PlantPurposeController.cs" />
+    <Compile Include="Controllers\PlantsController.cs" />
+    <Compile Include="Controllers\PlantShortNameController.cs" />
+    <Compile Include="Controllers\PortNationalBYCheckReIdController.cs" />
+    <Compile Include="Controllers\PortNationalBYGovController.cs" />
+    <Compile Include="Controllers\PortNationalBYStationController.cs" />
+    <Compile Include="Controllers\PortTypeConstrain_ArrivalPortController.cs" />
+    <Compile Include="Controllers\PortTypeController.cs" />
+    <Compile Include="Controllers\PostNewDataController.cs" />
+    <Compile Include="Controllers\PreviousPaymentController.cs" />
+    <Compile Include="Controllers\PrintPlantFeesController.cs" />
+    <Compile Include="Controllers\ProductAllController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductNameByItemIdController.cs" />
+    <Compile Include="Controllers\ProductNewController.cs" />
+    <Compile Include="Controllers\ProductStatusController.cs" />
+    <Compile Include="Controllers\Public_OrganizationController.cs" />
+    <Compile Include="Controllers\QualitativeGroupController.cs" />
+    <Compile Include="Controllers\QualitativeGroupNEWController.cs" />
+    <Compile Include="Controllers\Quick_FillDropsFor_EXRequestController.cs" />
+    <Compile Include="Controllers\Quick_NewEx_plantController.cs" />
+    <Compile Include="Controllers\ResendPasswordController.cs" />
+    <Compile Include="Controllers\SavefarmAccerdationReqeustController.cs" />
+    <Compile Include="Controllers\SelectCommitteeController.cs" />
+    <Compile Include="Controllers\SelectCompanyArEnController.cs" />
+    <Compile Include="Controllers\SelectFarmPlantArEnController.cs" />
+    <Compile Include="Controllers\SelectGovernArEnController.cs" />
+    <Compile Include="Controllers\SelectImOperationTypeController.cs" />
+    <Compile Include="Controllers\SelectPermisstionInformationByPermissionNumberController.cs" />
+    <Compile Include="Controllers\SelectRequestTypeController.cs" />
+    <Compile Include="Controllers\SelectShortNameForQuantitveController.cs" />
+    <Compile Include="Controllers\Select_AllPortNationalController.cs" />
+    <Compile Include="Controllers\Select_ExCheckRequestByImCheckNumberDetailsController.cs" />
+    <Compile Include="Controllers\Select_ImCheckRequestByImCheckNumberDetailsController.cs" />
+    <Compile Include="Controllers\Select_NewItemCategories_GroupController.cs" />
+    <Compile Include="Controllers\Select_PermissionRequestitemByPermissionNumberController.cs" />
+    <Compile Include="Controllers\Select_PermissionRequestItemByPermsiionNUmberAllInfromationController.cs" />
+    <Compile Include="Controllers\SendEmailsToPR_UserController.cs" />
+    <Compile Include="Controllers\ShipmentMeansController.cs" />
+    <Compile Include="Controllers\ShortNameAllController.cs" />
+    <Compile Include="Controllers\SMSVodefone.cs" />
+    <Compile Include="Controllers\StationAccrediationFirstRegistrationController.cs" />
+    <Compile Include="Controllers\StationAccreditationApiController.cs" />
+    <Compile Include="Controllers\StationAccreditationCommitePayment_PrintController.cs" />
+    <Compile Include="Controllers\StationAccreditationPayment_PrintController.cs" />
+    <Compile Include="Controllers\StationAccreditionCommitteeApiController.cs" />
+    <Compile Include="Controllers\StationActivityController.cs" />
+    <Compile Include="Controllers\StationActivityTypeController.cs" />
+    <Compile Include="Controllers\stationActivtytypeController.cs" />
+    <Compile Include="Controllers\StationAttachmentTypeController.cs" />
+    <Compile Include="Controllers\StationCommiteePaymentVisaController.cs" />
+    <Compile Include="Controllers\StationCompanyController.cs" />
+    <Compile Include="Controllers\StationController.cs" />
+    <Compile Include="Controllers\StationDetailsController.cs" />
+    <Compile Include="Controllers\StationFessController.cs" />
+    <Compile Include="Controllers\StationPaymentOnlineController.cs" />
+    <Compile Include="Controllers\StationRequestController.cs" />
+    <Compile Include="Controllers\StationSaveController.cs" />
+    <Compile Include="Controllers\StationUpdateController.cs" />
+    <Compile Include="Controllers\StatusPrurposNameController.cs" />
+    <Compile Include="Controllers\SystemCodeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TestMobileController.cs" />
+    <Compile Include="Controllers\TestTransactionController.cs" />
+    <Compile Include="Controllers\Transport_MeanController.cs" />
+    <Compile Include="Controllers\UersDetailsController.cs" />
+    <Compile Include="Controllers\UpdateEmailAdminController.cs" />
+    <Compile Include="Controllers\UpdatefarmRequestExpectedcommiteeDateController.cs" />
+    <Compile Include="Controllers\UsersAdminController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UsersErpController.cs" />
+    <Compile Include="Controllers\UsersFailureController.cs" />
+    <Compile Include="Controllers\UsersSendingController.cs" />
+    <Compile Include="Controllers\VillageController.cs" />
+    <Compile Include="Controllers\WebsiteController.cs" />
+    <Compile Include="DataClasses1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Export.cs" />
+    <Compile Include="ExportRequestFiles.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="PlantQuarantine.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PlantQuarantine.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="DataClasses1.dbml.layout">
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </None>
+    <Content Include="PlantQuarantine.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>PlantQuarantine.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>CapqApI.PlantQuarantineData</CustomToolNamespace>
+    </Content>
+    <None Include="PlantQuarantine.dbml.layout">
+      <DependentUpon>PlantQuarantine.dbml</DependentUpon>
+    </None>
+    <None Include="Properties\PublishProfiles\api.pubxml" />
+    <None Include="Properties\PublishProfiles\ee.pubxml" />
+    <None Include="Properties\PublishProfiles\NewAPi.pubxml" />
+    <None Include="Properties\PublishProfiles\newapiversion.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\CheckEditeProfile\" />
+    <Folder Include="Views\FarmUpateFees\" />
+    <Folder Include="Views\GetAllCompaniesAdminInformation\" />
+    <Folder Include="Views\Import_CheckRequest\" />
+    <Folder Include="Views\PersonInformationNew\" />
+    <Folder Include="WebControllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CapqModel\CapqModel.csproj">
+      <Project>{58595391-5875-4c40-92bb-7acf3f30147e}</Project>
+      <Name>CapqModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CapqWebDTO\CapqWebDTO.csproj">
+      <Project>{5a63960b-5e26-46c2-80f0-b7fdec491045}</Project>
+      <Name>CapqWebDTO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>9487</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49910/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

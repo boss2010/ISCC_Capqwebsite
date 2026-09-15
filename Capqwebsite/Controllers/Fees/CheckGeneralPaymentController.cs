@@ -41,7 +41,7 @@ namespace Capqwebsite.Controllers.Fees
             var checklist = context.Fees_Altahsils
                 .Where(x =>
                     x.National_ID == National_ID &&
-                    x.Code_Bank == "NF" &&
+                    x.Code_Bank != "00" &&
                     x.Account_Type == 138)
                 .ToList();
 

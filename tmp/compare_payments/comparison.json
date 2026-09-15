@@ -1,0 +1,1491 @@
+{
+  "excel_count": 410,
+  "excel_unique": 410,
+  "pdf_count": 411,
+  "pdf_unique": 411,
+  "only_pdf": [
+    {
+      "page": 2,
+      "order_id": "868033c2b835c",
+      "date": "7/27/2026",
+      "time": "10:02",
+      "amount": 605.0,
+      "line": "AGRICULTURE2 868033c2b835c Captured 7/27/2026 10:02 605"
+    }
+  ],
+  "only_excel": [],
+  "amount_mismatches": [
+    {
+      "order_id": "8077aea57b0d6",
+      "excel": {
+        "row": 24,
+        "transaction": 2757,
+        "order_id": "8077aea57b0d6",
+        "date": "30/07/2026",
+        "name": "السيد ١",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﻋﺘﻤﺎد اﻟـﻤﺰرﻋﺔ أﻛﺒﺮ ﻣﻦ ﺧﻤﺴﺔ أﻓﺪﻧﺔ ﺣﺘﻰ ٢٠ ﻓﺪان: 1,750.00 ج.م",
+        "amount": 1755
+      },
+      "pdf": {
+        "page": 12,
+        "order_id": "8077aea57b0d6",
+        "date": "7/30/2026",
+        "time": "17:39",
+        "amount": 2005.0,
+        "line": "AGRICULTURE2 8077aea57b0d6 83c263c2ff05f Captured 7/30/2026 17:39 2,005.00"
+      }
+    },
+    {
+      "order_id": "807b7d25c8e5b",
+      "excel": {
+        "row": 220,
+        "transaction": 1469,
+        "order_id": "807b7d25c8e5b",
+        "date": "29/07/2026",
+        "name": "ميرتكس للاستيراد ",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 100.00 ج.م",
+        "amount": 105
+      },
+      "pdf": {
+        "page": 6,
+        "order_id": "807b7d25c8e5b",
+        "date": "7/29/2026",
+        "time": "12:30",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 807b7d25c8e5b 80921cf077fdd Captured 7/29/2026 12:30 605"
+      }
+    },
+    {
+      "order_id": "80ee8ade9e6b8",
+      "excel": {
+        "row": 165,
+        "transaction": 2063,
+        "order_id": "80ee8ade9e6b8",
+        "date": "30/07/2026",
+        "name": "اجريكو فودز مصر ",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "80ee8ade9e6b8",
+        "date": "7/30/2026",
+        "time": "10:40",
+        "amount": 210.0,
+        "line": "AGRICULTURE2 80ee8ade9e6b8 88db8c0bfc16b Captured 7/30/2026 10:40 210"
+      }
+    },
+    {
+      "order_id": "815006f2ee462",
+      "excel": {
+        "row": 161,
+        "transaction": 2075,
+        "order_id": "815006f2ee462",
+        "date": "30/07/2026",
+        "name": "روتس للاستيراد",
+        "office": "مكتب الحجر الزراعى بالاسماعيلية",
+        "details": "نفقات سحب عينة: 200.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "815006f2ee462",
+        "date": "7/30/2026",
+        "time": "10:46",
+        "amount": 2205.0,
+        "line": "AGRICULTURE2 815006f2ee462 87047c5f9ef20 Captured 7/30/2026 10:46 2,205.00"
+      }
+    },
+    {
+      "order_id": "81595c22dbb46",
+      "excel": {
+        "row": 168,
+        "transaction": 2056,
+        "order_id": "81595c22dbb46",
+        "date": "30/07/2026",
+        "name": "ابناء الساحل ",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 2,500.00 ج.م",
+        "amount": 2505
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "81595c22dbb46",
+        "date": "7/30/2026",
+        "time": "10:36",
+        "amount": 2898.0,
+        "line": "AGRICULTURE2 81595c22dbb46 8399853695d5b Captured 7/30/2026 10:36 2,898.00"
+      }
+    },
+    {
+      "order_id": "81ee07b8aa274",
+      "excel": {
+        "row": 349,
+        "transaction": 651,
+        "order_id": "81ee07b8aa274",
+        "date": "27/07/2026",
+        "name": "جرين جلوب انترناشونال",
+        "office": "مكتب الحجر الزراعى بمعمل مطار القاهرة",
+        "details": "بدل انتقالات: 300.00 ج.م",
+        "amount": 300
+      },
+      "pdf": {
+        "page": 2,
+        "order_id": "81ee07b8aa274",
+        "date": "7/27/2026",
+        "time": "13:46",
+        "amount": 2205.0,
+        "line": "AGRICULTURE2 81ee07b8aa274 839437652533d Captured 7/27/2026 13:46 2,205.00"
+      }
+    },
+    {
+      "order_id": "81f97353af69d",
+      "excel": {
+        "row": 74,
+        "transaction": 2497,
+        "order_id": "81f97353af69d",
+        "date": "30/07/2026",
+        "name": "القواسمس",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 1,000.00 ج.م",
+        "amount": 1005
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "81f97353af69d",
+        "date": "7/30/2026",
+        "time": "13:22",
+        "amount": 2005.0,
+        "line": "AGRICULTURE2 81f97353af69d 8767e566ba2eb Captured 7/30/2026 13:22 2,005.00"
+      }
+    },
+    {
+      "order_id": "8250045b27c3e",
+      "excel": {
+        "row": 83,
+        "transaction": 2448,
+        "order_id": "8250045b27c3e",
+        "date": "30/07/2026",
+        "name": "اسلام صلاح ",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 2,093.00 ج.م | اﻋﺘﻤﺎد اﻟـﻤﺰرﻋﺔ أﻛﺒﺮ ﻣﻦ ﺧﻤﺴﺔ أﻓﺪﻧﺔ ﺣﺘﻰ ٢٠ ﻓﺪان: 1,000.00 ج.م",
+        "amount": 3098
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8250045b27c3e",
+        "date": "7/30/2026",
+        "time": "13:10",
+        "amount": 810.0,
+        "line": "AGRICULTURE2 8250045b27c3e 8ee8d54c2961a Captured 7/30/2026 13:10 810"
+      }
+    },
+    {
+      "order_id": "8265c26665268",
+      "excel": {
+        "row": 104,
+        "transaction": 2366,
+        "order_id": "8265c26665268",
+        "date": "30/07/2026",
+        "name": "لوسيندا فروت(بصره)",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 1,200.00 ج.م",
+        "amount": 1205
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8265c26665268",
+        "date": "7/30/2026",
+        "time": "12:24",
+        "amount": 3505.0,
+        "line": "AGRICULTURE2 8265c26665268 8ac8c6073b16a Captured 7/30/2026 12:24 3,505.00"
+      }
+    },
+    {
+      "order_id": "827e385f82499",
+      "excel": {
+        "row": 100,
+        "transaction": 2386,
+        "order_id": "827e385f82499",
+        "date": "30/07/2026",
+        "name": "الجرس للتوابل",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 110.00 ج.م",
+        "amount": 115
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "827e385f82499",
+        "date": "7/30/2026",
+        "time": "12:37",
+        "amount": 1205.0,
+        "line": "AGRICULTURE2 827e385f82499 8688c41d7ca83 Captured 7/30/2026 12:37 1,205.00"
+      }
+    },
+    {
+      "order_id": "8282a80591ee6",
+      "excel": {
+        "row": 92,
+        "transaction": 2415,
+        "order_id": "8282a80591ee6",
+        "date": "30/07/2026",
+        "name": "الغطاطي للتنميه والاستثمار الزراعي ",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﺳﺘﺨﺮاج ﺳﺠﻞ ﻗﻴﺪ ﺗﺼﺪﻳﺮ : 200.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8282a80591ee6",
+        "date": "7/30/2026",
+        "time": "12:55",
+        "amount": 2505.0,
+        "line": "AGRICULTURE2 8282a80591ee6 8b67ce8bbb66c Captured 7/30/2026 12:55 2,505.00"
+      }
+    },
+    {
+      "order_id": "82e7614c322a7",
+      "excel": {
+        "row": 143,
+        "transaction": 2158,
+        "order_id": "82e7614c322a7",
+        "date": "30/07/2026",
+        "name": "مؤسسه النيل لتجاره الدوليه",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اعتمادكيانات التصديرلصحةالنباتية/سحب عينات المزارع: 2,400.00 ج.م",
+        "amount": 2405
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "82e7614c322a7",
+        "date": "7/30/2026",
+        "time": "11:11",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 82e7614c322a7 895c9d42cd530 Captured 7/30/2026 11:11 605"
+      }
+    },
+    {
+      "order_id": "839437652533d",
+      "excel": {
+        "row": 348,
+        "transaction": 652,
+        "order_id": "839437652533d",
+        "date": "27/07/2026",
+        "name": "الجزيرة للتجارة",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 2,200.00 ج.م",
+        "amount": 2205
+      },
+      "pdf": {
+        "page": 2,
+        "order_id": "839437652533d",
+        "date": "7/27/2026",
+        "time": "13:46",
+        "amount": 300.0,
+        "line": "AGRICULTURE2 839437652533d 81ee07b8aa274 Captured 7/27/2026 13:46 300"
+      }
+    },
+    {
+      "order_id": "8399853695d5b",
+      "excel": {
+        "row": 169,
+        "transaction": 2055,
+        "order_id": "8399853695d5b",
+        "date": "30/07/2026",
+        "name": "مزرعة الناصر ٤ عنب",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "نفقات معاينه: 800.00 ج.م | نفقات سحب عينة: 2,093.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 2898
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8399853695d5b",
+        "date": "7/30/2026",
+        "time": "10:36",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 8399853695d5b 8fb50cf2d903b Captured 7/30/2026 10:36 205"
+      }
+    },
+    {
+      "order_id": "83c263c2ff05f",
+      "excel": {
+        "row": 25,
+        "transaction": 2756,
+        "order_id": "83c263c2ff05f",
+        "date": "30/07/2026",
+        "name": "الحسن",
+        "office": "ادارة خدمة المصدرين",
+        "details": "نفقات معاينه: 2,000.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 2005
+      },
+      "pdf": {
+        "page": 12,
+        "order_id": "83c263c2ff05f",
+        "date": "7/30/2026",
+        "time": "17:40",
+        "amount": 1755.0,
+        "line": "AGRICULTURE2 83c263c2ff05f 8077aea57b0d6 Captured 7/30/2026 17:40 1,755.00"
+      }
+    },
+    {
+      "order_id": "83cf6f2b5ca00",
+      "excel": {
+        "row": 47,
+        "transaction": 2615,
+        "order_id": "83cf6f2b5ca00",
+        "date": "30/07/2026",
+        "name": "سمارج هيربس",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "83cf6f2b5ca00",
+        "date": "7/30/2026",
+        "time": "14:23",
+        "amount": 1455.0,
+        "line": "AGRICULTURE2 83cf6f2b5ca00 86287ab44c217 Captured 7/30/2026 14:23 1,455.00"
+      }
+    },
+    {
+      "order_id": "83d106afbcc0f",
+      "excel": {
+        "row": 237,
+        "transaction": 1359,
+        "order_id": "83d106afbcc0f",
+        "date": "29/07/2026",
+        "name": "سامكريت مصر",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 295.00 ج.م",
+        "amount": 300
+      },
+      "pdf": {
+        "page": 6,
+        "order_id": "83d106afbcc0f",
+        "date": "7/29/2026",
+        "time": "11:15",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 83d106afbcc0f 8befe9eebf034 Captured 7/29/2026 11:15 605"
+      }
+    },
+    {
+      "order_id": "84de8a4fc70c6",
+      "excel": {
+        "row": 53,
+        "transaction": 2588,
+        "order_id": "84de8a4fc70c6",
+        "date": "30/07/2026",
+        "name": "رويال فروتس",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اعتمادكيانات التصديرلصحةالنباتية/سحب عينات المزارع: 2,088.00 ج.م",
+        "amount": 2093
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "84de8a4fc70c6",
+        "date": "7/30/2026",
+        "time": "14:05",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 84de8a4fc70c6 86829fc5da502 Captured 7/30/2026 14:05 605"
+      }
+    },
+    {
+      "order_id": "84e6e5dc20d9a",
+      "excel": {
+        "row": 172,
+        "transaction": 2047,
+        "order_id": "84e6e5dc20d9a",
+        "date": "30/07/2026",
+        "name": "الشاعر للاستيراد والتصدير ",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "84e6e5dc20d9a",
+        "date": "7/30/2026",
+        "time": "10:33",
+        "amount": 210.0,
+        "line": "AGRICULTURE2 84e6e5dc20d9a 886f3dfaf5abd Captured 7/30/2026 10:33 210"
+      }
+    },
+    {
+      "order_id": "8559ebbbd65e6",
+      "excel": {
+        "row": 146,
+        "transaction": 2143,
+        "order_id": "8559ebbbd65e6",
+        "date": "30/07/2026",
+        "name": "آفاق للاستثمار الزراعي",
+        "office": "مكتب الحجر الزراعى بالاسماعيلية",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8559ebbbd65e6",
+        "date": "7/30/2026",
+        "time": "11:06",
+        "amount": 5005.0,
+        "line": "AGRICULTURE2 8559ebbbd65e6 87caed3b68e2b Captured 7/30/2026 11:06 5,005.00"
+      }
+    },
+    {
+      "order_id": "858cafaefa0ee",
+      "excel": {
+        "row": 154,
+        "transaction": 2113,
+        "order_id": "858cafaefa0ee",
+        "date": "30/07/2026",
+        "name": "الطباخ",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "858cafaefa0ee",
+        "date": "7/30/2026",
+        "time": "10:56",
+        "amount": 6269.0,
+        "line": "AGRICULTURE2 858cafaefa0ee 8b569823ea519 Captured 7/30/2026 10:56 6,269.00"
+      }
+    },
+    {
+      "order_id": "85e240ac1fef5",
+      "excel": {
+        "row": 43,
+        "transaction": 2639,
+        "order_id": "85e240ac1fef5",
+        "date": "30/07/2026",
+        "name": "صومعة ههيا",
+        "office": "مكتب الحجر الزراعى بالاسماعيلية",
+        "details": "نفقات معاينه: 500.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 505
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "85e240ac1fef5",
+        "date": "7/30/2026",
+        "time": "14:35",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 85e240ac1fef5 8d8364d915fe9 Captured 7/30/2026 14:35 605"
+      }
+    },
+    {
+      "order_id": "85ea1eba5fbca",
+      "excel": {
+        "row": 357,
+        "transaction": 619,
+        "order_id": "85ea1eba5fbca",
+        "date": "27/07/2026",
+        "name": "جراند جرين",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 3,700.00 ج.م",
+        "amount": 3705
+      },
+      "pdf": {
+        "page": 2,
+        "order_id": "85ea1eba5fbca",
+        "date": "7/27/2026",
+        "time": "13:03",
+        "amount": 300.0,
+        "line": "AGRICULTURE2 85ea1eba5fbca 8fff1fe195522 Captured 7/27/2026 13:03 300"
+      }
+    },
+    {
+      "order_id": "86287ab44c217",
+      "excel": {
+        "row": 48,
+        "transaction": 2614,
+        "order_id": "86287ab44c217",
+        "date": "30/07/2026",
+        "name": "صومعة ههيا",
+        "office": "مكتب الحجر الزراعى بالاسماعيلية",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 1,450.00 ج.م",
+        "amount": 1455
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "86287ab44c217",
+        "date": "7/30/2026",
+        "time": "14:23",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 86287ab44c217 83cf6f2b5ca00 Captured 7/30/2026 14:23 605"
+      }
+    },
+    {
+      "order_id": "863953c2b6e7a",
+      "excel": {
+        "row": 81,
+        "transaction": 2456,
+        "order_id": "863953c2b6e7a",
+        "date": "30/07/2026",
+        "name": "الحسن",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﺳﺘﺨﺮاج ﺳﺠﻞ ﻗﻴﺪ ﺗﺼﺪﻳﺮ : 200.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "863953c2b6e7a",
+        "date": "7/30/2026",
+        "time": "13:12",
+        "amount": 3098.0,
+        "line": "AGRICULTURE2 863953c2b6e7a 8250045b27c3e Captured 7/30/2026 13:12 3,098.00"
+      }
+    },
+    {
+      "order_id": "86829fc5da502",
+      "excel": {
+        "row": 54,
+        "transaction": 2586,
+        "order_id": "86829fc5da502",
+        "date": "30/07/2026",
+        "name": "اولاد ابوبكر",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "86829fc5da502",
+        "date": "7/30/2026",
+        "time": "14:06",
+        "amount": 2093.0,
+        "line": "AGRICULTURE2 86829fc5da502 84de8a4fc70c6 Captured 7/30/2026 14:06 2,093.00"
+      }
+    },
+    {
+      "order_id": "8688c41d7ca83",
+      "excel": {
+        "row": 101,
+        "transaction": 2385,
+        "order_id": "8688c41d7ca83",
+        "date": "30/07/2026",
+        "name": "عوض الله عيد عوض الله (بصره)",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 1,200.00 ج.م",
+        "amount": 1205
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8688c41d7ca83",
+        "date": "7/30/2026",
+        "time": "12:36",
+        "amount": 115.0,
+        "line": "AGRICULTURE2 8688c41d7ca83 827e385f82499 Captured 7/30/2026 12:36 115"
+      }
+    },
+    {
+      "order_id": "87047c5f9ef20",
+      "excel": {
+        "row": 159,
+        "transaction": 2082,
+        "order_id": "87047c5f9ef20",
+        "date": "30/07/2026",
+        "name": "السعيد تريدنج ",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 2,200.00 ج.م",
+        "amount": 2205
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "87047c5f9ef20",
+        "date": "7/30/2026",
+        "time": "10:48",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 87047c5f9ef20 80ee8ade9e6b8 Captured 7/30/2026 10:48 605"
+      }
+    },
+    {
+      "order_id": "8709940a98156",
+      "excel": {
+        "row": 196,
+        "transaction": 1665,
+        "order_id": "8709940a98156",
+        "date": "29/07/2026",
+        "name": "ابناء الساحل ",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 3,800.00 ج.م",
+        "amount": 3805
+      },
+      "pdf": {
+        "page": 7,
+        "order_id": "8709940a98156",
+        "date": "7/29/2026",
+        "time": "13:39",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 8709940a98156 871c9219ed5d8 Captured 7/29/2026 13:39 605"
+      }
+    },
+    {
+      "order_id": "871c9219ed5d8",
+      "excel": {
+        "row": 197,
+        "transaction": 1662,
+        "order_id": "871c9219ed5d8",
+        "date": "29/07/2026",
+        "name": "فريدال للصناعات العطرية",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 7,
+        "order_id": "871c9219ed5d8",
+        "date": "7/29/2026",
+        "time": "13:39",
+        "amount": 3805.0,
+        "line": "AGRICULTURE2 871c9219ed5d8 8709940a98156 Captured 7/29/2026 13:39 3,805.00"
+      }
+    },
+    {
+      "order_id": "8767e566ba2eb",
+      "excel": {
+        "row": 75,
+        "transaction": 2496,
+        "order_id": "8767e566ba2eb",
+        "date": "30/07/2026",
+        "name": "الفجر",
+        "office": "ادارة خدمة المصدرين",
+        "details": "نفقات معاينه: 2,000.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 2005
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "8767e566ba2eb",
+        "date": "7/30/2026",
+        "time": "13:22",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 8767e566ba2eb 8df3f53f9633f Captured 7/30/2026 13:22 205"
+      }
+    },
+    {
+      "order_id": "87bc938b7556b",
+      "excel": {
+        "row": 144,
+        "transaction": 2156,
+        "order_id": "87bc938b7556b",
+        "date": "30/07/2026",
+        "name": "ساند فالى",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 300.00 ج.م",
+        "amount": 305
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "87bc938b7556b",
+        "date": "7/30/2026",
+        "time": "11:10",
+        "amount": 105.0,
+        "line": "AGRICULTURE2 87bc938b7556b 8abf3a8d161e4 Captured 7/30/2026 11:10 105"
+      }
+    },
+    {
+      "order_id": "87caed3b68e2b",
+      "excel": {
+        "row": 147,
+        "transaction": 2141,
+        "order_id": "87caed3b68e2b",
+        "date": "30/07/2026",
+        "name": "خيرات النيل ",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 5,000.00 ج.م",
+        "amount": 5005
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "87caed3b68e2b",
+        "date": "7/30/2026",
+        "time": "11:07",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 87caed3b68e2b 8559ebbbd65e6 Captured 7/30/2026 11:07 605"
+      }
+    },
+    {
+      "order_id": "886e0d57332af",
+      "excel": {
+        "row": 133,
+        "transaction": 2186,
+        "order_id": "886e0d57332af",
+        "date": "30/07/2026",
+        "name": "اليف العالميه",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "886e0d57332af",
+        "date": "7/30/2026",
+        "time": "11:23",
+        "amount": 105.0,
+        "line": "AGRICULTURE2 886e0d57332af 88b490e54f1df Captured 7/30/2026 11:23 105"
+      }
+    },
+    {
+      "order_id": "886f3dfaf5abd",
+      "excel": {
+        "row": 171,
+        "transaction": 2048,
+        "order_id": "886f3dfaf5abd",
+        "date": "30/07/2026",
+        "name": "توب فريش توجو",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 10.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 200.00 ج.م",
+        "amount": 210
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "886f3dfaf5abd",
+        "date": "7/30/2026",
+        "time": "10:32",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 886f3dfaf5abd 84e6e5dc20d9a Captured 7/30/2026 10:32 605"
+      }
+    },
+    {
+      "order_id": "88b490e54f1df",
+      "excel": {
+        "row": 135,
+        "transaction": 2182,
+        "order_id": "88b490e54f1df",
+        "date": "30/07/2026",
+        "name": "المجد لتنمية ",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 100.00 ج.م",
+        "amount": 105
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "88b490e54f1df",
+        "date": "7/30/2026",
+        "time": "11:23",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 88b490e54f1df 8a6f7c94dfd55 Captured 7/30/2026 11:23 205"
+      }
+    },
+    {
+      "order_id": "88db8c0bfc16b",
+      "excel": {
+        "row": 164,
+        "transaction": 2066,
+        "order_id": "88db8c0bfc16b",
+        "date": "30/07/2026",
+        "name": " كايرو فود",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 10.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 200.00 ج.م",
+        "amount": 210
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "88db8c0bfc16b",
+        "date": "7/30/2026",
+        "time": "10:42",
+        "amount": 2205.0,
+        "line": "AGRICULTURE2 88db8c0bfc16b 8dfdf08f40ac3 Captured 7/30/2026 10:42 2,205.00"
+      }
+    },
+    {
+      "order_id": "895c9d42cd530",
+      "excel": {
+        "row": 142,
+        "transaction": 2161,
+        "order_id": "895c9d42cd530",
+        "date": "30/07/2026",
+        "name": "الصقر العربي",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "895c9d42cd530",
+        "date": "7/30/2026",
+        "time": "11:11",
+        "amount": 2405.0,
+        "line": "AGRICULTURE2 895c9d42cd530 82e7614c322a7 Captured 7/30/2026 11:11 2,405.00"
+      }
+    },
+    {
+      "order_id": "897294fac4deb",
+      "excel": {
+        "row": 219,
+        "transaction": 1470,
+        "order_id": "897294fac4deb",
+        "date": "29/07/2026",
+        "name": "بألم ايجيبت للتمور",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 6,
+        "order_id": "897294fac4deb",
+        "date": "7/29/2026",
+        "time": "12:29",
+        "amount": 105.0,
+        "line": "AGRICULTURE2 897294fac4deb 807b7d25c8e5b Captured 7/29/2026 12:29 105"
+      }
+    },
+    {
+      "order_id": "89a36675b18b8",
+      "excel": {
+        "row": 80,
+        "transaction": 2460,
+        "order_id": "89a36675b18b8",
+        "date": "30/07/2026",
+        "name": "وادى النيل للاستيراد و التصدير ",
+        "office": "مكتب الحجر الزراعى بميناء غرب بورسعيد",
+        "details": "نفقات معاينه: 500.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 505
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "89a36675b18b8",
+        "date": "7/30/2026",
+        "time": "13:16",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 89a36675b18b8 8c04fe30a4df2 Captured 7/30/2026 13:16 205"
+      }
+    },
+    {
+      "order_id": "8a512f3fe1164",
+      "excel": {
+        "row": 117,
+        "transaction": 2292,
+        "order_id": "8a512f3fe1164",
+        "date": "30/07/2026",
+        "name": "مؤسسه النيل لتجاره الدوليه",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 25.00 ج.م",
+        "amount": 25
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "8a512f3fe1164",
+        "date": "7/30/2026",
+        "time": "11:57",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 8a512f3fe1164 8f5d1e9e2891d Captured 7/30/2026 11:57 205"
+      }
+    },
+    {
+      "order_id": "8a6f7c94dfd55",
+      "excel": {
+        "row": 134,
+        "transaction": 2185,
+        "order_id": "8a6f7c94dfd55",
+        "date": "30/07/2026",
+        "name": "ديليشيس للاستيراد و التصدير",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﺳﺘﺨﺮاج ﺳﺠﻞ ﻗﻴﺪ ﺗﺼﺪﻳﺮ : 200.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "8a6f7c94dfd55",
+        "date": "7/30/2026",
+        "time": "11:24",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 8a6f7c94dfd55 886e0d57332af Captured 7/30/2026 11:24 605"
+      }
+    },
+    {
+      "order_id": "8a8828d25302b",
+      "excel": {
+        "row": 89,
+        "transaction": 2419,
+        "order_id": "8a8828d25302b",
+        "date": "30/07/2026",
+        "name": "الشمس للاستيراد ",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 3,800.00 ج.م",
+        "amount": 3805
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8a8828d25302b",
+        "date": "7/30/2026",
+        "time": "12:59",
+        "amount": 305.0,
+        "line": "AGRICULTURE2 8a8828d25302b 8dea76d9163e5 Captured 7/30/2026 12:59 305"
+      }
+    },
+    {
+      "order_id": "8aa5687d0a04d",
+      "excel": {
+        "row": 152,
+        "transaction": 2118,
+        "order_id": "8aa5687d0a04d",
+        "date": "30/07/2026",
+        "name": "الدلتا للتوكيلات ",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 1,700.00 ج.م",
+        "amount": 1705
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8aa5687d0a04d",
+        "date": "7/30/2026",
+        "time": "11:00",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 8aa5687d0a04d 858cafaefa0ee Captured 7/30/2026 11:00 605"
+      }
+    },
+    {
+      "order_id": "8abf3a8d161e4",
+      "excel": {
+        "row": 145,
+        "transaction": 2154,
+        "order_id": "8abf3a8d161e4",
+        "date": "30/07/2026",
+        "name": "ايجل",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 100.00 ج.م",
+        "amount": 105
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8abf3a8d161e4",
+        "date": "7/30/2026",
+        "time": "11:09",
+        "amount": 305.0,
+        "line": "AGRICULTURE2 8abf3a8d161e4 87bc938b7556b Captured 7/30/2026 11:09 305"
+      }
+    },
+    {
+      "order_id": "8ac8c6073b16a",
+      "excel": {
+        "row": 105,
+        "transaction": 2365,
+        "order_id": "8ac8c6073b16a",
+        "date": "30/07/2026",
+        "name": "الفلاح للاستيراد والتصدير",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 3,500.00 ج.م",
+        "amount": 3505
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8ac8c6073b16a",
+        "date": "7/30/2026",
+        "time": "12:25",
+        "amount": 1205.0,
+        "line": "AGRICULTURE2 8ac8c6073b16a 8265c26665268 Captured 7/30/2026 12:25 1,205.00"
+      }
+    },
+    {
+      "order_id": "8b099dbb77170",
+      "excel": {
+        "row": 341,
+        "transaction": 671,
+        "order_id": "8b099dbb77170",
+        "date": "27/07/2026",
+        "name": "ايفرجريس للمنتجات الزراعية",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "بدل انتقالات: 600.00 ج.م",
+        "amount": 600
+      },
+      "pdf": {
+        "page": 3,
+        "order_id": "8b099dbb77170",
+        "date": "7/27/2026",
+        "time": "14:14",
+        "amount": 10000.0,
+        "line": "AGRICULTURE2 8b099dbb77170 8ffaafdc39508 Captured 7/27/2026 14:14 10,000.00"
+      }
+    },
+    {
+      "order_id": "8b15888ba6df0",
+      "excel": {
+        "row": 72,
+        "transaction": 2500,
+        "order_id": "8b15888ba6df0",
+        "date": "30/07/2026",
+        "name": "صومعة ابو صوير ",
+        "office": "مكتب الحجر الزراعى بالاسماعيلية",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 950.00 ج.م",
+        "amount": 955
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "8b15888ba6df0",
+        "date": "7/30/2026",
+        "time": "13:23",
+        "amount": 1005.0,
+        "line": "AGRICULTURE2 8b15888ba6df0 81f97353af69d Captured 7/30/2026 13:23 1,005.00"
+      }
+    },
+    {
+      "order_id": "8b569823ea519",
+      "excel": {
+        "row": 153,
+        "transaction": 2114,
+        "order_id": "8b569823ea519",
+        "date": "30/07/2026",
+        "name": "علي خميس ",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 6,264.00 ج.م",
+        "amount": 6269
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8b569823ea519",
+        "date": "7/30/2026",
+        "time": "10:56",
+        "amount": 1705.0,
+        "line": "AGRICULTURE2 8b569823ea519 8aa5687d0a04d Captured 7/30/2026 10:56 1,705.00"
+      }
+    },
+    {
+      "order_id": "8b67ce8bbb66c",
+      "excel": {
+        "row": 91,
+        "transaction": 2416,
+        "order_id": "8b67ce8bbb66c",
+        "date": "30/07/2026",
+        "name": "الشمس للاستيراد ",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 2,500.00 ج.م",
+        "amount": 2505
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8b67ce8bbb66c",
+        "date": "7/30/2026",
+        "time": "12:55",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 8b67ce8bbb66c 8282a80591ee6 Captured 7/30/2026 12:55 205"
+      }
+    },
+    {
+      "order_id": "8b95fae554749",
+      "excel": {
+        "row": 163,
+        "transaction": 2071,
+        "order_id": "8b95fae554749",
+        "date": "30/07/2026",
+        "name": "ابناء الساحل ",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 3,800.00 ج.م",
+        "amount": 3805
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8b95fae554749",
+        "date": "7/30/2026",
+        "time": "10:45",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 8b95fae554749 815006f2ee462 Captured 7/30/2026 10:45 205"
+      }
+    },
+    {
+      "order_id": "8b9a254d24995",
+      "excel": {
+        "row": 138,
+        "transaction": 2174,
+        "order_id": "8b9a254d24995",
+        "date": "30/07/2026",
+        "name": "مؤسسه النيل لتجاره الدوليه",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 300.00 ج.م",
+        "amount": 305
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "8b9a254d24995",
+        "date": "7/30/2026",
+        "time": "11:17",
+        "amount": 1005.0,
+        "line": "AGRICULTURE2 8b9a254d24995 8e7587ab07006 Captured 7/30/2026 11:17 1,005.00"
+      }
+    },
+    {
+      "order_id": "8befe9eebf034",
+      "excel": {
+        "row": 236,
+        "transaction": 1360,
+        "order_id": "8befe9eebf034",
+        "date": "29/07/2026",
+        "name": "اليف العالميه",
+        "office": "مكتب الحجر الزراعى بمعمل مطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 6,
+        "order_id": "8befe9eebf034",
+        "date": "7/29/2026",
+        "time": "11:16",
+        "amount": 300.0,
+        "line": "AGRICULTURE2 8befe9eebf034 83d106afbcc0f Captured 7/29/2026 11:16 300"
+      }
+    },
+    {
+      "order_id": "8c04fe30a4df2",
+      "excel": {
+        "row": 78,
+        "transaction": 2475,
+        "order_id": "8c04fe30a4df2",
+        "date": "30/07/2026",
+        "name": "الحسن",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﺳﺘﺨﺮاج ﺳﺠﻞ ﻗﻴﺪ ﺗﺼﺪﻳﺮ : 200.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8c04fe30a4df2",
+        "date": "7/30/2026",
+        "time": "13:16",
+        "amount": 505.0,
+        "line": "AGRICULTURE2 8c04fe30a4df2 89a36675b18b8 Captured 7/30/2026 13:16 505"
+      }
+    },
+    {
+      "order_id": "8c0f862ef7580",
+      "excel": {
+        "row": 309,
+        "transaction": 1007,
+        "order_id": "8c0f862ef7580",
+        "date": "28/07/2026",
+        "name": "الرحاب جروب للتصدير",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 4,
+        "order_id": "8c0f862ef7580",
+        "date": "7/28/2026",
+        "time": "11:58",
+        "amount": 2205.0,
+        "line": "AGRICULTURE2 8c0f862ef7580 8e5475380773a Captured 7/28/2026 11:58 2,205.00"
+      }
+    },
+    {
+      "order_id": "8cab50c3ac670",
+      "excel": {
+        "row": 68,
+        "transaction": 2519,
+        "order_id": "8cab50c3ac670",
+        "date": "30/07/2026",
+        "name": "احمد عبدالفتاح حسين 1",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﻋﺘﻤﺎدوﺗﺴﺠﻴﻞﻣﻮردﻣﻨﺘﺠﺎت زراﻋﻴﺔﻟـﻤﺤﻄﺎت وﻣﺮاﻛﺰاﻟﺘﻌﺒﺌﺔ: 1,000.00 ج.م",
+        "amount": 1005
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "8cab50c3ac670",
+        "date": "7/30/2026",
+        "time": "13:34",
+        "amount": 5.0,
+        "line": "AGRICULTURE2 8cab50c3ac670 8f9fbc6a25768 Captured 7/30/2026 13:34 5"
+      }
+    },
+    {
+      "order_id": "8d161bc729a4f",
+      "excel": {
+        "row": 70,
+        "transaction": 2517,
+        "order_id": "8d161bc729a4f",
+        "date": "30/07/2026",
+        "name": "النحاس",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 6,000.00 ج.م",
+        "amount": 6005
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "8d161bc729a4f",
+        "date": "7/30/2026",
+        "time": "13:34",
+        "amount": 1005.0,
+        "line": "AGRICULTURE2 8d161bc729a4f 8cab50c3ac670 Captured 7/30/2026 13:34 1,005.00"
+      }
+    },
+    {
+      "order_id": "8d8364d915fe9",
+      "excel": {
+        "row": 42,
+        "transaction": 2640,
+        "order_id": "8d8364d915fe9",
+        "date": "30/07/2026",
+        "name": "لاند سبيسز",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | بدل انتقالات: 600.00 ج.م",
+        "amount": 605
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "8d8364d915fe9",
+        "date": "7/30/2026",
+        "time": "14:34",
+        "amount": 505.0,
+        "line": "AGRICULTURE2 8d8364d915fe9 85e240ac1fef5 Captured 7/30/2026 14:34 505"
+      }
+    },
+    {
+      "order_id": "8dea76d9163e5",
+      "excel": {
+        "row": 90,
+        "transaction": 2417,
+        "order_id": "8dea76d9163e5",
+        "date": "30/07/2026",
+        "name": "ال شاهين للتجارة و الصناعة",
+        "office": "مكتب الحجر الزراعى بمنفذ العاشر من رمضان",
+        "details": "نفقات معاينه: 300.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 305
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8dea76d9163e5",
+        "date": "7/30/2026",
+        "time": "12:57",
+        "amount": 3805.0,
+        "line": "AGRICULTURE2 8dea76d9163e5 8a8828d25302b Captured 7/30/2026 12:57 3,805.00"
+      }
+    },
+    {
+      "order_id": "8df3f53f9633f",
+      "excel": {
+        "row": 73,
+        "transaction": 2499,
+        "order_id": "8df3f53f9633f",
+        "date": "30/07/2026",
+        "name": "الحسن",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﺳﺘﺨﺮاج ﺳﺠﻞ ﻗﻴﺪ ﺗﺼﺪﻳﺮ : 200.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "8df3f53f9633f",
+        "date": "7/30/2026",
+        "time": "13:24",
+        "amount": 955.0,
+        "line": "AGRICULTURE2 8df3f53f9633f 8b15888ba6df0 Captured 7/30/2026 13:24 955"
+      }
+    },
+    {
+      "order_id": "8dfdf08f40ac3",
+      "excel": {
+        "row": 162,
+        "transaction": 2072,
+        "order_id": "8dfdf08f40ac3",
+        "date": "30/07/2026",
+        "name": "اجرو ليمتد ",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 2,200.00 ج.م",
+        "amount": 2205
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8dfdf08f40ac3",
+        "date": "7/30/2026",
+        "time": "10:44",
+        "amount": 3805.0,
+        "line": "AGRICULTURE2 8dfdf08f40ac3 8b95fae554749 Captured 7/30/2026 10:44 3,805.00"
+      }
+    },
+    {
+      "order_id": "8e5475380773a",
+      "excel": {
+        "row": 310,
+        "transaction": 1006,
+        "order_id": "8e5475380773a",
+        "date": "28/07/2026",
+        "name": "ساند فالى",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | رسوم فحص عينة معملية : 2,200.00 ج.م",
+        "amount": 2205
+      },
+      "pdf": {
+        "page": 4,
+        "order_id": "8e5475380773a",
+        "date": "7/28/2026",
+        "time": "11:59",
+        "amount": 605.0,
+        "line": "AGRICULTURE2 8e5475380773a 8c0f862ef7580 Captured 7/28/2026 11:59 605"
+      }
+    },
+    {
+      "order_id": "8e68bb04ac8f8",
+      "excel": {
+        "row": 140,
+        "transaction": 2170,
+        "order_id": "8e68bb04ac8f8",
+        "date": "30/07/2026",
+        "name": "رويال روتس",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | ﺷﻬﺎدة ﺑﻴﺎﻧﺎت: 100.00 ج.م",
+        "amount": 105
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "8e68bb04ac8f8",
+        "date": "7/30/2026",
+        "time": "11:17",
+        "amount": 305.0,
+        "line": "AGRICULTURE2 8e68bb04ac8f8 8b9a254d24995 Captured 7/30/2026 11:17 305"
+      }
+    },
+    {
+      "order_id": "8e7587ab07006",
+      "excel": {
+        "row": 139,
+        "transaction": 2171,
+        "order_id": "8e7587ab07006",
+        "date": "30/07/2026",
+        "name": "ريزا",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﻋﺘﻤﺎدوﺗﺴﺠﻴﻞﻣﻮردﻣﻨﺘﺠﺎت زراﻋﻴﺔﻟـﻤﺤﻄﺎت وﻣﺮاﻛﺰاﻟﺘﻌﺒﺌﺔ: 1,000.00 ج.م",
+        "amount": 1005
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "8e7587ab07006",
+        "date": "7/30/2026",
+        "time": "11:17",
+        "amount": 105.0,
+        "line": "AGRICULTURE2 8e7587ab07006 8e68bb04ac8f8 Captured 7/30/2026 11:17 105"
+      }
+    },
+    {
+      "order_id": "8ee8d54c2961a",
+      "excel": {
+        "row": 82,
+        "transaction": 2450,
+        "order_id": "8ee8d54c2961a",
+        "date": "30/07/2026",
+        "name": "مجاهد فروت",
+        "office": "مكتب الحجر الزراعى بالدقى",
+        "details": "نفقات سحب عينة: 805.00 ج.م | رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 810
+      },
+      "pdf": {
+        "page": 10,
+        "order_id": "8ee8d54c2961a",
+        "date": "7/30/2026",
+        "time": "13:12",
+        "amount": 205.0,
+        "line": "AGRICULTURE2 8ee8d54c2961a 863953c2b6e7a Captured 7/30/2026 13:12 205"
+      }
+    },
+    {
+      "order_id": "8f5d1e9e2891d",
+      "excel": {
+        "row": 118,
+        "transaction": 2290,
+        "order_id": "8f5d1e9e2891d",
+        "date": "30/07/2026",
+        "name": "خيرات النيل ",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﺳﺘﺨﺮاج ﺳﺠﻞ ﻗﻴﺪ ﺗﺼﺪﻳﺮ : 200.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 9,
+        "order_id": "8f5d1e9e2891d",
+        "date": "7/30/2026",
+        "time": "11:58",
+        "amount": 25.0,
+        "line": "AGRICULTURE2 8f5d1e9e2891d 8a512f3fe1164 Captured 7/30/2026 11:58 25"
+      }
+    },
+    {
+      "order_id": "8f9fbc6a25768",
+      "excel": {
+        "row": 69,
+        "transaction": 2518,
+        "order_id": "8f9fbc6a25768",
+        "date": "30/07/2026",
+        "name": "الامين للاستيراد",
+        "office": "مكتب الحجر الزراعى بميناء دمياط",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م",
+        "amount": 5
+      },
+      "pdf": {
+        "page": 11,
+        "order_id": "8f9fbc6a25768",
+        "date": "7/30/2026",
+        "time": "13:33",
+        "amount": 6005.0,
+        "line": "AGRICULTURE2 8f9fbc6a25768 8d161bc729a4f Captured 7/30/2026 13:33 6,005.00"
+      }
+    },
+    {
+      "order_id": "8fb50cf2d903b",
+      "excel": {
+        "row": 167,
+        "transaction": 2058,
+        "order_id": "8fb50cf2d903b",
+        "date": "30/07/2026",
+        "name": "العمدة",
+        "office": "ادارة خدمة المصدرين",
+        "details": "رسوم صندوق شهداء: 5.00 ج.م | اﺳﺘﺨﺮاج ﺳﺠﻞ ﻗﻴﺪ ﺗﺼﺪﻳﺮ : 200.00 ج.م",
+        "amount": 205
+      },
+      "pdf": {
+        "page": 8,
+        "order_id": "8fb50cf2d903b",
+        "date": "7/30/2026",
+        "time": "10:37",
+        "amount": 2505.0,
+        "line": "AGRICULTURE2 8fb50cf2d903b 81595c22dbb46 Captured 7/30/2026 10:37 2,505.00"
+      }
+    },
+    {
+      "order_id": "8ffaafdc39508",
+      "excel": {
+        "row": 342,
+        "transaction": 670,
+        "order_id": "8ffaafdc39508",
+        "date": "27/07/2026",
+        "name": "خير زمان",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "بدل انتقالات: 10,000.00 ج.م",
+        "amount": 10000
+      },
+      "pdf": {
+        "page": 3,
+        "order_id": "8ffaafdc39508",
+        "date": "7/27/2026",
+        "time": "14:12",
+        "amount": 600.0,
+        "line": "AGRICULTURE2 8ffaafdc39508 8b099dbb77170 Captured 7/27/2026 14:12 600"
+      }
+    },
+    {
+      "order_id": "8fff1fe195522",
+      "excel": {
+        "row": 358,
+        "transaction": 618,
+        "order_id": "8fff1fe195522",
+        "date": "27/07/2026",
+        "name": "مجموعة ديري",
+        "office": "مكتب الحجر الزراعى بمطار القاهرة",
+        "details": "بدل انتقالات: 300.00 ج.م",
+        "amount": 300
+      },
+      "pdf": {
+        "page": 2,
+        "order_id": "8fff1fe195522",
+        "date": "7/27/2026",
+        "time": "13:04",
+        "amount": 3705.0,
+        "line": "AGRICULTURE2 8fff1fe195522 85ea1eba5fbca Captured 7/27/2026 13:04 3,705.00"
+      }
+    }
+  ],
+  "excel_duplicates": {},
+  "pdf_duplicates": {}
+}

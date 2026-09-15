@@ -15,6 +15,12 @@ namespace ViewModels
 
         public List<string> Offices { get; set; } = new();
 
+        [StringLength(250, ErrorMessage = "القسم لا يتجاوز 250 حرف")]
+        public string? Department { get; set; }
+
+        [StringLength(250, ErrorMessage = "الصنف لا يتجاوز 250 حرف")]
+        public string? Item { get; set; }
+
         public string? Customs_Certificate_Number { get; set; }
 
         [Required(ErrorMessage = "الرقم القومي مطلوب")]
@@ -46,6 +52,13 @@ namespace ViewModels
         public string FeesName { get; set; }
 
         public bool Selected { get; set; }
+
+        public bool IsFixedPrice { get; set; }
+
+        [StringLength(
+            250,
+            ErrorMessage = "بيان فرق الرسوم لا يتجاوز 250 حرف")]
+        public string? FeeDescription { get; set; }
 
         [Range(
             0,

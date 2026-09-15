@@ -23,24 +23,47 @@
         </div>
 
         <div class="col-md-4">
-            <label>رقم الشهادة الجمركية/رقم الفحص</label>
+            <label>اسم الشركة <span class="text-danger">*</span></label>
+            <input asp-for="Name"
+                   id="CompanyName"
+                   class="form-control"
+                   required />
+            <span asp-validation-for="Name"
+                  id="companyNameError"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label>الرقم القومي <span class="text-danger">*</span></label>
+            <input asp-for="National_ID"
+                   id="National_ID"
+                   class="form-control"
+                   maxlength="14" />
+            <span asp-validation-for="National_ID"
+                  id="nationalError"
+                  class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label>رقم الشهادة الجمركية / رقم طلب الفحص / رقم العينة</label>
             <input asp-for="Customs_Certificate_Number"
                    class="form-control" />
         </div>
 
         <div class="col-md-4">
-
-            <label>الرقم القومي</label>
-
-            <input asp-for="National_ID"
-                   id="National_ID"
+            <label>القسم</label>
+            <input asp-for="Department"
                    class="form-control"
-                   maxlength="14" />
+                   maxlength="250" />
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
 
-            <span id="nationalError"
-                  class="text-danger">
-            </span>
-
+        <div class="col-md-4">
+            <label>الصنف</label>
+            <input asp-for="Item"
+                   class="form-control"
+                   maxlength="250" />
+            <span asp-validation-for="Item" class="text-danger"></span>
         </div>
 
         <div class="col-md-4">
@@ -55,16 +78,6 @@
                    class="form-control" />
         </div>
 
-        <div class="col-md-4">
-            <label>اسم الشركة <span class="text-danger">*</span></label>
-            <input asp-for="Name"
-                   id="CompanyName"
-                   class="form-control"
-                   required />
-            <span asp-validation-for="Name"
-                  id="companyNameError"
-                  class="text-danger"></span>
-        </div>
         <div class="col-md-4">
             <label>اسم المحطة</label>
             <input asp-for="FarmName"
@@ -95,7 +108,7 @@
 
             @for (int i = 0; i < Model.Fees.Count; i++)
             {
-                var isMartyrFee = Model.Fees[i].FeesType_ID == 34;
+                var isMartyrFee = Model.Fees[i].FeesType_ID == 56;
                 <tr>
 
                     <td>

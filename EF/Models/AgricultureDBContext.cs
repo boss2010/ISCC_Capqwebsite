@@ -3310,11 +3310,16 @@ public partial class AgricultureDBContext : DbContext
             entity.Property(e => e.Account_Type)
                 .HasDefaultValue(-1)
                 .HasComment("138 حكومي، 139 خاص، 0 كلا الحسابين، -1 غير معروض");
+            entity.Property(e => e.Display_Order)
+                .HasComment("ترتيب ظهور الرسم في صفحات الدفع");
             entity.Property(e => e.Full_Name).HasMaxLength(250);
             entity.Property(e => e.Name_Ar).HasMaxLength(50);
             entity.Property(e => e.Name_En)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Price)
+                .HasComment("السعر الافتراضي للرسم")
+                .HasColumnType("money");
             entity.Property(e => e.User_Creation_Date).HasColumnType("smalldatetime");
             entity.Property(e => e.User_Deletion_Date).HasColumnType("smalldatetime");
             entity.Property(e => e.User_Updation_Date).HasColumnType("smalldatetime");
@@ -3366,6 +3371,8 @@ public partial class AgricultureDBContext : DbContext
                 .HasComment("كود العملية من البنك");
             entity.Property(e => e.Commercial_Register).HasMaxLength(50);
             entity.Property(e => e.Customs_Certificate_Number).HasMaxLength(200);
+            entity.Property(e => e.Department).HasMaxLength(250);
+            entity.Property(e => e.Item).HasMaxLength(250);
             entity.Property(e => e.IsSuccess_Bank).HasComment("0 تم رفض عملية البنك\r\n1 تم قبول العملية \r\nnull تم الارسال ولم الرد من البنك");
             entity.Property(e => e.Ledger_Number).HasMaxLength(100);
             entity.Property(e => e.Name).HasMaxLength(250);
@@ -3373,6 +3380,14 @@ public partial class AgricultureDBContext : DbContext
             entity.Property(e => e.OrderNumber).HasMaxLength(50);
             entity.Property(e => e.Payment_Type_ID).HasComment("from systemcode table 30\r\nنوع عملية الدفع فيزا - كاش");
             entity.Property(e => e.Tax_Registry).HasMaxLength(50);
+            entity.Property(e => e.Is_Used)
+                .HasDefaultValue(false)
+                .HasComment("هل تم استخدام العملية");
+            entity.Property(e => e.Used_Date)
+                .HasComment("تاريخ ووقت الاستخدام")
+                .HasColumnType("datetime2(0)");
+            entity.Property(e => e.Used_By_User_Id);
+            entity.Property(e => e.Used_By_User_Name).HasMaxLength(250);
             entity.Property(e => e.User_Creation_Date).HasColumnType("smalldatetime");
             entity.Property(e => e.office).HasMaxLength(200);
 
@@ -3390,6 +3405,10 @@ public partial class AgricultureDBContext : DbContext
             entity.Property(e => e.Amount)
                 .HasComment("المبلغ")
                 .HasColumnType("money");
+            entity.Property(e => e.Quantity).HasComment("العدد");
+            entity.Property(e => e.Fee_Description)
+                .HasMaxLength(250)
+                .HasComment("بيان إضافي لبند فرق الرسوم");
             entity.Property(e => e.User_Creation_Date).HasColumnType("smalldatetime");
 
             entity.HasOne(d => d.FeesType).WithMany(p => p.Fees_Altahsil_Detiles)

@@ -8,7 +8,7 @@ namespace Capqwebsite.Services;
 
 internal static class PaymentsExcelExporter
 {
-    private const int ColumnCount = 13;
+    private const int ColumnCount = 18;
 
     public static byte[] Create(
         IReadOnlyCollection<SuccessfulPaymentVM> payments,
@@ -207,12 +207,13 @@ internal static class PaymentsExcelExporter
         writer.WriteEndElement();
 
         writer.WriteStartElement("cellXfs");
-        writer.WriteAttributeString("count", "5");
+        writer.WriteAttributeString("count", "6");
         WriteXf(writer, 0, 0, 0, 0);
         WriteXf(writer, 0, 1, 3, 1, horizontal: "center");
         WriteXf(writer, 164, 0, 0, 1, horizontal: "center");
         WriteXf(writer, 165, 0, 0, 1, horizontal: "center");
         WriteXf(writer, 0, 2, 2, 0, horizontal: "center");
+        WriteXf(writer, 165, 1, 3, 1, horizontal: "center");
         writer.WriteEndElement();
 
         writer.WriteStartElement("cellStyles");
@@ -340,7 +341,9 @@ internal static class PaymentsExcelExporter
         IReadOnlyCollection<SuccessfulPaymentVM> payments,
         string reportTitle)
     {
-        var lastRow = payments.Count + 3;
+        var lastDataRow = payments.Count + 3;
+        var totalRow = lastDataRow + 1;
+        var filteredTotalAmount = payments.Sum(x => x.TotalAmount);
 
         writer.WriteStartDocument();
         writer.WriteStartElement(
@@ -380,8 +383,11 @@ internal static class PaymentsExcelExporter
         {
             "رقم العملية", "رقم الطلب", "تاريخ العملية", "تاريخ الدفع",
             "الاسم / الشركة", "الرقم القومي", "المكتب",
-            "رقم الشهادة / الفحص", "رقم السجل (الدفتر)",
-            "اسم المحطة", "تفاصيل الرسوم", "الإجمالي", "كود البنك"
+            "القسم", "الصنف",
+            "رقم الشهادة الجمركية / رقم طلب الفحص / رقم العينة",
+            "رقم السجل (الدفتر)", "اسم المحطة", "تفاصيل الرسوم",
+            "الإجمالي", "كود البنك", "حالة الاستخدام",
+            "تاريخ الاستخدام", "تم الاستخدام بواسطة"
         };
         WriteRow(writer, 3, height: 25, () =>
         {
@@ -412,32 +418,56 @@ internal static class PaymentsExcelExporter
                 WriteTextCell(writer, $"E{currentRow}", payment.Name, 0);
                 WriteTextCell(writer, $"F{currentRow}", payment.NationalID, 0);
                 WriteTextCell(writer, $"G{currentRow}", payment.Office, 0);
-                WriteTextCell(writer, $"H{currentRow}", payment.CustomsCertificateNumber, 0);
-                WriteTextCell(writer, $"I{currentRow}", payment.LedgerNumber, 0);
-                WriteTextCell(writer, $"J{currentRow}", payment.FarmName, 0);
+                WriteTextCell(writer, $"H{currentRow}", payment.Department, 0);
+                WriteTextCell(writer, $"I{currentRow}", payment.Item, 0);
+                WriteTextCell(writer, $"J{currentRow}", payment.CustomsCertificateNumber, 0);
+                WriteTextCell(writer, $"K{currentRow}", payment.LedgerNumber, 0);
+                WriteTextCell(writer, $"L{currentRow}", payment.FarmName, 0);
                 WriteTextCell(
                     writer,
-                    $"K{currentRow}",
+                    $"M{currentRow}",
                     string.Join(
                         " | ",
                         payment.Details.Select(detail =>
-                            $"{detail.FeesTypeName ?? "رسم"}: {detail.Amount ?? 0:N2} ج.م")),
+                            $"{detail.FeesTypeName ?? "رسم"}"
+                            + (string.IsNullOrWhiteSpace(detail.FeeDescription)
+                                ? string.Empty
+                                : $" ({detail.FeeDescription})")
+                            + $": {detail.Amount ?? 0:N2} ج.م")),
                     0);
-                WriteNumberCell(writer, $"L{currentRow}", payment.TotalAmount, 3);
-                WriteTextCell(writer, $"M{currentRow}", payment.BankCode, 0);
+                WriteNumberCell(writer, $"N{currentRow}", payment.TotalAmount, 3);
+                WriteTextCell(writer, $"O{currentRow}", payment.BankCode, 0);
+                WriteTextCell(writer, $"P{currentRow}", payment.IsUsed ? "تم الاستخدام" : "غير مستخدم", 0);
+                WriteTextCell(writer, $"Q{currentRow}", payment.UsedDate?.ToString("dd/MM/yyyy hh:mm tt"), 0);
+                WriteTextCell(writer, $"R{currentRow}", payment.UsedByUserName, 0);
             });
         }
+
+        WriteRow(writer, totalRow, height: 25, () =>
+        {
+            WriteTextCell(
+                writer,
+                $"A{totalRow}",
+                "إجمالي مبالغ نتائج البحث",
+                style: 1);
+            WriteNumberCell(
+                writer,
+                $"N{totalRow}",
+                filteredTotalAmount,
+                style: 5);
+        });
 
         writer.WriteEndElement();
 
         writer.WriteStartElement("autoFilter");
-        writer.WriteAttributeString("ref", $"A3:M{Math.Max(3, lastRow)}");
+        writer.WriteAttributeString("ref", $"A3:R{Math.Max(3, lastDataRow)}");
         writer.WriteEndElement();
 
         writer.WriteStartElement("mergeCells");
-        writer.WriteAttributeString("count", "2");
-        WriteMergedCell(writer, "A1:M1");
-        WriteMergedCell(writer, "A2:M2");
+        writer.WriteAttributeString("count", "3");
+        WriteMergedCell(writer, "A1:R1");
+        WriteMergedCell(writer, "A2:R2");
+        WriteMergedCell(writer, $"A{totalRow}:M{totalRow}");
         writer.WriteEndElement();
 
         writer.WriteEndElement();
@@ -448,7 +478,8 @@ internal static class PaymentsExcelExporter
     {
         var widths = new double[]
         {
-            13, 18, 19, 14, 28, 18, 24, 23, 21, 22, 48, 15, 12
+            13, 18, 19, 14, 28, 18, 24, 22, 22, 34, 21, 22, 48, 15, 12,
+            16, 21, 24
         };
         writer.WriteStartElement("cols");
         for (var index = 0; index < widths.Length; index++)

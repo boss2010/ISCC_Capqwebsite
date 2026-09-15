@@ -39,7 +39,10 @@ namespace Capqwebsite.Controllers.Fees
                                 Amount_Total = x.Amount_Total,
                                 User_Creation_Date = x.User_Creation_Date,
                                 Date = x.date,
+                                Account_Type = x.Account_Type,
                                 Office = x.office,
+                                Department = x.Department,
+                                Item = x.Item,
                                 Customs_Certificate_Number = x.Customs_Certificate_Number,
                                 National_ID = x.National_ID,
                                 Tax_Registry = x.Tax_Registry,
@@ -52,6 +55,8 @@ namespace Capqwebsite.Controllers.Fees
                                     .Select(d => new FeesAltahsilDetileDTO
                                     {
                                         Amount = d.Amount,
+                                        Quantity = d.Quantity,
+                                        FeeDescription = d.Fee_Description,
                                         FeesTypeName = d.FeesType != null
                                             ? d.FeesType.Name_Ar
                                             : null

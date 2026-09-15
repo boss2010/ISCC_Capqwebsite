@@ -1,10 +1,13 @@
 @using ViewModels
+@using System.Globalization
 @model SuccessfulPaymentsVM
 
 @{
     ViewData["Title"] = Model.Title;
     var firstPage = Math.Max(1, Model.Page - 2);
     var lastPage = Math.Min(Model.TotalPages, Model.Page + 2);
+    string FormatAmount(decimal? value) =>
+        value.HasValue ? value.Value.ToString("0.####", CultureInfo.InvariantCulture) : "0";
 }
 
 <style>
@@ -277,6 +280,90 @@
         color: #fff;
     }
 
+    .usage-form {
+        margin: 0;
+    }
+
+    .usage-check-label,
+    .usage-status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-width: 118px;
+        padding: 7px 10px;
+        border-radius: 8px;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .usage-check-label {
+        border: 1px solid #c59422;
+        background: #fffaf0;
+        color: #7a5510;
+        cursor: pointer;
+    }
+
+    .usage-check-label:hover {
+        background: #fff1cc;
+    }
+
+    .usage-checkbox {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        accent-color: #0c6b49;
+        cursor: pointer;
+    }
+
+    .usage-status.used {
+        border: 1px solid #9bcbb8;
+        background: #e8f7f0;
+        color: #086343;
+    }
+
+    .usage-date {
+        display: block;
+        margin-top: 4px;
+        color: #60776e;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .usage-feedback {
+        margin: 0 0 16px;
+        padding: 12px 16px;
+        border: 1px solid #a9d5c2;
+        border-radius: 10px;
+        background: #ecf9f3;
+        color: #086343;
+        font-weight: 700;
+    }
+
+    .payments-title-summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .payments-total {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 4px 13px;
+        border-radius: 18px;
+        background: #fff3cd;
+        color: #765400;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .usage-feedback.info {
+        border-color: #e1c47c;
+        background: #fff8e8;
+        color: #76520d;
+    }
+
     .payment-details-row td {
         padding: 0;
         background: #f4f9f7;
@@ -452,7 +539,12 @@
     <section class="payments-hero">
         <div class="payments-title">
             <h2>@Model.Title</h2>
-            <span class="payments-count">@Model.TotalCount عملية دفع ناجحة</span>
+            <div class="payments-title-summary">
+                <span class="payments-count">@Model.TotalCount عملية دفع ناجحة</span>
+                <span class="payments-total">
+                    إجمالي المبالغ: @Model.FilteredTotalAmount.ToString("N2") ج.م
+                </span>
+            </div>
         </div>
 
         <div class="payments-switcher">
@@ -470,6 +562,15 @@
             <a asp-action="Index" class="payments-nav-btn">رجوع</a>
         </div>
     </section>
+
+    @if (TempData["UsageSuccess"] is string usageSuccess)
+    {
+        <div class="usage-feedback" role="status">@usageSuccess</div>
+    }
+    else if (TempData["UsageInfo"] is string usageInfo)
+    {
+        <div class="usage-feedback info" role="status">@usageInfo</div>
+    }
 
     <form method="get" asp-action="@Model.ActionName" class="payments-filter">
         <div class="filter-field filter-search">
@@ -525,6 +626,7 @@
                         <th>الرقم القومي</th>
                         <th>المكتب</th>
                         <th>الإجمالي</th>
+                        <th>الاستخدام</th>
                         <th>التفاصيل</th>
                     </tr>
                 </thead>
@@ -532,7 +634,7 @@
                     @if (Model.Payments.Count == 0)
                     {
                         <tr>
-                            <td colspan="8" class="empty-payments">لا توجد عمليات دفع ناجحة مطابقة لمعايير البحث.</td>
+                            <td colspan="9" class="empty-payments">لا توجد عمليات دفع ناجحة مطابقة لمعايير البحث.</td>
                         </tr>
                     }
                     else
@@ -552,6 +654,51 @@
                                 <td>@(payment.Office ?? "-")</td>
                                 <td class="amount-cell">@payment.TotalAmount.ToString("N2") ج.م</td>
                                 <td>
+                                    @if (payment.IsUsed)
+                                    {
+                                        <span class="usage-status used">
+                                            <input type="checkbox"
+                                                   class="usage-checkbox"
+                                                   checked
+                                                   disabled
+                                                   aria-label="تم استخدام العملية" />
+                                            تم الاستخدام
+                                        </span>
+                                        @if (payment.UsedDate.HasValue)
+                                        {
+                                            <small class="usage-date">
+                                                @payment.UsedDate.Value.ToString("dd/MM/yyyy hh:mm tt")
+                                            </small>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(payment.UsedByUserName))
+                                        {
+                                            <small class="usage-date">
+                                                بواسطة: @payment.UsedByUserName
+                                            </small>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="MarkPaymentUsed"
+                                              method="post"
+                                              class="usage-form"
+                                              data-payment-id="@payment.ID">
+                                            <input type="hidden" name="id" value="@payment.ID" />
+                                            <input type="hidden" name="accountType" value="@Model.AccountType" />
+                                            <input type="hidden" name="search" value="@Model.Search" />
+                                            <input type="hidden" name="fromDate" value="@(Model.FromDate?.ToString("yyyy-MM-dd"))" />
+                                            <input type="hidden" name="toDate" value="@(Model.ToDate?.ToString("yyyy-MM-dd"))" />
+                                            <input type="hidden" name="page" value="@Model.Page" />
+                                            <label class="usage-check-label">
+                                                <input type="checkbox"
+                                                       class="usage-checkbox mark-used-checkbox"
+                                                       aria-label="تسجيل استخدام العملية @payment.ID" />
+                                                تم الاستخدام
+                                            </label>
+                                        </form>
+                                    }
+                                </td>
+                                <td>
                                     <div class="payment-actions">
                                     <button type="button"
                                             class="details-toggle"
@@ -568,12 +715,20 @@
                                 </td>
                             </tr>
                             <tr id="@detailsId" class="payment-details-row" hidden>
-                                <td colspan="8">
+                                <td colspan="9">
                                     <div class="details-content">
                                         <div class="details-info">
                                             <div class="details-info-item">
-                                                <span>رقم الشهادة / الفحص</span>
+                                                <span>رقم الشهادة الجمركية / رقم طلب الفحص / رقم العينة</span>
                                                 <strong>@(payment.CustomsCertificateNumber ?? "-")</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>القسم</span>
+                                                <strong>@(payment.Department ?? "-")</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>الصنف</span>
+                                                <strong>@(payment.Item ?? "-")</strong>
                                             </div>
                                             <div class="details-info-item">
                                                 <span>اسم المحطة</span>
@@ -589,7 +744,19 @@
                                             </div>
                                             <div class="details-info-item">
                                                 <span>إجمالي العملية</span>
-                                                <strong>@payment.TotalAmount.ToString("N2") ج.م</strong>
+                                                <strong>@FormatAmount(payment.TotalAmount) ج.م</strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>حالة الاستخدام</span>
+                                                <strong>
+                                                    @(payment.IsUsed
+                                                        ? $"تم الاستخدام - {payment.UsedDate:dd/MM/yyyy hh:mm tt}"
+                                                        : "غير مستخدم")
+                                                </strong>
+                                            </div>
+                                            <div class="details-info-item">
+                                                <span>تم الاستخدام بواسطة</span>
+                                                <strong>@(payment.IsUsed ? payment.UsedByUserName ?? "-" : "-")</strong>
                                             </div>
                                         </div>
 
@@ -597,21 +764,29 @@
                                             <thead>
                                                 <tr>
                                                     <th>نوع الرسم</th>
+                                                    <th>العدد</th>
                                                     <th>المبلغ</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @if (payment.Details.Count == 0)
                                                 {
-                                                    <tr><td colspan="2">لا توجد تفاصيل رسوم.</td></tr>
+                                                    <tr><td colspan="3">لا توجد تفاصيل رسوم.</td></tr>
                                                 }
                                                 else
                                                 {
                                                     @foreach (var detail in payment.Details)
                                                     {
                                                         <tr>
-                                                            <td>@(detail.FeesTypeName ?? "-")</td>
-                                                            <td>@(detail.Amount?.ToString("N2") ?? "0.00") ج.م</td>
+                                                            <td>
+                                                                @(detail.FeesTypeName ?? "-")
+                                                                @if (!string.IsNullOrWhiteSpace(detail.FeeDescription))
+                                                                {
+                                                                    <span> — @detail.FeeDescription</span>
+                                                                }
+                                                            </td>
+                                                            <td>@(detail.Quantity?.ToString() ?? "-")</td>
+                                                            <td>@FormatAmount(detail.Amount) ج.م</td>
                                                         </tr>
                                                     }
                                                 }
@@ -674,6 +849,27 @@
                 detailsRow.hidden = !willOpen;
                 button.setAttribute("aria-expanded", willOpen.toString());
                 button.textContent = willOpen ? "إخفاء التفاصيل" : "عرض التفاصيل";
+            });
+        });
+
+        document.querySelectorAll(".mark-used-checkbox").forEach(function (checkbox) {
+            checkbox.addEventListener("change", function () {
+                if (!checkbox.checked) {
+                    return;
+                }
+
+                const form = checkbox.closest(".usage-form");
+                const paymentId = form?.dataset.paymentId ?? "";
+                const confirmed = window.confirm(
+                    `هل أنت متأكد من تسجيل العملية رقم ${paymentId} كمستخدمة؟\nلن يمكن التراجع عن هذا الإجراء.`);
+
+                if (!confirmed || !form) {
+                    checkbox.checked = false;
+                    return;
+                }
+
+                checkbox.disabled = true;
+                form.submit();
             });
         });
     });

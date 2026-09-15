@@ -1,5 +1,11 @@
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
 @{
     ViewData["Title"] = "خدمات الدفع";
+    var showPrivatePayment = string.Equals(
+        Configuration["Features:ShowPrivatePayment"],
+        "true",
+        StringComparison.OrdinalIgnoreCase);
 }
 
 <style>
@@ -214,16 +220,19 @@
             <i class="fas fa-chevron-left fees-option-arrow" aria-hidden="true"></i>
         </a>
 
-        <a asp-action="InspectionPayment" class="fees-option">
-            <span class="fees-option-icon" aria-hidden="true">
-                <i class="fas fa-clipboard-check"></i>
-            </span>
-            <span class="fees-option-content">
-                <strong>اعتمادات وعينات وبدلات</strong>
-                <span>سداد رسوم الفحص والاعتمادات والعينات والبدلات.</span>
-            </span>
-            <i class="fas fa-chevron-left fees-option-arrow" aria-hidden="true"></i>
-        </a>
+        @if (showPrivatePayment)
+        {
+            <a asp-action="InspectionPayment" class="fees-option">
+                <span class="fees-option-icon" aria-hidden="true">
+                    <i class="fas fa-clipboard-check"></i>
+                </span>
+                <span class="fees-option-content">
+                    <strong>اعتمادات وعينات وبدلات</strong>
+                    <span>سداد رسوم الفحص والاعتمادات والعينات والبدلات.</span>
+                </span>
+                <i class="fas fa-chevron-left fees-option-arrow" aria-hidden="true"></i>
+            </a>
+        }
     </section>
 
     @if (Context.Session.GetString("UserSession") != null)
