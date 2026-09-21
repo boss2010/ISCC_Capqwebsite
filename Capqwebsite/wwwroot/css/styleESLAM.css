@@ -2030,7 +2030,7 @@ img[src*="emptyData"] {
 
 /* Page Header */
 .gov-page-header {
-    padding: 28px 0 24px;
+    /*padding: 28px 0 24px;*/
     background: #fff;
     border-bottom: 1px solid var(--gov-border);
     box-shadow: var(--gov-shadow-sm);
@@ -2041,12 +2041,7 @@ img[src*="emptyData"] {
     justify-content: space-between;
     gap: 16px;
 }
-.gov-page-header__title {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    mx-auto: flex max-w-7xl items-center px-6 py-4;
-}
+
 .gov-page-header__icon {
     width: 52px;
     height: 52px;
@@ -2261,27 +2256,6 @@ img[src*="emptyData"] {
     background: #ffd2ce !important;
 }
 
-/* ===== Breadcrumb ===== */
-.gov-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: .88rem;
-}
-.gov-breadcrumb__link {
-    color: var(--gov-navy-700) !important;
-    font-weight: 700;
-    text-decoration: none !important;
-}
-.gov-breadcrumb__link:hover { text-decoration: underline !important; }
-.gov-breadcrumb__sep {
-    color: var(--gov-gray-500);
-    font-size: .72rem;
-}
-.gov-breadcrumb__current {
-    color: var(--gov-gray-700);
-    font-weight: 700;
-}
 
 /* ===== Empty State ===== */
 .gov-empty-state {
@@ -2604,4 +2578,243 @@ img[src*="emptyData"] {
 .bg-secondary {
     background: var(--capq-gold);
     color: #fff;
+}
+
+
+/* ================================
+    سيد
+   Page Header
+================================ */
+
+
+.gov-page-header {
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #d9dee5;
+}
+
+    .gov-page-header .container {
+        width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        box-sizing: border-box;
+    }
+
+
+/* ================================
+   Header Inner
+================================ */
+
+.gov-page-header__inner {
+    width: 100%;
+    min-height: 138px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /*
+       مهم:
+       الـ HTML الحالي فيه العنوان أولاً
+       والـ breadcrumb ثانياً.
+
+       باستخدام direction: rtl
+       العنوان يظهر في اليمين
+       والـ breadcrumb في الشمال.
+    */
+    direction: rtl;
+    box-sizing: border-box;
+}
+
+
+/* ================================
+   Page Title
+   قانون الزراعة - يمين
+================================ */
+
+.gov-page-header__title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    direction: rtl;
+    flex-shrink: 0;
+}
+
+
+    /* عنوان قانون الزراعة */
+
+    .gov-page-header__title h1,
+    .gov-page-header__h1 {
+        margin: 0;
+        padding: 0;
+        color: #111827;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.4;
+        direction: rtl;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+
+/* ================================
+   Icon
+================================ */
+
+.gov-page-header__icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+
+/* ================================
+   Breadcrumb
+   الرئيسية - شمال
+================================ */
+
+.gov-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    font-size: .88rem;
+    line-height: 1.5;
+    /*
+       مهم:
+       نخلي اتجاه الـ breadcrumb عربي
+       لكن مكانه يفضل في الشمال
+    */
+    direction: rtl;
+    white-space: nowrap;
+}
+
+
+/* رابط الرئيسية */
+
+.gov-breadcrumb__link {
+    color: var(--gov-navy-700) !important;
+    font-weight: 700;
+    text-decoration: none !important;
+}
+
+    .gov-breadcrumb__link:hover {
+        text-decoration: underline !important;
+    }
+
+
+/* الفاصل */
+
+.gov-breadcrumb__sep {
+    color: var(--gov-gray-500);
+    font-size: .72rem;
+}
+
+
+/* الصفحة الحالية */
+
+.gov-breadcrumb__current {
+    color: var(--gov-gray-700);
+    font-weight: 700;
+}
+
+
+/* ================================
+   Desktop
+================================ */
+
+@media (min-width: 769px) {
+
+    .gov-page-header__inner {
+        min-height: 138px;
+    }
+}
+
+
+/* ================================
+   Tablet
+================================ */
+
+@media (max-width: 992px) {
+
+    .gov-page-header .container {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    .gov-page-header__title h1,
+    .gov-page-header__h1 {
+        font-size: 1.35rem;
+    }
+}
+
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 768px) {
+
+    .gov-page-header .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .gov-page-header__inner {
+        min-height: 110px;
+    }
+
+    .gov-page-header__title {
+        gap: 10px;
+    }
+
+        .gov-page-header__title h1,
+        .gov-page-header__h1 {
+            font-size: 1.2rem;
+        }
+
+    .gov-page-header__icon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .gov-breadcrumb {
+        font-size: .8rem;
+    }
+}
+
+
+/* ================================
+   Small Mobile
+================================ */
+
+@media (max-width: 480px) {
+
+    .gov-page-header__inner {
+        min-height: 95px;
+        gap: 12px;
+    }
+
+    .gov-page-header__title {
+        gap: 8px;
+    }
+
+        .gov-page-header__title h1,
+        .gov-page-header__h1 {
+            font-size: 1rem;
+        }
+
+    .gov-page-header__icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .gov-breadcrumb {
+        font-size: .75rem;
+    }
 }
