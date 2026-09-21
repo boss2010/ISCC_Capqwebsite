@@ -2045,6 +2045,7 @@ img[src*="emptyData"] {
     display: flex;
     align-items: center;
     gap: 14px;
+    mx-auto: flex max-w-7xl items-center px-6 py-4;
 }
 .gov-page-header__icon {
     width: 52px;
