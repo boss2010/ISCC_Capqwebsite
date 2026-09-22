@@ -1,23 +1,34 @@
 @model List<EF.Models.WebsiteTypeDetail>
 
-<!-- Page Header -->
+<!-- =========================
+     Page Header
+========================= -->
 <div class="gov-page-header">
     <div class="container">
         <div class="gov-page-header__inner">
             <div class="gov-page-header__title">
-                <span class="gov-page-header__icon"><i class="fas fa-edit"></i></span>
+                <span class="gov-page-header__icon">
+                    <i class="fas fa-edit"></i>
+                </span>
+
                 <div>
                     <span class="gov-page-header__eyebrow">لوحة التحكم</span>
-                    <h1 class="gov-page-header__h1">إدارة @(ViewBag.TypeAr ?? "البيانات")</h1>
+                    <h1 class="gov-page-header__h1">
+                        إدارة @(ViewBag.TypeAr ?? "البيانات")
+                    </h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <div class="container-fluid gov-inner-page">
     <div class="container">
 
+        <!-- =========================
+             Warning Message
+        ========================== -->
         @if (TempData["WarningMessage"] != null)
         {
             <div class="gov-alert gov-alert--warning mb-4">
@@ -26,230 +37,1858 @@
             </div>
         }
 
-        <!-- Add Form Card -->
+
+        <!-- =========================
+             Add Form Card
+        ========================== -->
         <div class="gov-form-card mb-4">
+
             <div class="gov-form-card__header">
-                <span class="gov-form-card__icon"><i class="fas fa-plus-circle"></i></span>
-                <h2 class="gov-form-card__title">إضافة @(ViewBag.TypeAr ?? "")</h2>
+                <span class="gov-form-card__icon">
+                    <i class="fas fa-plus-circle"></i>
+                </span>
+
+                <h2 class="gov-form-card__title">
+                    إضافة @(ViewBag.TypeAr ?? "")
+                </h2>
             </div>
+
+
             <div class="gov-form-card__body">
-                <form asp-controller="DataEntry" id="myForm" asp-action="Index" method="post" enctype="multipart/form-data">
-                    <input name="WebsitetypeID" id="WebsitetypeID" type="hidden" value="@(ViewBag.ID ?? "0")" />
-                    @if (ViewBag.ID != 9)
-                    {
-                        <div class="form-group">
-                            <label class="gov-label">@ViewBag.TitleAr</label>
-                            <input name="TitleAr" type="text" class="form-control" placeholder="@ViewBag.TitleAr">
-                        </div>
-                    }
-                    @if (ViewBag.ID == 12 || ViewBag.ID == 17)
-                    {
-                        <div class="form-group">
-                            <label class="gov-label">@ViewBag.TitleEn</label>
-                            <input name="TitleEn" type="text" class="form-control" placeholder="@ViewBag.TitleEn">
-                        </div>
-                    }
-                    @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
-                    {
-                        <div class="form-group">
-                            <label class="gov-label">@ViewBag.descAr</label>
-                            <textarea name="descAr" rows="3" class="form-control" autocomplete="off"></textarea>
-                        </div>
-                    }
-                    @if (ViewBag.ID == 12 || ViewBag.ID == 17)
-                    {
-                        <div class="form-group">
-                            <label class="gov-label">@ViewBag.descEn</label>
-                            <textarea name="descEn" rows="3" class="form-control" autocomplete="off"></textarea>
-                        </div>
-                    }
-                    @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10)
-                    {
-                        <div class="form-group">
-                            <label class="gov-label">@ViewBag.Date</label>
-                            <input name="Date" type="date" class="form-control" />
-                        </div>
-                    }
-                    @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 14 && ViewBag.ID != 6 && ViewBag.ID != 10 && ViewBag.ID != 17))
-                    {
-                        <div class="form-group">
-                            <label class="gov-label">@ViewBag.filepath</label>
-                            <input name="imageFile" type="file" class="form-control">
-                        </div>
-                    }
-                    @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12 || ViewBag.ID == 14 || ViewBag.ID == 6 || ViewBag.ID == 17)
-                    {
-                        <div class="form-group">
-                            <label class="gov-label">@ViewBag.linkURL</label>
-                            <input name="linkURL" type="text" class="form-control" />
-                        </div>
-                    }
-                    <div class="gov-form-actions">
-                        <button class="  md:inline-flex  items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors services btn-pay" type="submit">
-                            <i class="fas fa-save ml-1"></i> حفظ
-                        </button>
+
+                <form asp-controller="DataEntry"
+                      id="myForm"
+                      asp-action="Index"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <input name="WebsitetypeID"
+                           id="WebsitetypeID"
+                           type="hidden"
+                           value="@(ViewBag.ID ?? "0")" />
+
+                    <div class="gov-form-fields">
+
+                        @* =========================
+           Title Arabic
+        ========================== *@
+                        @if (ViewBag.ID != 9)
+                        {
+                            <div class="gov-field">
+
+                                <label class="gov-label">
+                                    @ViewBag.TitleAr
+                                </label>
+
+                                <input name="TitleAr"
+                                       type="text"
+                                       class="form-control"
+                                       placeholder="@ViewBag.TitleAr"
+                                       autocomplete="off" />
+
+                            </div>
+                        }
+
+
+                        @* =========================
+           Title English
+        ========================== *@
+                        @if (ViewBag.ID == 12 || ViewBag.ID == 17)
+                        {
+                            <div class="gov-field">
+
+                                <label class="gov-label">
+                                    @ViewBag.TitleEn
+                                </label>
+
+                                <input name="TitleEn"
+                                       type="text"
+                                       class="form-control"
+                                       placeholder="@ViewBag.TitleEn"
+                                       autocomplete="off" />
+
+                            </div>
+                        }
+
+
+                        @* =========================
+           Date
+        ========================== *@
+                        @if (ViewBag.ID == 7 ||
+                                                ViewBag.ID == 8 ||
+                                                ViewBag.ID == 10)
+                        {
+                            <div class="gov-field">
+
+                                <label class="gov-label">
+                                    @ViewBag.Date
+                                </label>
+
+                                <input name="Date"
+                                       type="date"
+                                       class="form-control" />
+
+                            </div>
+                        }
+
+
+                        @* =========================
+           File
+        ========================== *@
+                        @if ((ViewBag.ID == 8) ||
+                                                (ViewBag.ID != 15 &&
+                                                ViewBag.ID != 16 &&
+                                                ViewBag.ID != 12 &&
+                                                ViewBag.ID != 14 &&
+                                                ViewBag.ID != 6 &&
+                                                ViewBag.ID != 10 &&
+                                                ViewBag.ID != 17))
+                        {
+                            <div class="gov-field">
+
+                                <label class="gov-label">
+                                    @ViewBag.filepath
+                                </label>
+
+                                <input name="imageFile"
+                                       type="file"
+                                       class="form-control gov-file-input" />
+
+                            </div>
+                        }
+
+
+                        @* =========================
+           Link
+        ========================== *@
+                        @if (ViewBag.ID == 7 ||
+                                                ViewBag.ID == 8 ||
+                                                ViewBag.ID == 15 ||
+                                                ViewBag.ID == 16 ||
+                                                ViewBag.ID == 12 ||
+                                                ViewBag.ID == 14 ||
+                                                ViewBag.ID == 6 ||
+                                                ViewBag.ID == 17)
+                        {
+                            <div class="gov-field">
+
+                                <label class="gov-label">
+                                    @ViewBag.linkURL
+                                </label>
+
+                                <input name="linkURL"
+                                       type="text"
+                                       class="form-control"
+                                       placeholder="https://..."
+                                       autocomplete="off" />
+
+                            </div>
+                        }
+
+
+                        @* =========================
+           Arabic Description
+           Full Width
+        ========================== *@
+                        @if (ViewBag.ID == 7 ||
+                                                ViewBag.ID == 8 ||
+                                                ViewBag.ID == 10 ||
+                                                ViewBag.ID == 11 ||
+                                                ViewBag.ID == 12)
+                        {
+                            <div class="gov-field gov-field-full">
+
+                                <label class="gov-label">
+                                    @ViewBag.descAr
+                                </label>
+
+                                <textarea name="descAr"
+                                      rows="4"
+                                      class="form-control gov-textarea"
+                                      autocomplete="off"
+                                      placeholder="اكتب التفاصيل بالعربي..."></textarea>
+
+                            </div>
+                        }
+
+
+                        @* =========================
+           English Description
+           Full Width
+        ========================== *@
+                        @if (ViewBag.ID == 12 || ViewBag.ID == 17)
+                        {
+                            <div class="gov-field gov-field-full">
+
+                                <label class="gov-label">
+                                    @ViewBag.descEn
+                                </label>
+
+                                <textarea name="descEn"
+                                      rows="4"
+                                      class="form-control gov-textarea gov-textarea-en"
+                                      autocomplete="off"
+                                      placeholder="Enter details in English..."></textarea>
+
+                            </div>
+                        }
+
                     </div>
+
+
+                    @* =========================
+       Save
+    ========================== *@
+                    <div class="gov-form-actions">
+
+                        <button class="md:inline-flex
+                       items-center
+                       gap-2
+                       rounded-md
+                       bg-primary
+                       px-4
+                       py-2
+                       text-sm
+                       font-semibold
+                       text-primary-foreground
+                       transition-colors
+                       services
+                       btn-pay"
+                                type="submit">
+
+                            <i class="fas fa-save ml-1"></i>
+                            حفظ
+
+                        </button>
+
+                    </div>
+
                 </form>
+
+
             </div>
         </div>
 
-        <!-- Data Table Card -->
+
+
+        <!-- =========================
+             Data Table Card
+        ========================== -->
         <div class="gov-table-card">
-          @*   <div class="gov-table-card__header">
-                <span class="gov-form-card__icon"><i class="fas fa-list"></i></span>
-                <h2 class="gov-form-card__title">البيانات المدخلة</h2>
-            </div> *@
+
             <div class="gov-table-card__body">
+
                 <div class="table-responsive" id="div2">
+
                     <table class="table table-bordered table-striped table-hover">
+
                         <thead>
+
                             <tr>
+
+                                <!-- Arabic Title -->
                                 @if (ViewBag.ID != 9)
                                 {
-                                    <th>@ViewBag.TitleAr</th>
+                                    <th>
+                                        @ViewBag.TitleAr
+                                    </th>
                                 }
+
+
+                                <!-- English Title -->
                                 @if (ViewBag.ID == 12 || ViewBag.ID == 17)
                                 {
-                                    <th>@ViewBag.TitleEn</th>
+                                    <th>
+                                        @ViewBag.TitleEn
+                                    </th>
                                 }
-                                @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12)
+
+
+                                <!-- Arabic Description -->
+                                @if (ViewBag.ID == 7 ||
+                                                                ViewBag.ID == 8 ||
+                                                                ViewBag.ID == 10 ||
+                                                                ViewBag.ID == 11 ||
+                                                                ViewBag.ID == 12)
                                 {
-                                    <th>@ViewBag.descAr</th>
+                                    <th class="description-column">
+                                        @ViewBag.descAr
+                                    </th>
                                 }
-                                @if (ViewBag.ID == 7 || ViewBag.ID == 12 || ViewBag.ID == 17)
+
+
+                                <!-- English Description -->
+                                @if (ViewBag.ID == 7 ||
+                                                                ViewBag.ID == 12 ||
+                                                                ViewBag.ID == 17)
                                 {
-                                    <th>@ViewBag.descEn</th>
+                                    <th class="description-column">
+                                        @ViewBag.descEn
+                                    </th>
                                 }
-                                @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10)
+
+
+                                <!-- Date -->
+                                @if (ViewBag.ID == 7 ||
+                                                                ViewBag.ID == 8 ||
+                                                                ViewBag.ID == 10)
                                 {
-                                    <th>@ViewBag.Date</th>
+                                    <th>
+                                        @ViewBag.Date
+                                    </th>
                                 }
-                                @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 14 && ViewBag.ID != 6 && ViewBag.ID != 10 && ViewBag.ID != 17))
+
+
+                                <!-- File -->
+                                @if ((ViewBag.ID == 8) ||
+                                                                (ViewBag.ID != 15 &&
+                                                                ViewBag.ID != 16 &&
+                                                                ViewBag.ID != 12 &&
+                                                                ViewBag.ID != 14 &&
+                                                                ViewBag.ID != 6 &&
+                                                                ViewBag.ID != 10 &&
+                                                                ViewBag.ID != 17))
                                 {
-                                    <th>الصورة / الملف</th>
+                                    <th>
+                                        الصورة / الملف
+                                    </th>
                                 }
-                                @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12 || ViewBag.ID == 14 || ViewBag.ID == 6 || ViewBag.ID == 17)
+
+
+                                <!-- Link -->
+                                @if (ViewBag.ID == 7 ||
+                                                                ViewBag.ID == 8 ||
+                                                                ViewBag.ID == 15 ||
+                                                                ViewBag.ID == 16 ||
+                                                                ViewBag.ID == 12 ||
+                                                                ViewBag.ID == 14 ||
+                                                                ViewBag.ID == 6 ||
+                                                                ViewBag.ID == 17)
                                 {
-                                    <th>@ViewBag.linkURL</th>
+                                    <th>
+                                        @ViewBag.linkURL
+                                    </th>
                                 }
-                                <th >الإجراءات</th>
+
+
+                                <th>
+                                    الإجراءات
+                                </th>
+
                                 <th></th>
+
                             </tr>
+
                         </thead>
+
+
                         <tbody>
+
                             @if (Model != null)
                             {
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+
+                                        <!-- =========================
+                                             Arabic Title
+                                        ========================== -->
                                         @if (ViewBag.ID != 9)
                                         {
-                                            <td>@item.TitleAr</td>
+                                            <td class="gov-title-cell">
+                                                @if (!string.IsNullOrWhiteSpace(item.TitleAr))
+                                                {
+                                                    <span>
+                                                        @item.TitleAr
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="gov-empty-cell">
+                                                        —
+                                                    </span>
+                                                }
+                                            </td>
                                         }
-                                        @if (ViewBag.ID == 7 || ViewBag.ID == 12 || ViewBag.ID == 17)
+
+
+                                        <!-- =========================
+                                             English Title
+                                        ========================== -->
+                                        @if (ViewBag.ID == 12 || ViewBag.ID == 17)
                                         {
-                                            <td>@item.TitleEn</td>
+                                            <td class="gov-title-cell">
+
+                                                @if (!string.IsNullOrWhiteSpace(item.TitleEn))
+                                                {
+                                                    <span>
+                                                        @item.TitleEn
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="gov-empty-cell">
+                                                        —
+                                                    </span>
+                                                }
+
+                                            </td>
                                         }
-                                        @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10 || ViewBag.ID == 11 || ViewBag.ID == 12 || ViewBag.ID == 17)
+
+
+                                        <!-- =========================
+                                             Arabic Description
+                                        ========================== -->
+                                        @if (ViewBag.ID == 7 ||
+                                                                        ViewBag.ID == 8 ||
+                                                                        ViewBag.ID == 10 ||
+                                                                        ViewBag.ID == 11 ||
+                                                                        ViewBag.ID == 12)
                                         {
-                                            <td>@item.descAr</td>
+                                            <td class="gov-description-cell">
+
+                                                @if (!string.IsNullOrWhiteSpace(item.descAr))
+                                                {
+                                                    <div class="gov-description-preview">
+                                                        @item.descAr
+                                                    </div>
+
+                                                    @if (item.descAr.Length > 150)
+                                                    {
+                                                        <button type="button"
+                                                                class="gov-description-more openDetails"
+                                                                data-title="التفاصيل بالعربي"
+                                                                data-content="@item.descAr"
+                                                                data-direction="rtl">
+
+                                                            <i class="fas fa-expand-alt"></i>
+
+                                                            عرض التفاصيل
+
+                                                        </button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="gov-empty-cell">
+                                                        —
+                                                    </span>
+                                                }
+
+                                            </td>
                                         }
-                                        @if (ViewBag.ID == 7 || ViewBag.ID == 12)
+
+
+                                        <!-- =========================
+                                             English Description
+                                        ========================== -->
+                                        @if (ViewBag.ID == 7 ||
+                                                                        ViewBag.ID == 12 ||
+                                                                        ViewBag.ID == 17)
                                         {
-                                            <td>@item.descEn</td>
+                                            <td class="gov-description-cell">
+
+                                                @if (!string.IsNullOrWhiteSpace(item.descEn))
+                                                {
+                                                    <div class="gov-description-preview">
+                                                        @item.descEn
+                                                    </div>
+
+                                                    @if (item.descEn.Length > 150)
+                                                    {
+                                                        <button type="button"
+                                                                class="gov-description-more openDetails"
+                                                                data-title="Details in English"
+                                                                data-content="@item.descEn"
+                                                                data-direction="ltr">
+
+                                                            <i class="fas fa-expand-alt"></i>
+
+                                                            View Details
+
+                                                        </button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="gov-empty-cell">
+                                                        —
+                                                    </span>
+                                                }
+
+                                            </td>
                                         }
-                                        @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 10)
+
+
+                                        <!-- =========================
+                                             Date
+                                        ========================== -->
+                                        @if (ViewBag.ID == 7 ||
+                                                                        ViewBag.ID == 8 ||
+                                                                        ViewBag.ID == 10)
                                         {
                                             <td>
+
                                                 @if (item.Date != null)
                                                 {
                                                     @item.Date.Value.ToString("yyyy-MM-dd")
                                                 }
+                                                else
+                                                {
+                                                    <span class="gov-empty-cell">
+                                                        —
+                                                    </span>
+                                                }
+
                                             </td>
                                         }
-                                        @if ((ViewBag.ID == 8) || (ViewBag.ID != 15 && ViewBag.ID != 16 && ViewBag.ID != 12 && ViewBag.ID != 14 && ViewBag.ID != 6 && ViewBag.ID != 10 && ViewBag.ID != 17))
+
+
+                                        <!-- =========================
+                                             File
+                                        ========================== -->
+                                        @if ((ViewBag.ID == 8) ||
+                                                                        (ViewBag.ID != 15 &&
+                                                                        ViewBag.ID != 16 &&
+                                                                        ViewBag.ID != 12 &&
+                                                                        ViewBag.ID != 14 &&
+                                                                        ViewBag.ID != 6 &&
+                                                                        ViewBag.ID != 10 &&
+                                                                        ViewBag.ID != 17))
                                         {
                                             <td>
+
                                                 @if (!string.IsNullOrEmpty(item.filepath))
                                                 {
-                                                    if (item.filepath.EndsWith(".pdf"))
+                                                    if (item.filepath.EndsWith(".pdf",
+                                                    StringComparison.OrdinalIgnoreCase))
                                                     {
-                                                        <a href="#" class="gov-file-badge openPdf" data-pdf="@item.filepath">
-                                                            <i class="fas fa-file-pdf ml-1"></i>@item.TitleAr
+                                                        <a href="#"
+                                                           class="gov-file-badge openPdf"
+                                                           data-pdf="@item.filepath">
+
+                                                            <i class="fas fa-file-pdf ml-1"></i>
+
+                                                            @(string.IsNullOrWhiteSpace(item.TitleAr)
+                                                                                                    ? "فتح الملف"
+                                                                                                    : item.TitleAr)
+
+                                    </a>
+                                                                        }
+                                                    else if (
+                                                    item.filepath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                                                    item.filepath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                                                    item.filepath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
+                                                    item.filepath.EndsWith(".gif", StringComparison.OrdinalIgnoreCase) ||
+                                                    item.filepath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase) ||
+                                                    item.filepath.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
+                                                    {
+                                                        <img src="@item.filepath"
+                                                             alt="صورة"
+                                                             class="gov-table-thumb" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@item.filepath"
+                                                           target="_blank"
+                                                           class="gov-file-badge">
+
+                                                            <i class="fas fa-file ml-1"></i>
+                                                            فتح الملف
+
                                                         </a>
                                                     }
-                                                    else if (item.filepath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                                                             item.filepath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
-                                                             item.filepath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                                                             item.filepath.EndsWith(".gif", StringComparison.OrdinalIgnoreCase) ||
-                                                             item.filepath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase) ||
-                                                             item.filepath.EndsWith(".bmp", StringComparison.OrdinalIgnoreCase))
-                                                    {
-                                                        <img src="@item.filepath" alt="صورة" class="gov-table-thumb" />
-                                                    }
                                                 }
+                                                else
+                                                {
+                                                    <span class="gov-empty-cell">
+                                                        —
+                                                    </span>
+                                                }
+
                                             </td>
                                         }
-                                        @if (ViewBag.ID == 7 || ViewBag.ID == 8 || ViewBag.ID == 15 || ViewBag.ID == 16 || ViewBag.ID == 12 || ViewBag.ID == 14 || ViewBag.ID == 6 || ViewBag.ID == 17)
+
+
+                                        <!-- =========================
+                                             Link
+                                        ========================== -->
+                                        @if (ViewBag.ID == 7 ||
+                                                                        ViewBag.ID == 8 ||
+                                                                        ViewBag.ID == 15 ||
+                                                                        ViewBag.ID == 16 ||
+                                                                        ViewBag.ID == 12 ||
+                                                                        ViewBag.ID == 14 ||
+                                                                        ViewBag.ID == 6 ||
+                                                                        ViewBag.ID == 17)
                                         {
                                             <td>
+
                                                 @if (!string.IsNullOrEmpty(item.linkURL))
                                                 {
-                                                    <a href="@item.linkURL" target="_blank" class="gov-link">
-                                                        <i class="fas fa-external-link-alt ml-1"></i>فتح الرابط
+                                                    <a href="@item.linkURL"
+                                                       target="_blank"
+                                                       rel="noopener noreferrer"
+                                                       class="gov-link">
+
+                                                        <i class="fas fa-external-link-alt ml-1"></i>
+
+                                                        فتح الرابط
+
                                                     </a>
                                                 }
                                                 else
                                                 {
-                                                    <span class="gov-empty-cell">—</span>
+                                                    <span class="gov-empty-cell">
+                                                        —
+                                                    </span>
                                                 }
+
                                             </td>
                                         }
+
+
+                                        <!-- =========================
+                                             Actions
+                                        ========================== -->
                                         <td>
+
                                             <div class="gov-actions-cell">
+
                                                 <a href="@Url.Action("Edit", new { id = item.ID, IdType = ViewBag.ID })"
-                                                   class="btn btn-sm gov-btn-edit" title="تعديل">
+                                                   class="btn btn-sm gov-btn-edit"
+                                                   title="تعديل">
+
                                                     <i class="fas fa-edit"></i>
+
                                                 </a>
+
+
                                                 <a href="@Url.Action("Delete", "DataEntry", new { id = item.ID })"
-                                                   class="btn btn-sm gov-btn-delete" title="حذف"
+                                                   class="btn btn-sm gov-btn-delete"
+                                                   title="حذف"
                                                    onclick="return confirm('هل أنت متأكد من الحذف؟');">
+
                                                     <i class="fas fa-trash"></i>
+
                                                 </a>
+
                                             </div>
+
                                         </td>
+
+
+                                        <td></td>
+
                                     </tr>
                                 }
                             }
+
                         </tbody>
+
                     </table>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 </div>
 
-<!-- PDF Modal -->
-<div id="pdfModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
-    <div id="closeModal" style="position:absolute; top:16px; left:20px; cursor:pointer; color:#fff; font-size:18px; width:40px; height:40px; background:var(--gov-danger,#b42318); border-radius:50%; display:flex; align-items:center; justify-content:center;">
+
+
+<!-- =====================================================
+     PDF Modal
+====================================================== -->
+<div id="pdfModal"
+     class="gov-pdf-modal">
+
+    <div id="closeModal"
+         class="gov-pdf-close"
+         title="إغلاق">
+
         <i class="fas fa-times"></i>
+
     </div>
-    <iframe id="pdfFrame" style="width:min(92vw,1100px); height:min(80vh,760px); margin:6vh auto; display:block; border:none; border-radius:8px; background:#fff;"></iframe>
+
+    <iframe id="pdfFrame"
+            class="gov-pdf-frame">
+    </iframe>
+
 </div>
 
+
+
+<!-- =====================================================
+     Details Modal
+====================================================== -->
+<div id="detailsModal"
+     class="gov-details-modal">
+
+    <div class="gov-details-modal__content">
+
+        <!-- Header -->
+        <div class="gov-details-modal__header">
+
+            <h3 id="detailsModalTitle"
+                class="gov-details-modal__title">
+
+                <i class="fas fa-align-right"></i>
+
+                التفاصيل
+
+            </h3>
+
+
+            <button type="button"
+                    id="closeDetailsModal"
+                    class="gov-details-modal__close"
+                    aria-label="إغلاق">
+
+                <i class="fas fa-times"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- Body -->
+        <div id="detailsModalBody"
+             class="gov-details-modal__body">
+
+            <p id="detailsModalText"
+               class="gov-details-modal__text">
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     CSS
+====================================================== -->
+<style>
+
+    /* ========================================
+           FORM
+        ======================================== */
+
+    .gov-form-card .form-group {
+        margin-bottom: 20px;
+    }
+
+
+    .gov-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #344054;
+    }
+
+
+    .gov-form-card .form-control {
+        width: 100%;
+        min-height: 46px;
+        padding: 10px 14px;
+        border: 1px solid #d0d5dd;
+        border-radius: 8px;
+        background-color: #fff;
+        color: #101828;
+        font-size: 14px;
+        line-height: 1.6;
+        transition: all .2s ease;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+    }
+
+
+    .gov-form-card textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+        line-height: 1.9;
+    }
+
+
+    .gov-form-card textarea.gov-textarea {
+        direction: rtl;
+        text-align: right;
+    }
+
+
+    .gov-form-card textarea.gov-textarea-en {
+        direction: ltr;
+        text-align: left;
+    }
+
+
+    .gov-form-card .form-control:hover {
+        border-color: #98a2b3;
+    }
+
+
+    .gov-form-card .form-control:focus {
+        border-color: #1570ef;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(21, 112, 239, .10);
+    }
+
+
+    .gov-form-card .form-control::placeholder {
+        color: #98a2b3;
+    }
+
+
+    /* ========================================
+           FILE INPUT
+        ======================================== */
+
+    .gov-form-card input[type="file"].form-control {
+        padding: 8px 10px;
+        cursor: pointer;
+        background: #f9fafb;
+    }
+
+
+        .gov-form-card input[type="file"].form-control::file-selector-button {
+            margin-left: 10px;
+            padding: 8px 14px;
+            border: 0;
+            border-radius: 6px;
+            background: #eef4ff;
+            color: #175cd3;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+
+            .gov-form-card input[type="file"].form-control::file-selector-button:hover {
+                background: #dbeeff;
+            }
+
+
+    /* ========================================
+           TABLE
+        ======================================== */
+
+    .gov-table-card table {
+        vertical-align: middle;
+    }
+
+
+    .gov-table-card th {
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+
+    .gov-table-card td {
+        vertical-align: middle;
+    }
+
+
+    .gov-title-cell {
+        min-width: 180px;
+        max-width: 300px;
+        line-height: 1.7;
+        word-break: break-word;
+    }
+
+
+    .description-column {
+        min-width: 240px;
+    }
+
+
+    /* ========================================
+           DESCRIPTION
+        ======================================== */
+
+    .gov-description-cell {
+        max-width: 350px;
+        min-width: 240px;
+        line-height: 1.7;
+        color: #475467;
+        word-break: break-word;
+    }
+
+
+    .gov-description-preview {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+
+    .gov-description-more {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 8px;
+        padding: 5px 10px;
+        border: 0;
+        border-radius: 6px;
+        background: #eff8ff;
+        color: #175cd3;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+
+        .gov-description-more:hover {
+            background: #dbeeff;
+            color: #1849a9;
+            transform: translateY(-1px);
+        }
+
+
+        .gov-description-more i {
+            font-size: 11px;
+        }
+
+
+    /* ========================================
+           EMPTY CELL
+        ======================================== */
+
+    .gov-empty-cell {
+        color: #98a2b3;
+        font-size: 14px;
+    }
+
+
+    /* ========================================
+           DETAILS MODAL
+        ======================================== */
+
+    .gov-details-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(16, 24, 40, .70);
+        backdrop-filter: blur(3px);
+    }
+
+
+        .gov-details-modal.is-open {
+            display: flex;
+        }
+
+
+    .gov-details-modal__content {
+        width: min(850px, 95vw);
+        max-height: 85vh;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, .25);
+        animation: govModalIn .2s ease;
+    }
+
+
+    .gov-details-modal__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 16px 20px;
+        background: #f8fafc;
+        border-bottom: 1px solid #eaecf0;
+    }
+
+
+    .gov-details-modal__title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        color: #101828;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+
+        .gov-details-modal__title i {
+            color: #1570ef;
+        }
+
+
+    .gov-details-modal__close {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border: 0;
+        border-radius: 50%;
+        background: #fee4e2;
+        color: #b42318;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+
+
+        .gov-details-modal__close:hover {
+            background: #fecdca;
+            transform: rotate(5deg);
+        }
+
+
+    .gov-details-modal__body {
+        padding: 24px;
+        max-height: calc(85vh - 75px);
+        overflow-y: auto;
+        direction: rtl;
+        text-align: right;
+    }
+
+
+        .gov-details-modal__body.ltr {
+            direction: ltr;
+            text-align: left;
+        }
+
+
+    .gov-details-modal__text {
+        margin: 0;
+        color: #344054;
+        font-size: 15px;
+        line-height: 2;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+
+    /* ========================================
+           PDF MODAL
+        ======================================== */
+
+    .gov-pdf-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, .85);
+        padding: 20px;
+    }
+
+
+    .gov-pdf-close {
+        position: absolute;
+        top: 16px;
+        left: 20px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #fff;
+        font-size: 18px;
+        background: #b42318;
+        border-radius: 50%;
+        transition: all .2s ease;
+        z-index: 2;
+    }
+
+
+        .gov-pdf-close:hover {
+            background: #912018;
+            transform: rotate(5deg);
+        }
+
+
+    .gov-pdf-frame {
+        width: min(92vw, 1100px);
+        height: min(80vh, 760px);
+        margin: 6vh auto;
+        display: block;
+        border: none;
+        border-radius: 8px;
+        background: #fff;
+    }
+
+
+    /* ========================================
+           ANIMATION
+        ======================================== */
+
+    @@keyframes govModalIn {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(15px) scale(.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    }
+
+
+    /* ========================================
+           MOBILE
+        ======================================== */
+
+    @@media (max-width: 768px) {
+        .gov-form-card .form-control
+
+    {
+        min-height: 44px;
+    }
+
+
+    .gov-description-cell {
+        max-width: 250px;
+        min-width: 180px;
+    }
+
+
+    .gov-details-modal {
+        padding: 10px;
+    }
+
+
+    .gov-details-modal__content {
+        width: 100%;
+        max-height: 90vh;
+    }
+
+
+    .gov-details-modal__body {
+        padding: 18px;
+    }
+
+
+    .gov-details-modal__text {
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+
+    .gov-pdf-modal {
+        padding: 10px;
+    }
+
+
+    .gov-pdf-frame {
+        width: 96vw;
+        height: 82vh;
+    }
+
+    }
+    /* ========================================
+       FORM GRID
+    ======================================== */
+
+    .gov-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 24px;
+        align-items: start;
+    }
+
+
+    /* كل Field */
+
+    .gov-form-field {
+        min-width: 0;
+    }
+
+
+    /* Field بعرض الصف كله */
+
+    .gov-form-field--full {
+        grid-column: 1 / -1;
+    }
+
+
+    /* ========================================
+       LABEL
+    ======================================== */
+
+    .gov-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #344054;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+
+    /* ========================================
+       INPUT
+    ======================================== */
+
+    .gov-form-field .form-control {
+        width: 100%;
+        height: 48px;
+        padding: 10px 14px;
+        border: 1px solid #d0d5dd;
+        border-radius: 9px;
+        background: #fff;
+        color: #101828;
+        font-size: 14px;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+        transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+    }
+
+
+        /* Hover */
+
+        .gov-form-field .form-control:hover {
+            border-color: #98a2b3;
+        }
+
+
+        /* Focus */
+
+        .gov-form-field .form-control:focus {
+            border-color: #1570ef;
+            outline: none;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(21, 112, 239, .10);
+        }
+
+
+        /* Placeholder */
+
+        .gov-form-field .form-control::placeholder {
+            color: #98a2b3;
+        }
+
+
+    /* ========================================
+       TEXTAREA
+    ======================================== */
+
+    .gov-form-field textarea.form-control {
+        height: auto;
+        min-height: 125px;
+        resize: vertical;
+        line-height: 1.9;
+    }
+
+
+    /* عربي */
+
+    .gov-form-field textarea.gov-textarea {
+        direction: rtl;
+        text-align: right;
+    }
+
+
+    /* English */
+
+    .gov-form-field textarea.gov-textarea-en {
+        direction: ltr;
+        text-align: left;
+    }
+
+
+    /* ========================================
+       DATE
+    ======================================== */
+
+    .gov-form-field input[type="date"] {
+        cursor: pointer;
+    }
+
+
+    /* ========================================
+       FILE
+    ======================================== */
+
+    .gov-form-field input[type="file"] {
+        height: 48px;
+        padding: 6px 8px;
+        background: #f8fafc;
+        cursor: pointer;
+    }
+
+
+        .gov-form-field input[type="file"]::file-selector-button {
+            height: 34px;
+            margin-left: 8px;
+            padding: 0 14px;
+            border: none;
+            border-radius: 6px;
+            background: #eef4ff;
+            color: #175cd3;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+
+            .gov-form-field input[type="file"]::file-selector-button:hover {
+                background: #dbeeff;
+            }
+
+
+    /* ========================================
+       ACTIONS
+    ======================================== */
+
+    .gov-form-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #eaecf0;
+    }
+
+
+        .gov-form-actions .btn-pay {
+            min-width: 120px;
+            height: 44px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+
+    /* ========================================
+       RESPONSIVE
+    ======================================== */
+
+    /* Tablet */
+
+    @@media (max-width: 992px) {
+        .gov-form-grid
+
+    {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    }
+
+
+    /* Mobile */
+
+    @@media (max-width: 768px) {
+        .gov-form-grid
+
+    {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .gov-form-field--full {
+        grid-column: auto;
+    }
+
+    .gov-form-field .form-control {
+        height: 46px;
+    }
+
+    .gov-form-field textarea.form-control {
+        min-height: 110px;
+    }
+
+    }
+
+    /*sayed*/
+
+    /* ==========================================
+       DYNAMIC FORM
+       الحقول اللي تظهر فقط هي اللي تتحسب
+    ========================================== */
+
+    .gov-form-fields {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px 24px;
+        width: 100%;
+    }
+
+
+    /* ==========================================
+       كل Input
+    ========================================== */
+
+    .gov-field {
+        flex: 1 1 calc(50% - 12px);
+        min-width: 280px;
+        max-width: calc(50% - 12px);
+    }
+
+
+    /* ==========================================
+       Full Width
+       للـ textarea
+    ========================================== */
+
+    .gov-field-full {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+
+    /* ==========================================
+       Label
+    ========================================== */
+
+    .gov-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #344054;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+
+    /* ==========================================
+       Input
+    ========================================== */
+
+    .gov-field .form-control {
+        display: block;
+        width: 100%;
+        height: 48px;
+        padding: 10px 14px;
+        border: 1px solid #d0d5dd;
+        border-radius: 9px;
+        background: #fff;
+        color: #101828;
+        font-size: 14px;
+        box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+        transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+
+        /* Hover */
+
+        .gov-field .form-control:hover {
+            border-color: #98a2b3;
+        }
+
+
+        /* Focus */
+
+        .gov-field .form-control:focus {
+            border-color: #1570ef;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(21, 112, 239, .10);
+        }
+
+
+        /* Placeholder */
+
+        .gov-field .form-control::placeholder {
+            color: #98a2b3;
+        }
+
+
+    /* ==========================================
+       Textarea
+    ========================================== */
+
+    .gov-field textarea.form-control {
+        height: auto;
+        min-height: 130px;
+        resize: vertical;
+        line-height: 1.9;
+    }
+
+
+    /* Arabic */
+
+    .gov-field textarea.gov-textarea {
+        direction: rtl;
+        text-align: right;
+    }
+
+
+    /* English */
+
+    .gov-field textarea.gov-textarea-en {
+        direction: ltr;
+        text-align: left;
+    }
+
+
+    /* ==========================================
+       Date
+    ========================================== */
+
+    .gov-field input[type="date"] {
+        cursor: pointer;
+    }
+
+
+    /* ==========================================
+       File
+    ========================================== */
+
+    .gov-field input[type="file"] {
+        height: 48px;
+        padding: 6px 8px;
+        background: #f8fafc;
+        cursor: pointer;
+    }
+
+
+        .gov-field input[type="file"]::file-selector-button {
+            height: 34px;
+            margin-left: 8px;
+            padding: 0 14px;
+            border: 0;
+            border-radius: 6px;
+            background: #eef4ff;
+            color: #175cd3;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+
+            .gov-field input[type="file"]::file-selector-button:hover {
+                background: #dbeeff;
+            }
+
+
+    /* ==========================================
+       Actions
+    ========================================== */
+
+    .gov-form-actions {
+        display: flex;
+        align-items: center;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #eaecf0;
+    }
+
+
+        .gov-form-actions .btn-pay {
+            min-width: 120px;
+            height: 44px;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+
+    /* ==========================================
+       Desktop كبير
+       لو عندك 2 أو 3 حقول، يتم ترتيبهم
+       حسب الموجود فعليا
+    ========================================== */
+
+    @@media (min-width: 1200px) {
+        .gov-field
+
+    {
+        flex: 1 1 calc(50% - 12px);
+        max-width: calc(50% - 12px);
+    }
+
+    }
+
+
+    /* ==========================================
+       Tablet
+    ========================================== */
+
+    @@media (max-width: 991px) {
+        .gov-form-fields
+
+    {
+        gap: 16px;
+    }
+
+    .gov-field {
+        flex: 1 1 calc(50% - 8px);
+        max-width: calc(50% - 8px);
+        min-width: 240px;
+    }
+
+    .gov-field-full {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    }
+
+
+    /* ==========================================
+       Mobile
+    ========================================== */
+
+    @@media (max-width: 650px) {
+        .gov-form-fields
+
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .gov-field,
+    .gov-field-full {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+        .gov-field .form-control {
+            height: 46px;
+        }
+
+        .gov-field textarea.form-control {
+            min-height: 110px;
+        }
+
+    }
+</style>
+
+
+
+<!-- =====================================================
+     JavaScript
+====================================================== -->
 <script>
+
+    /* =====================================================
+       PDF MODAL
+    ====================================================== */
+
     const modal = document.getElementById("pdfModal");
     const frame = document.getElementById("pdfFrame");
     const closeBtn = document.getElementById("closeModal");
+
+
     document.querySelectorAll(".openPdf").forEach(link => {
+
         link.addEventListener("click", function (e) {
+
             e.preventDefault();
-            frame.src = this.getAttribute("data-pdf");
+
+            const pdfUrl = this.getAttribute("data-pdf");
+
+            if (!pdfUrl) {
+                return;
+            }
+
+            frame.src = pdfUrl;
+
             modal.style.display = "flex";
+
+            document.body.style.overflow = "hidden";
+
         });
+
     });
-    closeBtn.onclick = function () {
+
+
+    function closePdfModal() {
+
         modal.style.display = "none";
+
         frame.src = "";
+
+        document.body.style.overflow = "";
+
+    }
+
+
+    closeBtn.onclick = function () {
+
+        closePdfModal();
+
     };
+
+
+    modal.addEventListener("click", function (e) {
+
+        if (e.target === modal) {
+
+            closePdfModal();
+
+        }
+
+    });
+
+
+
+    /* =====================================================
+       DETAILS MODAL
+    ====================================================== */
+
+    const detailsModal =
+        document.getElementById("detailsModal");
+
+    const detailsModalTitle =
+        document.getElementById("detailsModalTitle");
+
+    const detailsModalText =
+        document.getElementById("detailsModalText");
+
+    const detailsModalBody =
+        document.getElementById("detailsModalBody");
+
+    const closeDetailsModal =
+        document.getElementById("closeDetailsModal");
+
+
+    /* Open Details */
+
+    document.querySelectorAll(".openDetails").forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            const title =
+                this.getAttribute("data-title") ||
+                "التفاصيل";
+
+            const content =
+                this.getAttribute("data-content") ||
+                "";
+
+            const direction =
+                this.getAttribute("data-direction") ||
+                "rtl";
+
+
+            /* Title */
+
+            if (direction === "ltr") {
+
+                detailsModalTitle.innerHTML = `
+                    <i class="fas fa-align-left"></i>
+                    ${title}
+                `;
+
+            }
+            else {
+
+                detailsModalTitle.innerHTML = `
+                    <i class="fas fa-align-right"></i>
+                    ${title}
+                `;
+
+            }
+
+
+            /* Content */
+
+            detailsModalText.textContent = content;
+
+
+            /* Direction */
+
+            if (direction === "ltr") {
+
+                detailsModalBody.classList.add("ltr");
+
+            }
+            else {
+
+                detailsModalBody.classList.remove("ltr");
+
+            }
+
+
+            /* Open */
+
+            detailsModal.classList.add("is-open");
+
+            document.body.style.overflow = "hidden";
+
+        });
+
+    });
+
+
+    /* Close Details */
+
+    function closeDetails() {
+
+        detailsModal.classList.remove("is-open");
+
+        detailsModalText.textContent = "";
+
+        document.body.style.overflow = "";
+
+    }
+
+
+    closeDetailsModal.addEventListener(
+        "click",
+        closeDetails
+    );
+
+
+    /* Click Outside */
+
+    detailsModal.addEventListener("click", function (e) {
+
+        if (e.target === detailsModal) {
+
+            closeDetails();
+
+        }
+
+    });
+
+
+    /* Escape */
+
+    document.addEventListener("keydown", function (e) {
+
+        if (e.key === "Escape") {
+
+            if (
+                detailsModal.classList.contains("is-open")
+            ) {
+
+                closeDetails();
+
+            }
+
+
+            if (
+                modal.style.display === "flex"
+            ) {
+
+                closePdfModal();
+
+            }
+
+        }
+
+    });
+
 </script>

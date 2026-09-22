@@ -1,26 +1,42 @@
 (function ($) {
     "use strict";
     
-    // Dropdown on mouse hover
+    // Leave time to move from the navbar heading into its dropdown items.
     $(document).ready(function () {
-        function toggleNavbarMethod() {
-            var $dropdowns = $('.navbar .dropdown');
+        var hoverNavigation = window.matchMedia('(min-width: 992px) and (hover: hover) and (pointer: fine)');
 
-            // Avoid stacking handlers every time the window is resized.
-            $dropdowns.off('.navbarHover');
+        $('.navbar .dropdown').each(function () {
+            var dropdown = this;
+            var toggle = dropdown.querySelector('.dropdown-toggle');
+            var closeTimer;
+            if (!toggle) return;
 
-            if ($(window).width() > 992) {
-                $dropdowns.on('mouseenter.navbarHover', function () {
-                    var toggle = this.querySelector('.dropdown-toggle');
-                    bootstrap.Dropdown.getOrCreateInstance(toggle).show();
-                }).on('mouseleave.navbarHover', function () {
-                    var toggle = this.querySelector('.dropdown-toggle');
-                    bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
-                });
+            function cancelClose() {
+                window.clearTimeout(closeTimer);
             }
-        }
-        toggleNavbarMethod();
-        $(window).resize(toggleNavbarMethod);
+
+            $(dropdown).on('mouseenter.navbarHover', function () {
+                cancelClose();
+                if (hoverNavigation.matches) {
+                    bootstrap.Dropdown.getOrCreateInstance(toggle).show();
+                }
+            }).on('mouseleave.navbarHover', function () {
+                if (!hoverNavigation.matches) return;
+                cancelClose();
+                closeTimer = window.setTimeout(function () {
+                    // Keyboard users may still be choosing an item inside the menu.
+                    if (!dropdown.querySelector('.dropdown-menu').contains(document.activeElement)) {
+                        bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+                    }
+                }, 350);
+            }).on('focusin.navbarHover', cancelClose);
+
+            toggle.addEventListener('hide.bs.dropdown', cancelClose);
+            hoverNavigation.addEventListener('change', function () {
+                cancelClose();
+                bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+            });
+        });
     });
     
     

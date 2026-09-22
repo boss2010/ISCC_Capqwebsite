@@ -21,7 +21,7 @@
 						<th scope="col">الشروط بالعربية</th>
 						<th scope="col">الشروط بالانجليزيه</th>
 						<th scope="col">الشهاده بالعربية</th>
-						<th scope="col">الشهاده بالنجليزيه</th>
+						<th scope="col">الشهاده بالانجليزيه</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,9 +33,67 @@
 							<td>@item.ShortName_Ar</td>
 							<td>@item.ConstrainText_Ar</td>
 							<td>@item.ConstrainText_En</td>
-							<td>@item.InSide_Certificate_Ar</td>
-							<td>@item.InSide_Certificate_En</td>
+                            <!-- ================================= -->
+                            <!-- الشهادة بالعربية -->
+                            <!-- ================================= -->
 
+                            <td class="certificate-cell">
+
+                                <div class="certificate-preview">
+
+                                    @item.InSide_Certificate_Ar
+
+                                </div>
+
+
+                                @if (!string.IsNullOrWhiteSpace(item.InSide_Certificate_Ar)
+                                                    && item.InSide_Certificate_Ar.Length > 100)
+                                {
+
+                                    <button type="button"
+                                            class="btn btn-link btn-sm show-certificate"
+                                            data-title="الشهادة بالعربية"
+                                            data-content="@item.InSide_Certificate_Ar">
+
+                                        عرض المزيد
+
+                                    </button>
+
+                                }
+
+                            </td>
+
+
+                            <!-- ================================= -->
+                            <!-- الشهادة بالإنجليزية -->
+                            <!-- ================================= -->
+
+                            <td class="certificate-cell">
+
+                                <div class="certificate-preview"
+                                     dir="ltr">
+
+                                    @item.InSide_Certificate_En
+
+                                </div>
+
+
+                                @if (!string.IsNullOrWhiteSpace(item.InSide_Certificate_En)
+                                                    && item.InSide_Certificate_En.Length > 100)
+                                {
+
+                                    <button type="button"
+                                            class="btn btn-link btn-sm show-certificate"
+                                            data-title="Certificate"
+                                            data-content="@item.InSide_Certificate_En">
+
+                                        عرض المزيد
+
+                                    </button>
+
+                                }
+
+                            </td>
 							
 						</tr>
 					}
