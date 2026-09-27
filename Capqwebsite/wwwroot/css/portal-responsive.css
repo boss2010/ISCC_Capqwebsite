@@ -1,0 +1,104 @@
+/* Shared public layout: explicit surfaces and a mobile-first navigation. */
+.gov-portal {
+    color-scheme: light;
+    background-color: #fcfaf5;
+    color: #172e23;
+}
+
+.portal-header {
+    background: #fcfaf5 !important;
+}
+
+.portal-header__inner { gap: 16px; }
+.portal-brand { min-width: 0; margin: 0; }
+.portal-brand > .size-12 { flex: 0 0 48px; }
+.portal-brand img { width: 100%; height: 100%; object-fit: contain; }
+.portal-brand > .leading-tight { min-width: 0; }
+.portal-nav { min-width: 0; margin-inline-start: auto; padding: 0; }
+.portal-nav .navbar-collapse { gap: 8px; }
+.portal-nav .nav-link { white-space: nowrap; }
+.portal-nav .services { justify-content: center; margin: 0; white-space: nowrap; }
+.portal-nav .dropdown-menu {
+    background: #fff;
+    color: #172e23;
+    border: 1px solid #dce4dc;
+    border-radius: 8px;
+    text-align: start;
+}
+.portal-nav .dropdown-item { color: #172e23; white-space: normal; padding: 10px 14px; }
+.portal-nav .dropdown-item:hover,
+.portal-nav .dropdown-item:focus { color: #172e23; background: #f5eedc; }
+.portal-nav .navbar-toggler {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    color: #174e38;
+    background: #edf2eb;
+    border: 1px solid #cedbce;
+    border-radius: 8px;
+}
+.portal-nav .nav-link:focus-visible,
+.portal-nav .navbar-toggler:focus-visible {
+    outline: 2px solid #174e38 !important;
+    outline-offset: 3px !important;
+}
+
+/* Use a conventional gradient so the hero stays readable on mobile browsers. */
+.portal-hero > .bg-gradient-to-l {
+    background: linear-gradient(to left, rgba(13, 43, 30, .95), rgba(13, 43, 30, .85) 55%, rgba(13, 43, 30, .55));
+}
+.portal-quick-links .grid > a { min-width: 0; }
+
+@media (min-width: 1200px) {
+    .portal-header__inner { flex-wrap: wrap; }
+    .portal-nav .navbar-toggler { display: none; }
+}
+
+@media (max-width: 1199.98px) {
+    .portal-header__inner { position: relative; padding: 12px 16px; }
+    .portal-brand { flex: 1 1 auto; padding-inline-end: 52px; }
+    .portal-nav { position: static; flex: 0 0 0; }
+    .portal-nav .navbar-toggler { position: absolute; inset-inline-end: 16px; top: 14px; }
+    .portal-nav .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        inset-inline: 0;
+        max-height: calc(100vh - 130px);
+        max-height: calc(100dvh - 130px);
+        overflow-y: auto;
+        padding: 12px 16px;
+        background: #fcfaf5;
+        border-bottom: 1px solid #dce4dc;
+        box-shadow: 0 12px 20px rgba(13, 43, 30, .12);
+    }
+    .portal-nav .navbar-nav { width: 100%; }
+    .portal-nav .nav-link { min-height: 44px; padding: 12px; white-space: normal; }
+    .portal-nav .dropdown-menu { position: static !important; width: 100%; box-shadow: none; }
+    .portal-nav .services { display: flex; width: 100%; min-height: 44px; margin-top: 10px; }
+}
+
+@media (max-width: 767.98px) {
+    .portal-brand .font-display { font-size: 16px; line-height: 1.6; }
+    .portal-brand .tracking-wider { font-size: 9px; letter-spacing: 0; line-height: 1.5; }
+    .portal-brand { gap: 8px; }
+    .portal-brand > .size-12 { flex-basis: 40px; width: 40px; height: 40px; }
+    .portal-hero > .max-w-7xl { padding: 48px 16px; }
+    .portal-hero h1 { font-size: clamp(1.8rem, 7.5vw, 2.5rem); line-height: 1.45; }
+    .portal-hero #services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .portal-hero #services a { justify-content: center; padding: 12px 8px; text-align: center; font-size: 13px; }
+    .portal-hero #services svg { flex-shrink: 0; }
+    .portal-quick-links .grid > a { flex-direction: column; gap: 12px; padding: 20px 12px; text-align: center; }
+    .portal-quick-links .text-lg { font-size: 1rem; }
+    .gov-main section.py-24 { padding-block: 40px; }
+    .gov-main section .text-4xl { font-size: 1.9rem; line-height: 1.5; }
+    .gov-main .gap-14 { gap: 28px; }
+    .gov-page-header__inner { flex-direction: column; align-items: flex-start; justify-content: center; gap: 12px; padding-block: 20px; }
+    .gov-page-header__title { min-width: 0; flex-shrink: 1; }
+    .gov-page-header__title h1, .gov-page-header__h1 { white-space: normal; }
+    .gov-breadcrumb { flex-wrap: wrap; white-space: normal; }
+    .gov-portal footer { padding-block: 36px; }
+    .gov-portal footer .text-center { text-align: start; }
+}

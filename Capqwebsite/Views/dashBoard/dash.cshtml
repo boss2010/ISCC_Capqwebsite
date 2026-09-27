@@ -1,255 +1,1754 @@
 ﻿@model ViewModels.DashboardVM
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
+
 @{
     ViewData["Title"] = "الإحصائيات";
+
+    var totalImport = Convert.ToDouble(ViewBag.TotalImportTons ?? 0);
+    var totalExport = Convert.ToDouble(ViewBag.TotalExportTons ?? 0);
+    var totalTons = Convert.ToDouble(ViewBag.TotalTons ?? 0);
+
+    var importOrders = Convert.ToInt32(ViewBag.ImportOrders ?? 0);
+    var exportOrders = Convert.ToInt32(ViewBag.ExportOrders ?? 0);
+
+    var people = Convert.ToInt32(ViewBag.People ?? 0);
+
+    var importPercent = totalTons > 0
+        ? Math.Round((totalImport / totalTons) * 100, 0)
+        : 0;
+
+    var exportPercent = totalTons > 0
+        ? Math.Round((totalExport / totalTons) * 100, 0)
+        : 0;
 }
-<div class="container gov-dashboard">
-    <div class="gov-dashboard__header">
-        <h2 class="gov-dashboard__title">لوحة الإحصائيات</h2>
-        <p class="gov-dashboard__subtitle">مؤشرات الوارد والصادر والجهات المسجلة لسنة @ViewBag.year</p>
+
+<div dir="rtl">
+
+    <style>
+
+        :root {
+            --green: #08764f;
+            --green2: #159451;
+            --green3: #1da65a;
+            --blue: #0c75a9;
+            --dark: #0c3f5c;
+            --light: #f5faf8;
+            --border: #d7e4e5;
+            --text: #123b51;
+            --red: #ff3030;
+            --lime: #8bdc4a;
+            --shadow: 0 5px 16px rgba(10,55,70,.10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #eef5f3;
+            font-family: "Tahoma","Arial",sans-serif;
+            color: var(--text);
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        .dashboard {
+            max-width: 1600px;
+            margin: auto;
+            background: #fff;
+            min-height: 100vh;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            height: 170px;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient( circle at 12% 55%, rgba(112,180,55,.55), transparent 28% ), linear-gradient( 110deg, #eaf6ee 0%, #fff 48%, #edf8f0 100% );
+            border-bottom: 1px solid #d8e4e0;
+        }
+
+            .header:before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient( 135deg, transparent 0 38%, rgba(0,123,82,.96) 38.2% 41%, transparent 41.2% ), linear-gradient( 145deg, transparent 0 48%, rgba(36,150,86,.18) 48.2% 52%, transparent 52.2% );
+            }
+
+        .header-art {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 47%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 58px;
+            letter-spacing: 8px;
+        }
+
+            .header-art span {
+                filter: drop-shadow(0 3px 5px rgba(0,0,0,.2));
+            }
+
+        .brand {
+            position: absolute;
+            right: 8%;
+            top: 24px;
+            text-align: right;
+            z-index: 2;
+        }
+
+            .brand h1 {
+                margin: 0;
+                color: #006b49;
+                font-size: 34px;
+                font-weight: 900;
+            }
+
+            .brand h2 {
+                margin: 5px 0 0;
+                font-size: 30px;
+                color: #00543e;
+            }
+
+            .brand p {
+                margin: 8px 0 0;
+                color: #377d70;
+                font-size: 21px;
+                font-weight: 700;
+            }
+
+        .logo {
+            position: absolute;
+            right: 2%;
+            top: 10px;
+            width: 105px;
+            height: 105px;
+            border: 4px solid #08764f;
+            border-radius: 50%;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            color: #08764f;
+            font-weight: 900;
+            font-size: 24px;
+            z-index: 3;
+            box-shadow: 0 3px 8px #0002;
+        }
+
+            .logo small {
+                font-size: 10px;
+            }
+
+        .menu {
+            position: absolute;
+            left: 14px;
+            top: 12px;
+            background: #08764f;
+            color: white;
+            border: 0;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            font-size: 25px;
+            z-index: 4;
+            cursor: pointer;
+        }
+
+        /* ================= FILTERS ================= */
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1.1fr 1.1fr .95fr 1.25fr 1.25fr 1.25fr 150px;
+            gap: 10px;
+            padding: 15px 24px;
+            background: #fff;
+            box-shadow: var(--shadow);
+            margin: 15px 24px 12px;
+            border-radius: 12px;
+        }
+
+        .field {
+            height: 54px;
+            border: 1px solid #d4e0e4;
+            border-radius: 9px;
+            background: #fbfdfd;
+            padding: 5px 13px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            .field label {
+                font-size: 12px;
+                color: #506979;
+                margin-bottom: 4px;
+            }
+
+            .field select,
+            .field input {
+                border: 0;
+                background: transparent;
+                outline: 0;
+                color: #0c3954;
+                font-weight: 700;
+                width: 100%;
+            }
+
+        .refresh {
+            border: 0;
+            border-radius: 9px;
+            background: #08764f;
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+            .refresh:hover {
+                background: #05613f;
+            }
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+            padding: 0 24px 12px;
+        }
+
+        .kpi {
+            height: 138px;
+            border-radius: 10px;
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+            .kpi.green {
+                background: linear-gradient(115deg,#09854d,#239f55);
+            }
+
+            .kpi.blue {
+                background: linear-gradient(115deg,#0875a9,#1d78a9);
+            }
+
+            .kpi:after {
+                content: "";
+                position: absolute;
+                right: -20px;
+                bottom: -55px;
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                background: #fff2;
+            }
+
+            .kpi .icon {
+                width: 78px;
+                height: 78px;
+                border-radius: 50%;
+                background: #fff;
+                color: #08764f;
+                display: grid;
+                place-items: center;
+                font-size: 39px;
+                z-index: 1;
+                flex-shrink: 0;
+            }
+
+            .kpi .data {
+                margin-right: 20px;
+                z-index: 1;
+            }
+
+            .kpi .title {
+                font-size: 20px;
+                font-weight: 800;
+            }
+
+            .kpi .number {
+                font-size: 46px;
+                line-height: 1.05;
+                font-weight: 900;
+                margin: 5px 0;
+            }
+
+            .kpi .compare {
+                font-size: 12px;
+                font-weight: 700;
+            }
+
+        .up {
+            color: #b9ff6b;
+            font-size: 20px;
+            margin-left: 5px;
+        }
+
+        /* ================= CHARTS ================= */
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 15px;
+            padding: 0 24px 12px;
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .panel-title {
+            font-size: 19px;
+            font-weight: 900;
+            padding: 12px 18px 5px;
+            color: #103e59;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-body {
+            padding: 4px 14px 10px;
+        }
+
+        .chart {
+            width: 100%;
+            height: 230px;
+        }
+
+            .chart svg {
+                width: 100%;
+                height: 100%;
+            }
+
+        .gridline {
+            stroke: #dce6e9;
+            stroke-width: 1;
+        }
+
+        .axis {
+            fill: #143f56;
+            font-size: 11px;
+        }
+
+        .bar {
+            fill: #21904e;
+        }
+
+            .bar:hover {
+                fill: #31a85d;
+            }
+
+        .line {
+            fill: none;
+            stroke: #ff3030;
+            stroke-width: 3;
+        }
+
+        .dot {
+            fill: #ff3030;
+        }
+
+        .value {
+            fill: #0b5b42;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .legend {
+            font-size: 12px;
+            color: #173f53;
+            display: flex;
+            gap: 18px;
+            margin-right: 10px;
+        }
+
+            .legend i {
+                display: inline-block;
+                width: 13px;
+                height: 9px;
+                border-radius: 3px;
+                margin-left: 5px;
+            }
+
+            .legend .g {
+                background: #21904e;
+            }
+
+            .legend .r {
+                background: #ff3030;
+            }
+
+        /* ================= BOTTOM ================= */
+
+        .bottom {
+            display: grid;
+            grid-template-columns: 1.15fr 1.15fr .75fr .9fr;
+            gap: 15px;
+            padding: 0 24px 12px;
+        }
+
+        .table-panel {
+            min-height: 275px;
+        }
+
+        .table-head {
+            color: #fff;
+            padding: 10px 14px;
+            font-size: 18px;
+            font-weight: 900;
+            background: linear-gradient(90deg,#138f50,#0b6d47);
+        }
+
+            .table-head.blue {
+                background: linear-gradient(90deg,#1a79aa,#0b6590);
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: #e8f0f0;
+            color: #16475a;
+            padding: 7px;
+        }
+
+        td {
+            padding: 7px;
+            border-bottom: 1px solid #edf1f2;
+            font-weight: 700;
+        }
+
+        .rank {
+            width: 30px;
+            height: 30px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e2eef0;
+            color: #0d6c7d;
+        }
+
+        .summary {
+            background: #08764f;
+            color: white;
+            padding: 9px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+            .summary.blue {
+                background: #0876a9;
+            }
+
+        /* ================= QUICK ================= */
+
+        .quick {
+            padding: 0 12px 12px;
+        }
+
+            .quick h3 {
+                margin: 10px 0;
+                color: #08764f;
+                text-align: center;
+                font-size: 17px;
+            }
+
+        .qitem {
+            border: 1px solid #d7e5df;
+            border-radius: 8px;
+            padding: 9px;
+            margin: 7px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fbfefd;
+        }
+
+            .qitem b {
+                font-size: 18px;
+                color: #08764f;
+            }
+
+            .qitem small {
+                display: block;
+                color: #4e6e78;
+            }
+
+        .delta {
+            font-size: 11px;
+            color: #4c9d2f;
+            font-weight: 800;
+        }
+
+        .updated {
+            background: #eef8f4;
+            border: 1px solid #cfe6dc;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* ================= DONUT ================= */
+
+        .donut-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .donut {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            background: conic-gradient( #279653 0 @importPercent %, #147ab7 @importPercent % 100% );
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+            .donut:after {
+                content: "";
+                width: 98px;
+                height: 98px;
+                border-radius: 50%;
+                background: #fff;
+                position: absolute;
+            }
+
+        .donut-center {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            font-weight: 900;
+            color: #123f54;
+        }
+
+            .donut-center small {
+                display: block;
+                font-size: 11px;
+            }
+
+        .key {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 18px;
+            font-weight: 700;
+        }
+
+            .key span:before {
+                content: "";
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                margin-left: 7px;
+                background: #279653;
+            }
+
+            .key.blue span:before {
+                background: #147ab7;
+            }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            background: linear-gradient(90deg,#086d49,#0c5f47);
+            color: #fff;
+            padding: 11px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+            .footer a {
+                color: white;
+                text-decoration: none;
+            }
+
+        /* ================= RESPONSIVE ================= */
+
+        @@media(max-width:1100px) {
+
+            .filters {
+                grid-template-columns: repeat(4,1fr);
+            }
+
+            .charts {
+                grid-template-columns: 1fr;
+            }
+
+            .bottom {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .header {
+                height: 150px;
+            }
+
+            .brand h1 {
+                font-size: 28px;
+            }
+
+            .brand h2 {
+                font-size: 24px;
+            }
+
+            .brand p {
+                font-size: 17px;
+            }
+        }
+
+        @@media(max-width:720px) {
+
+            .header {
+                height: 180px;
+            }
+
+            .header-art {
+                display: none;
+            }
+
+            .brand {
+                right: 80px;
+                top: 35px;
+            }
+
+            .logo {
+                right: 10px;
+                top: 10px;
+                width: 65px;
+                height: 65px;
+                font-size: 15px;
+            }
+
+            .brand h1 {
+                font-size: 22px;
+            }
+
+            .brand h2 {
+                font-size: 19px;
+            }
+
+            .brand p {
+                font-size: 13px;
+            }
+
+            .filters,
+            .cards,
+            .charts,
+            .bottom {
+                grid-template-columns: 1fr;
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .filters {
+                margin: 10px 12px;
+            }
+
+            .kpi {
+                height: 125px;
+            }
+
+                .kpi .number {
+                    font-size: 38px;
+                }
+
+            .footer {
+                font-size: 11px;
+                gap: 10px;
+            }
+
+                .footer span:last-child {
+                    display: none;
+                }
+        }
+
+    </style>
+
+
+    <div class="dashboard">
+
+        <!-- ================= HEADER ================= -->
+
+        <header class="header">
+
+            <button class="menu" type="button" onclick="toggleMenu()">
+                ☰
+            </button>
+
+            <div class="header-art">
+                <span>🍊 🍎 🌿 🚢 🔬</span>
+            </div>
+
+            <div class="brand">
+
+                <h1>لوحة مؤشرات وإحصائيات</h1>
+
+                <h2>الحجر الزراعي</h2>
+
+                <p>
+                    الإدارة المركزية للحجر الزراعي
+                </p>
+
+            </div>
+
+            <div class="logo">
+                CAPQ
+                <br />
+                <small>الحجر الزراعي</small>
+            </div>
+
+        </header>
+
+
+        <!-- ================= FILTERS ================= -->
+
+        <section class="filters">
+
+            <div class="field">
+                <label>من تاريخ</label>
+                <input type="date"
+                       id="fromDate"
+                       name="fromDate"
+                       value="@ViewBag.FromDate" />
+            </div>
+
+            <div class="field">
+                <label>إلى تاريخ</label>
+                <input type="date"
+                       id="toDate"
+                       name="toDate"
+                       value="@ViewBag.ToDate" />
+            </div>
+
+            <div class="field">
+                <label>السنة</label>
+
+                <select id="year" name="year">
+                    @{
+                        int selectedYear = ViewBag.year ?? DateTime.Now.Year;
+                    }
+
+                    @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 10; y--)
+                    {
+                        <option value="@y" selected="@(y == selectedYear)">
+                            @y
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="field">
+                <label>الشهر</label>
+
+                <select id="month" name="month">
+                    <option value="">جميع الشهور</option>
+
+                    <option value="1" selected="@(ViewBag.Month == 1)">يناير</option>
+                    <option value="2" selected="@(ViewBag.Month == 2)">فبراير</option>
+                    <option value="3" selected="@(ViewBag.Month == 3)">مارس</option>
+                    <option value="4" selected="@(ViewBag.Month == 4)">أبريل</option>
+                    <option value="5" selected="@(ViewBag.Month == 5)">مايو</option>
+                    <option value="6" selected="@(ViewBag.Month == 6)">يونيو</option>
+                    <option value="7" selected="@(ViewBag.Month == 7)">يوليو</option>
+                    <option value="8" selected="@(ViewBag.Month == 8)">أغسطس</option>
+                    <option value="9" selected="@(ViewBag.Month == 9)">سبتمبر</option>
+                    <option value="10" selected="@(ViewBag.Month == 10)">أكتوبر</option>
+                    <option value="11" selected="@(ViewBag.Month == 11)">نوفمبر</option>
+                    <option value="12" selected="@(ViewBag.Month == 12)">ديسمبر</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>المنتج</label>
+
+                <select id="productId" name="productId">
+                    <option value="">جميع المنتجات</option>
+
+                    @foreach (var item in ViewBag.ProductsList)
+                    {
+                        <option value="@item.ID"
+                                selected="@(ViewBag.ProductId == item.ID)">
+                            @item.ShortName_Ar
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="field">
+                <label>الاتجاه</label>
+
+                <select id="direction" name="direction">
+                    <option value="all"
+                            selected="@(ViewBag.Direction == "all")">
+                        استيراد / تصدير
+                    </option>
+
+                    <option value="import"
+                            selected="@(ViewBag.Direction == "import")">
+                        استيراد
+                    </option>
+
+                    <option value="export"
+                            selected="@(ViewBag.Direction == "export")">
+                        تصدير
+                    </option>
+                </select>
+            </div>
+
+            <button type="button"
+                    class="refresh"
+                    onclick="refreshDashboard()">
+                ⟳ تحديث
+            </button>
+
+        </section>
+
+
+
+        <!-- ================= KPI CARDS ================= -->
+
+        <section class="cards">
+
+            <div class="kpi green">
+
+                <div class="icon">
+                    👥
+                </div>
+
+                <div class="data">
+
+                    <div class="title">
+                        عدد المتعاملين
+                    </div>
+
+                    <div class="number">
+                        @people.ToString("N0")
+                    </div>
+
+                    <div class="compare">
+                        إجمالي المتعاملين
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="kpi blue">
+
+                <div class="icon">
+                    📄
+                </div>
+
+                <div class="data">
+
+                    <div class="title">
+                        عدد أذون الاستيراد
+                    </div>
+
+                    <div class="number">
+                        @importOrders.ToString("N0")
+                    </div>
+
+                    <div class="compare">
+                        خلال الفترة المحددة
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="kpi green">
+
+                <div class="icon">
+                    🔬
+                </div>
+
+                <div class="data">
+
+                    <div class="title">
+                        عدد أذون التصدير
+                    </div>
+
+                    <div class="number">
+                        @exportOrders.ToString("N0")
+                    </div>
+
+                    <div class="compare">
+                        خلال الفترة المحددة
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CHARTS ================= -->
+
+        <section class="charts">
+
+
+            <!-- IMPORT -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    <span>
+                        الكميات المستوردة بالطن طبقًا لأذون الاستيراد
+                    </span>
+
+                    <span class="legend">
+
+                        <span>
+                            <i class="g"></i>
+                            الكمية
+                        </span>
+
+                        <span>
+                            <i class="r"></i>
+                            عدد الأذون
+                        </span>
+
+                    </span>
+
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="chart"
+                         id="importChart">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXPORT -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    <span>
+                        الكميات المصدرة بالطن طبقًا لأذون التصدير
+                    </span>
+
+                    <span class="legend">
+
+                        <span>
+                            <i class="g"></i>
+                            الكمية
+                        </span>
+
+                        <span>
+                            <i class="r"></i>
+                            عدد الأذون
+                        </span>
+
+                    </span>
+
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="chart"
+                         id="exportChart">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TABLES ================= -->
+
+        <section class="bottom">
+
+
+            <!-- EXPORT PRODUCTS -->
+
+            <div class="panel table-panel">
+
+                <div class="table-head">
+                    أعلى 5 منتجات تصدير خلال العام
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>م</th>
+                            <th>المنتج</th>
+                            <th>الكمية (طن)</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @{
+                            int exportRank = 1;
+                        }
+
+                        @if (Model.ProductsEX != null &&
+                                                Model.ProductsEX.Any())
+                        {
+                            foreach (var item in Model.ProductsEX)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <span class="rank">
+                                            @exportRank
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @item.Country
+                                    </td>
+
+                                    <td>
+                                        @item.CountOrders.ToString("N0")
+                                    </td>
+
+                                </tr>
+
+                                exportRank++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3"
+                                    style="text-align:center;">
+                                    لا توجد بيانات
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="summary">
+
+                    إجمالي كمية التصدير خلال الفترة
+
+                    <br />
+
+                    <strong>
+                        @totalExport.ToString("N2") طن
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- IMPORT PRODUCTS -->
+
+            <div class="panel table-panel">
+
+                <div class="table-head blue">
+                    أعلى 5 منتجات استيراد خلال العام
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>م</th>
+                            <th>المنتج</th>
+                            <th>الكمية (طن)</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @{
+                            int importRank = 1;
+                        }
+
+                        @if (Model.Products != null &&
+                                                Model.Products.Any())
+                        {
+                            foreach (var item in Model.Products)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <span class="rank">
+                                            @importRank
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @item.Country
+                                    </td>
+
+                                    <td>
+                                        @item.CountOrders.ToString("N0")
+                                    </td>
+
+                                </tr>
+
+                                importRank++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3"
+                                    style="text-align:center;">
+                                    لا توجد بيانات
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="summary blue">
+
+                    إجمالي كمية الاستيراد خلال الفترة
+
+                    <br />
+
+                    <strong>
+                        @totalImport.ToString("N2") طن
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK STATS -->
+
+            <div class="panel quick">
+
+                <h3>
+                    أهم المؤشرات السريعة
+                </h3>
+
+
+                <div class="qitem">
+
+                    <div>
+
+                        <small>
+                            إجمالي الكميات المستوردة (طن)
+                        </small>
+
+                        <b>
+                            @totalImport.ToString("N2")
+                        </b>
+
+                    </div>
+
+                    <span class="delta">
+                        استيراد
+                    </span>
+
+                </div>
+
+
+                <div class="qitem">
+
+                    <div>
+
+                        <small>
+                            إجمالي الكميات المصدرة (طن)
+                        </small>
+
+                        <b>
+                            @totalExport.ToString("N2")
+                        </b>
+
+                    </div>
+
+                    <span class="delta">
+                        تصدير
+                    </span>
+
+                </div>
+
+
+                <div class="qitem">
+
+                    <div>
+
+                        <small>
+                            إجمالي الكميات
+                        </small>
+
+                        <b>
+                            @totalTons.ToString("N2")
+                        </b>
+
+                    </div>
+
+                    <span class="delta">
+                        طن
+                    </span>
+
+                </div>
+
+
+                <div class="updated">
+
+                    السنة المالية:
+
+                    <strong>
+                        @ViewBag.year
+                    </strong>
+
+                    <br />
+
+                    من
+                    <strong>
+                        @ViewBag.FromDate
+                    </strong>
+
+                    إلى
+                    <strong>
+                        @ViewBag.ToDate
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- DONUT -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    التوزيع النسبي للكميات (طن)
+                </div>
+
+
+                <div class="donut-wrap">
+
+                    <div class="donut">
+
+                        <div class="donut-center">
+
+                            @totalTons.ToString("N0")
+
+                            <small>
+                                إجمالي الكميات طن
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="key">
+
+                    <span>
+                        كميات مستوردة
+                    </span>
+
+                    <b>
+                        @totalImport.ToString("N0")
+                        &nbsp;
+                        @importPercent%
+                    </b>
+
+                </div>
+
+
+                <div class="key blue">
+
+                    <span>
+                        كميات مصدرة
+                    </span>
+
+                    <b>
+                        @totalExport.ToString("N0")
+                        &nbsp;
+                        @exportPercent%
+                    </b>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer class="footer">
+
+            <span>
+                معًا من أجل زراعة آمنة ..
+                تجارة آمنة ..
+                مستقبل مستدام
+            </span>
+
+            <span>
+
+                🌐
+
+                <a href="https://www.capq.gov.eg"
+                   target="_blank">
+
+                    www.capq.gov.eg
+
+                </a>
+
+                &nbsp; | &nbsp;
+
+                الإدارة المركزية للحجر الزراعي
+
+                &nbsp;
+
+                CAPQ 🌿
+
+            </span>
+
+        </footer>
+
     </div>
-    <div class="row gov-dashboard-grid">
-        <div class="col-lg-4">
-            <section class="gov-chart-card">
-                <canvas id="myChart2" class="gov-chart-canvas"></canvas>
-            </section>
-        </div>
-        <div class="col-lg-4">
-            <section class="gov-chart-card">
-                <canvas id="myChart1" class="gov-chart-canvas"></canvas>
-            </section>
-        </div>
-        <div class="col-lg-4">
-            <section class="gov-chart-card">
-                <canvas id="myChart3" class="gov-chart-canvas"></canvas>
-            </section>
-        </div>
-        <div class="col-lg-4">
-            <section class="gov-chart-card">
-                <canvas id="myChart4" class="gov-chart-canvas"></canvas>
-            </section>
-        </div>
-        <div class="col-lg-4">
-            <section class="gov-chart-card">
-                <canvas id="myChart" class="gov-chart-canvas"></canvas>
-            </section>
-        </div>
-    </div>
+
+
+    <script>
+
+        // =====================================================
+        // CHART DATA
+        // =====================================================
+
+        const months = [
+            'يناير',
+            'فبراير',
+            'مارس',
+            'أبريل',
+            'مايو',
+            'يونيو',
+            'يوليو',
+            'أغسطس',
+            'سبتمبر',
+            'أكتوبر',
+            'نوفمبر',
+            'ديسمبر'
+        ];
+
+        // حالياً بيانات مؤقتة للرسم فقط
+        // سيتم ربطها ببيانات Controller في الخطوة التالية
+
+        const imports = [
+            4200,
+            5600,
+            6800,
+            7200,
+            5900,
+            6300,
+            7800,
+            6700,
+            5800,
+            6900,
+            7600,
+            8400
+        ];
+
+        const exportsData = [
+            2100,
+            2800,
+            3400,
+            3900,
+            3200,
+            3700,
+            4200,
+            3600,
+            3100,
+            3800,
+            4500,
+            5000
+        ];
+
+
+        function makeChart(elId, data, max) {
+
+            const W = 720;
+            const H = 225;
+
+            const left = 46;
+            const right = 45;
+            const top = 16;
+            const bottom = 38;
+
+            const plotW = W - left - right;
+            const plotH = H - top - bottom;
+
+            const gap = plotW / data.length;
+
+            let s =
+                `<svg viewBox="0 0 ${W} ${H}"
+                      preserveAspectRatio="none">`;
+
+
+            for (let i = 0; i <= 4; i++) {
+
+                const y =
+                    top + plotH * i / 4;
+
+                const val =
+                    Math.round(max * (1 - i / 4));
+
+                s += `
+                    <line
+                        x1="${left}"
+                        y1="${y}"
+                        x2="${W-right}"
+                        y2="${y}"
+                        class="gridline"/>
+
+                    <text
+                        x="${left-7}"
+                        y="${y+4}"
+                        text-anchor="end"
+                        class="axis">
+                        ${val.toLocaleString()}
+                    </text>
+                `;
+            }
+
+
+            const pts = [];
+
+
+            data.forEach((v, i) => {
+
+                const bw = gap * .48;
+
+                const x =
+                    left +
+                    i * gap +
+                    (gap - bw) / 2;
+
+                const y =
+                    top +
+                    plotH -
+                    (v / max) * plotH;
+
+
+                s += `
+                    <rect
+                        class="bar"
+                        x="${x}"
+                        y="${y}"
+                        width="${bw}"
+                        height="${top + plotH - y}"
+                        rx="4"/>
+                `;
+
+
+                s += `
+                    <text
+                        x="${x + bw / 2}"
+                        y="${y - 6}"
+                        text-anchor="middle"
+                        class="value">
+                        ${v.toLocaleString()}
+                    </text>
+                `;
+
+
+                const px =
+                    left +
+                    i * gap +
+                    gap / 2;
+
+                const py =
+                    top +
+                    plotH -
+                    (v / max * .35) * plotH;
+
+
+                pts.push(`${px},${py}`);
+
+
+                s += `
+                    <text
+                        x="${px}"
+                        y="${H - 12}"
+                        text-anchor="middle"
+                        class="axis">
+                        ${months[i]}
+                    </text>
+                `;
+            });
+
+
+            s += `
+                <polyline
+                    class="line"
+                    points="${pts.join(' ')}"/>
+            `;
+
+
+            pts.forEach(p => {
+
+                const [x, y] = p.split(',');
+
+                s += `
+                    <circle
+                        class="dot"
+                        cx="${x}"
+                        cy="${y}"
+                        r="4"/>
+                `;
+            });
+
+
+            s += `
+                <text
+                    x="${W-right+18}"
+                    y="${top+4}"
+                    class="axis"
+                    fill="#ff3030">
+                    عدد الأذون
+                </text>
+            `;
+
+
+            s += `</svg>`;
+
+            document
+                .getElementById(elId)
+                .innerHTML = s;
+        }
+
+
+        makeChart(
+            'importChart',
+            imports,
+            10000
+        );
+
+
+        makeChart(
+            'exportChart',
+            exportsData,
+            5000
+        );
+
+
+        // =====================================================
+        // MENU
+        // =====================================================
+
+        function toggleMenu() {
+
+            document
+                .querySelector('.dashboard')
+                .classList
+                .toggle('compact');
+
+        }
+
+    </script>
+    <script>
+
+        // =====================================================
+        // ربط السنة بالتاريخ
+        // =====================================================
+
+        const yearSelect = document.getElementById("year");
+        const fromDate = document.getElementById("fromDate");
+        const toDate = document.getElementById("toDate");
+
+
+        function setYearDates() {
+
+            const year = parseInt(yearSelect.value);
+
+            if (!year)
+                return;
+
+
+            // أول يوم في السنة
+            const firstDay =
+                year + "-01-01";
+
+
+            // آخر يوم في السنة
+            const lastDay =
+                year + "-12-31";
+
+
+            // تحديد أقل وأقصى تاريخ للـCalendar
+            fromDate.min = firstDay;
+            fromDate.max = lastDay;
+
+            toDate.min = firstDay;
+            toDate.max = lastDay;
+
+
+            // لو التاريخ الحالي خارج السنة المختارة
+            if (!fromDate.value ||
+                fromDate.value < firstDay ||
+                fromDate.value > lastDay) {
+
+                fromDate.value = firstDay;
+            }
+
+
+            if (!toDate.value ||
+                toDate.value < firstDay ||
+                toDate.value > lastDay) {
+
+                toDate.value = lastDay;
+            }
+        }
+
+
+        // عند تغيير السنة
+        yearSelect.addEventListener("change", function () {
+
+            setYearDates();
+
+        });
+
+
+        // منع اختيار From أكبر من To
+        fromDate.addEventListener("change", function () {
+
+            toDate.min = this.value;
+
+            if (toDate.value < this.value) {
+
+                toDate.value = this.value;
+            }
+
+        });
+
+
+        // منع اختيار To أصغر من From
+        toDate.addEventListener("change", function () {
+
+            fromDate.max = this.value;
+
+            if (fromDate.value > this.value) {
+
+                fromDate.value = this.value;
+            }
+
+        });
+
+
+        // تشغيل أول مرة
+        setYearDates();
+
+
+        // =====================================================
+        // تحديث Dashboard
+        // =====================================================
+
+        function refreshDashboard() {
+
+            const year =
+                document.getElementById("year").value;
+
+            const from =
+                document.getElementById("fromDate").value;
+
+            const to =
+                document.getElementById("toDate").value;
+
+            const month =
+                document.getElementById("month").value;
+
+            const product =
+                document.getElementById("productId").value;
+
+            const direction =
+                document.getElementById("direction").value;
+
+
+            const params = new URLSearchParams();
+
+
+            if (year)
+                params.append("year", year);
+
+            if (from)
+                params.append("fromDate", from);
+
+            if (to)
+                params.append("toDate", to);
+
+            if (month)
+                params.append("month", month);
+
+            if (product)
+                params.append("productId", product);
+
+            if (direction)
+                params.append("direction", direction);
+
+
+            // تغيير النص مؤقتاً
+            const button =
+                document.querySelector(".refresh");
+
+            button.textContent = "جاري التحديث...";
+
+
+            // إعادة تحميل الـDashboard
+            window.location.href =
+                window.location.pathname +
+                "?" +
+                params.toString();
+        }
+
+    </script>
+
 </div>
-<script>
-    /* ====================== BAR CHART ====================== */
-    const xValues = ["الشركات ", "الهيئات", "الأفراد"];
-    const yValues = [
-        @ViewBag.Company_Nationals,
-        @ViewBag.Public_Organizations,
-        @ViewBag.People
-    ];
-    const barColors = ["#0d2d4d", "#2e6f57", "#b88a2d", "#5c6f82", "#0f6c8d"];
-    Chart.defaults.font.family = "'Cairo-Regular', Tahoma, Arial, sans-serif";
-    Chart.defaults.color = "#17212b";
-
-    const ctx = document.getElementById('myChart');
-    new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: xValues,
-            datasets: [{
-                backgroundColor: barColors,
-                data: yValues
-            }]
-        },
-        options: {
-            plugins: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: "التغيرات بالنسبة للأفراد والهيئات والشركات"+@ViewBag.year,
-                    font: { size: 16 }
-                }
-            }
-        }
-    });
-
-
-    /* ====================== LINE CHART ====================== */
-    
-
-
-    /* ====================== PIE CHART (COUNTRIES) ====================== */
-    let xValuesCountries = [
-        @foreach (var item in Model.Countries)
-        {
-                <text>"@item.Country",</text>
-        }
-    ];
-
-    xValuesCountries = @Html.Raw(
-                System.Text.Json.JsonSerializer.Serialize(
-                        Model.Countries.Select(x => x.Country)
-                )
-        );
-
-    const yValuesCountries = [
-        @foreach (var item in Model.Countries)
-        {
-                <text>@item.CountOrders,</text>
-        }
-    ];
-
-    const ctx1 = document.getElementById('myChart1');
-    new Chart(ctx1, {
-        type: "pie",
-        data: {
-            labels: xValuesCountries,
-            datasets: [{
-                backgroundColor: barColors,
-                data: yValuesCountries
-            }]
-        },
-        options: {
-            plugins: {
-                legend: { display: true },
-                title: {
-                    display: true,
-                    text: "أعلى خمس دول بالنسبة للوارد"+@ViewBag.year,
-                    font: { size: 16 }
-                }
-            }
-        }
-    });
-
-
-    /* ====================== DOUGHNUT CHART (PRODUCTS) ====================== */
-    let xValuesproducts = [
-        @foreach (var item in Model.Products)
-        {
-                <text>"@item.Country",</text>
-        }
-    ];
-
-    xValuesproducts = @Html.Raw(
-                System.Text.Json.JsonSerializer.Serialize(
-                        Model.Products.Select(x => x.Country)
-                )
-        );
-
-    const yValuesProducts = [
-        @foreach (var item in Model.Products)
-        {
-                <text>@item.CountOrders,</text>
-        }
-    ];
-
-    const ctx2 = document.getElementById('myChart2');
-    new Chart(ctx2, {
-        type: "doughnut",
-        data: {
-            labels: xValuesproducts,
-            datasets: [{
-                backgroundColor: barColors,
-                data: yValuesProducts
-            }]
-        },
-        options: {
-            plugins: {
-                legend: { display: true },
-                title: {
-                    display: true,
-                    text: "أعلى أربع منتجات بالنسبة للوارد لسنة "+@ViewBag.year,
-                    font: { size: 16 }
-                }
-            }
-        }
-    });
-
-
-    /* ====================== DOUGHNUT CHART (PRODUCTS) ====================== */
-    let xValuesproductsEX = [
-         @foreach (var item in Model.ProductsEX)
-         {
-                     <text>"@item.Country",</text>
-         }
-     ];
-
-     xValuesproductsEX = @Html.Raw(
-                                  System.Text.Json.JsonSerializer.Serialize(
-                                                  Model.ProductsEX.Select(x => x.Country)
-                                  )
-                  );
-
-     const yValuesProductsEX = [
-         @foreach (var item in Model.ProductsEX)
-         {
-                     <text>@item.CountOrders,</text>
-         }
-     ];
-
-     const ctx3 = document.getElementById('myChart3');
-     new Chart(ctx3, {
-         type: "doughnut",
-         data: {
-             labels: xValuesproductsEX,
-             datasets: [{
-                 backgroundColor: barColors,
-                 data: yValuesProductsEX
-             }]
-         },
-         options: {
-             plugins: {
-                 legend: { display: true },
-                 title: {
-                     display: true,
-                     text: "أعلى أربع منتجات بالنسبة للصادر"+@ViewBag.year,
-                     font: { size: 16 }
-                 }
-             }
-         }
-     });
-
-     /* ====================== PIE CHART (COUNTRIES) ====================== */
-    let xValuesCountriesEX = [
-        @foreach (var item in Model.CountriesEx)
-        {
-                    <text>"@item.Country",</text>
-        }
-    ];
-
-    xValuesCountriesEX = @Html.Raw(
-                                System.Text.Json.JsonSerializer.Serialize(
-                                                Model.CountriesEx.Select(x => x.Country)
-                                )
-                );
-
-
-    const yValuesCountriesEX = [
-        @foreach (var item in Model.CountriesEx)
-        {
-                    <text>@item.CountOrders,</text>
-        }
-    ];
-
-    const ctx4 = document.getElementById('myChart4');
-    new Chart(ctx4, {
-        type: "pie",
-        data: {
-            labels: xValuesCountriesEX,
-            datasets: [{
-                backgroundColor: barColors,
-                data: yValuesCountriesEX
-            }]
-        },
-        options: {
-            plugins: {
-                legend: { display: true },
-                title: {
-                    display: true,
-                    text: "أعلى خمس دول بالنسبة للصادر"+@ViewBag.year,
-                    font: { size: 16 }
-                }
-            }
-        }
-    });
-</script>
-
-
-

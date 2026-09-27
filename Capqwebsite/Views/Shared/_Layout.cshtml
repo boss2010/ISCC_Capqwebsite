@@ -25,6 +25,7 @@
     <link href="~/css/style.css" rel="stylesheet" /> *@
  	<link href="~/css/styleESLAM.css" rel="stylesheet"  /> 
     <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="~/css/portal-responsive.css" rel="stylesheet" asp-append-version="true" />
     <script src="~/js/jquery-3.7.1.min.js"></script>
     @*<script src="~/js/bootstrap.min.js"></script> *@
 
@@ -68,11 +69,11 @@
 
 
 
-    <header class="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
-        <div class="mx-auto flex max-w-7xl items-center px-6 py-4">
-            <a asp-controller="Home" asp-action="Index" class="flex items-center gap-3  mar-l-10">
+    <header class="portal-header sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
+        <div class="portal-header__inner mx-auto flex max-w-7xl items-center px-6 py-4">
+            <a asp-controller="Home" asp-action="Index" class="portal-brand flex items-center gap-3 mar-l-10">
                 <div class="relative grid size-12">
-                    <img src="~/img/logo-capq2.png" />
+                    <img src="~/img/logo-capq2.png" alt="شعار الحجر الزراعي المصري" />
                 </div>
                 <div class="leading-tight">
                     <div class="font-display text-lg font-bold text-primary-deep">الإدارة المركزية للحجر الزراعي</div>
@@ -82,7 +83,7 @@
                 </div>
             </a>
 
-            <nav class="navbar navbar-expand-lg navbar-dark py-3 py-lg-0">
+            <nav class="portal-nav navbar navbar-expand-xl navbar-dark py-3 py-lg-0" aria-label="القائمة الرئيسية">
 
 
                 @* <a href="" class="navbar-brand">
@@ -120,7 +121,7 @@
 
 
 
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="فتح وإغلاق القائمة الرئيسية">
                     <span class="navbar-toggler-icon"> <i class="fa fa-bars" aria-hidden="true"></i></span>
 
                 </button>

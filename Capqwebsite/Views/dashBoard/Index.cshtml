@@ -1,24 +1,774 @@
-﻿@model IEnumerable<EF.Models.WebsiteTypeDetail>
+﻿@* @model ViewModels.DashboardVM *@
+@{
+    ViewData["Title"] = "الإحصائيات";
+}
 
+<div dir="ltr">
 
+    <style>
+        :root {
+            --green: #08764f;
+            --green2: #159451;
+            --green3: #1da65a;
+            --blue: #0c75a9;
+            --dark: #0c3f5c;
+            --light: #f5faf8;
+            --border: #d7e4e5;
+            --text: #123b51;
+            --red: #ff3030;
+            --lime: #8bdc4a;
+            --shadow: 0 5px 16px rgba(10,55,70,.10);
+        }
 
-<div> <table id="refreshable-content">
-    @foreach (var item in Model)
-    { 
-       
-       <tr><td>@item.TitleAr</td></tr>
-   
-        
-    }
-   
- </table>
+        * {
+            box-sizing: border-box
+        }
 
+        body {
+            margin: 0;
+            background: #eef5f3;
+            font-family: "Tahoma","Arial",sans-serif;
+            color: var(--text)
+        }
+
+        button, input, select {
+            font: inherit
+        }
+
+        .dashboard {
+            max-width: 1600px;
+            margin: auto;
+            background: #fff;
+            min-height: 100vh
+        }
+
+        .header {
+            height: 170px;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 12% 55%,rgba(112,180,55,.55),transparent 28%), linear-gradient(110deg,#eaf6ee 0%,#fff 48%,#edf8f0 100%);
+            border-bottom: 1px solid #d8e4e0;
+        }
+
+            .header:before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(135deg,transparent 0 38%,rgba(0,123,82,.96) 38.2% 41%,transparent 41.2%), linear-gradient(145deg,transparent 0 48%,rgba(36,150,86,.18) 48.2% 52%,transparent 52.2%);
+            }
+
+        .header-art {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 47%;
+            height: 100%;
+            background: linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.55));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 58px;
+            letter-spacing: 8px;
+        }
+
+            .header-art span {
+                filter: drop-shadow(0 3px 5px rgba(0,0,0,.2))
+            }
+
+        .brand {
+            position: absolute;
+            right: 6%;
+            top: 24px;
+            text-align: right;
+            z-index: 2
+        }
+
+            .brand h1 {
+                margin: 0;
+                color: #006b49;
+                font-size: 34px;
+                font-weight: 900
+            }
+
+            .brand h2 {
+                margin: 5px 0 0;
+                font-size: 30px;
+                color: #00543e
+            }
+
+            .brand p {
+                margin: 8px 0 0;
+                color: #377d70;
+                font-size: 21px;
+                font-weight: 700
+            }
+
+        .logo {
+            position: absolute;
+            right: 2%;
+            top: 10px;
+            width: 105px;
+            height: 105px;
+            border: 4px solid #08764f;
+            border-radius: 50%;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            color: #08764f;
+            font-weight: 900;
+            font-size: 24px;
+            z-index: 3;
+            box-shadow: 0 3px 8px #0002
+        }
+
+        .menu {
+            position: absolute;
+            left: 14px;
+            top: 12px;
+            background: #08764f;
+            color: white;
+            border: 0;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            font-size: 25px;
+            z-index: 4
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 1.1fr 1.1fr .95fr 1.25fr 1.25fr 1.25fr 150px;
+            gap: 10px;
+            padding: 15px 24px;
+            background: #fff;
+            box-shadow: var(--shadow);
+            margin: 15px 24px 12px;
+            border-radius: 12px
+        }
+
+        .field {
+            height: 54px;
+            border: 1px solid #d4e0e4;
+            border-radius: 9px;
+            background: #fbfdfd;
+            padding: 5px 13px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+            .field label {
+                font-size: 12px;
+                color: #506979;
+                margin-bottom: 4px
+            }
+
+            .field select, .field input {
+                border: 0;
+                background: transparent;
+                outline: 0;
+                color: #0c3954;
+                font-weight: 700;
+                width: 100%
+            }
+
+        .refresh {
+            border: 0;
+            border-radius: 9px;
+            background: #08764f;
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+            cursor: pointer
+        }
+
+            .refresh:hover {
+                background: #05613f
+            }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 15px;
+            padding: 0 24px 12px
+        }
+
+        .kpi {
+            height: 138px;
+            border-radius: 10px;
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow)
+        }
+
+            .kpi.green {
+                background: linear-gradient(115deg,#09854d,#239f55)
+            }
+
+            .kpi.blue {
+                background: linear-gradient(115deg,#0875a9,#1d78a9)
+            }
+
+            .kpi:after {
+                content: "";
+                position: absolute;
+                right: -20px;
+                bottom: -55px;
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                background: #fff2
+            }
+
+            .kpi .icon {
+                width: 78px;
+                height: 78px;
+                border-radius: 50%;
+                background: #fff;
+                color: #08764f;
+                display: grid;
+                place-items: center;
+                font-size: 39px;
+                z-index: 1
+            }
+
+            .kpi .data {
+                margin-right: 20px;
+                z-index: 1
+            }
+
+            .kpi .title {
+                font-size: 20px;
+                font-weight: 800
+            }
+
+            .kpi .number {
+                font-size: 46px;
+                line-height: 1.05;
+                font-weight: 900;
+                margin: 5px 0
+            }
+
+            .kpi .compare {
+                font-size: 12px;
+                font-weight: 700
+            }
+
+        .up {
+            color: #b9ff6b;
+            font-size: 20px;
+            margin-left: 5px
+        }
+
+        .charts {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 15px;
+            padding: 0 24px 12px
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            box-shadow: var(--shadow);
+            overflow: hidden
+        }
+
+        .panel-title {
+            font-size: 19px;
+            font-weight: 900;
+            padding: 12px 18px 5px;
+            color: #103e59;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .panel-body {
+            padding: 4px 14px 10px
+        }
+
+        .chart {
+            width: 100%;
+            height: 230px
+        }
+
+            .chart svg {
+                width: 100%;
+                height: 100%
+            }
+
+        .gridline {
+            stroke: #dce6e9;
+            stroke-width: 1
+        }
+
+        .axis {
+            fill: #143f56;
+            font-size: 11px
+        }
+
+        .bar {
+            fill: #21904e
+        }
+
+            .bar:hover {
+                fill: #31a85d
+            }
+
+        .line {
+            fill: none;
+            stroke: #ff3030;
+            stroke-width: 3
+        }
+
+        .dot {
+            fill: #ff3030
+        }
+
+        .value {
+            fill: #0b5b42;
+            font-size: 11px;
+            font-weight: 800
+        }
+
+        .legend {
+            font-size: 12px;
+            color: #173f53;
+            display: flex;
+            gap: 18px;
+            margin-right: 10px
+        }
+
+            .legend i {
+                display: inline-block;
+                width: 13px;
+                height: 9px;
+                border-radius: 3px;
+                margin-left: 5px
+            }
+
+            .legend .g {
+                background: #21904e
+            }
+
+            .legend .r {
+                background: #ff3030
+            }
+
+        .bottom {
+            display: grid;
+            grid-template-columns: 1.15fr 1.15fr .75fr .9fr;
+            gap: 15px;
+            padding: 0 24px 12px
+        }
+
+        .table-panel {
+            min-height: 275px
+        }
+
+        .table-head {
+            color: #fff;
+            padding: 10px 14px;
+            font-size: 18px;
+            font-weight: 900;
+            background: linear-gradient(90deg,#138f50,#0b6d47)
+        }
+
+            .table-head.blue {
+                background: linear-gradient(90deg,#1a79aa,#0b6590)
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px
+        }
+
+        th {
+            background: #e8f0f0;
+            color: #16475a;
+            padding: 7px
+        }
+
+        td {
+            padding: 7px;
+            border-bottom: 1px solid #edf1f2;
+            font-weight: 700
+        }
+
+        .rank {
+            width: 30px;
+            height: 30px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #e2eef0;
+            color: #0d6c7d
+        }
+
+        .summary {
+            background: #08764f;
+            color: white;
+            padding: 9px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 900
+        }
+
+            .summary.blue {
+                background: #0876a9
+            }
+
+        .quick {
+            padding: 0 12px 12px
+        }
+
+            .quick h3 {
+                margin: 10px 0;
+                color: #08764f;
+                text-align: center;
+                font-size: 17px
+            }
+
+        .qitem {
+            border: 1px solid #d7e5df;
+            border-radius: 8px;
+            padding: 9px;
+            margin: 7px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fbfefd
+        }
+
+            .qitem b {
+                font-size: 18px;
+                color: #08764f
+            }
+
+            .qitem small {
+                display: block;
+                color: #4e6e78
+            }
+
+        .delta {
+            font-size: 11px;
+            color: #4c9d2f;
+            font-weight: 800
+        }
+
+        .updated {
+            background: #eef8f4;
+            border: 1px solid #cfe6dc;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-size: 12px
+        }
+
+        .donut-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px
+        }
+
+        .donut {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            background: conic-gradient(#279653 0 68%,#147ab7 68% 100%);
+            position: relative;
+            display: grid;
+            place-items: center
+        }
+
+            .donut:after {
+                content: "";
+                width: 98px;
+                height: 98px;
+                border-radius: 50%;
+                background: #fff;
+                position: absolute
+            }
+
+        .donut-center {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            font-weight: 900;
+            color: #123f54
+        }
+
+            .donut-center small {
+                display: block;
+                font-size: 11px
+            }
+
+        .key {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 18px;
+            font-weight: 700
+        }
+
+            .key span:before {
+                content: "";
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                margin-left: 7px;
+                background: #279653
+            }
+
+            .key.blue span:before {
+                background: #147ab7
+            }
+
+        .footer {
+            background: linear-gradient(90deg,#086d49,#0c5f47);
+            color: #fff;
+            padding: 11px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            font-size: 14px
+        }
+
+            .footer a {
+                color: white;
+                text-decoration: none
+            }
+
+        @@media(max - width:1100px) {
+            .filters {
+                grid-template-columns: repeat(4,1fr)
+            }
+
+            .charts {
+                grid-template-columns: 1fr
+            }
+
+            .bottom {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .header {
+                height: 150px
+            }
+
+            .brand h1 {
+                font-size: 28px
+            }
+
+            .brand h2 {
+                font-size: 24px
+            }
+
+            .brand p {
+                font-size: 17px
+            }
+        }
+
+        @@media(max - width:720px) {
+            .header {
+                height: 180px
+            }
+
+            .header-art {
+                display: none
+            }
+
+            .brand {
+                right: 80px;
+                top: 35px
+            }
+
+            .logo {
+                right: 10px;
+                top: 10px;
+                width: 65px;
+                height: 65px;
+                font-size: 15px
+            }
+
+            .brand h1 {
+                font-size: 22px
+            }
+
+            .brand h2 {
+                font-size: 19px
+            }
+
+            .brand p {
+                font-size: 13px
+            }
+
+            .filters, .cards, .charts, .bottom {
+                grid-template-columns: 1fr;
+                padding-left: 12px;
+                padding-right: 12px
+            }
+
+            .filters {
+                margin: 10px 12px
+            }
+
+            .kpi {
+                height: 125px
+            }
+
+                .kpi .number {
+                    font-size: 38px
+                }
+
+            .footer {
+                font-size: 11px;
+                gap: 10px
+            }
+
+                .footer span:last-child {
+                    display: none
+                }
+        }
+    </style>
+
+    <div class="dashboard">
+        <header class="header">
+            <button class="menu" onclick="toggleMenu()">☰</button>
+            <div class="header-art"><span>🍊 🍎 🌿 🚢 🔬</span></div>
+            <div class="brand">
+                <h1>لوحة مؤشرات وإحصائيات</h1>
+                <h2>الحجر الزراعي</h2>
+                <p>الإدارة المركزية للحجر الزراعي</p>
+            </div>
+            <div class="logo">CAPQ<br><small>الحجر الزراعي</small></div>
+        </header>
+
+        <section class="filters">
+            <div class="field"><label>من تاريخ</label><input type="date" value="2025-11-01"></div>
+            <div class="field"><label>إلى تاريخ</label><input type="date" value="2025-12-31"></div>
+            <div class="field"><label>السنة</label><select><option>2025</option><option>2026</option></select></div>
+            <div class="field"><label>الشهر</label><select><option>جميع الشهور</option></select></div>
+            <div class="field"><label>المنتج</label><select><option>جميع المنتجات</option></select></div>
+            <div class="field"><label>الاتجاه</label><select><option>استيراد / تصدير</option><option>استيراد</option><option>تصدير</option></select></div>
+            <button class="refresh" onclick="refreshDashboard()">⟳ تحديث</button>
+        </section>
+
+        <section class="cards">
+            <div class="kpi green"><div class="icon">👥</div><div class="data"><div class="title">عدد المتعاملين</div><div class="number" data-count="21365">21,365</div><div class="compare"><span class="up">↗ +15%</span> مقارنة بالفترة السابقة</div></div></div>
+            <div class="kpi blue"><div class="icon">📄</div><div class="data"><div class="title">عدد أذون الاستيراد</div><div class="number">8,750</div><div class="compare"><span class="up">↗ +8%</span> مقارنة بالفترة السابقة</div></div></div>
+            <div class="kpi green"><div class="icon">🔬</div><div class="data"><div class="title">عدد طلبات الفحص</div><div class="number">12,480</div><div class="compare"><span class="up">↗ +12%</span> مقارنة بالفترة السابقة</div></div></div>
+        </section>
+
+        <section class="charts">
+            <div class="panel">
+                <div class="panel-title">الكميات المستوردة بالطن طبقًا لأذون الاستيراد <span class="legend"><span><i class="g"></i>الكمية (طن)</span><span><i class="r"></i>عدد الأذون</span></span></div>
+                <div class="panel-body"><div class="chart" id="importChart"></div></div>
+            </div>
+            <div class="panel">
+                <div class="panel-title">الكميات المصدرة بالطن طبقًا لأذون التصدير <span class="legend"><span><i class="g"></i>الكمية (طن)</span><span><i class="r"></i>عدد الأذون</span></span></div>
+                <div class="panel-body"><div class="chart" id="exportChart"></div></div>
+            </div>
+        </section>
+
+        <section class="bottom">
+            <div class="panel table-panel">
+                <div class="table-head">أعلى 5 منتجات تصدير خلال العام</div>
+                <table>
+                    <thead><tr><th>م</th><th>المنتج</th><th>الكمية (طن)</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="rank">1</span></td><td>عنب 🍇</td><td>45,230</td></tr>
+                        <tr><td><span class="rank">2</span></td><td>برتقال 🍊</td><td>38,760</td></tr>
+                        <tr><td><span class="rank">3</span></td><td>بطاطس 🥔</td><td>32,450</td></tr>
+                        <tr><td><span class="rank">4</span></td><td>فراولة 🍓</td><td>28,690</td></tr>
+                        <tr><td><span class="rank">5</span></td><td>رمان ❤️</td><td>24,320</td></tr>
+                    </tbody>
+                </table>
+                <div class="summary">إجمالي كمية التصدير خلال العام<br><strong>1,250,680 طن</strong></div>
+            </div>
+
+            <div class="panel table-panel">
+                <div class="table-head blue">أعلى 5 منتجات استيراد خلال العام</div>
+                <table>
+                    <thead><tr><th>م</th><th>المنتج</th><th>الكمية (طن)</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="rank">1</span></td><td>قمح 🌾</td><td>68,750</td></tr>
+                        <tr><td><span class="rank">2</span></td><td>ذرة صفراء 🌽</td><td>54,320</td></tr>
+                        <tr><td><span class="rank">3</span></td><td>فول صويا 🫘</td><td>42,680</td></tr>
+                        <tr><td><span class="rank">4</span></td><td>زيت نخيل 🌴</td><td>36,250</td></tr>
+                        <tr><td><span class="rank">5</span></td><td>سماد زراعي 🌱</td><td>28,900</td></tr>
+                    </tbody>
+                </table>
+                <div class="summary blue">إجمالي كمية الاستيراد خلال العام<br><strong>980,450 طن</strong></div>
+            </div>
+
+            <div class="panel quick">
+                <h3>أهم المؤشرات السريعة</h3>
+                <div class="qitem"><div><small>إجمالي الكميات المستوردة (طن)</small><b>68,750</b></div><span class="delta">↗ +10%</span></div>
+                <div class="qitem"><div><small>إجمالي الكميات المصدرة (طن)</small><b>45,320</b></div><span class="delta">↗ +9%</span></div>
+                <div class="qitem"><div><small>متوسط زمن الفحص (يوم)</small><b>2.8</b></div><span class="delta">↘ -18%</span></div>
+                <div class="updated">آخر تحديث: <strong id="lastUpdate">2025/12/31 10:30</strong> 🗓️</div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">التوزيع النسبي للكميات (طن)</div>
+                <div class="donut-wrap"><div class="donut"><div class="donut-center">1,980,600<small>إجمالي الكميات طن</small></div></div></div>
+                <div class="key"><span>كميات مستوردة</span><b>1,343,280 &nbsp; 68%</b></div>
+                <div class="key blue"><span>كميات مصدرة</span><b>637,320 &nbsp; 32%</b></div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span>معًا من أجل زراعة آمنة .. تجارة آمنة .. مستقبل مستدام</span>
+            <span>🌐 <a href="https://www.capq.gov.eg" target="_blank">www.capq.gov.eg</a>　|　 الإدارة المركزية للحجر الزراعي　 CAPQ 🌿</span>
+        </footer>
+    </div>
+
+    <script>
+        const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+        const imports=[4200,5600,6800,7200,5900,6300,7800,6700,5800,6900,7600,8400];
+        const exports=[2100,2800,3400,3900,3200,3700,4200,3600,3100,3800,4500,5000];
+
+        function makeChart(elId,data,max){
+         const W=720,H=225, left=46,right=45,top=16,bottom=38;
+         const plotW=W-left-right,plotH=H-top-bottom, gap=plotW/data.length;
+         let s=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">`;
+         for(let i=0;i<=4;i++){
+           const y=top+plotH*i/4;
+           const val=Math.round(max*(1-i/4));
+           s+=`<line x1="${left}" y1="${y}" x2="${W-right}" y2="${y}" class="gridline"/><text x="${left-7}" y="${y+4}" text-anchor="end" class="axis">${val.toLocaleString()}</text>`;
+         }
+         const pts=[];
+         data.forEach((v,i)=>{
+           const bw=gap*.48,x=left+i*gap+(gap-bw)/2,y=top+plotH-(v/max)*plotH;
+           s+=`<rect class="bar" x="${x}" y="${y}" width="${bw}" height="${top+plotH-y}" rx="4"/>`;
+           s+=`<text x="${x+bw/2}" y="${y-6}" text-anchor="middle" class="value">${v.toLocaleString()}</text>`;
+           const px=left+i*gap+gap/2,py=top+plotH-(v/max*.35)*plotH;
+           pts.push(`${px},${py}`);
+           s+=`<text x="${px}" y="${H-12}" text-anchor="middle" class="axis">${months[i]}</text>`;
+         });
+         s+=`<polyline class="line" points="${pts.join(' ')}"/>`;
+         pts.forEach(p=>{const [x,y]=p.split(',');s+=`<circle class="dot" cx="${x}" cy="${y}" r="4"/>`;});
+         s+=`<text x="${W-right+18}" y="${top+4}" class="axis" fill="#ff3030">عدد الأذون</text>`;
+         s+='</svg>';document.getElementById(elId).innerHTML=s;
+        }
+        makeChart('importChart',imports,10000); makeChart('exportChart',exports,5000);
+
+        function refreshDashboard(){
+         const d=new Date();
+         document.getElementById('lastUpdate').textContent=d.toLocaleString('ar-EG',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+         const b=document.querySelector('.refresh');b.textContent='✓ تم التحديث';setTimeout(()=>b.textContent='⟳ تحديث',1200);
+        }
+        function toggleMenu(){document.querySelector('.dashboard').classList.toggle('compact')}
+    </script>
 </div>
-  <script src="~/js/jquery-3.4.1.min.js"></script> 
- <script>
-
-setInterval(function() {
-    $('#refreshable-content').load(location.href + ' #refreshable-content > *');
-}, 60000);
-
-</Script>   
