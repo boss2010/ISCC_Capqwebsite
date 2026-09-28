@@ -1,7 +1,7 @@
-@model ViewModels.HomeVM
+﻿@model ViewModels.HomeVM
 @{
     ViewData["Title"] = "Home Page";
-    var heroImg = "url('/img/hero-fields.jpg')";
+    var heroNews = Model.News ?? new List<ViewModels.ListNewsVM>();
 }
 
 @* ===== TOP BAR ===== *@
@@ -13,6 +13,7 @@
 
 @* ===== QUICK LINKS ===== *@
 
+<link rel="stylesheet" href="~/css/home-news-banner.css" asp-append-version="true" />
 <section class="portal-hero relative isolate overflow-hidden">
     <img src="~/img/hero-fields-DJLmT-UN.jpg"
          alt="حقول زراعية مصرية"
@@ -20,8 +21,8 @@
          height="1280"
          class="absolute inset-0 -z-10 size-full object-cover" />
     <div class="absolute inset-0 -z-10 bg-gradient-to-l from-primary-deep/95 via-primary-deep/85 to-primary-deep/50"></div>
-    <div class="mx-auto max-w-7xl px-6 py-24 md:py-36">
-        <div class="max-w-3xl">
+    <div class="hero-split mx-auto max-w-7xl px-6 py-24 md:py-36">
+        <div class="hero-intro max-w-3xl">
             <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-gold-soft">
                 <span class="size-1.5 rounded-full bg-gold"></span>بوابة حكومية رسمية
             </div>
@@ -81,8 +82,28 @@
                 <span>• تشريعات محدّثة</span><span>• مؤشرات مباشرة</span><span>• تنبيهات رسمية</span>
             </div>
         </div>
+@if (heroNews.Count > 0)
+{
+    <section class="home-news-banner" aria-label="آخر الأخبار" aria-roledescription="عارض شرائح" data-news-banner>
+        <div class="home-news-slides">
+            @for (var i = 0; i < heroNews.Count; i++)
+            {
+                var news = heroNews[i];
+                var imagePath = string.IsNullOrWhiteSpace(news.filepath) ? Url.Content("~/img/hero-fields-DJLmT-UN.jpg") : Url.Content(news.filepath);
+                <article class="home-news-slide" hidden="@(i != 0)" aria-roledescription="شريحة" aria-label="@(i + 1) من @heroNews.Count">
+                    <a class="home-news-link" href="@Url.Action("RowDetail", "News", new { ID = news.ID, Type = "الأخبار" })">
+                        <img class="home-news-image" src="@imagePath" alt="" loading="@(i == 0 ? "eager" : "lazy")" />
+                        <h2>@news.TitleAr</h2>
+                    </a>
+                </article>
+            }
+        </div>
+    </section>
+    <script src="~/js/home-news-banner.js" asp-append-version="true" defer></script>
+}
     </div>
 </section>
+
 
 <section class="portal-quick-links border-y border-border bg-card">
     <div class="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-border md:grid-cols-4">

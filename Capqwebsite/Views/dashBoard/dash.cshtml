@@ -66,88 +66,16 @@
         /* ================= HEADER ================= */
 
         .header {
-            height: 170px;
             position: relative;
-            overflow: hidden;
-            background: radial-gradient( circle at 12% 55%, rgba(112,180,55,.55), transparent 28% ), linear-gradient( 110deg, #eaf6ee 0%, #fff 48%, #edf8f0 100% );
+            background: #fff;
             border-bottom: 1px solid #d8e4e0;
         }
 
-            .header:before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: linear-gradient( 135deg, transparent 0 38%, rgba(0,123,82,.96) 38.2% 41%, transparent 41.2% ), linear-gradient( 145deg, transparent 0 48%, rgba(36,150,86,.18) 48.2% 52%, transparent 52.2% );
-            }
-
-        .header-art {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 47%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 58px;
-            letter-spacing: 8px;
+        .header-banner {
+            display: block;
+            width: 100%;
+            height: auto;
         }
-
-            .header-art span {
-                filter: drop-shadow(0 3px 5px rgba(0,0,0,.2));
-            }
-
-        .brand {
-            position: absolute;
-            right: 8%;
-            top: 24px;
-            text-align: right;
-            z-index: 2;
-        }
-
-            .brand h1 {
-                margin: 0;
-                color: #006b49;
-                font-size: 34px;
-                font-weight: 900;
-            }
-
-            .brand h2 {
-                margin: 5px 0 0;
-                font-size: 30px;
-                color: #00543e;
-            }
-
-            .brand p {
-                margin: 8px 0 0;
-                color: #377d70;
-                font-size: 21px;
-                font-weight: 700;
-            }
-
-        .logo {
-            position: absolute;
-            right: 2%;
-            top: 10px;
-            width: 105px;
-            height: 105px;
-            border: 4px solid #08764f;
-            border-radius: 50%;
-            background: #fff;
-            display: grid;
-            place-items: center;
-            text-align: center;
-            color: #08764f;
-            font-weight: 900;
-            font-size: 24px;
-            z-index: 3;
-            box-shadow: 0 3px 8px #0002;
-        }
-
-            .logo small {
-                font-size: 10px;
-            }
 
         .menu {
             position: absolute;
@@ -609,57 +537,9 @@
                 grid-template-columns: 1fr 1fr;
             }
 
-            .header {
-                height: 150px;
-            }
-
-            .brand h1 {
-                font-size: 28px;
-            }
-
-            .brand h2 {
-                font-size: 24px;
-            }
-
-            .brand p {
-                font-size: 17px;
-            }
         }
 
         @@media(max-width:720px) {
-
-            .header {
-                height: 180px;
-            }
-
-            .header-art {
-                display: none;
-            }
-
-            .brand {
-                right: 80px;
-                top: 35px;
-            }
-
-            .logo {
-                right: 10px;
-                top: 10px;
-                width: 65px;
-                height: 65px;
-                font-size: 15px;
-            }
-
-            .brand h1 {
-                font-size: 22px;
-            }
-
-            .brand h2 {
-                font-size: 19px;
-            }
-
-            .brand p {
-                font-size: 13px;
-            }
 
             .filters,
             .cards,
@@ -694,41 +574,20 @@
 
     </style>
 
-
     <div class="dashboard">
 
         <!-- ================= HEADER ================= -->
 
         <header class="header">
-
-            <button class="menu" type="button" onclick="toggleMenu()">
+            <img class="header-banner"
+                 src="~/img/capq-dashboard-banner.png"
+                 asp-append-version="true"
+                 width="1540" height="190"
+                 alt="الإدارة المركزية للحجر الزراعي — Central Administration of Plant Quarantine — من أجل زراعة آمنة .. لمستقبل أفضل" />
+           @*  <button class="menu" type="button" onclick="toggleMenu()" aria-label="فتح القائمة">
                 ☰
-            </button>
-
-            <div class="header-art">
-                <span>🍊 🍎 🌿 🚢 🔬</span>
-            </div>
-
-            <div class="brand">
-
-                <h1>لوحة مؤشرات وإحصائيات</h1>
-
-                <h2>الحجر الزراعي</h2>
-
-                <p>
-                    الإدارة المركزية للحجر الزراعي
-                </p>
-
-            </div>
-
-            <div class="logo">
-                CAPQ
-                <br />
-                <small>الحجر الزراعي</small>
-            </div>
-
+            </button> *@
         </header>
-
 
         <!-- ================= FILTERS ================= -->
 
@@ -833,8 +692,6 @@
 
         </section>
 
-
-
         <!-- ================= KPI CARDS ================= -->
 
         <section class="cards">
@@ -863,7 +720,6 @@
 
             </div>
 
-
             <div class="kpi blue">
 
                 <div class="icon">
@@ -887,7 +743,6 @@
                 </div>
 
             </div>
-
 
             <div class="kpi green">
 
@@ -915,11 +770,9 @@
 
         </section>
 
-
         <!-- ================= CHARTS ================= -->
 
         <section class="charts">
-
 
             <!-- IMPORT -->
 
@@ -956,7 +809,6 @@
                 </div>
 
             </div>
-
 
             <!-- EXPORT -->
 
@@ -996,11 +848,9 @@
 
         </section>
 
-
         <!-- ================= TABLES ================= -->
 
         <section class="bottom">
-
 
             <!-- EXPORT PRODUCTS -->
 
@@ -1082,7 +932,6 @@
 
             </div>
 
-
             <!-- IMPORT PRODUCTS -->
 
             <div class="panel table-panel">
@@ -1163,7 +1012,6 @@
 
             </div>
 
-
             <!-- QUICK STATS -->
 
             <div class="panel quick">
@@ -1171,7 +1019,6 @@
                 <h3>
                     أهم المؤشرات السريعة
                 </h3>
-
 
                 <div class="qitem">
 
@@ -1193,7 +1040,6 @@
 
                 </div>
 
-
                 <div class="qitem">
 
                     <div>
@@ -1214,7 +1060,6 @@
 
                 </div>
 
-
                 <div class="qitem">
 
                     <div>
@@ -1234,7 +1079,6 @@
                     </span>
 
                 </div>
-
 
                 <div class="updated">
 
@@ -1260,7 +1104,6 @@
 
             </div>
 
-
             <!-- DONUT -->
 
             <div class="panel">
@@ -1268,7 +1111,6 @@
                 <div class="panel-title">
                     التوزيع النسبي للكميات (طن)
                 </div>
-
 
                 <div class="donut-wrap">
 
@@ -1288,7 +1130,6 @@
 
                 </div>
 
-
                 <div class="key">
 
                     <span>
@@ -1302,7 +1143,6 @@
                     </b>
 
                 </div>
-
 
                 <div class="key blue">
 
@@ -1321,7 +1161,6 @@
             </div>
 
         </section>
-
 
         <!-- ================= FOOTER ================= -->
 
@@ -1357,7 +1196,6 @@
         </footer>
 
     </div>
-
 
     <script>
 
@@ -1413,7 +1251,6 @@
             5000
         ];
 
-
         function makeChart(elId, data, max) {
 
             const W = 720;
@@ -1432,7 +1269,6 @@
             let s =
                 `<svg viewBox="0 0 ${W} ${H}"
                       preserveAspectRatio="none">`;
-
 
             for (let i = 0; i <= 4; i++) {
 
@@ -1460,9 +1296,7 @@
                 `;
             }
 
-
             const pts = [];
-
 
             data.forEach((v, i) => {
 
@@ -1478,7 +1312,6 @@
                     plotH -
                     (v / max) * plotH;
 
-
                 s += `
                     <rect
                         class="bar"
@@ -1488,7 +1321,6 @@
                         height="${top + plotH - y}"
                         rx="4"/>
                 `;
-
 
                 s += `
                     <text
@@ -1500,7 +1332,6 @@
                     </text>
                 `;
 
-
                 const px =
                     left +
                     i * gap +
@@ -1511,9 +1342,7 @@
                     plotH -
                     (v / max * .35) * plotH;
 
-
                 pts.push(`${px},${py}`);
-
 
                 s += `
                     <text
@@ -1526,13 +1355,11 @@
                 `;
             });
 
-
             s += `
                 <polyline
                     class="line"
                     points="${pts.join(' ')}"/>
             `;
-
 
             pts.forEach(p => {
 
@@ -1547,7 +1374,6 @@
                 `;
             });
 
-
             s += `
                 <text
                     x="${W-right+18}"
@@ -1558,7 +1384,6 @@
                 </text>
             `;
 
-
             s += `</svg>`;
 
             document
@@ -1566,20 +1391,17 @@
                 .innerHTML = s;
         }
 
-
         makeChart(
             'importChart',
             imports,
             10000
         );
 
-
         makeChart(
             'exportChart',
             exportsData,
             5000
         );
-
 
         // =====================================================
         // MENU
@@ -1605,7 +1427,6 @@
         const fromDate = document.getElementById("fromDate");
         const toDate = document.getElementById("toDate");
 
-
         function setYearDates() {
 
             const year = parseInt(yearSelect.value);
@@ -1613,16 +1434,13 @@
             if (!year)
                 return;
 
-
             // أول يوم في السنة
             const firstDay =
                 year + "-01-01";
 
-
             // آخر يوم في السنة
             const lastDay =
                 year + "-12-31";
-
 
             // تحديد أقل وأقصى تاريخ للـCalendar
             fromDate.min = firstDay;
@@ -1630,7 +1448,6 @@
 
             toDate.min = firstDay;
             toDate.max = lastDay;
-
 
             // لو التاريخ الحالي خارج السنة المختارة
             if (!fromDate.value ||
@@ -1640,7 +1457,6 @@
                 fromDate.value = firstDay;
             }
 
-
             if (!toDate.value ||
                 toDate.value < firstDay ||
                 toDate.value > lastDay) {
@@ -1649,14 +1465,12 @@
             }
         }
 
-
         // عند تغيير السنة
         yearSelect.addEventListener("change", function () {
 
             setYearDates();
 
         });
-
 
         // منع اختيار From أكبر من To
         fromDate.addEventListener("change", function () {
@@ -1670,7 +1484,6 @@
 
         });
 
-
         // منع اختيار To أصغر من From
         toDate.addEventListener("change", function () {
 
@@ -1683,10 +1496,8 @@
 
         });
 
-
         // تشغيل أول مرة
         setYearDates();
-
 
         // =====================================================
         // تحديث Dashboard
@@ -1712,9 +1523,7 @@
             const direction =
                 document.getElementById("direction").value;
 
-
             const params = new URLSearchParams();
-
 
             if (year)
                 params.append("year", year);
@@ -1734,13 +1543,11 @@
             if (direction)
                 params.append("direction", direction);
 
-
             // تغيير النص مؤقتاً
             const button =
                 document.querySelector(".refresh");
 
             button.textContent = "جاري التحديث...";
-
 
             // إعادة تحميل الـDashboard
             window.location.href =

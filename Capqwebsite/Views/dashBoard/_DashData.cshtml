@@ -1,0 +1,494 @@
+﻿@model ViewModels.DashboardVM
+
+@{
+
+
+    var totalImport = Convert.ToDouble(ViewBag.TotalImportTons ?? 0);
+    var totalExport = Convert.ToDouble(ViewBag.TotalExportTons ?? 0);
+    var totalTons = Convert.ToDouble(ViewBag.TotalTons ?? 0);
+
+    var importOrders = Convert.ToInt32(ViewBag.ImportOrders ?? 0);
+    var exportOrders = Convert.ToInt32(ViewBag.ExportOrders ?? 0);
+
+    var people = Convert.ToInt32(ViewBag.People ?? 0);
+
+    var importPercent = totalTons > 0
+        ? Math.Round((totalImport / totalTons) * 100, 0)
+        : 0;
+
+    var exportPercent = totalTons > 0
+        ? Math.Round((totalExport / totalTons) * 100, 0)
+        : 0;
+}
+
+<div data-dashboard-fragment>
+        <!-- ================= KPI CARDS ================= -->
+
+        <section class="cards">
+
+            <div class="kpi green">
+
+                <div class="icon">
+                    👥
+                </div>
+
+                <div class="data">
+
+                    <div class="title">
+                        عدد المتعاملين
+                    </div>
+
+                    <div class="number">
+                        @people.ToString("N0")
+                    </div>
+
+                    <div class="compare">
+                        إجمالي المتعاملين
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="kpi blue">
+
+                <div class="icon">
+                    📄
+                </div>
+
+                <div class="data">
+
+                    <div class="title">
+                        عدد أذون الاستيراد
+                    </div>
+
+                    <div class="number">
+                        @importOrders.ToString("N0")
+                    </div>
+
+                    <div class="compare">
+                        خلال الفترة المحددة
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="kpi green">
+
+                <div class="icon">
+                    🔬
+                </div>
+
+                <div class="data">
+
+                    <div class="title">
+                        عدد أذون التصدير
+                    </div>
+
+                    <div class="number">
+                        @exportOrders.ToString("N0")
+                    </div>
+
+                    <div class="compare">
+                        خلال الفترة المحددة
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= CHARTS ================= -->
+
+        <section class="charts">
+
+            <!-- IMPORT -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    <span>
+                        الكميات المستوردة بالطن طبقًا لأذون الاستيراد
+                    </span>
+
+                    <span class="legend">
+
+                        <span>
+                            <i class="g"></i>
+                            الكمية
+                        </span>
+
+                        <span>
+                            <i class="r"></i>
+                            عدد الأذون
+                        </span>
+
+                    </span>
+
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="chart"
+                         id="importChart">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- EXPORT -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+
+                    <span>
+                        الكميات المصدرة بالطن طبقًا لأذون التصدير
+                    </span>
+
+                    <span class="legend">
+
+                        <span>
+                            <i class="g"></i>
+                            الكمية
+                        </span>
+
+                        <span>
+                            <i class="r"></i>
+                            عدد الأذون
+                        </span>
+
+                    </span>
+
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="chart"
+                         id="exportChart">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ================= TABLES ================= -->
+
+        <section class="bottom">
+
+            <!-- EXPORT PRODUCTS -->
+
+            <div class="panel table-panel">
+
+                <div class="table-head">
+                    أعلى 5 منتجات تصدير خلال العام
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>م</th>
+                            <th>المنتج</th>
+                            <th>الكمية (طن)</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @{
+                            int exportRank = 1;
+                        }
+
+                        @if (Model.ProductsEX != null &&
+                                                Model.ProductsEX.Any())
+                        {
+                            foreach (var item in Model.ProductsEX)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <span class="rank">
+                                            @exportRank
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @item.Country
+                                    </td>
+
+                                    <td>
+                                        @item.CountOrders.ToString("N0")
+                                    </td>
+
+                                </tr>
+
+                                exportRank++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3"
+                                    style="text-align:center;">
+                                    لا توجد بيانات
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="summary">
+
+                    إجمالي كمية التصدير خلال الفترة
+
+                    <br />
+
+                    <strong>
+                        @totalExport.ToString("N2") طن
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- IMPORT PRODUCTS -->
+
+            <div class="panel table-panel">
+
+                <div class="table-head blue">
+                    أعلى 5 منتجات استيراد خلال العام
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>م</th>
+                            <th>المنتج</th>
+                            <th>الكمية (طن)</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @{
+                            int importRank = 1;
+                        }
+
+                        @if (Model.Products != null &&
+                                                Model.Products.Any())
+                        {
+                            foreach (var item in Model.Products)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <span class="rank">
+                                            @importRank
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @item.Country
+                                    </td>
+
+                                    <td>
+                                        @item.CountOrders.ToString("N0")
+                                    </td>
+
+                                </tr>
+
+                                importRank++;
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3"
+                                    style="text-align:center;">
+                                    لا توجد بيانات
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+                <div class="summary blue">
+
+                    إجمالي كمية الاستيراد خلال الفترة
+
+                    <br />
+
+                    <strong>
+                        @totalImport.ToString("N2") طن
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- QUICK STATS -->
+
+            <div class="panel quick">
+
+                <h3>
+                    أهم المؤشرات السريعة
+                </h3>
+
+                <div class="qitem">
+
+                    <div>
+
+                        <small>
+                            إجمالي الكميات المستوردة (طن)
+                        </small>
+
+                        <b>
+                            @totalImport.ToString("N2")
+                        </b>
+
+                    </div>
+
+                    <span class="delta">
+                        استيراد
+                    </span>
+
+                </div>
+
+                <div class="qitem">
+
+                    <div>
+
+                        <small>
+                            إجمالي الكميات المصدرة (طن)
+                        </small>
+
+                        <b>
+                            @totalExport.ToString("N2")
+                        </b>
+
+                    </div>
+
+                    <span class="delta">
+                        تصدير
+                    </span>
+
+                </div>
+
+                <div class="qitem">
+
+                    <div>
+
+                        <small>
+                            إجمالي الكميات
+                        </small>
+
+                        <b>
+                            @totalTons.ToString("N2")
+                        </b>
+
+                    </div>
+
+                    <span class="delta">
+                        طن
+                    </span>
+
+                </div>
+
+                <div class="updated">
+
+                    السنة المالية:
+
+                    <strong>
+                        @ViewBag.year
+                    </strong>
+
+                    <br />
+
+                    من
+                    <strong>
+                        @ViewBag.FromDate
+                    </strong>
+
+                    إلى
+                    <strong>
+                        @ViewBag.ToDate
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- DONUT -->
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    التوزيع النسبي للكميات (طن)
+                </div>
+
+                <div class="donut-wrap">
+
+                    <div class="donut" style="--import-percent: @(importPercent.ToString(System.Globalization.CultureInfo.InvariantCulture))%">
+
+                        <div class="donut-center">
+
+                            @totalTons.ToString("N0")
+
+                            <small>
+                                إجمالي الكميات طن
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="key">
+
+                    <span>
+                        كميات مستوردة
+                    </span>
+
+                    <b>
+                        @totalImport.ToString("N0")
+                        &nbsp;
+                        @importPercent%
+                    </b>
+
+                </div>
+
+                <div class="key blue">
+
+                    <span>
+                        كميات مصدرة
+                    </span>
+
+                    <b>
+                        @totalExport.ToString("N0")
+                        &nbsp;
+                        @exportPercent%
+                    </b>
+
+                </div>
+
+            </div>
+
+        </section>
+</div>
