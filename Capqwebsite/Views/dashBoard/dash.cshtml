@@ -578,16 +578,7 @@
 
         <!-- ================= HEADER ================= -->
 
-        <header class="header">
-            <img class="header-banner"
-                 src="~/img/capq-dashboard-banner.png"
-                 asp-append-version="true"
-                 width="1540" height="190"
-                 alt="الإدارة المركزية للحجر الزراعي — Central Administration of Plant Quarantine — من أجل زراعة آمنة .. لمستقبل أفضل" />
-           @*  <button class="menu" type="button" onclick="toggleMenu()" aria-label="فتح القائمة">
-                ☰
-            </button> *@
-        </header>
+        @await Html.PartialAsync("_CapqPageBanner", "لوحة المؤشرات والإحصائيات")
 
         <!-- ================= FILTERS ================= -->
 

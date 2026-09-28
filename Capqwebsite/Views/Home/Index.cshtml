@@ -1,6 +1,7 @@
 ﻿@model ViewModels.HomeVM
 @{
     ViewData["Title"] = "Home Page";
+
     var heroNews = Model.News ?? new List<ViewModels.ListNewsVM>();
 }
 
@@ -13,7 +14,7 @@
 
 @* ===== QUICK LINKS ===== *@
 
-<link rel="stylesheet" href="~/css/home-news-banner.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/home-news-banner.css"  />
 <section class="portal-hero relative isolate overflow-hidden">
     <img src="~/img/hero-fields-DJLmT-UN.jpg"
          alt="حقول زراعية مصرية"
@@ -93,13 +94,13 @@
                 <article class="home-news-slide" hidden="@(i != 0)" aria-roledescription="شريحة" aria-label="@(i + 1) من @heroNews.Count">
                     <a class="home-news-link" href="@Url.Action("RowDetail", "News", new { ID = news.ID, Type = "الأخبار" })">
                         <img class="home-news-image" src="@imagePath" alt="" loading="@(i == 0 ? "eager" : "lazy")" />
-                        <h2>@news.TitleAr</h2>
+                        <div class="home-news-caption"><span class="home-news-tag">خبر رئيسي</span><h2>@news.TitleAr</h2></div>
                     </a>
                 </article>
             }
         </div>
     </section>
-    <script src="~/js/home-news-banner.js" asp-append-version="true" defer></script>
+    <script src="~/js/home-news-banner.js"  defer></script>
 }
     </div>
 </section>

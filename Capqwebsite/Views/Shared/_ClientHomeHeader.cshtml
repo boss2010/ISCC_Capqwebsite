@@ -1,0 +1,16 @@
+<header class="client-home-header" dir="rtl">
+    <div class="client-home-nav">
+        <a class="client-home-brand" href="@Url.Action("Index", "Home")">
+            <img src="~/img/logo-capq2.png" alt="شعار الحجر الزراعي" width="52" height="52" />
+            <div><strong>الإدارة المركزية للحجر الزراعي</strong><span>وزارة الزراعة واستصلاح الأراضي — جمهورية مصر العربية</span></div>
+        </a>
+        <nav aria-label="القائمة الرئيسية">
+            <a href="@Url.Action("Index", "Home")" aria-current="page">الرئيسية</a>
+            <a href="#about">عن الحجر الزراعي</a>
+            <a href="https://www.capq.gov.eg/Exporting/Main">الخدمات الإلكترونية</a>
+            <a href="@Url.Action("Index", "AgricultureLaw", new { ID = 1 })">الأنظمة واللوائح</a>
+            <a href="#news">المركز الإعلامي</a>
+            <a href="@Url.Action("Index", "contact")">تواصل معنا</a>
+        </nav>
+    </div>
+</header>

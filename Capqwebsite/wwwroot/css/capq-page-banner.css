@@ -1,0 +1,23 @@
+.capq-page-banner { position: relative; isolation: isolate; min-height: 240px; background: #fff; border-bottom: 1px solid #dce7df; overflow: hidden; }
+.capq-page-banner__art { position: absolute; inset: 0 auto 0 0; width: 48%; z-index: -1; background: url('../img/capq-banner-clean.png') left center / 208% 294% no-repeat; }
+.capq-page-banner__identity { width: 55%; margin-right: 0; margin-left: auto; min-height: 240px; display: flex; align-items: center; gap: 20px; padding: 24px 32px 24px 12px; }
+.capq-page-banner__logo { width: 100px; height: 110px; object-fit: contain; flex-shrink: 0; }
+.capq-page-banner__text { min-width: 0; }
+.capq-page-banner .capq-page-banner__name { margin: 0; color: #005c43; font-size: clamp(21px, 2vw, 32px); font-weight: 800; line-height: 1.5; }
+.capq-page-banner .capq-page-banner__english { margin: 4px 0 0; color: #17634f; font: 16px/1.5 Arial, sans-serif; text-align: right; }
+.capq-page-banner .capq-page-banner__slogan { margin: 8px 0 0; color: #537266; font-size: 14px; }
+.capq-page-banner .capq-page-banner__title { display: inline-block; margin: 16px 0 0; padding-top: 8px; border-top: 2px solid #c4a454; color: #123e31; font-size: 23px; font-weight: 700; line-height: 1.5; }
+@media (max-width: 1100px) {
+    .capq-page-banner__identity { width: 65%; gap: 12px; padding-right: 20px; }
+    .capq-page-banner__art { width: 35%; background-size: 290% 294%; }
+    .capq-page-banner__logo { width: 72px; height: 86px; }
+}
+@media (max-width: 700px) {
+    .capq-page-banner { padding-top: 105px; }
+    .capq-page-banner__art { top: 0; bottom: auto; width: 100%; height: 105px; background-size: 190% 294%; }
+    .capq-page-banner__identity { width: 100%; min-height: 0; padding: 20px 16px; align-items: flex-start; }
+    .capq-page-banner__logo { width: 58px; height: 68px; }
+    .capq-page-banner .capq-page-banner__name { font-size: 21px; }
+    .capq-page-banner .capq-page-banner__english { font-size: 13px; }
+    .capq-page-banner .capq-page-banner__title { font-size: 20px; margin-top: 12px; }
+}
