@@ -5,207 +5,40 @@
     var lang = string.IsNullOrEmpty(langCookies) ? "ar" : langCookies;
 }
 
-<!-- Page Header Start -->
-
-<div class="gov-page-header">
-    <div class="container">
-        <div class="gov-page-header__inner">
-
-            <div class="gov-page-header__title">
-
-                <span class="gov-page-header__icon">
-                    <i class="fas fa-balance-scale"></i>
-                </span>
-
-                <div>
-                    <span class="gov-page-header__eyebrow">
-                        التصدير
-                    </span>
-
-                    <h1 class="gov-page-header__h1">
-                        اشتراطات التصدير
-                    </h1>
-                </div>
-
-            </div>
-
-            <nav class="gov-breadcrumb">
-
-                <a href="/Home/HomePage/Index"
-                   class="gov-breadcrumb__link">
-                    الرئيسية
-                </a>
-
-                <i class="fas fa-chevron-left gov-breadcrumb__sep"></i>
-
-                <span class="gov-breadcrumb__current">
-                    اشتراطات التصدير
-                </span>
-
-            </nav>
-
+<link rel="stylesheet" href="~/css/procedure-search.css" asp-append-version="true" />
+<div class="procedure-page" dir="rtl">
+    <header class="procedure-heading">
+        <div class="procedure-container">
+            <nav class="procedure-breadcrumb" aria-label="مسار الصفحة"><a href="@Url.Action("Index", "Home")">الرئيسية</a><span>›</span> اشتراطات التصدير</nav>
+            <div class="procedure-title"><div><span>التصدير</span><h1>اشتراطات التصدير</h1></div><div class="procedure-title-icon"><i class="fas fa-balance-scale" aria-hidden="true"></i></div></div>
         </div>
+    </header>
+    <div class="procedure-content procedure-container">
+        <section class="procedure-panel" aria-labelledby="procedure-search-title">
+            <div class="procedure-panel-head"><div><h2 id="procedure-search-title">البحث في اشتراطات التصدير</h2><p>اختر دولة التصدير والنبات للوصول إلى الاشتراطات والبيانات المرتبطة بهما.</p></div><span class="procedure-badge">استعلام إلكتروني</span></div>
+            <div class="procedure-search-area">
+                <form id="searchForm">
+                    <div class="procedure-form-grid">
+                        <div class="procedure-field"><label for="ImInitiatorListId">دولة التصدير</label>
+                            @Html.DropDownList("CountryID", (IEnumerable<SelectListItem>)ViewData["CountryList"], "-- اختر دولة التصدير --", new { id = "ImInitiatorListId", @class = "form-control" })
+                        </div>
+                        <div class="procedure-field"><label for="ItemListId">النبات</label>
+                            @Html.DropDownList("ItemID", (IEnumerable<SelectListItem>)ViewData["ItemList"], "-- اختر النبات --", new { id = "ItemListId", @class = "form-control" })
+                        </div>
+                        <button id="btnsearch" class="procedure-search-btn" type="submit">بحث</button>
+                    </div>
+                </form>
+                <div class="procedure-helper"><i class="fas fa-info-circle" aria-hidden="true"></i><span>يرجى تحديد دولة التصدير والنبات ثم الضغط على «بحث» لعرض اشتراطات التصدير المتاحة.</span></div>
+                <div id="divdata" class="procedure-results" aria-live="polite">
+                    @if (Model != null && Model.Any())
+                    {
+                        <partial name="_PartialExporting.cshtml" model="Model" />
+                    }
+                </div>
+            </div>
+        </section>
     </div>
 </div>
-
-<!-- Page Header End -->
-
-
-<div class="mx-auto max-w-7xl px-6">
-
-    <div class="container-fluid bg-light">
-
-        <div class="container pt-5">
-
-            <!-- ============================= -->
-            <!-- Search Form -->
-            <!-- ============================= -->
-
-            <form id="searchForm" class="text-start">
-
-                <div class="row">
-
-                    <!-- الدولة / المنشأ -->
-                    <div class="col-md-4">
-
-                        <label class="label lbl-style">
-                            المنشأ
-                        </label>
-
-                        <br>
-                        <br>
-
-                        @Html.DropDownList(
-                        "CountryID",
-                                                (IEnumerable<SelectListItem>)ViewData["CountryList"],
-                                                "-- اختار --",
-                                                new
-                                                {
-                                                    @id = "ImInitiatorListId",
-                                                    @class = "form-control"
-                                                }
-                                                )
-
-                    </div>
-
-
-                    <!-- النباتات -->
-                    <div class="col-md-4">
-
-                        <label class="label lbl-style">
-                            النباتات
-                        </label>
-
-                        <br>
-                        <br>
-
-                        @Html.DropDownList(
-                                                "ItemID",
-                                                (IEnumerable<SelectListItem>)ViewData["ItemList"],
-                                                "-- اختار --",
-                                                new
-                                                {
-                                                    @id = "ItemListId",
-                                                    @class = "form-control"
-                                                }
-                                                )
-
-                    </div>
-
-
-                    <!-- مسمى مختصر -->
-                    <div style="display:none;" class="col-md-4">
-
-                        <label class="label lbl-style">
-                            مسمى مختصر
-                        </label>
-
-                        <br>
-                        <br>
-
-                        <select class="operator form-control">
-
-                            <option value="">
-                                مسمى مختصر
-                            </option>
-
-                            <option value="">
-                                ___
-                            </option>
-
-                            <option value="">
-                                ___
-                            </option>
-
-                            <option value="">
-                                __
-                            </option>
-
-                            <option value="">
-                                __
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <br />
-
-
-                <!-- زر البحث -->
-
-                <div class="row">
-
-                    <div class="col-md-4"></div>
-
-                    <div class="col-md-4">
-
-                        <center style="margin-bottom:15px;">
-
-                            <input id="btnsearch"
-                                   type="submit"
-                                   class="bg-primary-deep text-primary-foreground py-2 px-4"
-                                   name="btnSave"
-                                   value="بحث">
-
-                        </center>
-
-                    </div>
-
-                    <div class="col-md-4"></div>
-
-                </div>
-
-            </form>
-
-
-            <!-- ============================= -->
-            <!-- النتائج -->
-            <!-- ============================= -->
-
-            <div id="divdata">
-
-                @if (Model != null)
-                {
-                    <partial name="_PartialExporting.cshtml" for="@Model" />
-                }
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- ===================================================== -->
-<!-- Certificate Modal -->
-<!-- ===================================================== -->
-
 <div class="modal fade"
      id="certificateModal"
      tabindex="-1"

@@ -1,21 +1,19 @@
-﻿@model List<EF.Models.WebsiteTypeDetail>
+@model List<EF.Models.WebsiteTypeDetail>
 
 <link rel="stylesheet"
       href="~/css/agriculture-law-page.css"
       asp-append-version="true" />
 
 @{
-    // الحصول على ID من الرابط
+    // ID القادم من الرابط
     var queryId = Context.Request.Query["ID"].ToString();
 
-    int currentId = 0;
+    int.TryParse(queryId, out int currentId);
 
-    int.TryParse(queryId, out currentId);
-
-    // حماية من null
+    // البيانات
     var items = Model ?? new List<EF.Models.WebsiteTypeDetail>();
 
-    // عنوان الصفحة
+    // العنوان
     var pageTitle = ViewBag.TypeAr as string;
 
     if (string.IsNullOrWhiteSpace(pageTitle))
@@ -34,41 +32,32 @@
         };
     }
 
-    // عنوان المحتوى
     var sectionTitle = currentId switch
     {
         1 => "قوانين وتشريعات الزراعة",
         2 => "القرارات الوزارية",
         3 => "قوائم الآفات",
-        6 => "الفيديوهات",
-        14 => "الفيديوهات",
-        15 => "الفيديوهات",
-        16 => "الفيديوهات",
         17 => "بيانات التواصل",
+        6 or 14 or 15 or 16 => "الفيديوهات",
         _ => pageTitle
     };
 
-    // وصف المحتوى
     var sectionDescription = currentId switch
     {
         1 => "الوصول السريع إلى القوانين واللوائح المنظمة للعمل الزراعي",
         2 => "الوصول السريع إلى القرارات الوزارية المنظمة للعمل الزراعي",
         3 => "الوصول السريع إلى قوائم الآفات والمراجع الزراعية",
-        6 => "الوصول إلى الفيديوهات والمحتوى المرئي",
-        14 => "الوصول إلى الفيديوهات والمحتوى المرئي",
-        15 => "الوصول إلى الفيديوهات والمحتوى المرئي",
-        16 => "الوصول إلى الفيديوهات والمحتوى المرئي",
         17 => "بيانات التواصل والعنوان والموقع الجغرافي",
+        6 or 14 or 15 or 16 => "الوصول إلى الفيديوهات والمحتوى المرئي",
         _ => "الوصول السريع إلى التشريعات والقوانين واللوائح"
     };
 }
 
-
 <div class="law-page" dir="rtl">
 
-    <!-- ========================================= -->
+    <!-- ========================= -->
     <!-- HEADER -->
-    <!-- ========================================= -->
+    <!-- ========================= -->
 
     <section class="law-page-head">
 
@@ -83,9 +72,7 @@
 
                 <span>›</span>
 
-                <span>
-                    @pageTitle
-                </span>
+                <span>@pageTitle</span>
 
             </nav>
 
@@ -120,16 +107,14 @@
     </section>
 
 
-    <!-- ========================================= -->
+    <!-- ========================= -->
     <!-- CONTENT -->
-    <!-- ========================================= -->
+    <!-- ========================= -->
 
     <div class="law-content law-container">
 
 
-        <!-- ========================================= -->
         <!-- INTRO -->
-        <!-- ========================================= -->
 
         <div class="law-intro">
 
@@ -145,7 +130,6 @@
 
             </div>
 
-
             <span class="law-counter">
 
                 @items.Count عنصر متاح
@@ -155,9 +139,9 @@
         </div>
 
 
-        <!-- ========================================= -->
+        <!-- ================================================= -->
         <!-- VIDEOS -->
-        <!-- ========================================= -->
+        <!-- ================================================= -->
         @if (currentId == 6 ||
                 currentId == 14 ||
                 currentId == 15 ||
@@ -165,7 +149,7 @@
         {
             <div class="law-grid">
 
-                @if (items.Count > 0)
+                @if (items.Any())
                 {
                     foreach (var item in items)
                     {
@@ -212,7 +196,6 @@
                                         @item.TitleAr
                                     </h3>
 
-
                                     <div class="law-meta">
 
                                         <i class="fab fa-youtube"></i>
@@ -242,14 +225,15 @@
             </div>
         }
 
-        <!-- ========================================= -->
+
+        <!-- ================================================= -->
         <!-- CONTACT -->
-        <!-- ========================================= -->
+        <!-- ================================================= -->
         else if (currentId == 17)
         {
         <div class="law-grid">
 
-            @if (items.Count > 0)
+            @if (items.Any())
             {
                 foreach (var item in items)
                 {
@@ -259,8 +243,7 @@
 
                             <span class="law-file-badge">
 
-                                <i class="fas fa-address-card">
-                                </i>
+                                <i class="fas fa-address-card"></i>
 
                             </span>
 
@@ -278,8 +261,7 @@
                             {
                                 <div class="law-meta">
 
-                                    <i class="fas fa-envelope">
-                                    </i>
+                                    <i class="fas fa-envelope"></i>
 
                                     @item.TitleEn
 
@@ -291,8 +273,7 @@
                             {
                                 <div class="law-meta">
 
-                                    <i class="fas fa-phone">
-                                    </i>
+                                    <i class="fas fa-phone"></i>
 
                                     @item.descEn
 
@@ -306,8 +287,7 @@
                                    href="@item.linkURL"
                                    target="_blank">
 
-                                    <i class="fas fa-map-marker-alt">
-                                    </i>
+                                    <i class="fas fa-map-marker-alt"></i>
 
                                     عرض الموقع
 
@@ -323,34 +303,30 @@
         </div>
         }
 
-        <!-- ========================================= -->
+
+        <!-- ================================================= -->
         <!-- PDF / DOCUMENTS -->
-        <!-- ========================================= -->
+        <!-- ================================================= -->
         else
         {
         <div class="law-grid">
 
-            @if (items.Count > 0)
+            @if (items.Any())
             {
                 foreach (var item in items)
                 {
                     <article class="law-card">
 
-                        <!-- Cover -->
-
                         <div class="law-cover">
 
                             <span class="law-file-badge">
 
-                                <i class="far fa-file-pdf">
-                                </i>
+                                <i class="far fa-file-pdf"></i>
 
                             </span>
 
                         </div>
 
-
-                        <!-- Body -->
 
                         <div class="law-card-body">
 
@@ -361,8 +337,7 @@
 
                             <div class="law-meta">
 
-                                <i class="far fa-file-alt">
-                                </i>
+                                <i class="far fa-file-alt"></i>
 
                                 @pageTitle
 
@@ -375,8 +350,7 @@
                                    href="@item.filepath"
                                    data-pdf="@item.filepath">
 
-                                    <i class="fas fa-eye">
-                                    </i>
+                                    <i class="fas fa-eye"></i>
 
                                     عرض الملف
 
@@ -401,10 +375,10 @@
         }
 
 
-        <!-- ========================================= -->
+        <!-- ================================================= -->
         <!-- EMPTY -->
-        <!-- ========================================= -->
-        @if (items.Count == 0)
+        <!-- ================================================= -->
+        @if (!items.Any())
         {
             <p class="law-empty">
 
@@ -414,19 +388,17 @@
         }
 
 
-        <!-- ========================================= -->
+        <!-- ================================================= -->
         <!-- NOTICE -->
-        <!-- ========================================= -->
+        <!-- ================================================= -->
 
         <div class="law-notice">
 
-            <span class="law-notice-icon"
-                  aria-hidden="true">
+            <span class="law-notice-icon">
 
                 ✓
 
             </span>
-
 
             <div>
 
@@ -448,9 +420,9 @@
 </div>
 
 
-<!-- ========================================= -->
+<!-- ================================================= -->
 <!-- PDF MODAL -->
-<!-- ========================================= -->
+<!-- ================================================= -->
 
 <div id="pdfModal"
      style="
@@ -460,14 +432,11 @@
         left:0;
         width:100%;
         height:100%;
-        background:rgba(0,0,0,0.85);
+        background:rgba(0,0,0,.85);
         z-index:99999;
         align-items:center;
         justify-content:center;
      ">
-
-
-    <!-- Close -->
 
     <div id="closeModal"
          style="
@@ -490,8 +459,6 @@
     </div>
 
 
-    <!-- PDF -->
-
     <iframe id="pdfFrame"
             style="
                 width:min(92vw,1100px);
@@ -507,10 +474,6 @@
 </div>
 
 
-<!-- ========================================= -->
-<!-- JAVASCRIPT -->
-<!-- ========================================= -->
-
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -519,13 +482,10 @@
         const frame = document.getElementById("pdfFrame");
         const closeModal = document.getElementById("closeModal");
 
-
         if (!modal || !frame || !closeModal) {
             return;
         }
 
-
-        // Close button
 
         closeModal.addEventListener("click", function () {
 
@@ -535,8 +495,6 @@
 
         });
 
-
-        // PDF links
 
         document.querySelectorAll(".openPdf")
             .forEach(function (link) {
@@ -548,11 +506,9 @@
                     const pdf =
                         this.getAttribute("data-pdf");
 
-
                     if (!pdf) {
                         return;
                     }
-
 
                     frame.src = pdf;
 
@@ -562,8 +518,6 @@
 
             });
 
-
-        // Close when clicking outside
 
         modal.addEventListener("click", function (e) {
 
@@ -577,8 +531,6 @@
 
         });
 
-
-        // ESC
 
         document.addEventListener("keydown", function (e) {
 
