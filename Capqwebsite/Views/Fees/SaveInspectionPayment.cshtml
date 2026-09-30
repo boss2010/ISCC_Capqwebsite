@@ -1,146 +1,216 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "NBE Payment";
     Layout = null;
-    //Layout = "~/Areas/Master/MasterDataEntryExportRequst.cshtml";
 }
 
+<!DOCTYPE html>
 <html>
 <head>
 
-@*     @if ( ViewBag.ScriptBankPort != 80 && ViewBag.ScriptBankPort != 443 &&  ViewBag.Url != "site.capq.gov.eg")
-    {
-        <script src="https://test-nbe.gateway.mastercard.com/checkout/version/61/checkout.js" data-error="error callback" data-cancel="cancel callback"></script>
-    }
-    else
-    {
-        <script src="https://nbe.gateway.mastercard.com/checkout/version/61/checkout.js" data-error="error callback" data-cancel="cancel callback"></script>
-    } *@
+    <meta charset="utf-8" />
 
-    <script src="https://nbe.gateway.mastercard.com/checkout/version/61/checkout.js" data-error="error callback" data-cancel="cancel callback"></script>
+    <title>NBE Payment</title>
+
+    <!-- ========================================================= -->
+    <!-- NBE CHECKOUT SDK -->
+    <!-- ========================================================= -->
+
+    <script src="https://nbe.gateway.mastercard.com/static/checkout/checkout.min.js"
+            data-error="nbeCheckoutErrorCallback"
+            data-cancel="nbeCheckoutCancelCallback">
+    </script>
+
+
+
+    <!-- ========================================================= -->
+    <!-- JQUERY -->
+    <!-- ========================================================= -->
+
+
+
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+
+    <!-- ========================================================= -->
+    <!-- BOOTSTRAP -->
+    <!-- ========================================================= -->
 
 
     <link href="~/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/js/jquery-3.4.1.min.js"></script>
-    <script src="~/bootstrap.min.js"></script>
-    <script>
-        //$(document).ready(function(){
-        //    $("#btnpayVersiontwo").click();
-        //    alert("fgd");
-        //});
-        window.onload = function() {
 
-            $("#btnpayVersiontwo").click();
-        };
+
+    <script src="~/bootstrap.min.js"></script>
+
+
+    <!-- ========================================================= -->
+    <!-- NBE ERROR / CANCEL CALLBACKS -->
+    <!-- ========================================================= -->
+
+    <script>
+
+        function nbeCheckoutErrorCallback(error) { }
+
+
+        function nbeCheckoutCancelCallback() { }
+
+    </script>
+
+
+    <!-- ========================================================= -->
+    <!-- PAYMENT SCRIPT -->
+    <!-- ========================================================= -->
+
+    <script>
 
         $(document).ready(function () {
 
+            /* ===================================================== */
+            /* GET SESSION ID */
+            /* ===================================================== */
+
+            var sessionId = $("#SessionId").val();
 
 
-            var amount = 0;
-            if (@ViewBag.amount!='') {
-                amount=@ViewBag.amount;
+            /* ===================================================== */
+            /* VALIDATE SESSION */
+            /* ===================================================== */
+
+            if (!sessionId) {
+                return;
             }
 
 
-            //function completeCallback(resultIndicator, sessionVersion) {
-            //    alert(resultIndicator);
-            //    alert('done');
-            //    //handle payment completion
-            //}
+            /* ===================================================== */
+            /* OPEN PAYMENT PAGE */
+            /* ===================================================== */
 
-            function errorCallback(error) {
-                console.log(JSON.stringify(error));
-                alert(JSON.stringify(error));
-            }
-            function cancelCallback() {
-                console.log('Payment cancelled');
-            }
-            //function completeCallback() {
-            //    console.log('Payment completed');
-            //}
+            function openPaymentPage() {
+
+                try {
+
+                    var payment = Checkout.showPaymentPage();
 
 
-            Checkout.configure({
+                    /*
+                     * بعض إصدارات الـ SDK
+                     * ممكن ترجع Promise
+                     */
 
-                session: {
-                    id: $("#SessionId").val()
-                },
-                order: {
-                    amount: function () {
-                        //Dynamic calculation of amount
-                        return amount // 100 + 0;
-                    },
-                    currency: 'EGP',
-                    description: 'Ordered goods',
-                    id: $("#OrderId").val(),
-                },
+                    if (payment &&
+                        typeof payment.catch === "function") {
 
-
-                billing: {
-
-                    address: {
-
-                        street: '123 Customer Street',
-
-                        city: 'Metropolis',
-
-                        postcodeZip: '99999',
-
-                        stateProvince: 'NY',
-
-                        country: 'USA'
+                        payment.catch(function (error) { });
 
                     }
 
-                },
+                }
+                catch (error) { }
+            }
 
 
+            /* ===================================================== */
+            /* CHECKOUT READY */
+            /* ===================================================== */
 
-                interaction: {
-                    operation: 'PURCHASE',
-                    merchant: {
-                        name: 'NBE',
-                        address: {
-                            line1: '200 Sample St',
-                            line2: '1234 Example Town'
-                        }
-                    },
-                    displayControl: {
-                        billingAddress: 'HIDE',
-                        customerEmail: 'HIDE',
-                        orderSummary: 'HIDE',
-                        shipping: 'HIDE',
-                      //  paymentConfirmation: 'HIDE'
+            function checkoutReady() {
+
+                /*
+                 * فتح صفحة الدفع تلقائياً
+                 */
+
+                openPaymentPage();
+
+            }
+
+
+            /* ===================================================== */
+            /* CHECKOUT CONFIGURATION */
+            /* ===================================================== */
+
+            try {
+
+                /*
+                 * مهم جداً:
+                 *
+                 * مع INITIATE_CHECKOUT الجديد
+                 * نرسل الـ Session فقط.
+                 *
+                 * لا نرسل order هنا.
+                 * لا نرسل amount هنا.
+                 * لا نرسل currency هنا.
+                 * لا نرسل interaction هنا.
+                 *
+                 * هذه البيانات تم إرسالها بالفعل
+                 * في Create_Session().
+                 */
+
+                var configuration = Checkout.configure({
+
+                    session: {
+                        id: sessionId
                     }
-                },
+
+                });
 
 
-            });
+                /* ================================================= */
+                /* HANDLE PROMISE */
+                /* ================================================= */
 
+                if (configuration &&
+                    typeof configuration.then === "function") {
+
+
+                    configuration
+                        .then(function () {
+
+                            checkoutReady();
+
+                        })
+                        .catch(function (error) { });
+
+
+                }
+                else {
+
+                    /*
+                     * بعض الإصدارات لا ترجع Promise
+                     */
+
+                    checkoutReady();
+
+                }
+
+            }
+            catch (error) { }
 
         });
+
     </script>
 
 </head>
 
+
 <body>
-    <center>
 
-        @*@if (ViewBag.Url != "www.capq.gov.eg" && ViewBag.port!=80 && ViewBag.port!=443)
-        {*@
+    <!-- ========================================================= -->
+    <!-- NBE SESSION -->
+    <!-- ========================================================= -->
 
-        <input type="hidden" id="SessionId" name="SesId" value="@ViewBag.Ses_Id" />
-        <input type="hidden" id="OrderId" name="OrdId" value="@ViewBag.Ord_Id" />
-        @*<input type="button" style="visibility:hidden" id="btnpayVersionone" value="Pay with Lightbox" onclick="Checkout.showLightbox();" />*@
-        <input type="button" style="visibility:hidden" id="btnpayVersiontwo" value="Pay with Payment Page" onclick="Checkout.showPaymentPage();" />
-        @*}*@
-    </center>
+    <input type="hidden"
+           id="SessionId"
+           name="SesId"
+           value="@ViewBag.Ses_Id" />
 
+
+    <!-- ========================================================= -->
+    <!-- NBE ORDER -->
+    <!-- ========================================================= -->
+
+    <input type="hidden"
+           id="OrderId"
+           name="OrdId"
+           value="@ViewBag.Ord_Id" />
 
 
 </body>
-
 </html>
-
-
-

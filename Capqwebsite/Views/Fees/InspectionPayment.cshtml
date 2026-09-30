@@ -696,7 +696,7 @@
                                class="payment-type-button @(isGeneralPayment ? "active" : "")"
                                aria-current="@(isGeneralPayment ? "page" : null)">
                                 <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
-                                <span>رسوم وخدمات وشهادات</span>
+                                <span>دفع رسوم الخدمات (حساب حكومى)</span>
                             </a>
                             @if (showPrivatePayment)
                             {
@@ -704,7 +704,7 @@
                                    class="payment-type-button @(!isGeneralPayment ? "active" : "")"
                                    aria-current="@(!isGeneralPayment ? "page" : null)">
                                     <i class="fas fa-clipboard-check" aria-hidden="true"></i>
-                                    <span>اعتمادات وعينات وبدلات</span>
+                                    <span>دفع رسوم الاعتمادات والبدلات (حساب خاص)</span>
                                 </a>
                             }
                         </div>
