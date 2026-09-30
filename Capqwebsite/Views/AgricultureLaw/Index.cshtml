@@ -1,24 +1,6 @@
-@model List<EF.Models.WebsiteTypeDetail>
+﻿@model List<EF.Models.WebsiteTypeDetail>
 
-<!-- Page Header -->
-<div class="gov-page-header">
-    <div class="container">
-        <div class="gov-page-header__inner">
-            <div class="gov-page-header__title">
-                <span class="gov-page-header__icon"><i class="fas fa-balance-scale"></i></span>
-                <div>
-                    <span class="gov-page-header__eyebrow">التشريعات والقوانين</span>
-                    <h1 class="gov-page-header__h1">@ViewBag.TypeAr</h1>
-                </div>
-            </div>
-            <nav class="gov-breadcrumb">
-                <a href="@Url.Action("Index", "Home")" class="gov-breadcrumb__link">الرئيسية</a>
-                <i class="fas fa-chevron-left gov-breadcrumb__sep"></i>
-                <span class="gov-breadcrumb__current">@ViewBag.TypeAr</span>
-            </nav>
-        </div>
-    </div>
-</div>
+@await Html.PartialAsync("_CapqPageBanner", (string)(ViewBag.TypeAr ?? "التشريعات والقوانين"))
 
 <div class="container-fluid gov-inner-page">
     <div class="container">

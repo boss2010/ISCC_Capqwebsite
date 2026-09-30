@@ -481,7 +481,13 @@ namespace Capqwebsite.Controllers
 			// 23) Return View
 			// =========================================================
 
-			return View(vm);
+			if (Request.Headers["X-Dashboard-Refresh"] == "true")
+            {
+                Response.Headers.CacheControl = "no-store";
+                return PartialView("_DashData", vm);
+            }
+
+            return View(vm);
 		}
 
 

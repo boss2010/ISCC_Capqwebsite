@@ -1,0 +1,31 @@
+.client-home { background: #082b1b url('../img/hero-fields-DJLmT-UN.jpg') center top / cover fixed; }
+.client-home-header { padding: 24px 0 10px; background: linear-gradient(90deg,#031d12c7,#031d128c); }
+.client-home-nav { width: min(1450px,92%); margin: auto; min-height: 74px; display: flex; align-items: center; gap: 22px; padding: 10px 16px; border: 1px solid #e2ae326b; border-radius: 16px; background: #031e13a8; backdrop-filter: blur(12px); box-shadow: 0 10px 35px #0003; color: #fff; }
+.client-home-brand { display: flex; align-items: center; gap: 12px; margin-left: auto; color: #fff; text-decoration: none; flex-shrink: 0; }
+.client-home-brand img { width: 52px; height: 52px; object-fit: contain; background: #fff; border: 1px solid #e2ae32; border-radius: 12px; padding: 3px; }
+.client-home-brand strong { display: block; font-size: 17px; }
+.client-home-brand span { display: block; color: #ddd; font-size: 12px; margin-top: 4px; }
+.client-home-nav nav { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.client-home-nav nav a { color: #fff; text-decoration: none; padding: 13px 14px; border-radius: 10px; font-size: 14px; }
+.client-home-nav nav a:hover,.client-home-nav nav a[aria-current] { color: #f2c34e; background: #e2ae321a; }
+.client-home-nav a:focus-visible { outline: 2px solid #f2c34e; outline-offset: 3px; }
+.client-home .portal-hero { background: linear-gradient(90deg,#031d12c7,#031d128c); }
+.client-home .portal-hero > img,.client-home .portal-hero > .bg-gradient-to-l { display: none; }
+.client-home .hero-split { width: min(1450px,92%); max-width: 1450px; margin: auto; min-height: 0; padding: 8px 0 38px; grid-template-columns: 1.05fr 1.35fr; gap: 42px; }
+.client-home .hero-intro h1 { font-size: clamp(38px,4.5vw,70px); line-height: 1.18; margin: 0 0 17px; }
+.client-home .hero-intro h1 span { color: #f2c34e; }
+.client-home .hero-intro > p { color: #e0e7df; font-size: 17px; line-height: 2; margin: 0 0 25px; }
+.client-home #services { margin-top: 0; gap: 12px; }
+.client-home #services a { border: 1px solid #e2ae32; border-radius: 10px; padding: 15px 23px; font-weight: bold; }
+.client-home #services a.bg-gold { background: #e2ae32; color: #17301f; }
+.client-home .home-news-banner { position: relative; inset: auto; width: 100%; min-height: 385px; padding: 12px; border: 1px solid #e7c1527a; border-radius: 20px; background: #0723177a; box-shadow: 0 18px 45px #0004; }
+.client-home .home-news-link { min-height: 360px; height: 100%; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; }
+.client-home .home-news-caption { position: absolute; inset: auto 0 0; padding: 25px 28px; }
+.client-home .home-news-link h2 { position: static; font-size: 26px; line-height: 1.55; margin: 0; }
+.home-news-tag { display: inline-block; background: #e2ae32; color: #17301f; padding: 8px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 12px; }
+.client-home-ticker { width: min(1450px,92%); margin: 18px auto 28px; min-height: 52px; padding: 10px 18px; display: flex; align-items: center; gap: 20px; border-radius: 13px; background: #f7edcf; color: #273124; box-shadow: 0 8px 28px #0002; }
+.client-home-ticker__badge { background: #e2ae32; color: #172517; padding: 9px 18px; border-radius: 9px; font-weight: bold; }
+.client-home-ticker time { margin-right: auto; color: #5d5b4d; font-size: 13px; white-space: nowrap; }
+@media(max-width:1150px) { .client-home-nav { flex-wrap: wrap; } .client-home-nav nav { width: 100%; } .client-home .hero-split { grid-template-columns: 1fr 1fr; gap: 25px; } }
+@media(max-width:800px) { .client-home-header { padding-top: 12px; } .client-home .hero-split { grid-template-columns: 1fr; } .client-home .home-news-banner { max-width: none; } .client-home-nav nav { flex-wrap: nowrap; overflow-x: auto; } .client-home-nav nav a { white-space: nowrap; } .client-home-brand { flex-shrink: 1; } .client-home-ticker { font-size: 12px; gap: 8px; } .client-home-ticker time { display: none; } }
+@media(max-width:520px) { .client-home .hero-intro h1 { font-size: 38px; } .client-home .hero-intro > p { font-size: 14px; } .client-home .home-news-link { min-height: 310px; } .client-home .home-news-link h2 { font-size: 21px; } .client-home-brand strong { font-size: 15px; } .client-home-brand span { font-size: 10px; } }
