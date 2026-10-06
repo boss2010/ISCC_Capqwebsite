@@ -1,6 +1,22 @@
 @model string
-<link rel="stylesheet" href="~/css/capq-page-banner.css"  />
-<header class="capq-page-banner" dir="rtl">
+@* <link rel="stylesheet" href="~/css/capq-page-banner.css"  /> *@
+<link rel="stylesheet" href="~/css/agriculture-law-page.css"   />
+<section class="law-page-head">
+    <div class="law-container">
+        <nav class="law-breadcrumb" aria-label="مسار الصفحة"><a href="@Url.Action("Index", "Home")">الرئيسية</a> 
+            <span>›</span> @Model
+        </nav>
+        <div class="law-title-wrap"><div>
+            <span>التشريعات والقوانين</span>
+                <h1>@Model</h1>
+            </div>
+            <div class="law-title-icon">
+                <i class="fas fa-balance-scale" aria-hidden="true"></i>
+                </div>
+                </div>
+    </div>
+</section>
+@* <header class="capq-page-banner" dir="rtl">
     <div class="capq-page-banner__art" aria-hidden="true"></div>
     <div class="capq-page-banner__identity">
         <img class="capq-page-banner__logo" src="~/img/logo-capq2.png" alt="شعار الحجر الزراعي المصري" />
@@ -11,4 +27,4 @@
             <h1 class="capq-page-banner__title">@Model</h1>
         </div>
     </div>
-</header>
+</header> *@
