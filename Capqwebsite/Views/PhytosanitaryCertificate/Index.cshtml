@@ -1,5 +1,213 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "البحث عن شهادة";
+}
+
+<link rel="stylesheet"
+      href="~/css/agriculture-law-page.css"
+      asp-append-version="true" />
+
+<section dir="rtl" class="min-h-[60vh] beigecolor py-16">
+    <div class="mx-auto max-w-3xl px-6">
+        <div class="rounded-xl border border-border bg-card p-8 shadow-elegant">
+
+            <div class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
+                الخدمات الإلكترونية
+            </div>
+
+            <h1 class="font-display text-3xl font-bold text-primary-deep">
+                البحث عن شهادة
+            </h1>
+
+            <div class="mt-8">
+                <label for="CertificateNumber"
+                       class="mb-2 block text-sm font-semibold text-primary-deep">
+                    رقم الشهادة
+                </label>
+
+                <input type="text"
+                       id="CertificateNumber"
+                       name="number"
+                       class="w-full rounded-md border border-border bg-background px-4 py-3 text-foreground outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30"
+                       placeholder="أدخلي رقم الشهادة" />
+            </div>
+
+            <button type="button"
+                    id="searchCertificate"
+                    style="color:#fff !important;"
+                    class="mt-5 rounded-md bg-primary-deep px-6 py-3 font-semibold transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-gold/50">
+                بحث
+            </button>
+
+            <p id="searchMessage"
+               class="mt-4 text-sm text-primary-deep"
+               role="status"></p>
+
+            <!-- كارت الشهادة يظهر بعد نجاح البحث -->
+            <div id="certificateResults"
+                 class="law-page mt-8"
+                 style="display:none;">
+
+                <div class="law-content law-container"
+                     style="max-width:100%; padding:0;">
+
+                    <div class="law-grid"
+                         style="grid-template-columns:repeat(auto-fit, minmax(280px, 360px)); justify-content:start;">
+
+                        <article class="law-card">
+                            <div class="law-cover">
+                                <span class="law-file-badge">
+                                    <i class="far fa-file-pdf" aria-hidden="true"></i>
+                                </span>
+                            </div>
+
+                            <div class="law-card-body">
+                                <h3 id="certificateTitle">الشهادة</h3>
+
+                                <div class="law-meta">
+                                    <i class="far fa-file-alt" aria-hidden="true"></i>
+                                    شهادة صحية نباتية
+                                </div>
+
+                                <a href="#"
+                                   id="openCertificate"
+                                   class="law-view">
+                                    <i class="fas fa-eye" aria-hidden="true"></i>
+                                    عرض الشهادة
+                                </a>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- نافذة عرض الشهادة بنفس طريقة عرض القوانين -->
+<div id="pdfModal"
+     style="display:none;
+            position:fixed;
+            inset:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.85);
+            z-index:9999;
+            align-items:center;
+            justify-content:center;">
+
+    <button type="button"
+            id="closeModal"
+            aria-label="إغلاق"
+            style="position:absolute;
+                   top:16px;
+                   left:20px;
+                   cursor:pointer;
+                   color:#fff;
+                   width:40px;
+                   height:40px;
+                   background:var(--gov-danger,#b42318);
+                   border:0;
+                   border-radius:50%;
+                   display:flex;
+                   align-items:center;
+                   justify-content:center;">
+        <i class="fas fa-times"></i>
+    </button>
+
+    <iframe id="pdfFrame"
+            title="عرض الشهادة"
+            style="width:min(92vw,1100px);
+                   height:min(80vh,760px);
+                   margin:6vh auto;
+                   display:block;
+                   border:none;
+                   border-radius:8px;
+                   background:#fff;">
+    </iframe>
+</div>
+
+@section Scripts {
+    <script>
+        const searchButton = document.getElementById("searchCertificate");
+        const numberInput = document.getElementById("CertificateNumber");
+        const message = document.getElementById("searchMessage");
+        const results = document.getElementById("certificateResults");
+        const certificateTitle = document.getElementById("certificateTitle");
+        const openCertificate = document.getElementById("openCertificate");
+        const modal = document.getElementById("pdfModal");
+        const frame = document.getElementById("pdfFrame");
+        const closeButton = document.getElementById("closeModal");
+
+        searchButton.addEventListener("click", async function () {
+            const number = numberInput.value.trim();
+
+            message.textContent = "";
+            results.style.display = "none";
+            openCertificate.removeAttribute("data-pdf");
+
+            if (!number) {
+                message.textContent = "أدخلي رقم الشهادة.";
+                return;
+            }
+
+            searchButton.disabled = true;
+            message.textContent = "جارٍ البحث...";
+
+            try {
+                const searchUrl =
+                    '@Url.Action("GetCertificate", "PhytosanitaryCertificate")'
+                    + "?number=" + encodeURIComponent(number);
+
+                const response = await fetch(searchUrl);
+                const data = await response.json();
+
+                if (!response.ok || !data.success || !data.certificateFile) {
+                    message.textContent =
+                        data.message || "لم يتم العثور على الشهادة.";
+                    return;
+                }
+
+                certificateTitle.textContent =
+                    "شهادة رقم " + (data.certificateNumber || number);
+
+                openCertificate.setAttribute("data-pdf", data.certificateFile);
+                results.style.display = "block";
+                message.textContent = "تم العثور على الشهادة.";
+            } catch {
+                message.textContent = "حدث خطأ أثناء البحث عن الشهادة.";
+            } finally {
+                searchButton.disabled = false;
+            }
+        });
+
+        openCertificate.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const pdfUrl = this.getAttribute("data-pdf");
+            if (!pdfUrl) return;
+
+            frame.src = pdfUrl;
+            modal.style.display = "flex";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+            frame.src = "";
+        });
+
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                frame.src = "";
+            }
+        });
+
+        numberInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                searchButton.click();
+            }
+        });
+    </script>
 }
