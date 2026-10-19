@@ -2,673 +2,561 @@
     ViewData["Title"] = "البحث عن شهادات الدولة";
 }
 
-<link rel="stylesheet"
-      href="~/css/agriculture-law-page.css"
-      asp-append-version="true" />
-
 <style>
-    #certificateSearchPage {
-        background: #f5f1e8;
-        color: #243b35;
+    :root {
+        --capq-green: #087a4b;
+        --capq-green-light: #0a9a60;
+        --capq-dark: #075b3e;
+        --capq-text: #173b34;
     }
 
-        #certificateSearchPage > div > div {
-            border: 1px solid #e5dccb;
-            border-radius: 20px;
-            background: #fffefa;
-            box-shadow: 0 16px 40px rgba(53, 67, 55, 0.09);
-        }
-
-        #certificateSearchPage h1 {
-            margin-top: 0.35rem;
-            color: #24483d;
-            line-height: 1.4;
-        }
-
-        #certificateSearchPage label {
-            color: #344b40;
-        }
-
-        #certificateSearchPage input {
-            min-height: 50px;
-            border: 1px solid #d9d1c3;
-            border-radius: 10px;
-            background: #fff;
-            color: #263b34;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-            #certificateSearchPage input:focus {
-                border-color: #bd9654;
-                box-shadow: 0 0 0 3px rgba(189, 150, 84, 0.18);
-            }
-
-    #searchCertificate {
-        min-width: 125px;
-        border: 0;
-        border-radius: 10px;
-        background: #245344;
-        color: #fff !important;
-        box-shadow: 0 5px 12px rgba(36, 83, 68, 0.18);
+    .verification-page,
+    .verification-page * {
+        box-sizing: border-box;
     }
 
-        #searchCertificate:hover {
-            background: #193f33;
-            opacity: 1;
-        }
-
-        #searchCertificate:disabled {
-            cursor: wait;
-            opacity: 0.65;
-        }
-
-    #searchMessage {
-        min-height: 1.5rem;
-        color: #53645b;
-    }
-
-    #certificateSearchPage .law-card {
+    .verification-page {
+        direction: rtl;
+        max-width: 1536px;
+        margin: 0 auto;
         overflow: hidden;
-        border: 1px solid #e7dfd1;
-        border-radius: 16px;
-        background: #fffefa;
-        box-shadow: 0 8px 22px rgba(53, 67, 55, 0.08);
-        transition: transform 0.2s, box-shadow 0.2s;
+        color: var(--capq-text);
+        font-family: Tahoma, Arial, sans-serif;
+        background: linear-gradient(180deg, #f5fbfa 0%, #eef8f6 100%);
     }
 
-        #certificateSearchPage .law-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 28px rgba(53, 67, 55, 0.14);
-        }
-
-    #certificateSearchPage .law-cover {
-        min-height: 145px;
+    .verification-header {
+        position: relative;
+        min-height: 215px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #edf2ec, #f6efe1);
+        overflow: hidden;
+        background: #fff;
+        border-bottom: 1px solid #dceae6;
     }
 
-    #certificateSearchPage .law-file-badge {
-        color: #a77b37;
-        font-size: 2.6rem;
+    .verification-header-art {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 54%;
+        background-image: url('@Url.Content("~/img/capq-header.jpg")');
+        background-size: cover;
+        background-position: left center;
     }
 
-    #certificateSearchPage .law-card-body h3 {
-        color: #24483d;
-        font-size: 1.1rem;
+        .verification-header-art::after {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 15%;
+            width: 180px;
+            height: 270px;
+            background: linear-gradient(135deg, transparent 42%, #0c8756 43%, #0c8756 51%, transparent 52%);
+            opacity: .8;
+        }
+
+    .verification-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        width: 75%;
+        padding: 24px 38px;
+    }
+
+    .verification-logo {
+        flex: 0 0 132px;
+        width: 132px;
+        height: 132px;
+        border: 4px solid #d6eadf;
+        border-radius: 50%;
+        object-fit: contain;
+        background: #fff;
+        box-shadow: inset 0 0 0 7px #fff;
+    }
+
+    .verification-brand h1 {
+        margin: 0 0 8px;
+        color: var(--capq-dark);
+        font-size: clamp(23px, 3vw, 36px);
+        font-weight: 800;
+    }
+
+    .verification-brand .english-title {
+        color: #145b47;
+        direction: ltr;
+        text-align: right;
+        font-size: 18px;
+    }
+
+    .verification-brand .tagline {
+        margin-top: 12px;
+        color: #33554d;
+        font-size: 16px;
+    }
+
+    .verification-main {
+        padding: 36px 32px 26px;
+    }
+
+    .verification-hero {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) minmax(360px, 1.45fr) 250px;
+        align-items: center;
+        gap: 26px;
+        min-height: 460px;
+        padding: 28px;
+        border: 1px solid #e0eee9;
+        border-radius: 18px;
+        background: rgba(255,255,255,.88);
+        box-shadow: 0 7px 25px rgba(30,90,70,.08);
+    }
+
+    .certificate-illustration {
+        position: relative;
+        min-height: 390px;
+        overflow: hidden;
+        border: 1px solid #dcece3;
+        border-radius: 14px;
+        background: #eaf7ef;
+    }
+
+        .certificate-illustration img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .certificate-seal {
+        position: absolute;
+        right: 14px;
+        bottom: 20px;
+        width: 92px;
+        height: 105px;
+        display: grid;
+        place-items: center;
+        clip-path: polygon(50% 0, 90% 15%, 88% 65%, 50% 100%, 12% 65%, 10% 15%);
+        color: #fff;
+        background: linear-gradient(145deg, #0ba566, #07824f);
+        font-size: 56px;
+        font-weight: 800;
+        filter: drop-shadow(0 8px 12px rgba(0,90,55,.2));
+    }
+
+    .verification-center h2 {
+        margin: 0;
+        color: var(--capq-dark);
+        font-size: clamp(28px, 3.3vw, 39px);
+        line-height: 1.35;
+    }
+
+    .verification-intro {
+        margin: 16px 0 24px;
+        color: #244940;
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .verification-form {
+        padding: 24px;
+        border: 1px solid #e2eee9;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 4px 15px rgba(30,90,70,.07);
+    }
+
+        .verification-form label {
+            display: block;
+            margin-bottom: 9px;
+            color: #244940;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .verification-form input {
+            width: 100%;
+            height: 52px;
+            margin-bottom: 16px;
+            padding: 0 14px;
+            border: 1px solid #cdded9;
+            border-radius: 9px;
+            outline: none;
+            color: var(--capq-text);
+            background: #fff;
+            direction: rtl;
+            text-align: right;
+            font-size: 16px;
+        }
+
+            .verification-form input:focus {
+                border-color: var(--capq-green-light);
+                box-shadow: 0 0 0 3px rgba(10,154,96,.12);
+            }
+
+    #searchButton {
+        width: 100%;
+        min-height: 56px;
+        margin-top: 4px;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 9px;
+        color: #fff !important;
+        background: linear-gradient(90deg, #078451, #0aa062);
+        font-size: 19px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+        #searchButton:hover {
+            filter: brightness(1.06);
+        }
+
+    .verification-error {
+        margin-bottom: 16px;
+        padding: 12px 14px;
+        border: 1px solid #efc7c7;
+        border-radius: 9px;
+        color: #9b3030;
+        background: #fff1f1;
+        font-size: 14px;
         line-height: 1.7;
     }
 
-    #certificateSearchPage .law-meta {
-        color: #68766e;
+    .verification-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
-    #certificateSearchPage .certificate-date {
-        margin-top: 8px;
-        color: #68766e;
-        font-size: 0.9rem;
-    }
-
-    #certificateSearchPage .law-view {
-        display: inline-flex;
+    .verification-benefit {
+        display: flex;
         align-items: center;
-        gap: 8px;
-        margin-top: 12px;
-        border-radius: 9px;
-        background: #245344;
+        gap: 12px;
+        min-height: 82px;
+        padding: 14px;
+        border: 1px solid #e0efe9;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #f0faf6, #e8f7f1);
+    }
+
+    .verification-benefit-icon {
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--capq-green);
+        border-radius: 50%;
+        color: var(--capq-green);
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .verification-benefit strong {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .verification-steps {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr 1fr;
+        gap: 18px;
+        align-items: center;
+        margin-top: 24px;
+        padding: 20px;
+        border: 1px solid #dfeee9;
+        border-radius: 16px;
+        background: rgba(255,255,255,.82);
+    }
+
+    .verification-qr {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-left: 18px;
+        border-left: 1px solid #d6e6e0;
+    }
+
+        .verification-qr img {
+            flex: 0 0 90px;
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+        }
+
+        .verification-qr span {
+            color: #45645a;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+    .verification-step {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .verification-step-number {
+        width: 36px;
+        height: 36px;
+        display: inline-grid;
+        place-items: center;
+        margin-bottom: 8px;
+        border-radius: 50%;
         color: #fff;
-        padding: 10px 16px;
-        text-decoration: none;
-        transition: background 0.2s;
+        background: var(--capq-green);
+        font-weight: 800;
     }
 
-        #certificateSearchPage .law-view:hover {
-            background: #193f33;
-            color: #fff;
-        }
-
-    #certificatePager button {
-        min-height: 40px;
-        border: 1px solid #d9d1c3;
-        border-radius: 9px;
-        background: #fffefa;
-        color: #245344;
-        transition: background 0.2s, color 0.2s;
+    .verification-step strong {
+        display: block;
+        font-size: 15px;
+        line-height: 1.7;
     }
 
-        #certificatePager button:not(:disabled):hover {
-            border-color: #245344;
-            background: #245344;
-            color: #fff;
-        }
-
-        #certificatePager button:disabled {
-            cursor: not-allowed;
-            opacity: 0.45;
-        }
-
-    #pageInfo {
-        color: #53645b;
-        font-weight: 600;
+    .verification-footer {
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 36px;
+        color: #fff;
+        background: #005a3e;
+        font-size: 15px;
     }
 
-    #goToPage {
-        min-height: 40px;
-        border: 1px solid #d9d1c3;
-        border-radius: 9px;
-        background: #fff;
-        color: #263b34;
-    }
-
-    @@media (max-width: 640px) {
-        #certificateSearchPage > div > div {
-            padding: 1.25rem;
+        .verification-footer .site-url {
+            direction: ltr;
         }
 
-        #certificatePager {
+    @@media (max-width: 1100px) {
+        .verification-header-content {
+            width: 85%;
+        }
+
+        .verification-hero {
+            grid-template-columns: minmax(200px, .8fr) minmax(340px, 1.4fr);
+        }
+
+        .verification-benefits {
+            grid-column: 1 / -1;
+            flex-direction: row;
+        }
+
+        .verification-benefit {
+            flex: 1;
+        }
+
+        .verification-steps {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .verification-qr {
+            grid-column: 1 / -1;
             justify-content: center;
+            padding: 0 0 16px;
+            border: 0;
+            border-bottom: 1px solid #d6e6e0;
+        }
+    }
+
+    @@media (max-width: 720px) {
+        .verification-header {
+            min-height: 190px;
         }
 
-        #pageInfo {
+        .verification-header-art {
             width: 100%;
+            opacity: .5;
+        }
+
+        .verification-header-content {
+            width: 100%;
+            justify-content: center;
+            padding: 20px 14px;
+            text-align: center;
+        }
+
+        .verification-logo {
+            flex-basis: 82px;
+            width: 82px;
+            height: 82px;
+        }
+
+        .verification-brand .english-title,
+        .verification-brand .tagline {
+            font-size: 13px;
+        }
+
+        .verification-main {
+            padding: 16px 12px;
+        }
+
+        .verification-hero {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 16px;
+        }
+
+        .certificate-illustration {
+            min-height: 280px;
+        }
+
+        .verification-center h2 {
+            font-size: 28px;
+        }
+
+        .verification-intro {
+            font-size: 16px;
+        }
+
+        .verification-benefits {
+            flex-direction: column;
+        }
+
+        .verification-steps {
+            grid-template-columns: 1fr;
+        }
+
+        .verification-qr {
+            justify-content: center;
+            padding: 0 0 16px;
+            border: 0;
+            border-bottom: 1px solid #d6e6e0;
+        }
+
+        .verification-footer {
+            flex-direction: column;
+            justify-content: center;
+            gap: 7px;
             text-align: center;
         }
     }
 </style>
 
-<section id="certificateSearchPage"
-         dir="rtl"
-         class="min-h-[60vh] beigecolor py-16">
+<div class="verification-page">
+    <header class="verification-header">
+        <div class="verification-header-art"></div>
 
-    <div class="mx-auto max-w-5xl px-6">
-        <div class="rounded-xl border border-border bg-card p-8 shadow-elegant">
+        <div class="verification-header-content">
+            <img class="verification-logo"
+                 src="@Url.Content("~/img/capq-logo.jpg")"
+                 alt="شعار الإدارة المركزية للحجر الزراعي" />
 
-            <div class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
-                الخدمات الإلكترونية
-            </div>
-
-            <h1 class="font-display text-3xl font-bold">
-                البحث عن شهادات الدولة
-            </h1>
-
-            <div class="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
-                <div>
-                    <label for="UserName"
-                           class="mb-2 block text-sm font-semibold">
-                        اسم المستخدم
-                    </label>
-
-                    <input type="text"
-                           id="UserName"
-                           autocomplete="username"
-                           class="w-full rounded-md px-4 py-3 outline-none transition"
-                           placeholder="أدخلي اسم المستخدم" />
+            <div class="verification-brand">
+                <h1>الإدارة المركزية للحجر الزراعي</h1>
+                <div class="english-title">
+                    Central Administration of Plant Quarantine
                 </div>
-
-                <div>
-                    <label for="Password"
-                           class="mb-2 block text-sm font-semibold">
-                        كلمة مرور الدولة
-                    </label>
-
-                    <input type="password"
-                           id="Password"
-                           autocomplete="current-password"
-                           class="w-full rounded-md px-4 py-3 outline-none transition"
-                           placeholder="أدخلي كلمة المرور" />
-                </div>
-
-                <div>
-                    <label for="DateFrom"
-                           class="mb-2 block text-sm font-semibold">
-                        تاريخ الشهادة من
-                    </label>
-
-                    <input type="date"
-                           id="DateFrom"
-                           class="w-full px-4 py-3 outline-none transition" />
-                </div>
-
-                <div>
-                    <label for="DateTo"
-                           class="mb-2 block text-sm font-semibold">
-                        تاريخ الشهادة إلى
-                    </label>
-
-                    <input type="date"
-                           id="DateTo"
-                           class="w-full px-4 py-3 outline-none transition" />
+                <div class="tagline">
+                    من أجل زراعة آمنة .. لمستقبل أفضل
                 </div>
             </div>
-
-            <button type="button"
-                    id="searchCertificate"
-                    class="mt-5 px-6 py-3 font-semibold transition">
-                بحث
-            </button>
-
-            <p id="searchMessage"
-               class="mt-4 text-sm"
-               role="status"></p>
-
-            <div id="certificateResults"
-                 class="law-page"
-                 style="display:none; margin-top:48px;">
-
-                <div class="law-content law-container"
-                     style="max-width:100%; padding:0;">
-
-                    <div id="certificatesGrid"
-                         class="law-grid"
-                         style="grid-template-columns:repeat(auto-fit, minmax(280px, 360px)); justify-content:start;">
-                    </div>
-
-                    <div id="certificatePager"
-                         class="mt-6 flex flex-wrap items-center gap-3"
-                         style="display:none;">
-
-                        <button type="button" id="firstPage" class="px-4 py-2">
-                            الأولى
-                        </button>
-
-                        <button type="button" id="previousPage" class="px-4 py-2">
-                            السابق
-                        </button>
-
-                        <span id="pageInfo" class="text-sm"></span>
-
-                        <label for="goToPage" class="text-sm">
-                            الانتقال إلى:
-                        </label>
-
-                        <input type="number"
-                               id="goToPage"
-                               min="1"
-                               class="w-20 px-3 py-2"
-                               aria-label="رقم الصفحة" />
-
-                        <button type="button"
-                                id="goToPageButton"
-                                class="px-4 py-2">
-                            اذهب
-                        </button>
-
-                        <button type="button" id="nextPage" class="px-4 py-2">
-                            التالي
-                        </button>
-
-                        <button type="button" id="lastPage" class="px-4 py-2">
-                            الأخيرة
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
-    </div>
-</section>
+    </header>
 
-<div id="pdfModal"
-     style="display:none;
-            position:fixed;
-            inset:0;
-            width:100%;
-            height:100%;
-            background:rgba(0,0,0,0.85);
-            z-index:9999;
-            align-items:center;
-            justify-content:center;">
+    <main class="verification-main">
+        <section class="verification-hero">
+            <div class="certificate-illustration">
+                <img src="@Url.Content("~/img/capq-certificate.jpg")"
+                     alt="نموذج شهادة زراعية" />
+                <div class="certificate-seal" aria-hidden="true">✓</div>
+            </div>
 
-    <button type="button"
-            id="closeModal"
-            aria-label="إغلاق"
-            style="position:absolute;
-                   top:16px;
-                   left:20px;
-                   cursor:pointer;
-                   color:#fff;
-                   width:40px;
-                   height:40px;
-                   background:#a83a32;
-                   border:0;
-                   border-radius:50%;
-                   display:flex;
-                   align-items:center;
-                   justify-content:center;">
-        <i class="fas fa-times"></i>
-    </button>
+            <div class="verification-center">
+                <h2>البحث عن شهادات الدولة</h2>
+                <p class="verification-intro">
+                    أدخلي بيانات الدولة لعرض شهاداتها.
+                </p>
 
-    <iframe id="pdfFrame"
-            title="عرض الشهادة"
-            style="width:min(92vw,1100px);
-                   height:min(80vh,760px);
-                   margin:6vh auto;
-                   display:block;
-                   border:none;
-                   border-radius:8px;
-                   background:#fff;">
-    </iframe>
+                <div class="verification-form">
+                    <form asp-controller="PhytosanitaryCertificateCountry"
+                          asp-action="SearchResults"
+                          method="post">
+
+                        <label for="UserName">اسم المستخدم</label>
+                        <input id="UserName"
+                               name="userName"
+                               type="text"
+                               autocomplete="username"
+                               required
+                               placeholder="أدخلي اسم المستخدم" />
+
+                        <label for="Password">كلمة مرور الدولة</label>
+                        <input id="Password"
+                               name="password"
+                               type="password"
+                               autocomplete="current-password"
+                               required
+                               placeholder="أدخلي كلمة المرور" />
+
+                        @if (TempData["SearchError"] != null)
+                        {
+                            <div class="verification-error" role="alert">
+                                @TempData["SearchError"]
+                            </div>
+                        }
+
+                        <button type="submit" id="searchButton">
+                            بحث عن الشهادات
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <aside class="verification-benefits">
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">✓</div>
+                    <strong>التأكد من صحة<br>الشهادة الزراعية</strong>
+                </div>
+
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">♢</div>
+                    <strong>دعم سلامة المحاصيل<br>والبيئة</strong>
+                </div>
+
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">◎</div>
+                    <strong>تسهيل حركة التجارة<br>الزراعية</strong>
+                </div>
+
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">◒</div>
+                    <strong>خدمة إلكترونية<br>لراحة المتعاملين</strong>
+                </div>
+            </aside>
+        </section>
+
+        <section class="verification-steps">
+            <div class="verification-qr">
+                <img src="@Url.Content("~/img/capq-verification-qr.jpg")"
+                     alt="رمز الاستجابة السريعة" />
+                <span>
+                    يمكنكِ مسح رمز الاستجابة السريعة للاطلاع على دليل استخدام الخدمة
+                </span>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">1</span>
+                <strong>أدخلي اسم المستخدم</strong>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">2</span>
+                <strong>أدخلي كلمة مرور الدولة</strong>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">3</span>
+                <strong>اضغطي بحث لعرض الشهادات</strong>
+            </div>
+        </section>
+    </main>
+
+    <footer class="verification-footer">
+        <div class="site-url">www.capq.gov.eg</div>
+        <div>الإدارة المركزية للحجر الزراعي</div>
+    </footer>
 </div>
-
-@section Scripts {
-    <script>
-        const searchButton = document.getElementById("searchCertificate");
-        const userNameInput = document.getElementById("UserName");
-        const passwordInput = document.getElementById("Password");
-        const dateFromInput = document.getElementById("DateFrom");
-        const dateToInput = document.getElementById("DateTo");
-        const message = document.getElementById("searchMessage");
-
-        const results = document.getElementById("certificateResults");
-        const certificatesGrid = document.getElementById("certificatesGrid");
-        const pager = document.getElementById("certificatePager");
-        const pageInfo = document.getElementById("pageInfo");
-
-        const firstButton = document.getElementById("firstPage");
-        const previousButton = document.getElementById("previousPage");
-        const nextButton = document.getElementById("nextPage");
-        const lastButton = document.getElementById("lastPage");
-        const goToPageInput = document.getElementById("goToPage");
-        const goToPageButton = document.getElementById("goToPageButton");
-
-        const modal = document.getElementById("pdfModal");
-        const frame = document.getElementById("pdfFrame");
-        const closeButton = document.getElementById("closeModal");
-
-        const searchUrl =
-            '@Url.Action("GetCertificatesByCountry", "PhytosanitaryCertificateCountry")';
-
-        let currentPage = 1;
-        let totalPages = 0;
-
-        function formatCertificateDate(dateValue) {
-            if (!dateValue) {
-                return "تاريخ الشهادة غير متاح";
-            }
-
-            const parts = dateValue.split("-").map(Number);
-
-            if (parts.length !== 3 || parts.some(Number.isNaN)) {
-                return "تاريخ الشهادة غير متاح";
-            }
-
-            const date = new Date(parts[0], parts[1] - 1, parts[2]);
-
-            return new Intl.DateTimeFormat("ar-EG", {
-                day: "numeric",
-                month: "long",
-                year: "numeric"
-            }).format(date);
-        }
-
-        function createCertificateCard(certificate) {
-            const article = document.createElement("article");
-            article.className = "law-card";
-
-            const cover = document.createElement("div");
-            cover.className = "law-cover";
-
-            const badge = document.createElement("span");
-            badge.className = "law-file-badge";
-
-            const pdfIcon = document.createElement("i");
-            pdfIcon.className = "far fa-file-pdf";
-            pdfIcon.setAttribute("aria-hidden", "true");
-
-            badge.appendChild(pdfIcon);
-            cover.appendChild(badge);
-
-            const body = document.createElement("div");
-            body.className = "law-card-body";
-
-            const title = document.createElement("h3");
-            title.textContent =
-                "شهادة رقم " + certificate.certificateNumber;
-
-            const typeMeta = document.createElement("div");
-            typeMeta.className = "law-meta";
-
-            const fileIcon = document.createElement("i");
-            fileIcon.className = "far fa-file-alt";
-            fileIcon.setAttribute("aria-hidden", "true");
-
-            typeMeta.appendChild(fileIcon);
-            typeMeta.appendChild(
-                document.createTextNode(" شهادة صحية نباتية")
-            );
-
-            const dateMeta = document.createElement("div");
-            dateMeta.className = "certificate-date";
-
-            const calendarIcon = document.createElement("i");
-            calendarIcon.className = "far fa-calendar-alt";
-            calendarIcon.setAttribute("aria-hidden", "true");
-
-            dateMeta.appendChild(calendarIcon);
-            dateMeta.appendChild(
-                document.createTextNode(
-                    " تاريخ الشهادة: " +
-                    formatCertificateDate(certificate.certificateDate)
-                )
-            );
-
-            const openLink = document.createElement("a");
-            openLink.href = "#";
-            openLink.className = "law-view";
-            openLink.innerHTML =
-                '<i class="fas fa-eye" aria-hidden="true"></i> عرض الشهادة';
-
-            openLink.addEventListener("click", function (event) {
-                event.preventDefault();
-
-                if (!certificate.certificateFile) {
-                    return;
-                }
-
-                frame.src = certificate.certificateFile;
-                modal.style.display = "flex";
-            });
-
-            body.appendChild(title);
-            body.appendChild(typeMeta);
-            body.appendChild(dateMeta);
-            body.appendChild(openLink);
-
-            article.appendChild(cover);
-            article.appendChild(body);
-
-            return article;
-        }
-
-        async function loadCertificates(page) {
-            const userName = userNameInput.value.trim();
-            const password = passwordInput.value;
-            const dateFrom = dateFromInput.value;
-            const dateTo = dateToInput.value;
-
-            if (!userName || !password) {
-                message.textContent =
-                    "أدخلي اسم المستخدم وكلمة مرور الدولة.";
-                return;
-            }
-
-            if (dateFrom && dateTo && dateFrom > dateTo) {
-                message.textContent =
-                    "تاريخ البداية يجب أن يكون قبل تاريخ النهاية.";
-                return;
-            }
-
-            searchButton.disabled = true;
-            firstButton.disabled = true;
-            previousButton.disabled = true;
-            nextButton.disabled = true;
-            lastButton.disabled = true;
-            goToPageButton.disabled = true;
-
-            message.textContent = "جارٍ تحميل الشهادات...";
-
-            try {
-                const body = new URLSearchParams();
-                body.append("userName", userName);
-                body.append("password", password);
-                body.append("page", page);
-                body.append("pageSize", "12");
-
-                if (dateFrom) {
-                    body.append("dateFrom", dateFrom);
-                }
-
-                if (dateTo) {
-                    body.append("dateTo", dateTo);
-                }
-
-                const response = await fetch(searchUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: body.toString()
-                });
-
-                const data = await response.json();
-
-                if (!response.ok || !data.success) {
-                    certificatesGrid.replaceChildren();
-                    results.style.display = "none";
-                    pager.style.display = "none";
-
-                    message.textContent =
-                        data.message || "تعذر تحميل شهادات الدولة.";
-                    return;
-                }
-
-                if (!Array.isArray(data.certificates) ||
-                    data.certificates.length === 0) {
-                    certificatesGrid.replaceChildren();
-                    results.style.display = "none";
-                    pager.style.display = "none";
-
-                    message.textContent =
-                        "لا توجد شهادات مطابقة للتواريخ المحددة.";
-                    return;
-                }
-
-                certificatesGrid.replaceChildren();
-
-                data.certificates.forEach(function (certificate) {
-                    certificatesGrid.appendChild(
-                        createCertificateCard(certificate)
-                    );
-                });
-
-                currentPage = data.page;
-                totalPages = data.totalPages;
-
-                results.style.display = "block";
-                pager.style.display =
-                    totalPages > 1 ? "flex" : "none";
-
-                pageInfo.textContent =
-                    "صفحة " + currentPage +
-                    " من " + totalPages +
-                    " — إجمالي الشهادات: " + data.totalCount;
-
-                goToPageInput.min = 1;
-                goToPageInput.max = totalPages;
-                goToPageInput.value = currentPage;
-
-                firstButton.disabled = currentPage <= 1;
-                previousButton.disabled = currentPage <= 1;
-                nextButton.disabled = currentPage >= totalPages;
-                lastButton.disabled = currentPage >= totalPages;
-
-                message.textContent = "";
-            } catch (error) {
-                message.textContent =
-                    "حدث خطأ أثناء البحث. تحققي من الاتصال وحاولي مرة أخرى.";
-                console.error("Certificate search error:", error);
-            } finally {
-                searchButton.disabled = false;
-                goToPageButton.disabled = false;
-            }
-        }
-
-        searchButton.addEventListener("click", function () {
-            loadCertificates(1);
-        });
-
-        firstButton.addEventListener("click", function () {
-            if (currentPage > 1) {
-                loadCertificates(1);
-            }
-        });
-
-        previousButton.addEventListener("click", function () {
-            if (currentPage > 1) {
-                loadCertificates(currentPage - 1);
-            }
-        });
-
-        nextButton.addEventListener("click", function () {
-            if (currentPage < totalPages) {
-                loadCertificates(currentPage + 1);
-            }
-        });
-
-        lastButton.addEventListener("click", function () {
-            if (currentPage < totalPages) {
-                loadCertificates(totalPages);
-            }
-        });
-
-        function goToSelectedPage() {
-            const selectedPage =
-                Number.parseInt(goToPageInput.value, 10);
-
-            if (!Number.isInteger(selectedPage) ||
-                selectedPage < 1 ||
-                selectedPage > totalPages) {
-                message.textContent =
-                    "أدخلي رقم صفحة من 1 إلى " + totalPages + ".";
-                return;
-            }
-
-            loadCertificates(selectedPage);
-        }
-
-        goToPageButton.addEventListener("click", goToSelectedPage);
-
-        goToPageInput.addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                goToSelectedPage();
-            }
-        });
-
-        function searchOnEnter(event) {
-            if (event.key === "Enter") {
-                loadCertificates(1);
-            }
-        }
-
-        userNameInput.addEventListener("keydown", searchOnEnter);
-        passwordInput.addEventListener("keydown", searchOnEnter);
-        dateFromInput.addEventListener("keydown", searchOnEnter);
-        dateToInput.addEventListener("keydown", searchOnEnter);
-
-        function closePdfModal() {
-            modal.style.display = "none";
-            frame.src = "";
-        }
-
-        closeButton.addEventListener("click", closePdfModal);
-
-        modal.addEventListener("click", function (event) {
-            if (event.target === modal) {
-                closePdfModal();
-            }
-        });
-    </script>
-}
