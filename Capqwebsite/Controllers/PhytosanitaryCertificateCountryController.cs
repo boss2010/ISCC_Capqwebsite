@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 
 namespace Capqwebsite.Controllers
 {
@@ -23,6 +24,8 @@ namespace Capqwebsite.Controllers
         public async Task<IActionResult> GetCertificatesByCountry(
             string userName,
             string password,
+            DateTime? dateFrom,
+            DateTime? dateTo,
             int page = 1,
             int pageSize = 12)
         {
@@ -33,6 +36,17 @@ namespace Capqwebsite.Controllers
                 {
                     success = false,
                     message = "أدخلي اسم المستخدم وكلمة مرور الدولة."
+                });
+            }
+
+            if (dateFrom.HasValue &&
+                dateTo.HasValue &&
+                dateFrom.Value.Date > dateTo.Value.Date)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "تاريخ البداية يجب أن يكون قبل تاريخ النهاية."
                 });
             }
 
@@ -75,10 +89,11 @@ namespace Capqwebsite.Controllers
                         .Add("@password", SqlDbType.NVarChar, 256)
                         .Value = password;
 
-                    var result =
+                    var credentialResult =
                         await credentialCommand.ExecuteScalarAsync();
 
-                    if (result == null || result == DBNull.Value)
+                    if (credentialResult == null ||
+                        credentialResult == DBNull.Value)
                     {
                         return Unauthorized(new
                         {
@@ -87,7 +102,7 @@ namespace Capqwebsite.Controllers
                         });
                     }
 
-                    countryId = Convert.ToInt32(result);
+                    countryId = Convert.ToInt32(credentialResult);
                 }
 
                 int totalCount;
@@ -95,12 +110,28 @@ namespace Capqwebsite.Controllers
                 await using (var countCommand = new SqlCommand(@"
                     SELECT COUNT(*)
                     FROM dbo.CertificateFile
-                    WHERE CountryId = @countryId;",
+                    WHERE CountryId = @countryId
+                      AND (@dateFrom IS NULL
+                           OR User_Creation_Date >= @dateFrom)
+                      AND (@dateTo IS NULL
+                           OR User_Creation_Date < DATEADD(DAY, 1, @dateTo));",
                     connection))
                 {
                     countCommand.Parameters
                         .Add("@countryId", SqlDbType.Int)
                         .Value = countryId;
+
+                    countCommand.Parameters
+                        .Add("@dateFrom", SqlDbType.Date)
+                        .Value = dateFrom.HasValue
+                            ? dateFrom.Value.Date
+                            : DBNull.Value;
+
+                    countCommand.Parameters
+                        .Add("@dateTo", SqlDbType.Date)
+                        .Value = dateTo.HasValue
+                            ? dateTo.Value.Date
+                            : DBNull.Value;
 
                     totalCount = Convert.ToInt32(
                         await countCommand.ExecuteScalarAsync());
@@ -116,9 +147,13 @@ namespace Capqwebsite.Controllers
                 var certificates = new List<object>();
 
                 await using (var certificatesCommand = new SqlCommand(@"
-                    SELECT Id, CertificateNumber
+                    SELECT Id, CertificateNumber, User_Creation_Date
                     FROM dbo.CertificateFile
                     WHERE CountryId = @countryId
+                      AND (@dateFrom IS NULL
+                           OR User_Creation_Date >= @dateFrom)
+                      AND (@dateTo IS NULL
+                           OR User_Creation_Date < DATEADD(DAY, 1, @dateTo))
                     ORDER BY Id DESC
                     OFFSET @offset ROWS
                     FETCH NEXT @pageSize ROWS ONLY;",
@@ -127,6 +162,18 @@ namespace Capqwebsite.Controllers
                     certificatesCommand.Parameters
                         .Add("@countryId", SqlDbType.Int)
                         .Value = countryId;
+
+                    certificatesCommand.Parameters
+                        .Add("@dateFrom", SqlDbType.Date)
+                        .Value = dateFrom.HasValue
+                            ? dateFrom.Value.Date
+                            : DBNull.Value;
+
+                    certificatesCommand.Parameters
+                        .Add("@dateTo", SqlDbType.Date)
+                        .Value = dateTo.HasValue
+                            ? dateTo.Value.Date
+                            : DBNull.Value;
 
                     certificatesCommand.Parameters
                         .Add("@offset", SqlDbType.Int)
@@ -147,9 +194,23 @@ namespace Capqwebsite.Controllers
                         if (string.IsNullOrWhiteSpace(certificateNumber))
                             continue;
 
+                        string certificateDate = null;
+
+                        if (reader["User_Creation_Date"] != DBNull.Value)
+                        {
+                            var creationDate =
+                                Convert.ToDateTime(reader["User_Creation_Date"]);
+
+                            certificateDate =
+                                creationDate.ToString(
+                                    "yyyy-MM-dd",
+                                    CultureInfo.InvariantCulture);
+                        }
+
                         certificates.Add(new
                         {
                             certificateNumber,
+                            certificateDate,
                             certificateFile = Url.Action(
                                 nameof(OpenCertificate),
                                 "PhytosanitaryCertificateCountry",
@@ -219,8 +280,6 @@ namespace Capqwebsite.Controllers
                         return NotFound("مسار ملف الشهادة فارغ.");
                 }
 
-                // المسار المخزن مثل:
-                // plant/CertifactionNew/2022/5/file.pdf
                 var relativePath = storedPath
                     .Replace('/', Path.DirectorySeparatorChar)
                     .Replace('\\', Path.DirectorySeparatorChar)

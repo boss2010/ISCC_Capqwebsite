@@ -104,6 +104,12 @@
         color: #68766e;
     }
 
+    #certificateSearchPage .certificate-date {
+        margin-top: 8px;
+        color: #68766e;
+        font-size: 0.9rem;
+    }
+
     #certificateSearchPage .law-view {
         display: inline-flex;
         align-items: center;
@@ -156,21 +162,18 @@
     }
 
     @@media (max-width: 640px) {
-        #certificateSearchPage > div > div
+        #certificateSearchPage > div > div {
+            padding: 1.25rem;
+        }
 
-    {
-        padding: 1.25rem;
-    }
+        #certificatePager {
+            justify-content: center;
+        }
 
-    #certificatePager {
-        justify-content: center;
-    }
-
-    #pageInfo {
-        width: 100%;
-        text-align: center;
-    }
-
+        #pageInfo {
+            width: 100%;
+            text-align: center;
+        }
     }
 </style>
 
@@ -199,7 +202,7 @@
                     <input type="text"
                            id="UserName"
                            autocomplete="username"
-                           class="w-full rounded-md border px-4 py-3 outline-none transition"
+                           class="w-full rounded-md px-4 py-3 outline-none transition"
                            placeholder="أدخلي اسم المستخدم" />
                 </div>
 
@@ -212,8 +215,30 @@
                     <input type="password"
                            id="Password"
                            autocomplete="current-password"
-                           class="w-full rounded-md border px-4 py-3 outline-none transition"
+                           class="w-full rounded-md px-4 py-3 outline-none transition"
                            placeholder="أدخلي كلمة المرور" />
+                </div>
+
+                <div>
+                    <label for="DateFrom"
+                           class="mb-2 block text-sm font-semibold">
+                        تاريخ الشهادة من
+                    </label>
+
+                    <input type="date"
+                           id="DateFrom"
+                           class="w-full px-4 py-3 outline-none transition" />
+                </div>
+
+                <div>
+                    <label for="DateTo"
+                           class="mb-2 block text-sm font-semibold">
+                        تاريخ الشهادة إلى
+                    </label>
+
+                    <input type="date"
+                           id="DateTo"
+                           class="w-full px-4 py-3 outline-none transition" />
                 </div>
             </div>
 
@@ -243,15 +268,11 @@
                          class="mt-6 flex flex-wrap items-center gap-3"
                          style="display:none;">
 
-                        <button type="button"
-                                id="firstPage"
-                                class="px-4 py-2">
+                        <button type="button" id="firstPage" class="px-4 py-2">
                             الأولى
                         </button>
 
-                        <button type="button"
-                                id="previousPage"
-                                class="px-4 py-2">
+                        <button type="button" id="previousPage" class="px-4 py-2">
                             السابق
                         </button>
 
@@ -273,15 +294,11 @@
                             اذهب
                         </button>
 
-                        <button type="button"
-                                id="nextPage"
-                                class="px-4 py-2">
+                        <button type="button" id="nextPage" class="px-4 py-2">
                             التالي
                         </button>
 
-                        <button type="button"
-                                id="lastPage"
-                                class="px-4 py-2">
+                        <button type="button" id="lastPage" class="px-4 py-2">
                             الأخيرة
                         </button>
                     </div>
@@ -340,6 +357,8 @@
         const searchButton = document.getElementById("searchCertificate");
         const userNameInput = document.getElementById("UserName");
         const passwordInput = document.getElementById("Password");
+        const dateFromInput = document.getElementById("DateFrom");
+        const dateToInput = document.getElementById("DateTo");
         const message = document.getElementById("searchMessage");
 
         const results = document.getElementById("certificateResults");
@@ -363,6 +382,26 @@
 
         let currentPage = 1;
         let totalPages = 0;
+
+        function formatCertificateDate(dateValue) {
+            if (!dateValue) {
+                return "تاريخ الشهادة غير متاح";
+            }
+
+            const parts = dateValue.split("-").map(Number);
+
+            if (parts.length !== 3 || parts.some(Number.isNaN)) {
+                return "تاريخ الشهادة غير متاح";
+            }
+
+            const date = new Date(parts[0], parts[1] - 1, parts[2]);
+
+            return new Intl.DateTimeFormat("ar-EG", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }).format(date);
+        }
 
         function createCertificateCard(certificate) {
             const article = document.createElement("article");
@@ -388,16 +427,31 @@
             title.textContent =
                 "شهادة رقم " + certificate.certificateNumber;
 
-            const meta = document.createElement("div");
-            meta.className = "law-meta";
+            const typeMeta = document.createElement("div");
+            typeMeta.className = "law-meta";
 
             const fileIcon = document.createElement("i");
             fileIcon.className = "far fa-file-alt";
             fileIcon.setAttribute("aria-hidden", "true");
 
-            meta.appendChild(fileIcon);
-            meta.appendChild(
+            typeMeta.appendChild(fileIcon);
+            typeMeta.appendChild(
                 document.createTextNode(" شهادة صحية نباتية")
+            );
+
+            const dateMeta = document.createElement("div");
+            dateMeta.className = "certificate-date";
+
+            const calendarIcon = document.createElement("i");
+            calendarIcon.className = "far fa-calendar-alt";
+            calendarIcon.setAttribute("aria-hidden", "true");
+
+            dateMeta.appendChild(calendarIcon);
+            dateMeta.appendChild(
+                document.createTextNode(
+                    " تاريخ الشهادة: " +
+                    formatCertificateDate(certificate.certificateDate)
+                )
             );
 
             const openLink = document.createElement("a");
@@ -418,7 +472,8 @@
             });
 
             body.appendChild(title);
-            body.appendChild(meta);
+            body.appendChild(typeMeta);
+            body.appendChild(dateMeta);
             body.appendChild(openLink);
 
             article.appendChild(cover);
@@ -430,10 +485,18 @@
         async function loadCertificates(page) {
             const userName = userNameInput.value.trim();
             const password = passwordInput.value;
+            const dateFrom = dateFromInput.value;
+            const dateTo = dateToInput.value;
 
             if (!userName || !password) {
                 message.textContent =
                     "أدخلي اسم المستخدم وكلمة مرور الدولة.";
+                return;
+            }
+
+            if (dateFrom && dateTo && dateFrom > dateTo) {
+                message.textContent =
+                    "تاريخ البداية يجب أن يكون قبل تاريخ النهاية.";
                 return;
             }
 
@@ -452,6 +515,14 @@
                 body.append("password", password);
                 body.append("page", page);
                 body.append("pageSize", "12");
+
+                if (dateFrom) {
+                    body.append("dateFrom", dateFrom);
+                }
+
+                if (dateTo) {
+                    body.append("dateTo", dateTo);
+                }
 
                 const response = await fetch(searchUrl, {
                     method: "POST",
@@ -481,7 +552,7 @@
                     pager.style.display = "none";
 
                     message.textContent =
-                        "لا توجد شهادات مسجلة لهذه الدولة.";
+                        "لا توجد شهادات مطابقة للتواريخ المحددة.";
                     return;
                 }
 
@@ -584,6 +655,8 @@
 
         userNameInput.addEventListener("keydown", searchOnEnter);
         passwordInput.addEventListener("keydown", searchOnEnter);
+        dateFromInput.addEventListener("keydown", searchOnEnter);
+        dateToInput.addEventListener("keydown", searchOnEnter);
 
         function closePdfModal() {
             modal.style.display = "none";

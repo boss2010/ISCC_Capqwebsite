@@ -1,159 +1,677 @@
 ﻿@{
-    ViewData["Title"] = "البحث عن شهادة";
+    ViewData["Title"] = "التحقق من الشهادة الزراعية";
 }
 
-<link rel="stylesheet"
-      href="~/css/agriculture-law-page.css"
-      asp-append-version="true" />
+<style>
+    :root {
+        --capq-green: #087a4b;
+        --capq-green-light: #0a9a60;
+        --capq-dark: #075b3e;
+        --capq-text: #173b34;
+    }
 
-<section dir="rtl" class="min-h-[60vh] beigecolor py-16">
-    <div class="mx-auto max-w-3xl px-6">
-        <div class="rounded-xl border border-border bg-card p-8 shadow-elegant">
+    .verification-page,
+    .verification-page * {
+        box-sizing: border-box;
+    }
 
-            <div class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-gold">
-                الخدمات الإلكترونية
+    .verification-page {
+        direction: rtl;
+        max-width: 1536px;
+        margin: 0 auto;
+        overflow: hidden;
+        color: var(--capq-text);
+        font-family: Tahoma, Arial, sans-serif;
+        background: linear-gradient(180deg, #f5fbfa 0%, #eef8f6 100%);
+    }
+
+    .verification-header {
+        position: relative;
+        min-height: 215px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: #fff;
+        border-bottom: 1px solid #dceae6;
+    }
+
+    .verification-header-art {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 54%;
+        background-image: url('@Url.Content("~/img/capq-header.jpg")');
+        background-size: cover;
+        background-position: left center;
+    }
+
+        .verification-header-art::after {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 15%;
+            width: 180px;
+            height: 270px;
+            background: linear-gradient( 135deg, transparent 42%, #0c8756 43%, #0c8756 51%, transparent 52% );
+            opacity: .8;
+        }
+
+    .verification-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        width: 75%;
+        padding: 24px 38px;
+    }
+
+    .verification-logo {
+        flex: 0 0 132px;
+        width: 132px;
+        height: 132px;
+        border: 4px solid #d6eadf;
+        border-radius: 50%;
+        object-fit: contain;
+        background: #fff;
+        box-shadow: inset 0 0 0 7px #fff;
+    }
+
+    .verification-brand h1 {
+        margin: 0 0 8px;
+        color: var(--capq-dark);
+        font-size: clamp(23px, 3vw, 36px);
+        font-weight: 800;
+    }
+
+    .verification-brand .english-title {
+        color: #145b47;
+        direction: ltr;
+        text-align: right;
+        font-size: 18px;
+    }
+
+    .verification-brand .tagline {
+        margin-top: 12px;
+        color: #33554d;
+        font-size: 16px;
+    }
+
+    .verification-main {
+        padding: 36px 32px 26px;
+    }
+
+    .verification-hero {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) minmax(360px, 1.45fr) 250px;
+        align-items: center;
+        gap: 26px;
+        min-height: 460px;
+        padding: 28px;
+        border: 1px solid #e0eee9;
+        border-radius: 18px;
+        background: rgba(255,255,255,.88);
+        box-shadow: 0 7px 25px rgba(30,90,70,.08);
+    }
+
+    .certificate-illustration {
+        position: relative;
+        min-height: 390px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border: 1px solid #dcece3;
+        border-radius: 14px;
+        background: #eaf7ef;
+    }
+
+        .certificate-illustration img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .certificate-seal {
+        position: absolute;
+        right: 14px;
+        bottom: 20px;
+        width: 92px;
+        height: 105px;
+        display: grid;
+        place-items: center;
+        clip-path: polygon(50% 0, 90% 15%, 88% 65%, 50% 100%, 12% 65%, 10% 15%);
+        color: #fff;
+        background: linear-gradient(145deg, #0ba566, #07824f);
+        font-size: 56px;
+        font-weight: 800;
+        filter: drop-shadow(0 8px 12px rgba(0,90,55,.2));
+    }
+
+    .verification-center h2 {
+        margin: 0;
+        color: var(--capq-dark);
+        font-size: clamp(28px, 3.3vw, 39px);
+        line-height: 1.35;
+    }
+
+    .verification-intro {
+        margin: 16px 0 24px;
+        color: #244940;
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .verification-form {
+        padding: 24px;
+        border: 1px solid #e2eee9;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 4px 15px rgba(30,90,70,.07);
+    }
+
+        .verification-form label {
+            display: block;
+            margin-bottom: 12px;
+            color: #244940;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .verification-form input {
+            width: 100%;
+            height: 56px;
+            padding: 0 16px;
+            border: 1px solid #cdded9;
+            border-radius: 9px;
+            outline: none;
+            color: var(--capq-text);
+            background: #fff;
+            direction: ltr;
+            text-align: right;
+            font-size: 17px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+            .verification-form input:focus {
+                border-color: var(--capq-green-light);
+                box-shadow: 0 0 0 3px rgba(10,154,96,.12);
+            }
+
+    #verifyBtn {
+        width: 100%;
+        min-height: 56px;
+        margin-top: 16px;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 9px;
+        color: #fff !important;
+        background: linear-gradient(90deg, #078451, #0aa062);
+        font-size: 19px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: filter .2s, opacity .2s;
+    }
+
+        #verifyBtn:hover {
+            filter: brightness(1.06);
+        }
+
+        #verifyBtn:disabled {
+            cursor: wait;
+            opacity: .65;
+        }
+
+    .verification-result {
+        display: none;
+        margin-top: 14px;
+        padding: 13px 16px;
+        border-radius: 9px;
+        font-size: 15px;
+        line-height: 1.8;
+    }
+
+        .verification-result.ok {
+            display: block;
+            border: 1px solid #bfe7d1;
+            color: #0a6b43;
+            background: #eaf8f0;
+        }
+
+        .verification-result.err {
+            display: block;
+            border: 1px solid #efc7c7;
+            color: #9b3030;
+            background: #fff1f1;
+        }
+
+    #openCertificate {
+        display: none;
+        width: 100%;
+        min-height: 48px;
+        margin-top: 12px;
+        padding: 12px 16px;
+        border: 1px solid var(--capq-green);
+        border-radius: 9px;
+        color: var(--capq-green);
+        background: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: color .2s, background .2s;
+    }
+
+        #openCertificate:hover {
+            color: #fff;
+            background: var(--capq-green);
+        }
+
+    .verification-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .verification-benefit {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 82px;
+        padding: 14px;
+        border: 1px solid #e0efe9;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #f0faf6, #e8f7f1);
+    }
+
+    .verification-benefit-icon {
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--capq-green);
+        border-radius: 50%;
+        color: var(--capq-green);
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .verification-benefit strong {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .verification-steps {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr 1fr;
+        gap: 18px;
+        align-items: center;
+        margin-top: 24px;
+        padding: 20px;
+        border: 1px solid #dfeee9;
+        border-radius: 16px;
+        background: rgba(255,255,255,.82);
+    }
+
+    .verification-qr {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-left: 18px;
+        border-left: 1px solid #d6e6e0;
+    }
+
+        .verification-qr img {
+            flex: 0 0 90px;
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+        }
+
+        .verification-qr span {
+            color: #45645a;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+    .verification-step {
+        text-align: center;
+        padding: 10px;
+    }
+
+    .verification-step-number {
+        width: 36px;
+        height: 36px;
+        display: inline-grid;
+        place-items: center;
+        margin-bottom: 8px;
+        border-radius: 50%;
+        color: #fff;
+        background: var(--capq-green);
+        font-weight: 800;
+    }
+
+    .verification-step strong {
+        display: block;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .verification-footer {
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 36px;
+        color: #fff;
+        background: #005a3e;
+        font-size: 15px;
+    }
+
+        .verification-footer .site-url {
+            direction: ltr;
+        }
+
+    #pdfModal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,.85);
+    }
+
+    #closeModal {
+        position: absolute;
+        top: 16px;
+        left: 20px;
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        border-radius: 50%;
+        color: #fff;
+        background: #a83a32;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    #pdfFrame {
+        width: min(92vw, 1100px);
+        height: min(80vh, 760px);
+        display: block;
+        border: 0;
+        border-radius: 8px;
+        background: #fff;
+    }
+
+    @@media (max-width: 1100px) {
+        .verification-header-content {
+            width: 85%;
+        }
+
+        .verification-hero {
+            grid-template-columns: minmax(200px, .8fr) minmax(340px, 1.4fr);
+        }
+
+        .verification-benefits {
+            grid-column: 1 / -1;
+            flex-direction: row;
+        }
+
+        .verification-benefit {
+            flex: 1;
+        }
+
+        .verification-steps {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .verification-qr {
+            grid-column: 1 / -1;
+            justify-content: center;
+            padding: 0 0 16px;
+            border-left: 0;
+            border-bottom: 1px solid #d6e6e0;
+        }
+    }
+
+    @@media (max-width: 720px) {
+        .verification-header {
+            min-height: 190px;
+        }
+
+        .verification-header-art {
+            width: 100%;
+            opacity: .5;
+        }
+
+        .verification-header-content {
+            width: 100%;
+            justify-content: center;
+            padding: 20px 14px;
+            text-align: center;
+        }
+
+        .verification-logo {
+            flex-basis: 82px;
+            width: 82px;
+            height: 82px;
+        }
+
+        .verification-brand .english-title {
+            font-size: 13px;
+        }
+
+        .verification-brand .tagline {
+            font-size: 13px;
+        }
+
+        .verification-main {
+            padding: 16px 12px;
+        }
+
+        .verification-hero {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 16px;
+        }
+
+        .certificate-illustration {
+            min-height: 280px;
+        }
+
+        .verification-center h2 {
+            font-size: 28px;
+        }
+
+        .verification-intro {
+            font-size: 16px;
+        }
+
+        .verification-benefits {
+            flex-direction: column;
+        }
+
+        .verification-steps {
+            grid-template-columns: 1fr;
+        }
+
+        .verification-qr {
+            justify-content: center;
+            padding: 0 0 16px;
+            border-left: 0;
+            border-bottom: 1px solid #d6e6e0;
+        }
+
+        .verification-footer {
+            flex-direction: column;
+            justify-content: center;
+            gap: 7px;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="verification-page">
+    <header class="verification-header">
+        <div class="verification-header-art"></div>
+
+        <div class="verification-header-content">
+            <img class="verification-logo"
+                 src="@Url.Content("~/img/capq-logo.jpg")"
+                 alt="شعار الإدارة المركزية للحجر الزراعي" />
+
+            <div class="verification-brand">
+                <h1>الإدارة المركزية للحجر الزراعي</h1>
+                <div class="english-title">
+                    Central Administration of Plant Quarantine
+                </div>
+                <div class="tagline">
+                    من أجل زراعة آمنة .. لمستقبل أفضل
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="verification-main">
+        <section class="verification-hero">
+            <div class="certificate-illustration">
+                <img src="@Url.Content("~/img/capq-certificate.jpg")"
+                     alt="نموذج شهادة زراعية" />
+                <div class="certificate-seal" aria-hidden="true">✓</div>
             </div>
 
-            <h1 class="font-display text-3xl font-bold text-primary-deep">
-                البحث عن شهادة
-            </h1>
+            <div class="verification-center">
+                <h2>التحقق من الشهادة الزراعية</h2>
+                <p class="verification-intro">
+                    يمكنك التحقق من صحة الشهادة الزراعية بإدخال رقمها.
+                </p>
 
-            <div class="mt-8">
-                <label for="CertificateNumber"
-                       class="mb-2 block text-sm font-semibold text-primary-deep">
-                    رقم الشهادة
-                </label>
+                <div class="verification-form">
+                    <label for="certNo">أدخلي رقم الشهادة الزراعية</label>
 
-                <input type="text"
-                       id="CertificateNumber"
-                       name="number"
-                       class="w-full rounded-md border border-border bg-background px-4 py-3 text-foreground outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30"
-                       placeholder="أدخلي رقم الشهادة" />
-            </div>
+                    <input id="certNo"
+                           type="text"
+                           inputmode="numeric"
+                           maxlength="30"
+                           placeholder="مثال: 123456789" />
 
-            <button type="button"
-                    id="searchCertificate"
-                    style="color:#fff !important;"
-                    class="mt-5 rounded-md bg-primary-deep px-6 py-3 font-semibold transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-gold/50">
-                بحث
-            </button>
+                    <button type="button" id="verifyBtn">
+                        تحقق من الشهادة　⌕
+                    </button>
 
-            <p id="searchMessage"
-               class="mt-4 text-sm text-primary-deep"
-               role="status"></p>
+                    <div id="result"
+                         class="verification-result"
+                         role="status"
+                         aria-live="polite"></div>
 
-            <!-- كارت الشهادة يظهر بعد نجاح البحث -->
-            <div id="certificateResults"
-                 class="law-page mt-8"
-                 style="display:none;">
-
-                <div class="law-content law-container"
-                     style="max-width:100%; padding:0;">
-
-                    <div class="law-grid"
-                         style="grid-template-columns:repeat(auto-fit, minmax(280px, 360px)); justify-content:start;">
-
-                        <article class="law-card">
-                            <div class="law-cover">
-                                <span class="law-file-badge">
-                                    <i class="far fa-file-pdf" aria-hidden="true"></i>
-                                </span>
-                            </div>
-
-                            <div class="law-card-body">
-                                <h3 id="certificateTitle">الشهادة</h3>
-
-                                <div class="law-meta">
-                                    <i class="far fa-file-alt" aria-hidden="true"></i>
-                                    شهادة صحية نباتية
-                                </div>
-
-                                <a href="#"
-                                   id="openCertificate"
-                                   class="law-view">
-                                    <i class="fas fa-eye" aria-hidden="true"></i>
-                                    عرض الشهادة
-                                </a>
-                            </div>
-                        </article>
-
-                    </div>
+                    <button type="button" id="openCertificate">
+                        عرض ملف الشهادة
+                    </button>
                 </div>
             </div>
 
-        </div>
-    </div>
-</section>
+            <aside class="verification-benefits">
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">✓</div>
+                    <strong>التأكد من صحة<br>الشهادة الزراعية</strong>
+                </div>
 
-<!-- نافذة عرض الشهادة بنفس طريقة عرض القوانين -->
-<div id="pdfModal"
-     style="display:none;
-            position:fixed;
-            inset:0;
-            width:100%;
-            height:100%;
-            background:rgba(0,0,0,0.85);
-            z-index:9999;
-            align-items:center;
-            justify-content:center;">
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">♢</div>
+                    <strong>دعم سلامة المحاصيل<br>والبيئة</strong>
+                </div>
 
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">◎</div>
+                    <strong>تسهيل حركة التجارة<br>الزراعية</strong>
+                </div>
+
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">◒</div>
+                    <strong>خدمة إلكترونية<br>لراحة المتعاملين</strong>
+                </div>
+            </aside>
+        </section>
+
+        <section class="verification-steps">
+            <div class="verification-qr">
+                <img src="@Url.Content("~/img/capq-verification-qr.jpg")"
+                     alt="رمز الاستجابة السريعة" />
+                <span>
+                    يمكنكِ مسح رمز الاستجابة السريعة للاطلاع على دليل استخدام الخدمة
+                </span>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">1</span>
+                <strong>أدخلي رقم الشهادة الزراعية</strong>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">2</span>
+                <strong>اضغطي على زر التحقق</strong>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">3</span>
+                <strong>ستظهر نتيجة التحقق ويمكنك فتح الشهادة</strong>
+            </div>
+        </section>
+    </main>
+
+    <footer class="verification-footer">
+        <div class="site-url">www.capq.gov.eg</div>
+        <div>الإدارة المركزية للحجر الزراعي</div>
+    </footer>
+</div>
+
+<div id="pdfModal">
     <button type="button"
             id="closeModal"
-            aria-label="إغلاق"
-            style="position:absolute;
-                   top:16px;
-                   left:20px;
-                   cursor:pointer;
-                   color:#fff;
-                   width:40px;
-                   height:40px;
-                   background:var(--gov-danger,#b42318);
-                   border:0;
-                   border-radius:50%;
-                   display:flex;
-                   align-items:center;
-                   justify-content:center;">
-        <i class="fas fa-times"></i>
+            aria-label="إغلاق">
+        &times;
     </button>
 
-    <iframe id="pdfFrame"
-            title="عرض الشهادة"
-            style="width:min(92vw,1100px);
-                   height:min(80vh,760px);
-                   margin:6vh auto;
-                   display:block;
-                   border:none;
-                   border-radius:8px;
-                   background:#fff;">
-    </iframe>
+    <iframe id="pdfFrame" title="عرض الشهادة"></iframe>
 </div>
 
 @section Scripts {
     <script>
-        const searchButton = document.getElementById("searchCertificate");
-        const numberInput = document.getElementById("CertificateNumber");
-        const message = document.getElementById("searchMessage");
-        const results = document.getElementById("certificateResults");
-        const certificateTitle = document.getElementById("certificateTitle");
-        const openCertificate = document.getElementById("openCertificate");
+        const verifyButton = document.getElementById("verifyBtn");
+        const certificateInput = document.getElementById("certNo");
+        const result = document.getElementById("result");
+        const openCertificateButton =
+            document.getElementById("openCertificate");
+
         const modal = document.getElementById("pdfModal");
         const frame = document.getElementById("pdfFrame");
         const closeButton = document.getElementById("closeModal");
 
-        searchButton.addEventListener("click", async function () {
-            const number = numberInput.value.trim();
+        let certificateUrl = "";
 
-            message.textContent = "";
-            results.style.display = "none";
-            openCertificate.removeAttribute("data-pdf");
+        verifyButton.addEventListener("click", async function () {
+            const number = certificateInput.value.trim();
+
+            result.className = "verification-result";
+            result.textContent = "";
+            openCertificateButton.style.display = "none";
+            certificateUrl = "";
 
             if (!number) {
-                message.textContent = "أدخلي رقم الشهادة.";
+                result.textContent =
+                    "من فضلك أدخلي رقم الشهادة الزراعية.";
+                result.classList.add("err");
                 return;
             }
 
-            searchButton.disabled = true;
-            message.textContent = "جارٍ البحث...";
+            verifyButton.disabled = true;
+            verifyButton.textContent = "جارٍ التحقق...";
 
             try {
                 const searchUrl =
@@ -163,50 +681,56 @@
                 const response = await fetch(searchUrl);
                 const data = await response.json();
 
-                if (!response.ok || !data.success || !data.certificateFile) {
-                    message.textContent =
+                if (!response.ok ||
+                    !data.success ||
+                    !data.certificateFile) {
+                    result.textContent =
                         data.message || "لم يتم العثور على الشهادة.";
+                    result.classList.add("err");
                     return;
                 }
 
-                certificateTitle.textContent =
-                    "شهادة رقم " + (data.certificateNumber || number);
-
-                openCertificate.setAttribute("data-pdf", data.certificateFile);
-                results.style.display = "block";
-                message.textContent = "تم العثور على الشهادة.";
-            } catch {
-                message.textContent = "حدث خطأ أثناء البحث عن الشهادة.";
+                certificateUrl = data.certificateFile;
+                result.textContent =
+                    "تم العثور على الشهادة رقم " +
+                    (data.certificateNumber || number) +
+                    " وهي متاحة للعرض.";
+                result.classList.add("ok");
+                openCertificateButton.style.display = "block";
+            } catch (error) {
+                result.textContent =
+                    "حدث خطأ أثناء التحقق. حاولي مرة أخرى.";
+                result.classList.add("err");
+                console.error("Certificate verification error:", error);
             } finally {
-                searchButton.disabled = false;
+                verifyButton.disabled = false;
+                verifyButton.textContent = "تحقق من الشهادة　⌕";
             }
         });
 
-        openCertificate.addEventListener("click", function (event) {
-            event.preventDefault();
+        openCertificateButton.addEventListener("click", function () {
+            if (!certificateUrl) return;
 
-            const pdfUrl = this.getAttribute("data-pdf");
-            if (!pdfUrl) return;
-
-            frame.src = pdfUrl;
+            frame.src = certificateUrl;
             modal.style.display = "flex";
         });
 
-        closeButton.addEventListener("click", function () {
+        function closeCertificateModal() {
             modal.style.display = "none";
             frame.src = "";
-        });
+        }
+
+        closeButton.addEventListener("click", closeCertificateModal);
 
         modal.addEventListener("click", function (event) {
             if (event.target === modal) {
-                modal.style.display = "none";
-                frame.src = "";
+                closeCertificateModal();
             }
         });
 
-        numberInput.addEventListener("keydown", function (event) {
+        certificateInput.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
-                searchButton.click();
+                verifyButton.click();
             }
         });
     </script>
