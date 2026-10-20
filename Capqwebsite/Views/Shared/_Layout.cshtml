@@ -219,8 +219,17 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle text-sm" data-bs-toggle="dropdown"> شهادة الصحة النباتية</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificate/Index" class="dropdown-item" target="_blank"> التحقق من الشهادة بالرقم</a>
-                                    <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificateLogin/Index" class="dropdown-item" target="_blank">التحقق من الشهادات للدول</a>
+                                    <a href="@Url.Action("Index", "PhytosanitaryCertificate")" class="dropdown-item">
+
+                                        التحقق من الشهادة بالرقم
+                                    </a>
+                                    <a href="@Url.Action("Index", "PhytosanitaryCertificateCountry")" class="dropdown-item">
+
+                                        التحقق من الشهادات للدول
+                                    </a>
+                                    @* <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificate/Index" class="dropdown-item" target="_blank"> التحقق من الشهادة بالرقم</a> *@
+                                    @* <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificate/Index" class="dropdown-item" target="_blank"> التحقق من الشهادة بالرقم</a> *@
+                                    @* <a href="https://www.capq.gov.eg/Exporting/PhytosanitaryCertificateLogin/Index" class="dropdown-item" target="_blank">التحقق من الشهادات للدول</a> *@
                                 </div>
                             </div>
                             <a href="~/dashBoard/dash" class="nav-item nav-link text-sm">الإحصائيات</a>

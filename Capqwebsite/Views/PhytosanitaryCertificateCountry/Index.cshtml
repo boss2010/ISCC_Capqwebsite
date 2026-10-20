@@ -1,0 +1,562 @@
+﻿@{
+    ViewData["Title"] = "البحث عن شهادات الدولة";
+}
+
+<style>
+    :root {
+        --capq-green: #087a4b;
+        --capq-green-light: #0a9a60;
+        --capq-dark: #075b3e;
+        --capq-text: #173b34;
+    }
+
+    .verification-page,
+    .verification-page * {
+        box-sizing: border-box;
+    }
+
+    .verification-page {
+        direction: rtl;
+        max-width: 1536px;
+        margin: 0 auto;
+        overflow: hidden;
+        color: var(--capq-text);
+        font-family: Tahoma, Arial, sans-serif;
+        background: linear-gradient(180deg, #f5fbfa 0%, #eef8f6 100%);
+    }
+
+    .verification-header {
+        position: relative;
+        min-height: 215px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background: #fff;
+        border-bottom: 1px solid #dceae6;
+    }
+
+    .verification-header-art {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 54%;
+        background-image: url('@Url.Content("~/img/capq-header.jpg")');
+        background-size: cover;
+        background-position: left center;
+    }
+
+        .verification-header-art::after {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 15%;
+            width: 180px;
+            height: 270px;
+            background: linear-gradient(135deg, transparent 42%, #0c8756 43%, #0c8756 51%, transparent 52%);
+            opacity: .8;
+        }
+
+    .verification-header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        width: 75%;
+        padding: 24px 38px;
+    }
+
+    .verification-logo {
+        flex: 0 0 132px;
+        width: 132px;
+        height: 132px;
+        border: 4px solid #d6eadf;
+        border-radius: 50%;
+        object-fit: contain;
+        background: #fff;
+        box-shadow: inset 0 0 0 7px #fff;
+    }
+
+    .verification-brand h1 {
+        margin: 0 0 8px;
+        color: var(--capq-dark);
+        font-size: clamp(23px, 3vw, 36px);
+        font-weight: 800;
+    }
+
+    .verification-brand .english-title {
+        color: #145b47;
+        direction: ltr;
+        text-align: right;
+        font-size: 18px;
+    }
+
+    .verification-brand .tagline {
+        margin-top: 12px;
+        color: #33554d;
+        font-size: 16px;
+    }
+
+    .verification-main {
+        padding: 36px 32px 26px;
+    }
+
+    .verification-hero {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) minmax(360px, 1.45fr) 250px;
+        align-items: center;
+        gap: 26px;
+        min-height: 460px;
+        padding: 28px;
+        border: 1px solid #e0eee9;
+        border-radius: 18px;
+        background: rgba(255,255,255,.88);
+        box-shadow: 0 7px 25px rgba(30,90,70,.08);
+    }
+
+    .certificate-illustration {
+        position: relative;
+        min-height: 390px;
+        overflow: hidden;
+        border: 1px solid #dcece3;
+        border-radius: 14px;
+        background: #eaf7ef;
+    }
+
+        .certificate-illustration img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .certificate-seal {
+        position: absolute;
+        right: 14px;
+        bottom: 20px;
+        width: 92px;
+        height: 105px;
+        display: grid;
+        place-items: center;
+        clip-path: polygon(50% 0, 90% 15%, 88% 65%, 50% 100%, 12% 65%, 10% 15%);
+        color: #fff;
+        background: linear-gradient(145deg, #0ba566, #07824f);
+        font-size: 56px;
+        font-weight: 800;
+        filter: drop-shadow(0 8px 12px rgba(0,90,55,.2));
+    }
+
+    .verification-center h2 {
+        margin: 0;
+        color: var(--capq-dark);
+        font-size: clamp(28px, 3.3vw, 39px);
+        line-height: 1.35;
+    }
+
+    .verification-intro {
+        margin: 16px 0 24px;
+        color: #244940;
+        font-size: 18px;
+        line-height: 1.8;
+    }
+
+    .verification-form {
+        padding: 24px;
+        border: 1px solid #e2eee9;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 4px 15px rgba(30,90,70,.07);
+    }
+
+        .verification-form label {
+            display: block;
+            margin-bottom: 9px;
+            color: #244940;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .verification-form input {
+            width: 100%;
+            height: 52px;
+            margin-bottom: 16px;
+            padding: 0 14px;
+            border: 1px solid #cdded9;
+            border-radius: 9px;
+            outline: none;
+            color: var(--capq-text);
+            background: #fff;
+            direction: rtl;
+            text-align: right;
+            font-size: 16px;
+        }
+
+            .verification-form input:focus {
+                border-color: var(--capq-green-light);
+                box-shadow: 0 0 0 3px rgba(10,154,96,.12);
+            }
+
+    #searchButton {
+        width: 100%;
+        min-height: 56px;
+        margin-top: 4px;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 9px;
+        color: #fff !important;
+        background: linear-gradient(90deg, #078451, #0aa062);
+        font-size: 19px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+        #searchButton:hover {
+            filter: brightness(1.06);
+        }
+
+    .verification-error {
+        margin-bottom: 16px;
+        padding: 12px 14px;
+        border: 1px solid #efc7c7;
+        border-radius: 9px;
+        color: #9b3030;
+        background: #fff1f1;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .verification-benefits {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .verification-benefit {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 82px;
+        padding: 14px;
+        border: 1px solid #e0efe9;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #f0faf6, #e8f7f1);
+    }
+
+    .verification-benefit-icon {
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--capq-green);
+        border-radius: 50%;
+        color: var(--capq-green);
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .verification-benefit strong {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .verification-steps {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr 1fr;
+        gap: 18px;
+        align-items: center;
+        margin-top: 24px;
+        padding: 20px;
+        border: 1px solid #dfeee9;
+        border-radius: 16px;
+        background: rgba(255,255,255,.82);
+    }
+
+    .verification-qr {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-left: 18px;
+        border-left: 1px solid #d6e6e0;
+    }
+
+        .verification-qr img {
+            flex: 0 0 90px;
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+        }
+
+        .verification-qr span {
+            color: #45645a;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+    .verification-step {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .verification-step-number {
+        width: 36px;
+        height: 36px;
+        display: inline-grid;
+        place-items: center;
+        margin-bottom: 8px;
+        border-radius: 50%;
+        color: #fff;
+        background: var(--capq-green);
+        font-weight: 800;
+    }
+
+    .verification-step strong {
+        display: block;
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .verification-footer {
+        min-height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 36px;
+        color: #fff;
+        background: #005a3e;
+        font-size: 15px;
+    }
+
+        .verification-footer .site-url {
+            direction: ltr;
+        }
+
+    @@media (max-width: 1100px) {
+        .verification-header-content {
+            width: 85%;
+        }
+
+        .verification-hero {
+            grid-template-columns: minmax(200px, .8fr) minmax(340px, 1.4fr);
+        }
+
+        .verification-benefits {
+            grid-column: 1 / -1;
+            flex-direction: row;
+        }
+
+        .verification-benefit {
+            flex: 1;
+        }
+
+        .verification-steps {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .verification-qr {
+            grid-column: 1 / -1;
+            justify-content: center;
+            padding: 0 0 16px;
+            border: 0;
+            border-bottom: 1px solid #d6e6e0;
+        }
+    }
+
+    @@media (max-width: 720px) {
+        .verification-header {
+            min-height: 190px;
+        }
+
+        .verification-header-art {
+            width: 100%;
+            opacity: .5;
+        }
+
+        .verification-header-content {
+            width: 100%;
+            justify-content: center;
+            padding: 20px 14px;
+            text-align: center;
+        }
+
+        .verification-logo {
+            flex-basis: 82px;
+            width: 82px;
+            height: 82px;
+        }
+
+        .verification-brand .english-title,
+        .verification-brand .tagline {
+            font-size: 13px;
+        }
+
+        .verification-main {
+            padding: 16px 12px;
+        }
+
+        .verification-hero {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding: 16px;
+        }
+
+        .certificate-illustration {
+            min-height: 280px;
+        }
+
+        .verification-center h2 {
+            font-size: 28px;
+        }
+
+        .verification-intro {
+            font-size: 16px;
+        }
+
+        .verification-benefits {
+            flex-direction: column;
+        }
+
+        .verification-steps {
+            grid-template-columns: 1fr;
+        }
+
+        .verification-qr {
+            justify-content: center;
+            padding: 0 0 16px;
+            border: 0;
+            border-bottom: 1px solid #d6e6e0;
+        }
+
+        .verification-footer {
+            flex-direction: column;
+            justify-content: center;
+            gap: 7px;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="verification-page">
+    <header class="verification-header">
+        <div class="verification-header-art"></div>
+
+        <div class="verification-header-content">
+            <img class="verification-logo"
+                 src="@Url.Content("~/img/capq-logo.jpg")"
+                 alt="شعار الإدارة المركزية للحجر الزراعي" />
+
+            <div class="verification-brand">
+                <h1>الإدارة المركزية للحجر الزراعي</h1>
+                <div class="english-title">
+                    Central Administration of Plant Quarantine
+                </div>
+                <div class="tagline">
+                    من أجل زراعة آمنة .. لمستقبل أفضل
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="verification-main">
+        <section class="verification-hero">
+            <div class="certificate-illustration">
+                <img src="@Url.Content("~/img/capq-certificate.jpg")"
+                     alt="نموذج شهادة زراعية" />
+                <div class="certificate-seal" aria-hidden="true">✓</div>
+            </div>
+
+            <div class="verification-center">
+                <h2>البحث عن شهادات الدولة</h2>
+                <p class="verification-intro">
+                    أدخلي بيانات الدولة لعرض شهاداتها.
+                </p>
+
+                <div class="verification-form">
+                    <form asp-controller="PhytosanitaryCertificateCountry"
+                          asp-action="SearchResults"
+                          method="post">
+
+                        <label for="UserName">اسم المستخدم</label>
+                        <input id="UserName"
+                               name="userName"
+                               type="text"
+                               autocomplete="username"
+                               required
+                               placeholder="أدخلي اسم المستخدم" />
+
+                        <label for="Password">كلمة مرور الدولة</label>
+                        <input id="Password"
+                               name="password"
+                               type="password"
+                               autocomplete="current-password"
+                               required
+                               placeholder="أدخلي كلمة المرور" />
+
+                        @if (TempData["SearchError"] != null)
+                        {
+                            <div class="verification-error" role="alert">
+                                @TempData["SearchError"]
+                            </div>
+                        }
+
+                        <button type="submit" id="searchButton">
+                            بحث عن الشهادات
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <aside class="verification-benefits">
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">✓</div>
+                    <strong>التأكد من صحة<br>الشهادة الزراعية</strong>
+                </div>
+
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">♢</div>
+                    <strong>دعم سلامة المحاصيل<br>والبيئة</strong>
+                </div>
+
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">◎</div>
+                    <strong>تسهيل حركة التجارة<br>الزراعية</strong>
+                </div>
+
+                <div class="verification-benefit">
+                    <div class="verification-benefit-icon">◒</div>
+                    <strong>خدمة إلكترونية<br>لراحة المتعاملين</strong>
+                </div>
+            </aside>
+        </section>
+
+        <section class="verification-steps">
+            <div class="verification-qr">
+                <img src="@Url.Content("~/img/capq-verification-qr.jpg")"
+                     alt="رمز الاستجابة السريعة" />
+                <span>
+                    يمكنكِ مسح رمز الاستجابة السريعة للاطلاع على دليل استخدام الخدمة
+                </span>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">1</span>
+                <strong>أدخلي اسم المستخدم</strong>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">2</span>
+                <strong>أدخلي كلمة مرور الدولة</strong>
+            </div>
+
+            <div class="verification-step">
+                <span class="verification-step-number">3</span>
+                <strong>اضغطي بحث لعرض الشهادات</strong>
+            </div>
+        </section>
+    </main>
+
+    <footer class="verification-footer">
+        <div class="site-url">www.capq.gov.eg</div>
+        <div>الإدارة المركزية للحجر الزراعي</div>
+    </footer>
+</div>

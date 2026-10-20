@@ -1,0 +1,512 @@
+﻿@using Capqwebsite.Controllers
+@model CertificateResultsViewModel
+
+@{
+    ViewData["Title"] = "نتائج البحث عن الشهادات";
+
+    var firstItem = Model.TotalCount == 0
+        ? 0
+        : ((Model.Page - 1) * Model.PageSize) + 1;
+
+    var lastItem = Math.Min(Model.Page * Model.PageSize, Model.TotalCount);
+    var firstPage = Math.Max(1, Model.Page - 2);
+    var lastPage = Math.Min(Model.TotalPages, Model.Page + 2);
+}
+
+<style>
+    .results-page {
+        direction: rtl;
+        min-height: 70vh;
+        padding: 48px 16px;
+        background: #f7f4ed;
+    }
+
+    .results-container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .results-panel {
+        padding: 28px;
+        border: 1px solid #e7dfd0;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(45, 54, 45, .08);
+    }
+
+    .results-heading {
+        margin-bottom: 22px;
+        color: #254b3b;
+    }
+
+        .results-heading h1 {
+            margin: 0 0 8px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .results-heading p {
+            margin: 0;
+            color: #68746c;
+        }
+
+    .filter-form,
+    .number-search-form {
+        display: grid;
+        gap: 14px;
+        align-items: end;
+        margin: 24px 0 14px;
+        padding: 18px;
+        border: 1px solid #eee7da;
+        border-radius: 14px;
+        background: #fbfaf7;
+    }
+
+    .filter-form {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+    }
+
+    .number-search-form {
+        grid-template-columns: 1fr auto;
+        margin-top: 14px;
+        margin-bottom: 24px;
+    }
+
+    .filter-field label,
+    .number-search-field label {
+        display: block;
+        margin-bottom: 7px;
+        color: #254b3b;
+        font-weight: 600;
+    }
+
+    .filter-field input,
+    .number-search-field input {
+        width: 100%;
+        min-height: 44px;
+        padding: 9px 12px;
+        border: 1px solid #d8d1c4;
+        border-radius: 9px;
+        background: #fff;
+        color: #27352e;
+    }
+
+        .filter-field input:focus,
+        .number-search-field input:focus {
+            border-color: #b18b45;
+            outline: 3px solid rgba(177, 139, 69, .18);
+        }
+
+    .btn-search,
+    .pagination-button {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        padding: 9px 24px;
+        border: 0;
+        border-radius: 9px;
+        background: #254b3b;
+        color: #fff !important;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+        .btn-search:hover,
+        .pagination-button:hover:not(:disabled) {
+            background: #1b3b2e;
+        }
+
+    .results-summary {
+        margin: 18px 0;
+        color: #58665d;
+    }
+
+    .certificate-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 18px;
+    }
+
+    .certificate-card {
+        display: flex;
+        flex-direction: column;
+        min-height: 190px;
+        padding: 20px;
+        border: 1px solid #e8e1d5;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 5px 16px rgba(45, 54, 45, .06);
+    }
+
+        .certificate-card h2 {
+            margin: 0 0 14px;
+            color: #254b3b;
+            font-size: 1.1rem;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+    .certificate-date {
+        margin: 0 0 18px;
+        color: #69746d;
+    }
+
+    .certificate-open {
+        display: inline-block;
+        width: fit-content;
+        margin-top: auto;
+        padding: 9px 16px;
+        border-radius: 8px;
+        background: #b18b45;
+        color: #fff !important;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+        .certificate-open:hover {
+            background: #96743a;
+            color: #fff !important;
+        }
+
+    .empty-results {
+        padding: 30px 18px;
+        border: 1px dashed #d8d1c4;
+        border-radius: 12px;
+        color: #68746c;
+        text-align: center;
+        background: #fbfaf7;
+    }
+
+    .pagination-wrap {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid #eee7da;
+    }
+
+    .pagination-info {
+        color: #68746c;
+    }
+
+    .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .pagination-form {
+        display: inline;
+        margin: 0;
+    }
+
+    .pagination-button {
+        min-width: 40px;
+        min-height: 40px;
+        padding: 7px 12px;
+        border: 1px solid #ded7ca;
+        background: #fff;
+        color: #254b3b !important;
+    }
+
+        .pagination-button:hover:not(:disabled) {
+            border-color: #254b3b;
+            background: #254b3b;
+            color: #fff !important;
+        }
+
+        .pagination-button.active {
+            border-color: #254b3b;
+            background: #254b3b;
+            color: #fff !important;
+        }
+
+        .pagination-button:disabled {
+            color: #aaa !important;
+            background: #f4f2ee;
+            cursor: not-allowed;
+        }
+
+    .validation-message {
+        margin-bottom: 12px;
+        color: #a33232;
+    }
+
+    @@media (max-width: 700px) {
+        .results-panel
+
+    {
+        padding: 20px 16px;
+    }
+
+    .filter-form,
+    .number-search-form {
+        grid-template-columns: 1fr;
+    }
+
+        .filter-form .btn-search,
+        .number-search-form .btn-search {
+            width: 100%;
+        }
+
+    .pagination-wrap {
+        justify-content: center;
+    }
+
+    }
+</style>
+
+<section class="results-page">
+    <div class="results-container">
+        <div class="results-panel">
+            <header class="results-heading">
+                <h1>نتائج البحث عن الشهادات</h1>
+                <p>يمكنك تصفية الشهادات بالتاريخ أو البحث برقم الشهادة.</p>
+            </header>
+
+            <div asp-validation-summary="All" class="validation-message"></div>
+
+            <form asp-controller="PhytosanitaryCertificateCountry"
+                  asp-action="FilterResults"
+                  method="post"
+                  class="filter-form">
+
+                <div class="filter-field">
+                    <label for="dateFrom">التاريخ من</label>
+                    <input id="dateFrom"
+                           name="dateFrom"
+                           type="date"
+                           value="@(Model.DateFrom?.ToString("yyyy-MM-dd"))" />
+                </div>
+
+                <div class="filter-field">
+                    <label for="dateTo">التاريخ إلى</label>
+                    <input id="dateTo"
+                           name="dateTo"
+                           type="date"
+                           value="@(Model.DateTo?.ToString("yyyy-MM-dd"))" />
+                </div>
+
+                <input type="hidden"
+                       name="certificateNumber"
+                       value="@Model.CertificateNumber" />
+
+                <input type="hidden" name="pageSize" value="@Model.PageSize" />
+                <input type="hidden" name="page" value="1" />
+
+                <button type="submit" class="btn-search">
+                    تصفية بالتاريخ
+                </button>
+            </form>
+
+            <form asp-controller="PhytosanitaryCertificateCountry"
+                  asp-action="FilterResults"
+                  method="post"
+                  class="number-search-form">
+
+                <div class="number-search-field">
+                    <label for="certificateNumber">رقم الشهادة</label>
+                    <input id="certificateNumber"
+                           name="certificateNumber"
+                           type="text"
+                           value="@Model.CertificateNumber"
+                           placeholder="أدخلي رقم الشهادة" />
+                </div>
+
+                <input type="hidden"
+                       name="dateFrom"
+                       value="@(Model.DateFrom?.ToString("yyyy-MM-dd"))" />
+
+                <input type="hidden"
+                       name="dateTo"
+                       value="@(Model.DateTo?.ToString("yyyy-MM-dd"))" />
+
+                <input type="hidden" name="pageSize" value="@Model.PageSize" />
+                <input type="hidden" name="page" value="1" />
+
+                <button type="submit" class="btn-search">
+                    بحث برقم الشهادة
+                </button>
+            </form>
+
+            <p class="results-summary">
+                عدد الشهادات: <strong>@Model.TotalCount</strong>
+            </p>
+
+            @if (Model.Certificates.Any())
+            {
+                <div class="certificate-grid">
+                    @foreach (var certificate in Model.Certificates)
+                    {
+                        <article class="certificate-card">
+                            <h2>شهادة رقم: @certificate.CertificateNumber</h2>
+
+                            <p class="certificate-date">
+                                تاريخ الشهادة:
+                                @(certificate.CertificateDate?.ToString("yyyy/MM/dd")
+                                    ?? "غير متوفر")
+                            </p>
+
+                            <a asp-controller="PhytosanitaryCertificateCountry"
+                               asp-action="OpenCertificate"
+                               asp-route-number="@certificate.CertificateNumber"
+                               target="_blank"
+                               rel="noopener"
+                               class="certificate-open">
+                                عرض الشهادة
+                            </a>
+                        </article>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-results">
+                    لا توجد شهادات مطابقة للبحث أو الفترة المحددة.
+                </div>
+            }
+
+            @if (Model.TotalPages > 1)
+            {
+                <div class="pagination-wrap">
+                    <div class="pagination-info">
+                        عرض @firstItem إلى @lastItem من @Model.TotalCount
+                    </div>
+
+                    <nav aria-label="التنقل بين صفحات النتائج">
+                        <ul class="pagination">
+                            <li>
+                                <form asp-controller="PhytosanitaryCertificateCountry"
+                                      asp-action="FilterResults"
+                                      method="post"
+                                      class="pagination-form">
+                                    <input type="hidden" name="dateFrom"
+                                           value="@(Model.DateFrom?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="dateTo"
+                                           value="@(Model.DateTo?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="certificateNumber"
+                                           value="@Model.CertificateNumber" />
+                                    <input type="hidden" name="pageSize"
+                                           value="@Model.PageSize" />
+                                    <input type="hidden" name="page" value="1" />
+                                    <button type="submit"
+                                            class="pagination-button"
+                                            disabled="@(Model.Page <= 1)">
+                                        الأولى
+                                    </button>
+                                </form>
+                            </li>
+
+                            <li>
+                                <form asp-controller="PhytosanitaryCertificateCountry"
+                                      asp-action="FilterResults"
+                                      method="post"
+                                      class="pagination-form">
+                                    <input type="hidden" name="dateFrom"
+                                           value="@(Model.DateFrom?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="dateTo"
+                                           value="@(Model.DateTo?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="certificateNumber"
+                                           value="@Model.CertificateNumber" />
+                                    <input type="hidden" name="pageSize"
+                                           value="@Model.PageSize" />
+                                    <input type="hidden" name="page"
+                                           value="@(Model.Page - 1)" />
+                                    <button type="submit"
+                                            class="pagination-button"
+                                            disabled="@(Model.Page <= 1)">
+                                        السابق
+                                    </button>
+                                </form>
+                            </li>
+
+                            @for (var pageNumber = firstPage;
+                           pageNumber <= lastPage;
+                           pageNumber++)
+                            {
+                                <li>
+                                    <form asp-controller="PhytosanitaryCertificateCountry"
+                                          asp-action="FilterResults"
+                                          method="post"
+                                          class="pagination-form">
+                                        <input type="hidden" name="dateFrom"
+                                               value="@(Model.DateFrom?.ToString("yyyy-MM-dd"))" />
+                                        <input type="hidden" name="dateTo"
+                                               value="@(Model.DateTo?.ToString("yyyy-MM-dd"))" />
+                                        <input type="hidden" name="certificateNumber"
+                                               value="@Model.CertificateNumber" />
+                                        <input type="hidden" name="pageSize"
+                                               value="@Model.PageSize" />
+                                        <input type="hidden" name="page"
+                                               value="@pageNumber" />
+                                        <button type="submit"
+                                                class="pagination-button @(pageNumber == Model.Page ? "active" : "")"
+                                                aria-current="@(pageNumber == Model.Page ? "page" : null)">
+                                            @pageNumber
+                                        </button>
+                                    </form>
+                                </li>
+                            }
+
+                            <li>
+                                <form asp-controller="PhytosanitaryCertificateCountry"
+                                      asp-action="FilterResults"
+                                      method="post"
+                                      class="pagination-form">
+                                    <input type="hidden" name="dateFrom"
+                                           value="@(Model.DateFrom?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="dateTo"
+                                           value="@(Model.DateTo?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="certificateNumber"
+                                           value="@Model.CertificateNumber" />
+                                    <input type="hidden" name="pageSize"
+                                           value="@Model.PageSize" />
+                                    <input type="hidden" name="page"
+                                           value="@(Model.Page + 1)" />
+                                    <button type="submit"
+                                            class="pagination-button"
+                                            disabled="@(Model.Page >= Model.TotalPages)">
+                                        التالي
+                                    </button>
+                                </form>
+                            </li>
+
+                            <li>
+                                <form asp-controller="PhytosanitaryCertificateCountry"
+                                      asp-action="FilterResults"
+                                      method="post"
+                                      class="pagination-form">
+                                    <input type="hidden" name="dateFrom"
+                                           value="@(Model.DateFrom?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="dateTo"
+                                           value="@(Model.DateTo?.ToString("yyyy-MM-dd"))" />
+                                    <input type="hidden" name="certificateNumber"
+                                           value="@Model.CertificateNumber" />
+                                    <input type="hidden" name="pageSize"
+                                           value="@Model.PageSize" />
+                                    <input type="hidden" name="page"
+                                           value="@Model.TotalPages" />
+                                    <button type="submit"
+                                            class="pagination-button"
+                                            disabled="@(Model.Page >= Model.TotalPages)">
+                                        الأخيرة
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            }
+        </div>
+    </div>
+</section>
