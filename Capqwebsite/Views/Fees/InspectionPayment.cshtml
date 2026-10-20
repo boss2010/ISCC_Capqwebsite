@@ -788,7 +788,7 @@
                                                    placeholder="0.000"
                                                    aria-label="الوزن بالطن @Model.Fees[i].FeesName" />
                                             <span asp-validation-for="Fees[i].Quantity"
-                                                  class="text-danger small"></span>
+                                                  class="text-danger quantity-error small"></span>
                                         </div>
                                         <div class="fee-input-group">
                                             <label asp-for="Fees[i].Amount">القيمة لكل طن</label>
@@ -807,20 +807,16 @@
                                     <div class="fee-input-group">
                                         <label asp-for="Fees[i].Quantity">العدد</label>
                                         <input asp-for="Fees[i].Quantity"
-                                               type="number"
+                                               type="text"
+                                               inputmode="numeric"
                                                min="@(isMartyrFee ? "1" : "0")"
-                                               step="1"
                                                class="form-control quantity"
                                                aria-label="عدد @Model.Fees[i].FeesName" />
-                                        <span asp-validation-for="Fees[i].Quantity" class="text-danger small"></span>
+                                        <span asp-validation-for="Fees[i].Quantity" class="text-danger quantity-error small"></span>
                                     </div>
                                     <div class="fee-input-group">
                                         <label asp-for="Fees[i].Amount">
-                                            @(isGeneralPayment && Model.Fees[i].IsFixedPrice
-                                                ? "قيمة الوحدة"
-                                                : isGeneralPayment
-                                                    ? "إجمالي القيمة"
-                                                    : "قيمة الوحدة")
+                                            قيمة الوحدة
                                         </label>
                                         <input asp-for="Fees[i].Amount"
                                                class="form-control amount"
@@ -934,7 +930,6 @@
             const feesError = document.getElementById("feesError");
             const totalInput = document.getElementById("Amount_Total");
             const totalDisplay = document.getElementById("AmountTotalDisplay");
-            const usesDatabasePricing = @isGeneralPayment.ToString().ToLowerInvariant();
             const mechanizationFixedAmount = @mechanizationFixedAmount.ToString(System.Globalization.CultureInfo.InvariantCulture);
             const mechanizationRate = @mechanizationRate.ToString(System.Globalization.CultureInfo.InvariantCulture);
             const modalElement = document.getElementById("paymentTermsModal");
@@ -954,11 +949,9 @@
                         card.querySelector(".quantity").value) || 0);
                     const amountInput = card.querySelector(".amount");
                     const amount = Number.parseFloat(amountInput.value) || 0;
-                    const lineTotal = usesDatabasePricing && amountInput.readOnly
+                    const lineTotal = quantity > 0 && amount > 0
                         ? quantity * amount
-                        : usesDatabasePricing
-                            ? amount
-                            : quantity * amount;
+                        : 0;
                     card.querySelector(".line-total").textContent =
                         lineTotal.toFixed(2);
                     if (quantity > 0 && amount > 0) {
@@ -1005,6 +998,7 @@
                 feesError.textContent = "";
                 feesError.style.display = "none";
                 document.querySelectorAll(".fee-error").forEach(x => x.textContent = "");
+                document.querySelectorAll(".quantity-error").forEach(x => x.textContent = "");
                 document.querySelectorAll(".description-error").forEach(x => x.textContent = "");
 
                 if (!companyName.value.trim()) {
@@ -1040,6 +1034,29 @@
                     feesError.style.display = "block";
                     valid = false;
                 }
+
+                document.querySelectorAll(".fee-card").forEach(card => {
+                    if (card.dataset.differenceFee === "true") return;
+
+                    const quantityInput = card.querySelector(".quantity");
+                    const amountInput = card.querySelector(".amount");
+                    const quantity = Number.parseFloat(quantityInput.value) || 0;
+                    const amount = Number.parseFloat(amountInput.value) || 0;
+
+                    if (quantity > 0 && amount <= 0) {
+                        card.querySelector(".fee-error").textContent =
+                            "ادخل قيمة الوحدة";
+                        valid = false;
+                    }
+
+                    if (quantity <= 0 && amount > 0 && !amountInput.readOnly) {
+                        card.querySelector(".quantity-error").textContent =
+                            card.dataset.weightBased === "true"
+                                ? "ادخل الوزن بالطن"
+                                : "ادخل العدد";
+                        valid = false;
+                    }
+                });
 
                 const differenceFeeCard = document.querySelector(
                     '.fee-card[data-difference-fee="true"]');

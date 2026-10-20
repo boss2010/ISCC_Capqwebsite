@@ -609,6 +609,7 @@ namespace Capqwebsite.Controllers.Fees
             ValidateRequiredMartyrFee(model, MartyrFeeTypeId);
             ValidateDifferenceFee(model);
             ValidateFeeQuantities(model, allowSeedTestingWeight: false);
+            ValidateFeeCompleteness(model);
 
             var allowedGovernmentFeeIds = governmentFeeDefinitions.Keys.ToHashSet();
 
@@ -687,9 +688,7 @@ namespace Capqwebsite.Controllers.Fees
 
             var feesSubtotal = model.Fees
                 .Where(x => x.Selected && x.Amount.HasValue)
-                .Sum(x => x.IsFixedPrice
-                    ? x.Amount!.Value * x.Quantity
-                    : x.Amount!.Value);
+                .Sum(CalculateFeeLineAmount);
             var mechanizationAmount = CalculateMechanizationFee(feesSubtotal);
             model.Amount_Total = feesSubtotal + mechanizationAmount;
 
@@ -724,9 +723,7 @@ namespace Capqwebsite.Controllers.Fees
                 Fees_Altahsil_Detile det = new Fees_Altahsil_Detile
                 {
                     FeesType_ID = item.FeesType_ID,
-                    Amount = item.IsFixedPrice
-                        ? item.Amount * item.Quantity
-                        : item.Amount,
+                    Amount = CalculateFeeLineAmount(item),
                     Quantity = item.Quantity,
                     Fee_Description = item.FeesType_ID == DifferenceFeeTypeId
                         ? item.FeeDescription?.Trim()
@@ -858,7 +855,7 @@ namespace Capqwebsite.Controllers.Fees
             return Math.Truncate(untrimmedAmount * 100m) / 100m;
         }
 
-        private static decimal CalculatePrivateFeeLineAmount(FeeVM fee)
+        private static decimal CalculateFeeLineAmount(FeeVM fee)
         {
             if (!fee.Amount.HasValue)
             {
@@ -899,6 +896,38 @@ namespace Capqwebsite.Controllers.Fees
                     ModelState.AddModelError(
                         $"Fees[{index}].Quantity",
                         "العدد يجب أن يكون رقمًا صحيحًا بدون كسور");
+                }
+            }
+        }
+
+        private void ValidateFeeCompleteness(FeesAltahsilVM model)
+        {
+            for (var index = 0; index < (model.Fees?.Count ?? 0); index++)
+            {
+                var fee = model.Fees![index];
+
+                if (fee.FeesType_ID == DifferenceFeeTypeId)
+                {
+                    continue;
+                }
+
+                var hasQuantity = fee.Quantity > 0;
+                var hasAmount = fee.Amount.HasValue && fee.Amount.Value > 0;
+
+                if (hasQuantity && !hasAmount)
+                {
+                    ModelState.AddModelError(
+                        $"Fees[{index}].Amount",
+                        "ادخل قيمة الوحدة");
+                }
+
+                if (!hasQuantity && hasAmount && !fee.IsFixedPrice)
+                {
+                    ModelState.AddModelError(
+                        $"Fees[{index}].Quantity",
+                        fee.FeesType_ID == SeedTestingFeeTypeId
+                            ? "ادخل الوزن بالطن"
+                            : "ادخل العدد");
                 }
             }
         }
@@ -1024,6 +1053,7 @@ namespace Capqwebsite.Controllers.Fees
 
                 ValidateRequiredMartyrFee(model, MartyrFeeTypeId);
                 ValidateDifferenceFee(model);
+                ValidateFeeCompleteness(model);
 
                 var allowedPrivateFeeIds = privateFeeDefinitions.Keys.ToHashSet();
 
@@ -1112,7 +1142,7 @@ namespace Capqwebsite.Controllers.Fees
 
                 var feesSubtotal = model.Fees
                     .Where(x => x.Selected && x.Amount.HasValue)
-                    .Sum(CalculatePrivateFeeLineAmount);
+                    .Sum(CalculateFeeLineAmount);
                 var mechanizationAmount = CalculateMechanizationFee(feesSubtotal);
                 model.Amount_Total = feesSubtotal + mechanizationAmount;
 				//save in database
@@ -1146,7 +1176,7 @@ namespace Capqwebsite.Controllers.Fees
 					Fees_Altahsil_Detile det = new Fees_Altahsil_Detile
 					{
 						FeesType_ID = item.FeesType_ID,
-						Amount = CalculatePrivateFeeLineAmount(item),
+						Amount = CalculateFeeLineAmount(item),
 						Quantity = item.Quantity,
                         Fee_Description = item.FeesType_ID == DifferenceFeeTypeId
                             ? item.FeeDescription?.Trim()
