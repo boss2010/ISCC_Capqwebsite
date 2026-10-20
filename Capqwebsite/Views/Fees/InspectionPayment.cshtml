@@ -21,6 +21,8 @@
         ViewData["RequiredMartyrFeeTypeId"] ?? (byte)56);
     var differenceFeeTypeId = Convert.ToByte(
         ViewData["DifferenceFeeTypeId"] ?? (byte)81);
+    var seedTestingFeeTypeId = Convert.ToByte(
+        ViewData["SeedTestingFeeTypeId"] ?? (byte)83);
     var mechanizationFixedAmount = Convert.ToDecimal(
         ViewData["MechanizationFixedAmount"] ?? 2m);
     var mechanizationRate = Convert.ToDecimal(
@@ -727,9 +729,13 @@
                                 Model.Fees[i].FeesType_ID == requiredMartyrFeeTypeId;
                             var isDifferenceFee =
                                 Model.Fees[i].FeesType_ID == differenceFeeTypeId;
+                            var isWeightBasedFee =
+                                !isGeneralPayment &&
+                                Model.Fees[i].FeesType_ID == seedTestingFeeTypeId;
                             <article class="fee-card"
                                      data-required-martyr="@(isMartyrFee ? "true" : "false")"
-                                     data-difference-fee="@(isDifferenceFee ? "true" : "false")">
+                                     data-difference-fee="@(isDifferenceFee ? "true" : "false")"
+                                     data-weight-based="@(isWeightBasedFee ? "true" : "false")">
                                 <div class="fee-card-title">
                                     @Model.Fees[i].FeesName
                                     @if (isMartyrFee)
@@ -765,6 +771,33 @@
                                                    min="0.01"
                                                    placeholder="0.00"
                                                    aria-label="قيمة فرق الرسوم" />
+                                            <span asp-validation-for="Fees[i].Amount"
+                                                  class="text-danger fee-error small"></span>
+                                        </div>
+                                    }
+                                    else if (isWeightBasedFee)
+                                    {
+                                        <div class="fee-input-group">
+                                            <label asp-for="Fees[i].Quantity">الوزن بالطن</label>
+                                            <input asp-for="Fees[i].Quantity"
+                                                   type="text"
+                                                   inputmode="decimal"
+                                                   min="0"
+                                                   step="0.001"
+                                                   class="form-control quantity"
+                                                   placeholder="0.000"
+                                                   aria-label="الوزن بالطن @Model.Fees[i].FeesName" />
+                                            <span asp-validation-for="Fees[i].Quantity"
+                                                  class="text-danger small"></span>
+                                        </div>
+                                        <div class="fee-input-group">
+                                            <label asp-for="Fees[i].Amount">القيمة لكل طن</label>
+                                            <input asp-for="Fees[i].Amount"
+                                                   class="form-control amount"
+                                                   inputmode="decimal"
+                                                   min="0.01"
+                                                   readonly="readonly"
+                                                   aria-label="قيمة الطن @Model.Fees[i].FeesName" />
                                             <span asp-validation-for="Fees[i].Amount"
                                                   class="text-danger fee-error small"></span>
                                         </div>
@@ -827,7 +860,7 @@
                                 <strong id="selectedServicesCount">0</strong>
                             </div>
                             <div class="summary-line">
-                                <span>إجمالي العدد</span>
+                                <span>@(isGeneralPayment ? "إجمالي العدد" : "إجمالي العدد / الوزن")</span>
                                 <strong id="totalQuantity">0</strong>
                             </div>
                             <div class="summary-line">
@@ -917,9 +950,8 @@
                 let totalQuantity = 0;
                 let selectedServices = 0;
                 document.querySelectorAll(".fee-card").forEach(card => {
-                    const quantity = Math.max(0, Number.parseInt(
-                        card.querySelector(".quantity").value,
-                        10) || 0);
+                    const quantity = Math.max(0, Number.parseFloat(
+                        card.querySelector(".quantity").value) || 0);
                     const amountInput = card.querySelector(".amount");
                     const amount = Number.parseFloat(amountInput.value) || 0;
                     const lineTotal = usesDatabasePricing && amountInput.readOnly
@@ -958,7 +990,9 @@
                 document.getElementById("selectedServicesCount").textContent =
                     selectedServices.toString();
                 document.getElementById("totalQuantity").textContent =
-                    totalQuantity.toString();
+                    Number.isInteger(totalQuantity)
+                        ? totalQuantity.toString()
+                        : totalQuantity.toFixed(3).replace(/\.?0+$/, "");
                 document.getElementById("summaryEmpty").style.display =
                     selectedServices > 0 ? "none" : "block";
             }
@@ -995,9 +1029,8 @@
 
                 const selected = [...document.querySelectorAll(".fee-card")]
                     .filter(card => {
-                        const quantity = Number.parseInt(
-                            card.querySelector(".quantity").value,
-                            10) || 0;
+                        const quantity = Number.parseFloat(
+                            card.querySelector(".quantity").value) || 0;
                         const amount = Number.parseFloat(
                             card.querySelector(".amount").value) || 0;
                         return quantity > 0 && amount > 0;
@@ -1075,17 +1108,26 @@
 
             document.querySelectorAll(".quantity").forEach(quantity => {
                 quantity.addEventListener("input", () => {
-                    quantity.value = quantity.value.replace(/\D/g, "");
+                    const isWeightBased =
+                        quantity.closest(".fee-card")?.dataset.weightBased === "true";
+                    quantity.value = isWeightBased
+                        ? quantity.value
+                            .replace(/[,\u066B]/g, ".")
+                            .replace(/[^0-9.]/g, "")
+                            .replace(/(\..*)\./g, "$1")
+                            .replace(/(\.\d{3}).+$/, "$1")
+                        : quantity.value.replace(/\D/g, "");
                     calculateTotal();
                 });
                 quantity.addEventListener("blur", () => {
-                    const minimumQuantity = Number.parseInt(
-                        quantity.min,
-                        10) || 0;
+                    const minimumQuantity =
+                        Number.parseFloat(quantity.min) || 0;
                     if (!quantity.value ||
-                        Number.parseInt(quantity.value, 10) < minimumQuantity) {
+                        Number.parseFloat(quantity.value) < minimumQuantity) {
                         quantity.value = minimumQuantity.toString();
                         calculateTotal();
+                    } else if (quantity.value.endsWith(".")) {
+                        quantity.value = quantity.value.slice(0, -1);
                     }
                 });
             });

@@ -17,9 +17,9 @@ public partial class Fees_Altahsil_Detile
     public decimal? Amount { get; set; }
 
     /// <summary>
-    /// العدد
+    /// العدد أو الوزن بالطن حسب نوع الرسم
     /// </summary>
-    public int? Quantity { get; set; }
+    public decimal? Quantity { get; set; }
 
     /// <summary>
     /// بيان إضافي لبند فرق الرسوم

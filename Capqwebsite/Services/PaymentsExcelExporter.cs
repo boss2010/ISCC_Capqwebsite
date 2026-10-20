@@ -433,6 +433,11 @@ internal static class PaymentsExcelExporter
                             + (string.IsNullOrWhiteSpace(detail.FeeDescription)
                                 ? string.Empty
                                 : $" ({detail.FeeDescription})")
+                            + (detail.Quantity.HasValue
+                                ? detail.FeesTypeId == 83
+                                    ? $" — الوزن: {detail.Quantity.Value:0.###} طن"
+                                    : $" — العدد: {detail.Quantity.Value:0.###}"
+                                : string.Empty)
                             + $": {detail.Amount ?? 0:N2} ج.م")),
                     0);
                 WriteNumberCell(writer, $"N{currentRow}", payment.TotalAmount, 3);

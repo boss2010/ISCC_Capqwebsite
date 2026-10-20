@@ -12,6 +12,7 @@ namespace Capqwebsite.Controllers.Fees
         private const byte MartyrFeeTypeId = 56;
         private const byte LegacyPrivateMartyrFeeTypeId = 34;
         private const byte DifferenceFeeTypeId = 81;
+        private const byte SeedTestingFeeTypeId = 83;
         private const decimal MartyrFeeMinimumAmount = 5m;
 		private const string MechanizationFeeName = "رسوم ميكنة";
 		private const decimal MechanizationFixedAmount = 2m;
@@ -240,6 +241,7 @@ namespace Capqwebsite.Controllers.Fees
                         .OrderBy(d => d.ID)
                         .Select(d => new FeesAltahsilDetileDTO
                         {
+                            FeesTypeId = d.FeesType_ID,
                             Amount = d.Amount,
                             Quantity = d.Quantity,
                             FeeDescription = d.Fee_Description,
@@ -307,6 +309,7 @@ namespace Capqwebsite.Controllers.Fees
                         .OrderBy(d => d.ID)
                         .Select(d => new FeesAltahsilDetileDTO
                         {
+                            FeesTypeId = d.FeesType_ID,
                             Amount = d.Amount,
                             Quantity = d.Quantity,
                             FeeDescription = d.Fee_Description,
@@ -428,6 +431,7 @@ namespace Capqwebsite.Controllers.Fees
                         .OrderBy(d => d.ID)
                         .Select(d => new FeesAltahsilDetileDTO
                         {
+                            FeesTypeId = d.FeesType_ID,
                             Amount = d.Amount,
                             Quantity = d.Quantity,
                             FeeDescription = d.Fee_Description,
@@ -604,6 +608,7 @@ namespace Capqwebsite.Controllers.Fees
 
             ValidateRequiredMartyrFee(model, MartyrFeeTypeId);
             ValidateDifferenceFee(model);
+            ValidateFeeQuantities(model, allowSeedTestingWeight: false);
 
             var allowedGovernmentFeeIds = governmentFeeDefinitions.Keys.ToHashSet();
 
@@ -831,6 +836,7 @@ namespace Capqwebsite.Controllers.Fees
             ViewData["MechanizationRate"] = MechanizationRate;
             ViewData["RequiredMartyrFeeTypeId"] = MartyrFeeTypeId;
             ViewData["DifferenceFeeTypeId"] = DifferenceFeeTypeId;
+            ViewData["SeedTestingFeeTypeId"] = SeedTestingFeeTypeId;
             ViewData["PaymentAction"] = isGeneralPayment
                 ? nameof(SaveGeneralPayment)
                 : nameof(SaveInspectionPayment);
@@ -850,6 +856,51 @@ namespace Capqwebsite.Controllers.Fees
             var untrimmedAmount =
                 MechanizationFixedAmount + (feesSubtotal * MechanizationRate);
             return Math.Truncate(untrimmedAmount * 100m) / 100m;
+        }
+
+        private static decimal CalculatePrivateFeeLineAmount(FeeVM fee)
+        {
+            if (!fee.Amount.HasValue)
+            {
+                return 0m;
+            }
+
+            return Math.Round(
+                fee.Amount.Value * fee.Quantity,
+                2,
+                MidpointRounding.AwayFromZero);
+        }
+
+        private void ValidateFeeQuantities(
+            FeesAltahsilVM model,
+            bool allowSeedTestingWeight)
+        {
+            for (var index = 0; index < (model.Fees?.Count ?? 0); index++)
+            {
+                var fee = model.Fees![index];
+                var isWeightBased =
+                    allowSeedTestingWeight &&
+                    fee.FeesType_ID == SeedTestingFeeTypeId;
+
+                if (isWeightBased)
+                {
+                    if (decimal.Round(fee.Quantity, 3) != fee.Quantity)
+                    {
+                        ModelState.AddModelError(
+                            $"Fees[{index}].Quantity",
+                            "الوزن بالطن يجب ألا يزيد عن 3 أرقام عشرية");
+                    }
+
+                    continue;
+                }
+
+                if (decimal.Truncate(fee.Quantity) != fee.Quantity)
+                {
+                    ModelState.AddModelError(
+                        $"Fees[{index}].Quantity",
+                        "العدد يجب أن يكون رقمًا صحيحًا بدون كسور");
+                }
+            }
         }
 
         private static List<FeesType> GetMechanizationFeeDefinitions(
@@ -969,6 +1020,8 @@ namespace Capqwebsite.Controllers.Fees
                     fee.Selected = fee.Quantity > 0 && fee.Amount > 0;
                 }
 
+                ValidateFeeQuantities(model, allowSeedTestingWeight: true);
+
                 ValidateRequiredMartyrFee(model, MartyrFeeTypeId);
                 ValidateDifferenceFee(model);
 
@@ -1059,7 +1112,7 @@ namespace Capqwebsite.Controllers.Fees
 
                 var feesSubtotal = model.Fees
                     .Where(x => x.Selected && x.Amount.HasValue)
-                    .Sum(x => x.Amount!.Value * x.Quantity);
+                    .Sum(CalculatePrivateFeeLineAmount);
                 var mechanizationAmount = CalculateMechanizationFee(feesSubtotal);
                 model.Amount_Total = feesSubtotal + mechanizationAmount;
 				//save in database
@@ -1093,7 +1146,7 @@ namespace Capqwebsite.Controllers.Fees
 					Fees_Altahsil_Detile det = new Fees_Altahsil_Detile
 					{
 						FeesType_ID = item.FeesType_ID,
-						Amount = item.Amount * item.Quantity,
+						Amount = CalculatePrivateFeeLineAmount(item),
 						Quantity = item.Quantity,
                         Fee_Description = item.FeesType_ID == DifferenceFeeTypeId
                             ? item.FeeDescription?.Trim()

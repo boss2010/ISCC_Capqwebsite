@@ -61,10 +61,11 @@ namespace ViewModels
         public string? FeeDescription { get; set; }
 
         [Range(
-            0,
-            999999,
-            ErrorMessage = "العدد يجب أن يكون صفرًا أو أكبر")]
-        public int Quantity { get; set; }
+            typeof(decimal),
+            "0",
+            "999999",
+            ErrorMessage = "العدد أو الوزن يجب أن يكون صفرًا أو أكبر")]
+        public decimal Quantity { get; set; }
 
         [Range(
             0.01,

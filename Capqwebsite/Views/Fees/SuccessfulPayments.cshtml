@@ -764,7 +764,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>نوع الرسم</th>
-                                                    <th>العدد</th>
+                                                    <th>العدد / الوزن</th>
                                                     <th>المبلغ</th>
                                                 </tr>
                                             </thead>
@@ -785,7 +785,13 @@
                                                                     <span> — @detail.FeeDescription</span>
                                                                 }
                                                             </td>
-                                                            <td>@(detail.Quantity?.ToString() ?? "-")</td>
+                                                            <td>
+                                                                @(detail.Quantity.HasValue
+                                                                    ? detail.FeesTypeId == 83
+                                                                        ? $"{detail.Quantity.GetValueOrDefault():0.###} طن"
+                                                                        : $"{detail.Quantity.GetValueOrDefault():0.###}"
+                                                                    : "-")
+                                                            </td>
                                                             <td>@FormatAmount(detail.Amount) ج.م</td>
                                                         </tr>
                                                     }

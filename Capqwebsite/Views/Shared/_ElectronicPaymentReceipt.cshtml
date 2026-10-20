@@ -764,7 +764,7 @@
                         <tr>
                             <th style="width:8%">م</th>
                             <th>نوع الرسم</th>
-                            <th style="width:14%">العدد</th>
+                            <th style="width:14%">العدد / الوزن</th>
                             <th style="width:23%">القيمة (ج.م)</th>
                         </tr>
                     </thead>
@@ -786,7 +786,13 @@
                                             <span> — @Model.Details[i].FeeDescription</span>
                                         }
                                     </td>
-                                    <td>@(Model.Details[i].Quantity?.ToString(CultureInfo.InvariantCulture) ?? "-")</td>
+                                    <td>
+                                        @(Model.Details[i].Quantity.HasValue
+                                            ? Model.Details[i].FeesTypeId == 83
+                                                ? $"{Model.Details[i].Quantity.GetValueOrDefault().ToString("0.###", CultureInfo.InvariantCulture)} طن"
+                                                : Model.Details[i].Quantity.GetValueOrDefault().ToString("0.###", CultureInfo.InvariantCulture)
+                                            : "-")
+                                    </td>
                                     <td class="fee-value">@FormatAmount(Model.Details[i].Amount)</td>
                                 </tr>
                             }

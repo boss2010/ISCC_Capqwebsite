@@ -52,6 +52,7 @@ namespace Capqwebsite.Controllers.Fees
                                 Details = x.Fees_Altahsil_Detiles
                                     .Select(d => new FeesAltahsilDetileDTO
                                     {
+                                        FeesTypeId = d.FeesType_ID,
                                         Amount = d.Amount,
                                         Quantity = d.Quantity,
                                         FeeDescription = d.Fee_Description,
