@@ -72,6 +72,11 @@ namespace Capqwebsite.Controllers.Fees
                             date = item.date,
                         });
                 }
+                else
+                {
+                    item.IsSuccess_Bank = false;
+                    item.Code_Bank = "NF";
+                }
             }
 
             context.SaveChanges();
