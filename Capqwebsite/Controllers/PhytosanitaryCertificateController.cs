@@ -7,14 +7,17 @@ namespace Capqwebsite.Controllers
     public class PhytosanitaryCertificateController : Controller
     {
         private readonly IConfiguration _configuration;
-        private readonly IWebHostEnvironment _environment;
+        private readonly ILogger<PhytosanitaryCertificateController> _logger;
+        private readonly string _attachmentServer;
 
         public PhytosanitaryCertificateController(
             IConfiguration configuration,
-            IWebHostEnvironment environment)
+            ILogger<PhytosanitaryCertificateController> logger)
         {
             _configuration = configuration;
-            _environment = environment;
+            _logger = logger;
+            _attachmentServer = configuration["Path_NetworkShare"]
+                ?? throw new InvalidOperationException("Path_NetworkShare is not configured.");
         }
 
         public IActionResult Index()
@@ -108,7 +111,6 @@ namespace Capqwebsite.Controllers
 
        
         [HttpGet]
-        [HttpGet]
         public async Task<IActionResult> OpenCertificate(string number)
         {
             if (string.IsNullOrWhiteSpace(number))
@@ -147,54 +149,34 @@ namespace Capqwebsite.Controllers
                         return NotFound("مسار ملف الشهادة فارغ.");
                 }
 
-                // المسار في قاعدة البيانات يبدأ بـ plant/، بينما مجلد plant موجود داخل F:\
-                var relativePath = storedPath
-                    .Replace('/', Path.DirectorySeparatorChar)
-                    .Replace('\\', Path.DirectorySeparatorChar)
-                    .TrimStart(Path.DirectorySeparatorChar);
+                if (Uri.TryCreate(storedPath, UriKind.Absolute, out var uri)
+                    && uri.Scheme is "http" or "https")
+                    return Redirect(storedPath);
 
-                if (relativePath.StartsWith(
-                        "plant" + Path.DirectorySeparatorChar,
-                        StringComparison.OrdinalIgnoreCase))
-                {
-                    relativePath = relativePath.Substring(
-                        ("plant" + Path.DirectorySeparatorChar).Length);
-                }
-
-                var filePath = Path.GetFullPath(
-                    Path.Combine(@"F:\plant", relativePath));
-
+                string filePath = Capqwebsite.Infrastructure.CertificateAttachmentFiles.ResolvePath(
+                    storedPath, _attachmentServer);
+                Capqwebsite.Infrastructure.AttachmentShareConnection.Connect(filePath, _configuration);
                 if (!System.IO.File.Exists(filePath))
-                    return NotFound($"الملف غير موجود: {filePath}");
+                    return NotFound("ملف الشهادة غير موجود على سيرفر الملفات.");
 
-                var contentType = Path.GetExtension(filePath).ToLowerInvariant() switch
-                {
-                    ".pdf" => "application/pdf",
-                    ".png" => "image/png",
-                    ".jpg" or ".jpeg" => "image/jpeg",
-                    _ => "application/octet-stream"
-                };
-
-                var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
-                return File(fileBytes, contentType);
+                string contentType = Capqwebsite.Infrastructure.CertificateAttachmentFiles.ContentType(filePath);
+                byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(filePath, HttpContext.RequestAborted);
+                return contentType == "application/octet-stream"
+                    ? File(fileBytes, contentType, Path.GetFileName(filePath))
+                    : File(fileBytes, contentType);
             }
-            catch
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                return StatusCode(500, "حدث خطأ أثناء قراءة ملف الشهادة من القرص F.");
+                _logger.LogError(ex,
+                    "Unable to open public certificate {CertificateNumber} from the configured file server",
+                    number);
+                return NotFound("تعذر فتح ملف الشهادة من السيرفر. تأكد من وجود الملف وصلاحية الوصول للمجلد المشترك.");
             }
-        }
-        private static string GetContentType(string filePath)
-        {
-            var extension = Path.GetExtension(filePath).ToLowerInvariant();
-
-            return extension switch
+            catch (Exception ex)
             {
-                ".pdf" => "application/pdf",
-                ".png" => "image/png",
-                ".jpg" or ".jpeg" => "image/jpeg",
-                ".gif" => "image/gif",
-                _ => "application/octet-stream"
-            };
+                _logger.LogError(ex, "Unable to load public certificate {CertificateNumber}", number);
+                return StatusCode(500, "حدث خطأ أثناء قراءة ملف الشهادة.");
+            }
         }
     }
 }
