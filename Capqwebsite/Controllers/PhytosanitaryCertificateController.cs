@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
 using System.Data;
 
 namespace Capqwebsite.Controllers
@@ -120,10 +121,12 @@ namespace Capqwebsite.Controllers
             if (string.IsNullOrWhiteSpace(connectionString))
                 return StatusCode(500, "إعداد الاتصال CertificateDb غير موجود.");
 
+            string? server = null;
+            string? filePath = null;
+            string? storedPath = null;
+
             try
             {
-                string storedPath;
-
                 await using (var connection = new SqlConnection(connectionString))
                 await using (var command = new SqlCommand(@"
             SELECT TOP (1) CertificateFile
@@ -147,40 +150,77 @@ namespace Capqwebsite.Controllers
                         return NotFound("مسار ملف الشهادة فارغ.");
                 }
 
-                // المسار في قاعدة البيانات يبدأ بـ plant/، بينما مجلد plant موجود داخل F:\
-                var relativePath = storedPath
-                    .Replace('/', Path.DirectorySeparatorChar)
-                    .Replace('\\', Path.DirectorySeparatorChar)
-                    .TrimStart(Path.DirectorySeparatorChar);
+                server = ResolveAttachmentServer();
+                filePath = ResolveAttachmentPath(server, storedPath);
 
-                if (relativePath.StartsWith(
-                        "plant" + Path.DirectorySeparatorChar,
-                        StringComparison.OrdinalIgnoreCase))
+                var stream = new FileStream(
+                    filePath,
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read,
+                    bufferSize: 64 * 1024,
+                    options: FileOptions.Asynchronous | FileOptions.SequentialScan);
+
+                try
                 {
-                    relativePath = relativePath.Substring(
-                        ("plant" + Path.DirectorySeparatorChar).Length);
+                    Response.Headers["X-Content-Type-Options"] = "nosniff";
+                    Response.Headers.CacheControl = "private, no-store";
+
+                    var contentType = Path.GetExtension(filePath).ToLowerInvariant() switch
+                    {
+                        ".pdf" => "application/pdf",
+                        ".jpg" or ".jpeg" => "image/jpeg",
+                        ".png" => "image/png",
+                        ".gif" => "image/gif",
+                        ".webp" => "image/webp",
+                        ".bmp" => "image/bmp",
+                        _ => "application/octet-stream"
+                    };
+
+                    return File(
+                        stream,
+                        contentType,
+                        enableRangeProcessing: true);
                 }
-
-                var filePath = Path.GetFullPath(
-                    Path.Combine(@"F:\plant", relativePath));
-
-                if (!System.IO.File.Exists(filePath))
-                    return NotFound($"الملف غير موجود: {filePath}");
-
-                var contentType = Path.GetExtension(filePath).ToLowerInvariant() switch
+                catch
                 {
-                    ".pdf" => "application/pdf",
-                    ".png" => "image/png",
-                    ".jpg" or ".jpeg" => "image/jpeg",
-                    _ => "application/octet-stream"
-                };
-
-                var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
-                return File(fileBytes, contentType);
+                    await stream.DisposeAsync();
+                    throw;
+                }
             }
-            catch
+            catch (ArgumentException ex)
             {
-                return StatusCode(500, "حدث خطأ أثناء قراءة ملف الشهادة من القرص F.");
+                return AttachmentError(
+                    400, "مسار ملف الشهادة غير صالح.", ex, server, storedPath, filePath);
+            }
+            catch (FileNotFoundException ex)
+            {
+                return AttachmentError(
+                    404, "ملف الشهادة غير موجود على السيرفر.", ex, server, storedPath, filePath);
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                return AttachmentError(
+                    404, "مجلد الشهادة غير موجود أو مشاركة الملفات غير متاحة.",
+                    ex, server, storedPath, filePath);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return AttachmentError(
+                    403, "حساب تشغيل الموقع ليس لديه صلاحية قراءة ملف الشهادة من السيرفر.",
+                    ex, server, storedPath, filePath);
+            }
+            catch (IOException ex)
+            {
+                return AttachmentError(
+                    503, "تعذرت قراءة ملف الشهادة. تحقق من اتصال السيرفر وصلاحية المشاركة.",
+                    ex, server, storedPath, filePath);
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                return AttachmentError(
+                    500, "إعدادات سيرفر الملفات غير صالحة.",
+                    ex, server, storedPath, filePath);
             }
         }
         private static string GetContentType(string filePath)
@@ -196,5 +236,69 @@ namespace Capqwebsite.Controllers
                 _ => "application/octet-stream"
             };
         }
+
+        private string ResolveAttachmentServer()
+        {
+            var server = _configuration["Path_NetworkShare"];
+
+            if (string.IsNullOrWhiteSpace(server))
+                throw new InvalidOperationException(
+                    "الإعداد Path_NetworkShare غير موجود.");
+
+            server = server.Trim().Trim('\\', '/');
+
+            if (server.IndexOfAny(new[] { '\\', '/', ':' }) >= 0)
+                throw new InvalidOperationException(
+                    "Path_NetworkShare يجب أن يحتوي اسم السيرفر أو عنوان IP فقط.");
+
+            return server;
+        }
+
+        private string ResolveAttachmentPath(string server, string storedPath)
+        {
+            if (string.IsNullOrWhiteSpace(storedPath))
+                throw new ArgumentException("مسار الشهادة فارغ.");
+
+            const string root = @"\"; // لا تستخدمي هذا السطر؛ السطر الصحيح أدناه
+            var shareRoot = @"\\" + server + @"\plant\";
+
+            var path = storedPath.Trim().Replace('/', '\\');
+
+            foreach (var segment in path.Split('\\'))
+            {
+                if (segment == "." || segment == "..")
+                    throw new ArgumentException("مسار الشهادة غير صالح.");
+            }
+
+            // يقبل المسار النسبي مثل plant\folder\file.pdf
+            // أو مسار UNC كامل على نفس مشاركة plant.
+            if (!path.StartsWith(@"\\", StringComparison.Ordinal))
+                path = @"\\" + server + @"\" + path.TrimStart('\\');
+
+            path = Path.GetFullPath(path);
+
+            if (!path.StartsWith(shareRoot, StringComparison.OrdinalIgnoreCase)
+                || path.Length == shareRoot.Length
+                || path.Contains(':'))
+            {
+                throw new ArgumentException(
+                    "ملف الشهادة يجب أن يكون داخل مشاركة plant.");
+            }
+
+            return path;
+        }   
+        private IActionResult AttachmentError(
+            int statusCode,
+            string message,
+            Exception exception,
+            string? server,
+            string? storedPath,
+            string? filePath)
+        {
+            // سجّلي exception هنا باستخدام ILogger إذا كان متوفرًا في الـController.
+            return StatusCode(statusCode, message);
+        }
+
+
     }
 }
