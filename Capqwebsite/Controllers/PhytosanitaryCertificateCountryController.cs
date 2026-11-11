@@ -7,11 +7,17 @@ namespace Capqwebsite.Controllers
     public class PhytosanitaryCertificateCountryController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly ILogger<PhytosanitaryCertificateCountryController> _logger;
+        private readonly string _attachmentServer;
 
         public PhytosanitaryCertificateCountryController(
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ILogger<PhytosanitaryCertificateCountryController> logger)
         {
             _configuration = configuration;
+            _logger = logger;
+            _attachmentServer = configuration["Path_NetworkShare"]
+                ?? throw new InvalidOperationException("Path_NetworkShare is not configured.");
         }
 
         [HttpGet]
@@ -379,42 +385,31 @@ namespace Capqwebsite.Controllers
                     "مسار ملف الشهادة غير موجود في قاعدة البيانات.");
             }
 
-            var relativePath = storedPath
-                .Replace('/', Path.DirectorySeparatorChar)
-                .Replace('\\', Path.DirectorySeparatorChar)
-                .TrimStart(Path.DirectorySeparatorChar);
+            if (Uri.TryCreate(storedPath, UriKind.Absolute, out var uri)
+                && uri.Scheme is "http" or "https")
+                return Redirect(storedPath);
 
-            var fullPath = Path.GetFullPath(
-                Path.Combine(@"F:\", relativePath));
-
-            if (!System.IO.File.Exists(fullPath))
+            string fullPath = Capqwebsite.Infrastructure.CertificateAttachmentFiles.ResolvePath(
+                storedPath, _attachmentServer);
+            try
             {
-                return NotFound(
-                    $"ملف الشهادة غير موجود على هذا المسار: {fullPath}");
+                Capqwebsite.Infrastructure.AttachmentShareConnection.Connect(fullPath, _configuration);
+                if (!System.IO.File.Exists(fullPath))
+                    return NotFound("ملف الشهادة غير موجود على سيرفر الملفات.");
+
+                string contentType = Capqwebsite.Infrastructure.CertificateAttachmentFiles.ContentType(fullPath);
+                byte[] fileBytes = await System.IO.File.ReadAllBytesAsync(fullPath, HttpContext.RequestAborted);
+                return contentType == "application/octet-stream"
+                    ? File(fileBytes, contentType, Path.GetFileName(fullPath))
+                    : File(fileBytes, contentType);
             }
-
-            var extension = Path.GetExtension(fullPath).ToLowerInvariant();
-
-            var contentType = extension switch
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                ".pdf" => "application/pdf",
-                ".jpg" or ".jpeg" => "image/jpeg",
-                ".png" => "image/png",
-                _ => "application/octet-stream"
-            };
-
-            var fileBytes =
-                await System.IO.File.ReadAllBytesAsync(fullPath);
-
-            if (contentType == "application/octet-stream")
-            {
-                return File(
-                    fileBytes,
-                    contentType,
-                    Path.GetFileName(fullPath));
+                _logger.LogError(ex,
+                    "Unable to open certificate {CertificateNumber} from the configured file server",
+                    number);
+                return NotFound("تعذر فتح ملف الشهادة من السيرفر. تأكد من وجود الملف وصلاحية الوصول للمجلد المشترك.");
             }
-
-            return File(fileBytes, contentType);
         }
 
         private static void AddResultsParameters(
