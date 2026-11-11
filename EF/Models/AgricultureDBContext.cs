@@ -3405,7 +3405,9 @@ public partial class AgricultureDBContext : DbContext
             entity.Property(e => e.Amount)
                 .HasComment("المبلغ")
                 .HasColumnType("money");
-            entity.Property(e => e.Quantity).HasComment("العدد");
+            entity.Property(e => e.Quantity)
+                .HasColumnType("decimal(18, 2)")
+                .HasComment("العدد");
             entity.Property(e => e.Fee_Description)
                 .HasMaxLength(250)
                 .HasComment("بيان إضافي لبند فرق الرسوم");

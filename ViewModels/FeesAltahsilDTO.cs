@@ -43,7 +43,7 @@ namespace ViewModels
 
         public decimal? Amount { get; set; }
 
-        public int? Quantity { get; set; }
+        public decimal? Quantity { get; set; }
 
         public string? FeesTypeName { get; set; }
 

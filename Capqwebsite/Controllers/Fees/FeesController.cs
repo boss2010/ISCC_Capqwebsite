@@ -788,6 +788,8 @@ namespace Capqwebsite.Controllers.Fees
             Succesurl = "https://site.capq.gov.eg/" + "Resit/Index?ID=" + fe.ID + "&Order_No=" + Order_No;
             Cancelurl = "https://site.capq.gov.eg/" + "Fees/Index/cancelorder?ID=" + fe.ID + "&Order_No=";
 
+
+
             ss = Method_Bank.Create_Session(amount, Order_No, Cancelurl, Succesurl/* Bank_port, host*/);
                 ViewBag.Url = Url;
 

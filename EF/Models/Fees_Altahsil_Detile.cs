@@ -19,7 +19,7 @@ public partial class Fees_Altahsil_Detile
     /// <summary>
     /// العدد
     /// </summary>
-    public int? Quantity { get; set; }
+    public decimal? Quantity { get; set; }
 
     /// <summary>
     /// بيان إضافي لبند فرق الرسوم

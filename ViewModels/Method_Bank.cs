@@ -231,6 +231,7 @@ namespace ViewModels
                 String Order_No = order; //"2" +Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 9)+ Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 3);
                 CancelURL = CancelURL + Order_No;
                 var url = "";
+
                 url = "https://nbe.gateway.mastercard.com/api/rest/version/100/merchant/AGRICULTURE/session";
 
 

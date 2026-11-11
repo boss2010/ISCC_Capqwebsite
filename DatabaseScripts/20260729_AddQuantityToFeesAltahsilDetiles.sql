@@ -1,7 +1,7 @@
 IF COL_LENGTH('dbo.Fees_Altahsil_Detiles', 'Quantity') IS NULL
 BEGIN
     ALTER TABLE dbo.Fees_Altahsil_Detiles
-        ADD Quantity int NULL;
+        ADD Quantity decimal(18, 2) NULL;
 END;
 
 IF EXISTS
