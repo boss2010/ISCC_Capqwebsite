@@ -10,7 +10,12 @@
     var importOrders = Convert.ToInt32(ViewBag.ImportOrders ?? 0);
     var exportOrders = Convert.ToInt32(ViewBag.ExportOrders ?? 0);
 
-    var people = Convert.ToInt32(ViewBag.People ?? 0);
+    var totalClients = Convert.ToInt32(ViewBag.TotalClients ?? 0);
+    var importClients = Convert.ToInt32(ViewBag.ImportClients ?? 0);
+    var exportClients = Convert.ToInt32(ViewBag.ExportClients ?? 0);
+    var importCheckRequests = Convert.ToInt32(ViewBag.ImportCheckRequests ?? 0);
+    var importPermissions = Convert.ToInt32(ViewBag.ImportPermissions ?? 0);
+    var exportCheckRequests = Convert.ToInt32(ViewBag.ExportCheckRequests ?? 0);
 
     var importPercent = totalTons > 0
         ? Math.Round((totalImport / totalTons) * 100, 0)
@@ -219,6 +224,39 @@
             .kpi .compare {
                 font-size: 12px;
                 font-weight: 700;
+            }
+
+            .kpi .data.activity-data {
+                width: 100%;
+            }
+
+            .kpi-metrics {
+                display: flex;
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .kpi-metric {
+                min-width: 0;
+                flex: 1;
+                padding: 8px 10px;
+                border-radius: 8px;
+                background: rgba(255,255,255,.14);
+                text-align: center;
+            }
+
+            .kpi-metric span {
+                display: block;
+                font-size: 11px;
+                font-weight: 700;
+                white-space: nowrap;
+            }
+
+            .kpi-metric strong {
+                display: block;
+                margin-top: 3px;
+                font-size: 24px;
+                line-height: 1;
             }
 
         .up {
@@ -696,15 +734,15 @@
                 <div class="data">
 
                     <div class="title">
-                        عدد المتعاملين
+                        إجمالي المتعاملين
                     </div>
 
                     <div class="number">
-                        @people.ToString("N0")
+                        @totalClients.ToString("N0")
                     </div>
 
                     <div class="compare">
-                        إجمالي المتعاملين
+                        المسجلون في الأفراد والشركات والهيئات
                     </div>
 
                 </div>
@@ -717,18 +755,16 @@
                     📄
                 </div>
 
-                <div class="data">
+                <div class="data activity-data">
 
                     <div class="title">
-                        عدد أذون الاستيراد
+                        نشاط الوارد خلال الفترة
                     </div>
 
-                    <div class="number">
-                        @importOrders.ToString("N0")
-                    </div>
-
-                    <div class="compare">
-                        خلال الفترة المحددة
+                    <div class="kpi-metrics">
+                        <div class="kpi-metric"><span>المتعاملون</span><strong>@importClients.ToString("N0")</strong></div>
+                        <div class="kpi-metric"><span>طلبات الفحص</span><strong>@importCheckRequests.ToString("N0")</strong></div>
+                        <div class="kpi-metric"><span>أذون الاستيراد</span><strong>@importPermissions.ToString("N0")</strong></div>
                     </div>
 
                 </div>
@@ -741,18 +777,15 @@
                     🔬
                 </div>
 
-                <div class="data">
+                <div class="data activity-data">
 
                     <div class="title">
-                        عدد أذون التصدير
+                        نشاط الصادر خلال الفترة
                     </div>
 
-                    <div class="number">
-                        @exportOrders.ToString("N0")
-                    </div>
-
-                    <div class="compare">
-                        خلال الفترة المحددة
+                    <div class="kpi-metrics">
+                        <div class="kpi-metric"><span>المتعاملون</span><strong>@exportClients.ToString("N0")</strong></div>
+                        <div class="kpi-metric"><span>طلبات الفحص</span><strong>@exportCheckRequests.ToString("N0")</strong></div>
                     </div>
 
                 </div>
@@ -772,7 +805,7 @@
                 <div class="panel-title">
 
                     <span>
-                        الكميات المستوردة بالطن طبقًا لأذون الاستيراد
+                        الكميات المستوردة وعدد أذون الاستيراد شهريًا
                     </span>
 
                     <span class="legend">
@@ -808,7 +841,7 @@
                 <div class="panel-title">
 
                     <span>
-                        الكميات المصدرة بالطن طبقًا لأذون التصدير
+                        الكميات المصدرة وعدد طلبات فحص الصادر شهريًا
                     </span>
 
                     <span class="legend">
@@ -820,7 +853,7 @@
 
                         <span>
                             <i class="r"></i>
-                            عدد الأذون
+                            عدد الطلبات
                         </span>
 
                     </span>
@@ -1073,7 +1106,7 @@
 
                 <div class="updated">
 
-                    السنة المالية:
+                    السنة الميلادية:
 
                     <strong>
                         @ViewBag.year
@@ -1209,40 +1242,12 @@
             'ديسمبر'
         ];
 
-        // حالياً بيانات مؤقتة للرسم فقط
-        // سيتم ربطها ببيانات Controller في الخطوة التالية
+        const imports = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ImportTonsByMonth));
+        const exportsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ExportTonsByMonth));
+        const importCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ImportPermissionsByMonth));
+        const exportCounts = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.ExportRequestsByMonth));
 
-        const imports = [
-            4200,
-            5600,
-            6800,
-            7200,
-            5900,
-            6300,
-            7800,
-            6700,
-            5800,
-            6900,
-            7600,
-            8400
-        ];
-
-        const exportsData = [
-            2100,
-            2800,
-            3400,
-            3900,
-            3200,
-            3700,
-            4200,
-            3600,
-            3100,
-            3800,
-            4500,
-            5000
-        ];
-
-        function makeChart(elId, data, max) {
+        function makeChart(elId, data, counts) {
 
             const W = 720;
             const H = 225;
@@ -1255,7 +1260,9 @@
             const plotW = W - left - right;
             const plotH = H - top - bottom;
 
-            const gap = plotW / data.length;
+            const gap = plotW / months.length;
+            const max = Math.max(1, ...data) * 1.15;
+            const countMax = Math.max(1, ...counts) * 1.15;
 
             let s =
                 `<svg viewBox="0 0 ${W} ${H}"
@@ -1331,7 +1338,7 @@
                 const py =
                     top +
                     plotH -
-                    (v / max * .35) * plotH;
+                    (counts[i] / countMax) * plotH;
 
                 pts.push(`${px},${py}`);
 
@@ -1371,7 +1378,7 @@
                     y="${top+4}"
                     class="axis"
                     fill="#ff3030">
-                    عدد الأذون
+                    عدد الأذون/الطلبات
                 </text>
             `;
 
@@ -1385,13 +1392,13 @@
         makeChart(
             'importChart',
             imports,
-            10000
+            importCounts
         );
 
         makeChart(
             'exportChart',
             exportsData,
-            5000
+            exportCounts
         );
 
         // =====================================================

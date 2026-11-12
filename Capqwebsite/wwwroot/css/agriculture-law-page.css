@@ -21,6 +21,9 @@
 .law-card:hover { transform:translateY(-5px); box-shadow:0 12px 35px #00362717; }
 .law-cover { height:118px; position:relative; overflow:hidden; background:radial-gradient(circle at 15% 20%,#c6a3312e 0 2px,transparent 3px),linear-gradient(135deg,#fbfcf1,#eef7ec); }
 .law-cover::before { content:""; position:absolute; inset:-20px; background-image:radial-gradient(circle at 30% 30%,transparent 0 12px,#dbead4 13px 14px,transparent 15px); background-size:42px 42px; opacity:.55; transform:rotate(15deg); }
+.law-cover--video { height:190px; background:#10231d; }
+.law-cover--video::before { display:none; }
+.law-cover--video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
 .law-file-badge { position:absolute; right:18px; top:18px; width:43px; height:43px; border-radius:12px; background:#004b36; color:#e9d98b; display:grid; place-items:center; font-size:20px; box-shadow:0 7px 16px #004b362e; }
 .law-card-body { padding:18px 19px 16px; }
 .law-card-body h3 { font-size:15px; font-weight:800; margin:0 0 7px; line-height:1.8; color:#173a2f; }

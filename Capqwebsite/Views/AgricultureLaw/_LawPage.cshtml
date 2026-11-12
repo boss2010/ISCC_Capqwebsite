@@ -1,22 +1,58 @@
 @model List<EF.Models.WebsiteTypeDetail>
+@{
+    var pageTitle = (string)(ViewBag.TypeAr ?? "التشريعات والقوانين");
+    var typeId = Model?.FirstOrDefault()?.WebsitetypeID
+        ?? (int.TryParse(Context.Request.Query["ID"], out var requestedTypeId) ? requestedTypeId : 0);
+    var isVideoPage = typeId is 6 or 14 or 15 or 16;
+    var isContactPage = typeId == 17;
+}
 <link rel="stylesheet" href="~/css/agriculture-law-page.css"   />
 <div class="law-page" dir="rtl">
     <section class="law-page-head">
         <div class="law-container">
             <nav class="law-breadcrumb" aria-label="مسار الصفحة"><a href="@Url.Action("Index", "Home")">الرئيسية</a> <span>›</span> قانون الزراعة</nav>
-            <div class="law-title-wrap"><div><span>التشريعات والقوانين</span><h1>قانون الزراعة</h1></div><div class="law-title-icon"><i class="fas fa-balance-scale" aria-hidden="true"></i></div></div>
+            <div class="law-title-wrap"><div><span>التشريعات والقوانين</span><h1>@pageTitle</h1></div><div class="law-title-icon"><i class="fas fa-balance-scale" aria-hidden="true"></i></div></div>
         </div>
     </section>
     <div class="law-content law-container">
-        <div class="law-intro"><div><h2>قوانين وتشريعات الزراعة</h2><p>الوصول السريع إلى القوانين واللوائح المنظمة للعمل الزراعي</p></div><span class="law-counter">@(Model?.Count ?? 0) تشريع متاح</span></div>
+        <div class="law-intro"><div><h2>@pageTitle</h2><p>الوصول السريع إلى القوانين واللوائح والمراجع المتاحة</p></div><span class="law-counter">@(Model?.Count ?? 0) ملف متاح</span></div>
         <div class="law-grid">
             @if (Model != null)
             {
                 foreach (var item in Model)
                 {
                     <article class="law-card">
-                        <div class="law-cover"><span class="law-file-badge"><i class="far fa-file-pdf" aria-hidden="true"></i></span></div>
-                        <div class="law-card-body"><h3>@item.TitleAr</h3><div class="law-meta"><i class="far fa-file-alt" aria-hidden="true"></i> تشريع زراعي</div>
+                        @if (isVideoPage && !string.IsNullOrWhiteSpace(item.linkURL))
+                        {
+                            var embedUrl = item.linkURL.Contains("watch?v=")
+                                ? item.linkURL.Replace("watch?v=", "embed/").Split('&')[0]
+                                : item.linkURL;
+                            <div class="law-cover law-cover--video">
+                                <iframe src="@embedUrl" title="@item.TitleAr" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <div class="law-card-body">
+                                <h3>@item.TitleAr</h3>
+                                <div class="law-meta"><i class="fab fa-youtube" aria-hidden="true"></i> محتوى مرئي</div>
+                                <a class="law-view" href="@item.linkURL" target="_blank" rel="noopener"><i class="fas fa-play" aria-hidden="true"></i> مشاهدة الفيديو</a>
+                            </div>
+                        }
+                        else if (isContactPage)
+                        {
+                            <div class="law-cover"><span class="law-file-badge"><i class="fas fa-address-card" aria-hidden="true"></i></span></div>
+                            <div class="law-card-body">
+                                <h3>@item.TitleAr</h3>
+                                <div class="law-meta"><i class="fas fa-envelope" aria-hidden="true"></i> @item.TitleEn</div>
+                                <div class="law-meta"><i class="fas fa-phone-alt" aria-hidden="true"></i> @item.descEn</div>
+                                @if (!string.IsNullOrWhiteSpace(item.linkURL))
+                                {
+                                    <a class="law-view" href="@item.linkURL" target="_blank" rel="noopener"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> الموقع الجغرافي</a>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="law-cover"><span class="law-file-badge"><i class="far fa-file-pdf" aria-hidden="true"></i></span></div>
+                            <div class="law-card-body"><h3>@item.TitleAr</h3><div class="law-meta"><i class="far fa-file-alt" aria-hidden="true"></i> ملف متاح</div>
                             @if (!string.IsNullOrWhiteSpace(item.filepath))
                             {
                                 <a class="law-view openPdf" href="@item.filepath" data-pdf="@item.filepath"><i class="fas fa-eye" aria-hidden="true"></i> عرض القانون</a>
@@ -25,12 +61,11 @@
                             {
                                 <span class="law-meta">الملف غير متاح حاليًا</span>
                             }
-                        </div>
+                            </div>
+                        }
                     </article>
                 }
             }
-            <article class="law-card"><div class="law-cover"><span class="law-file-badge"><i class="fas fa-book" aria-hidden="true"></i></span></div><div class="law-card-body"><h3>القرارات الوزارية</h3><div class="law-meta">مرجع · القرارات المنظمة للعمل الزراعي</div><a class="law-view" href="@Url.Action("Index", "AgricultureLaw", new { ID = 2 })"><i class="fas fa-eye" aria-hidden="true"></i> استعراض</a></div></article>
-            <article class="law-card"><div class="law-cover"><span class="law-file-badge"><i class="fas fa-seedling" aria-hidden="true"></i></span></div><div class="law-card-body"><h3>قوائم الآفات</h3><div class="law-meta">حجر زراعي · مراجع</div><a class="law-view" href="@Url.Action("Index", "AgricultureLaw", new { ID = 3 })"><i class="fas fa-eye" aria-hidden="true"></i> عرض الملفات</a></div></article>
         </div>
         @if (Model == null || Model.Count == 0) { <p class="law-empty">لا توجد تشريعات متاحة حاليًا.</p> }
         <div class="law-notice"><span class="law-notice-icon" aria-hidden="true">✓</span><div><h3>منصة تشريعات رقمية أكثر سهولة</h3><p>الوصول إلى القوانين والقرارات والمراجع الزراعية والاطلاع على ملفاتها الإلكترونية.</p></div></div>

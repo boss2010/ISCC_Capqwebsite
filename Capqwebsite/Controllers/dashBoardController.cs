@@ -25,51 +25,71 @@ namespace Capqwebsite.Controllers
 			string direction = "all")
 		{
 			// =========================================================
-			// 1) السنة المالية
+			// 1) السنة الميلادية
 			// =========================================================
 
-			int yearNo = year ?? (
-				DateTime.Now.Month >= 4
-					? DateTime.Now.Year
-					: DateTime.Now.Year - 1
-			);
+			const int sqlMinYear = 1753;
+			const int sqlMaxSafeYear = 9998;
+
+			int yearNo = year is >= sqlMinYear and <= sqlMaxSafeYear
+				? year.Value
+				: DateTime.Now.Year;
+
+			if (month is < 1 or > 12)
+			{
+				month = null;
+			}
 
 
 			// =========================================================
 			// 2) تحديد الفترة
-			// السنة المالية من 1 أبريل إلى 31 مارس
+			// السنة الميلادية من 1 يناير إلى 31 ديسمبر
 			// =========================================================
 
 			DateTime startDate;
 			DateTime endDate;
 
-			if (fromDate.HasValue)
+			bool hasValidFromDate =
+				fromDate.HasValue &&
+				fromDate.Value.Year >= sqlMinYear &&
+				fromDate.Value.Year <= 9999;
+
+			if (hasValidFromDate)
 			{
-				startDate = fromDate.Value.Date;
+				startDate = fromDate!.Value.Date;
 			}
 			else
 			{
-				startDate = new DateTime(yearNo, 4, 1);
+				startDate = new DateTime(yearNo, 1, 1);
 			}
 
 
-			if (toDate.HasValue)
+			bool hasValidToDate =
+				toDate.HasValue &&
+				toDate.Value.Year >= sqlMinYear &&
+				toDate.Value.Date <= new DateTime(9999, 12, 30);
+
+			if (hasValidToDate)
 			{
 				// اليوم المختار بالكامل
-				endDate = toDate.Value.Date.AddDays(1);
+				endDate = toDate!.Value.Date.AddDays(1);
 			}
 			else
 			{
-				// نهاية السنة المالية
-				endDate = new DateTime(yearNo + 1, 4, 1);
+				// نهاية السنة الميلادية
+				endDate = new DateTime(yearNo + 1, 1, 1);
+			}
+
+			if (endDate <= startDate)
+			{
+				endDate = startDate.AddDays(1);
+				toDate = startDate;
 			}
 
 
 			// =========================================================
 			// 3) البيانات العامة
 			// =========================================================
-
-			ViewBag.People = db.People.Count();
 
 			ViewBag.Public_Organizations =
 				db.Public_Organizations.Count();
@@ -121,16 +141,31 @@ namespace Capqwebsite.Controllers
 				);
 			}
 
+			var importPermissions = db.Im_PermissionRequests
+				.Where(x =>
+					x.IsAcceppted == true &&
+					x.User_Creation_Date.HasValue &&
+					x.User_Creation_Date.Value >= startDate &&
+					x.User_Creation_Date.Value < endDate
+				);
+
+			if (month.HasValue)
+			{
+				importPermissions = importPermissions.Where(x =>
+					x.User_Creation_Date.Value.Month == month.Value
+				);
+			}
+
 
 			// =========================================================
 			// 6) عدد أذون الاستيراد
 			// =========================================================
 
-			int importOrders = importRequests.Count();
+			int importOrders = importPermissions.Count();
 
 
 			// =========================================================
-			// 7) عدد أذون التصدير
+			// 7) عدد طلبات فحص الصادر
 			// =========================================================
 
 			int exportOrders = exportRequests.Count();
@@ -202,6 +237,16 @@ namespace Capqwebsite.Controllers
 				exportItems =
 					exportItems.Where(x =>
 						x.ProductId == productId.Value);
+
+				var filteredImportRequestIds = importItems
+					.Select(x => x.Request.ID)
+					.Distinct();
+
+				importPermissions = importPermissions.Where(x =>
+					x.Im_CheckRequest_ID.HasValue &&
+					filteredImportRequestIds.Contains(x.Im_CheckRequest_ID.Value));
+
+				importOrders = importPermissions.Count();
 			}
 
 
@@ -229,12 +274,130 @@ namespace Capqwebsite.Controllers
 				importRequests =
 					importRequests.Where(x => false);
 
+				importPermissions =
+					importPermissions.Where(x => false);
+
 				importOrders = 0;
 			}
 
 
 			// =========================================================
-			// 12) أعلى منتجات الاستيراد
+			// 12) المتعاملون الفعليون في الوارد والصادر
+			// النوع 6 = شركة، 7 = هيئة، 8 = فرد
+			// =========================================================
+
+			var companyIds = db.Company_Nationals
+				.Select(x => x.ID)
+				.ToHashSet();
+
+			var organizationIds = db.Public_Organizations
+				.Select(x => x.ID)
+				.ToHashSet();
+
+			var personIds = db.People
+				.Select(x => x.ID)
+				.ToHashSet();
+
+			bool IsRegisteredClient(int typeId, long clientId) =>
+				typeId switch
+				{
+					6 => companyIds.Contains(clientId),
+					7 => organizationIds.Contains(clientId),
+					8 => personIds.Contains(clientId),
+					_ => false
+				};
+
+			var importRequestIds = (productId.HasValue
+					? importItems.Select(x => x.Request.ID)
+					: importRequests.Select(x => x.ID))
+				.Distinct()
+				.ToList();
+
+			var exportRequestIds = (productId.HasValue
+					? exportItems.Select(x => x.Request.ID)
+					: exportRequests.Select(x => x.ID))
+				.Distinct()
+				.ToList();
+
+			ViewBag.ImportCheckRequests = importRequestIds.Count;
+			ViewBag.ImportPermissions = importOrders;
+			ViewBag.ExportCheckRequests = exportRequestIds.Count;
+
+			var importClients = db.Im_CheckRequest_Data
+				.Where(x =>
+					x.Im_CheckRequest_ID.HasValue &&
+					importRequestIds.Contains(x.Im_CheckRequest_ID.Value) &&
+					(x.ImporterType_Id == 6 || x.ImporterType_Id == 7 || x.ImporterType_Id == 8))
+				.Select(x => new { TypeId = x.ImporterType_Id, ClientId = x.Importer_ID })
+				.Distinct()
+				.AsEnumerable()
+				.Where(x => IsRegisteredClient(x.TypeId, x.ClientId))
+				.Select(x => $"{x.TypeId}:{x.ClientId}")
+				.ToHashSet();
+
+			var exportClients = db.Ex_CheckRequest_Data
+				.Where(x =>
+					x.Ex_CheckRequest_ID.HasValue &&
+					exportRequestIds.Contains(x.Ex_CheckRequest_ID.Value) &&
+					(x.ImporterType_Id == 6 || x.ImporterType_Id == 7 || x.ImporterType_Id == 8))
+				.Select(x => new { TypeId = x.ImporterType_Id, ClientId = x.Importer_ID })
+				.Distinct()
+				.AsEnumerable()
+				.Where(x => IsRegisteredClient(x.TypeId, x.ClientId))
+				.Select(x => $"{x.TypeId}:{x.ClientId}")
+				.ToHashSet();
+
+			ViewBag.ImportClients = importClients.Count;
+			ViewBag.ExportClients = exportClients.Count;
+			ViewBag.TotalClients = companyIds.Count + organizationIds.Count + personIds.Count;
+
+			var importTonsByMonth = importItems
+				.GroupBy(x => x.Request.IsAccepted_Date!.Value.Month)
+				.Select(g => new
+				{
+					Month = g.Key,
+					Value = (g.Sum(x => (double?)x.Item.GrossWeight) ?? 0) / 1000
+				})
+				.ToDictionary(x => x.Month, x => Math.Round(x.Value, 2));
+
+			var exportTonsByMonth = exportItems
+				.GroupBy(x => x.Request.User_Creation_Date!.Value.Month)
+				.Select(g => new
+				{
+					Month = g.Key,
+					Value = (g.Sum(x => (double?)x.Item.GrossWeight) ?? 0) / 1000
+				})
+				.ToDictionary(x => x.Month, x => Math.Round(x.Value, 2));
+
+			var importPermissionsByMonth = importPermissions
+				.GroupBy(x => x.User_Creation_Date!.Value.Month)
+				.Select(g => new { Month = g.Key, Value = g.Count() })
+				.ToDictionary(x => x.Month, x => x.Value);
+
+			var exportRequestsByMonth = exportRequests
+				.GroupBy(x => x.User_Creation_Date!.Value.Month)
+				.Select(g => new { Month = g.Key, Value = g.Count() })
+				.ToDictionary(x => x.Month, x => x.Value);
+
+			ViewBag.ImportTonsByMonth = Enumerable.Range(1, 12)
+				.Select(monthNo => importTonsByMonth.GetValueOrDefault(monthNo))
+				.ToArray();
+
+			ViewBag.ExportTonsByMonth = Enumerable.Range(1, 12)
+				.Select(monthNo => exportTonsByMonth.GetValueOrDefault(monthNo))
+				.ToArray();
+
+			ViewBag.ImportPermissionsByMonth = Enumerable.Range(1, 12)
+				.Select(monthNo => importPermissionsByMonth.GetValueOrDefault(monthNo))
+				.ToArray();
+
+			ViewBag.ExportRequestsByMonth = Enumerable.Range(1, 12)
+				.Select(monthNo => exportRequestsByMonth.GetValueOrDefault(monthNo))
+				.ToArray();
+
+
+			// =========================================================
+			// 13) أعلى منتجات الاستيراد
 			// =========================================================
 
 			var Products = importItems

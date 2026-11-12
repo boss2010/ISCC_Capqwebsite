@@ -10,7 +10,12 @@
     var importOrders = Convert.ToInt32(ViewBag.ImportOrders ?? 0);
     var exportOrders = Convert.ToInt32(ViewBag.ExportOrders ?? 0);
 
-    var people = Convert.ToInt32(ViewBag.People ?? 0);
+    var totalClients = Convert.ToInt32(ViewBag.TotalClients ?? 0);
+    var importClients = Convert.ToInt32(ViewBag.ImportClients ?? 0);
+    var exportClients = Convert.ToInt32(ViewBag.ExportClients ?? 0);
+    var importCheckRequests = Convert.ToInt32(ViewBag.ImportCheckRequests ?? 0);
+    var importPermissions = Convert.ToInt32(ViewBag.ImportPermissions ?? 0);
+    var exportCheckRequests = Convert.ToInt32(ViewBag.ExportCheckRequests ?? 0);
 
     var importPercent = totalTons > 0
         ? Math.Round((totalImport / totalTons) * 100, 0)
@@ -35,15 +40,15 @@
                 <div class="data">
 
                     <div class="title">
-                        عدد المتعاملين
+                        إجمالي المتعاملين
                     </div>
 
                     <div class="number">
-                        @people.ToString("N0")
+                        @totalClients.ToString("N0")
                     </div>
 
                     <div class="compare">
-                        إجمالي المتعاملين
+                        المسجلون في الأفراد والشركات والهيئات
                     </div>
 
                 </div>
@@ -56,18 +61,16 @@
                     📄
                 </div>
 
-                <div class="data">
+                <div class="data activity-data">
 
                     <div class="title">
-                        عدد أذون الاستيراد
+                        نشاط الوارد خلال الفترة
                     </div>
 
-                    <div class="number">
-                        @importOrders.ToString("N0")
-                    </div>
-
-                    <div class="compare">
-                        خلال الفترة المحددة
+                    <div class="kpi-metrics">
+                        <div class="kpi-metric"><span>المتعاملون</span><strong>@importClients.ToString("N0")</strong></div>
+                        <div class="kpi-metric"><span>طلبات الفحص</span><strong>@importCheckRequests.ToString("N0")</strong></div>
+                        <div class="kpi-metric"><span>أذون الاستيراد</span><strong>@importPermissions.ToString("N0")</strong></div>
                     </div>
 
                 </div>
@@ -80,18 +83,15 @@
                     🔬
                 </div>
 
-                <div class="data">
+                <div class="data activity-data">
 
                     <div class="title">
-                        عدد أذون التصدير
+                        نشاط الصادر خلال الفترة
                     </div>
 
-                    <div class="number">
-                        @exportOrders.ToString("N0")
-                    </div>
-
-                    <div class="compare">
-                        خلال الفترة المحددة
+                    <div class="kpi-metrics">
+                        <div class="kpi-metric"><span>المتعاملون</span><strong>@exportClients.ToString("N0")</strong></div>
+                        <div class="kpi-metric"><span>طلبات الفحص</span><strong>@exportCheckRequests.ToString("N0")</strong></div>
                     </div>
 
                 </div>
@@ -111,7 +111,7 @@
                 <div class="panel-title">
 
                     <span>
-                        الكميات المستوردة بالطن طبقًا لأذون الاستيراد
+                        الكميات المستوردة وعدد أذون الاستيراد شهريًا
                     </span>
 
                     <span class="legend">
@@ -147,7 +147,7 @@
                 <div class="panel-title">
 
                     <span>
-                        الكميات المصدرة بالطن طبقًا لأذون التصدير
+                        الكميات المصدرة وعدد طلبات فحص الصادر شهريًا
                     </span>
 
                     <span class="legend">
@@ -159,7 +159,7 @@
 
                         <span>
                             <i class="r"></i>
-                            عدد الأذون
+                            عدد الطلبات
                         </span>
 
                     </span>
@@ -412,7 +412,7 @@
 
                 <div class="updated">
 
-                    السنة المالية:
+                    السنة الميلادية:
 
                     <strong>
                         @ViewBag.year
